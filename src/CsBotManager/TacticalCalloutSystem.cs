@@ -72,6 +72,9 @@ public class TacticalCalloutSystem
         float dist = (enemyPos - botPos).Length();
         if (dist > 2500.0f) return false;
 
+        var botCp = mapProfile?.FindChokepointAt(botPos.X, botPos.Y, botPos.Z);
+        var enemyCp = mapProfile?.FindChokepointAt(enemyPos.X, enemyPos.Y, enemyPos.Z);
+
         // 1. Linha de Visão / Spotted direto do engine
         bool isSpottedByMask = false;
         try
@@ -104,21 +107,25 @@ public class TacticalCalloutSystem
             }
         }
 
-        if (isInFov && (isSpottedByMask || dist <= 2000.0f))
+        bool smokeBlocking = calloutSystem != null && botCp != null && enemyCp != null &&
+                             calloutSystem.HasRecentSmokeLikelyBetween(botCp.Name, enemyCp.Name, 18.0f);
+
+        bool hasGeometricValidity = botCp != null && enemyCp != null &&
+                                    (string.Equals(botCp.Name, enemyCp.Name, StringComparison.OrdinalIgnoreCase) ||
+                                     AreSectorsAdjacent(botCp.Name, enemyCp.Name));
+
+        // Visual legítimo: FOV + (spotted OU geometria plausível) + sem bloqueio recente de smoke
+        if (isInFov && (isSpottedByMask || hasGeometricValidity) && !smokeBlocking)
         {
             return true;
         }
 
         // 3. Percepção Sonora: Inimigo emitiu som audível (Footstep, WeaponFire, Dano) naquele setor nos últimos 4.0s
-        if (calloutSystem != null && mapProfile != null)
+        if (calloutSystem != null && enemyCp != null)
         {
-            var enemyCp = mapProfile.FindChokepointAt(enemyPos.X, enemyPos.Y, enemyPos.Z);
-            if (enemyCp != null)
+            if (calloutSystem.HasRecentEnemyAudioInSector(enemyCp.Name, 4.0f))
             {
-                if (calloutSystem.HasRecentEnemyAudioInSector(enemyCp.Name, 4.0f))
-                {
-                    return true;
-                }
+                return true;
             }
         }
 
@@ -134,9 +141,39 @@ public class TacticalCalloutSystem
         {
             lock (activities)
             {
-                return activities.Any(a => now - a.Time <= maxSecondsAgo && a.IsEnemy);
+                return activities.Any(a => now - a.Time <= maxSecondsAgo && a.IsEnemy && !a.IsGrenade);
             }
         }
+        return false;
+    }
+
+    public bool HasRecentSmokeLikelyBetween(string sectorA, string sectorB, float maxSecondsAgo = 18.0f)
+    {
+        if (string.IsNullOrEmpty(sectorA) || string.IsNullOrEmpty(sectorB)) return false;
+        float now = Server.CurrentTime;
+
+        foreach (var kvp in _recentSectorActivity)
+        {
+            string sector = kvp.Key;
+            if (!string.Equals(sector, sectorA, StringComparison.OrdinalIgnoreCase) &&
+                !string.Equals(sector, sectorB, StringComparison.OrdinalIgnoreCase) &&
+                !AreSectorsAdjacent(sector, sectorA) &&
+                !AreSectorsAdjacent(sector, sectorB))
+            {
+                continue;
+            }
+
+            var events = kvp.Value;
+            lock (events)
+            {
+                bool hasRecentSmoke = events.Any(e => e.IsGrenade && now - e.Time <= maxSecondsAgo);
+                if (hasRecentSmoke)
+                {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
@@ -376,6 +413,27 @@ public class TacticalCalloutSystem
     // ==============================================================================
     // 4. Callout de Som / Passos Próximos (Audio Cue Callout - Bloco 1 / F-009)
     // ==============================================================================
+    public void HandleWeaponFire(EventWeaponFire @event)
+    {
+        var shooter = @event.Userid;
+        if (shooter == null || !shooter.IsValid || !shooter.PawnIsAlive) return;
+
+        var shooterPos = shooter.PlayerPawn.Value?.AbsOrigin;
+        if (shooterPos == null) return;
+
+        var cp = _mapProfileManager.FindChokepointAt(shooterPos.X, shooterPos.Y, shooterPos.Z);
+        string sectorName = cp?.Name ?? string.Empty;
+        if (string.IsNullOrEmpty(sectorName)) return;
+
+        var allPlayers = Utilities.GetPlayers();
+        bool anyEnemyListenerNearby = allPlayers.Any(p =>
+            p != null && p.IsValid && p.IsBot && p.PawnIsAlive && p.Team != shooter.Team &&
+            p.PlayerPawn.Value?.AbsOrigin != null &&
+            (p.PlayerPawn.Value.AbsOrigin - shooterPos).Length() <= 1200.0f);
+
+        RecordAudioActivity(sectorName, shooter.Slot, isEnemy: anyEnemyListenerNearby, isGrenade: false);
+    }
+
     public void HandleFootstep(EventPlayerFootstep @event)
     {
         var walker = @event.Userid;

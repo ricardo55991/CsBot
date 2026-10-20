@@ -434,7 +434,7 @@ public class BotLocomotionDriver
             {
                 if (_isTacticalSaveActive)
                 {
-                    // No SAVE TÁTICO, bloqueia imediatamente qualquer tentativa de defuse ou aproximação da C4
+                    // No SAVE TÁTICO, bloqueia imediatamente qualquer tentativa de defuse ou corrida para a C4
                     bool isDefusing = false;
                     try
                     {
@@ -446,6 +446,21 @@ public class BotLocomotionDriver
                     {
                         controller.ExecuteClientCommand("-use; slot1");
                     }
+
+                    if (state.ActiveMovementId != 0 && api != null)
+                    {
+                        try
+                        {
+                            api.CancelUsercmdMovement(slot, state.ActiveMovementId);
+                        }
+                        catch { }
+                        state.ActiveMovementId = 0;
+                    }
+
+                    bot.IsStopping = true;
+                    bot.WaitTimer.Duration = 0.8f;
+                    bot.WaitTimer.Timestamp = currentTime + 0.8f;
+                    continue;
                 }
                 else if (_isBombPlanted)
                 {

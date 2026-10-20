@@ -235,6 +235,10 @@ Responda APENAS um JSON válido seguindo esta estrutura exata:
                 }
             }
         }
+        catch (OperationCanceledException)
+        {
+            throw;
+        }
         catch (Exception)
         {
             // Fallback determinístico

@@ -100,8 +100,8 @@ public class PacingAndFallbackController
 
         Server.PrintToChatAll($" {ChatColors.Green}[CsBot Maestro]{ChatColors.Default} Fase de Staging Iniciada ({_stagingTimeRemaining:F0}s). Aguardando confirmações e utilitárias!");
 
-        // Loop de verificação a cada 1 segundo
-        _stagingTimer = _plugin.AddTimer(1.0f, () =>
+        // Loop de verificação a cada 1 segundo (F-006: timer central de round)
+        _stagingTimer = _plugin.AddRoundTimer(1.0f, () =>
         {
             _stagingTimeRemaining -= 1.0f;
 

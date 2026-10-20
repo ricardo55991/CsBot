@@ -130,6 +130,10 @@ public class CsBotManagerPlugin : BasePlugin
         _locomotionDriver.RetakeBrain = _retakeAndDefuseBrain;
         _locomotionDriver.UtilityCoordinator = _utilityCoordinator;
         _locomotionDriver.MapProfileManager = _mapProfileManager;
+        if (_utilityCoordinator != null)
+        {
+            _utilityCoordinator.LocomotionDriver = _locomotionDriver;
+        }
         _clearAndPlantController.CalloutSystem = _calloutSystem;
         _combatAdapter.CalloutSystem = _calloutSystem;
         _combatAdapter.MapProfileManager = _mapProfileManager;
@@ -154,6 +158,7 @@ public class CsBotManagerPlugin : BasePlugin
         RegisterEventHandler<EventPlayerHurt>(OnPlayerHurt);
         RegisterEventHandler<EventPlayerDeath>(OnPlayerDeath);
         RegisterEventHandler<EventPlayerFootstep>(OnPlayerFootstep);
+        RegisterEventHandler<EventWeaponFire>(OnWeaponFire);
         RegisterEventHandler<EventBombPlanted>(OnBombPlanted);
         RegisterEventHandler<EventBombBegindefuse>(OnBombBeginDefuse);
         RegisterEventHandler<EventSmokegrenadeDetonate>(OnSmokeGrenadeDetonate);
@@ -246,7 +251,7 @@ public class CsBotManagerPlugin : BasePlugin
         _mapProfileManager.LoadProfile(Server.MapName, ModuleDirectory);
 
         // 0.3s: Análise Econômica e Decisão Tática
-        AddTimer(0.3f, () =>
+        AddRoundTimer(0.3f, () =>
         {
             var players = GetActivePlayers();
             var human = players.FirstOrDefault(p => !p.IsBot);
@@ -616,6 +621,12 @@ public class CsBotManagerPlugin : BasePlugin
     {
         _calloutSystem?.HandleFootstep(@event);
         _mobilityController?.OnPlayerFootstep(@event);
+        return HookResult.Continue;
+    }
+
+    private HookResult OnWeaponFire(EventWeaponFire @event, GameEventInfo info)
+    {
+        _calloutSystem?.HandleWeaponFire(@event);
         return HookResult.Continue;
     }
 

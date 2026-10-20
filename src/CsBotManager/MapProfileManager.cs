@@ -133,7 +133,16 @@ public class MapProfileManager
 
     public TacticalSpot? GetFallbackSpot(string currentSpotId)
     {
-        if (_spotsById.TryGetValue(currentSpotId, out var current) && !string.IsNullOrEmpty(current.FallbackSpotId))
+        TacticalSpot? current = null;
+        lock (_profileLock)
+        {
+            if (_spotsById.TryGetValue(currentSpotId, out var found))
+            {
+                current = found;
+            }
+        }
+
+        if (current != null && !string.IsNullOrEmpty(current.FallbackSpotId))
         {
             return GetSpotById(current.FallbackSpotId);
         }
@@ -255,10 +264,14 @@ public class MapProfileManager
         }
         else // TR
         {
-            var trSpots = _spotsById.Values
-                .Where(s => s.Side == "TR" && (s.Id.StartsWith("tr_staging_") || s.Id.Contains("staging")))
-                .OrderBy(_ => _random.Next())
-                .ToList();
+            List<TacticalSpot> trSpots;
+            lock (_profileLock)
+            {
+                trSpots = _spotsById.Values
+                    .Where(s => s.Side == "TR" && (s.Id.StartsWith("tr_staging_") || s.Id.Contains("staging")))
+                    .OrderBy(_ => _random.Next())
+                    .ToList();
+            }
 
             for (int i = 0; i < enemyBots.Count && i < trSpots.Count; i++)
             {
@@ -281,20 +294,24 @@ public class MapProfileManager
             _ => "Mid"
         };
 
-        var matching = _spotsById.Values
-            .Where(s => s.Sector.Equals(sector, StringComparison.OrdinalIgnoreCase) &&
-                       (s.Side.Equals(side, StringComparison.OrdinalIgnoreCase) || s.Side.Equals("ANY", StringComparison.OrdinalIgnoreCase)))
-            .ToList();
-
-        if (side == "TR")
+        List<TacticalSpot> matching;
+        lock (_profileLock)
         {
-            var filtered = matching.Where(s => isStaging ? s.Id.Contains("staging") : (s.Id.Contains("exec") || s.Id.Contains("plant"))).ToList();
-            if (filtered.Count > 0) matching = filtered;
-        }
+            matching = _spotsById.Values
+                .Where(s => s.Sector.Equals(sector, StringComparison.OrdinalIgnoreCase) &&
+                           (s.Side.Equals(side, StringComparison.OrdinalIgnoreCase) || s.Side.Equals("ANY", StringComparison.OrdinalIgnoreCase)))
+                .ToList();
 
-        if (matching.Count == 0)
-        {
-            matching = _spotsById.Values.Where(s => s.Side.Equals(side, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (side == "TR")
+            {
+                var filtered = matching.Where(s => isStaging ? s.Id.Contains("staging") : (s.Id.Contains("exec") || s.Id.Contains("plant"))).ToList();
+                if (filtered.Count > 0) matching = filtered;
+            }
+
+            if (matching.Count == 0)
+            {
+                matching = _spotsById.Values.Where(s => s.Side.Equals(side, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
         }
 
         if (matching.Count == 0) return null;

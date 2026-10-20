@@ -9,6 +9,7 @@ public class UtilityAndClockCoordinator
     private readonly BasePlugin _plugin;
     private readonly MapProfileManager _mapProfileManager;
     private readonly RoleManager _roleManager;
+    public BotLocomotionDriver? LocomotionDriver { get; set; }
 
     private readonly Dictionary<string, ChokepointBlockState> _activeBlocks = new(StringComparer.OrdinalIgnoreCase);
     private readonly Random _random = new();
@@ -103,10 +104,16 @@ public class UtilityAndClockCoordinator
 
     public void UpdateClockSense(float roundTimeRemaining, bool isBombPlanted, TacticalPlan plan, List<CCSPlayerController> ctBots, List<CCSPlayerController> trBots)
     {
+        bool previousSaveState = plan.IsTacticalSaveActive;
+
         if (isBombPlanted)
         {
             plan.IsClockDesperationActive = false;
             plan.IsLateRoundSilenceActive = false;
+            if (previousSaveState != plan.IsTacticalSaveActive)
+            {
+                LocomotionDriver?.NotifySaveState(plan.IsTacticalSaveActive);
+            }
             return;
         }
 
@@ -210,6 +217,11 @@ public class UtilityAndClockCoordinator
         {
             plan.IsClockDesperationActive = false;
             plan.IsTacticalSaveActive = false;
+        }
+
+        if (previousSaveState != plan.IsTacticalSaveActive)
+        {
+            LocomotionDriver?.NotifySaveState(plan.IsTacticalSaveActive);
         }
     }
 
