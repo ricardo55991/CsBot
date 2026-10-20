@@ -421,25 +421,6 @@ Situação observada: **last-write-wins** em vários campos e ausência de owner
 - **Recomendação:** introduzir camada de percepção legitimada (visão/áudio validado/TTL de intel).
 - **Teste futuro:** mapas com oclusão forte e telemetria de falsos positivos de callout.
 
-### F-010
-- **ID:** F-010
-- **Título:** Bridge HTTP de voz sem limite de payload e tratamento de erro HTTP incompleto
-- **Severidade:** 🟠 IMPORTANTE
-- **Classificação:** COMPROVADO POR ANÁLISE ESTÁTICA
-- **Arquivo/linhas:** `[src/CsBotManager/VoiceCommandBridge.cs:L94-L97]`, `[src/CsBotManager/VoiceCommandBridge.cs:L119-L122]`
-- **Classe/método:** `VoiceCommandBridge.OnContextReceived`
-- **Trecho mínimo:** `ReadToEnd()` sem limitação; `catch` apenas loga.
-- **Fluxo:** POST local -> leitura integral do body -> deserialize.
-- **Esperado:** limite de tamanho, timeout de leitura, status de erro consistente.
-- **Implementado:** sem limite explícito.
-- **Impacto:** consumo de memória/latência sob payload malicioso/local.
-- **Cenário:** envio de JSON muito grande via localhost.
-- **Risco:** degradação de processo e comportamento HTTP inconsistente.
-- **Dependência externa:** cliente HTTP local.
-- **Confiança:** Alto.
-- **Recomendação:** validar `ContentLength64`, stream limitado e resposta 4xx/5xx explícita em exceção.
-- **Teste futuro:** fuzz de payload (tamanho e JSON malformado) em ambiente controlado.
-
 ### F-011
 - **ID:** F-011
 - **Título:** HUD HTML sem escaping de strings externas (voz/LLM)
@@ -477,25 +458,6 @@ Situação observada: **last-write-wins** em vários campos e ausência de owner
 - **Confiança:** Médio-Alto.
 - **Recomendação:** padrão único `IsValid` no ponto de uso.
 - **Teste futuro:** cenários de disconnect/morte durante timers.
-
-### F-013
-- **ID:** F-013
-- **Título:** Acoplamento forte a caminhos absolutos do ambiente original
-- **Severidade:** 🟠 IMPORTANTE
-- **Classificação:** COMPROVADO POR CONFIGURAÇÃO VERSIONADA
-- **Arquivo/linhas:** `[start_cs2_ai_server.bat:L2-L4,L11,L16]`, `[src/CsBotManager/CsBotManager.csproj:L14,L18,L39-L40]`
-- **Classe/método:** config/startup
-- **Trecho mínimo:** uso explícito de `H:\CS2_AI_Server` em startup, references e deploy.
-- **Fluxo:** build/deploy/start dependem de topologia local.
-- **Esperado:** parametrização por variável/arquivo de configuração por ambiente.
-- **Implementado:** hardcoded.
-- **Impacto:** baixa portabilidade e onboarding/CI difícil.
-- **Cenário:** clone em outra máquina/drive.
-- **Risco:** falha operacional de setup.
-- **Dependência externa:** infraestrutura do host.
-- **Confiança:** Alto.
-- **Recomendação:** externalizar paths e condicionar targets de deploy.
-- **Teste futuro:** execução em ambiente com path alternativo e config parametrizada.
 
 ### F-014
 - **ID:** F-014
@@ -568,7 +530,7 @@ Situação observada: **last-write-wins** em vários campos e ausência de owner
 
 ## 14. Problemas comprovados estaticamente
 
-- F-001, F-002, F-003, F-005, F-006, F-007, F-008, F-009, F-010, F-011, F-012, F-013, F-015, F-016.
+- F-001, F-002, F-003, F-005, F-006, F-007, F-008, F-009, F-011, F-012, F-015, F-016.
 
 ---
 
@@ -649,18 +611,61 @@ Classificação exigida:
 
 ---
 
-## 22. Plano de correção priorizado (sem alterar código nesta etapa)
+## 22. Plano de Execução Definitivo (8 Blocos Cirúrgicos de Implementação)
 
-1. **Bloquear obsolescência de IA (P0):** request id monotônico + checagem de round/fase antes de commit do plano.
-2. **Cancelar e limitar requests IA (P0):** `CancellationToken` por round/unload e throttle de concorrência.
-3. **Ownership central de ordens (P0):** registrar dono/versão/timestamp por recurso (nav, stance, utility, defuse).
-4. **Pipeline transacional de inventário/C4 (P0):** pós-condições explícitas (1 C4, 1 primária, ownership válido).
-5. **Timer registry por round (P1):** cancelar em round end/map end/unload inclusive timers aninhados.
-6. **Percepção legitimada (P1):** separar intel de visão/áudio válido vs proximidade geométrica.
-7. **Higiene de validação de handles (P1):** padrão único `IsValid` no ponto de uso em callbacks.
-8. **Sanitização de HUD (P1):** encode de texto externo (voz/LLM).
-9. **Consumir gate anti-duplicação de utilitárias (P2).**
-10. **Portabilidade de infra (P2):** parametrizar `H:`/deploy, revisar docs e pré-requisitos externos.
+### Bloco 1: Correção de Passos Aliados e Percepção Legítima Sem "Wallhack por Raio" (`F-009` e `Seção 13.4`)
+1. **Filtro de Time em `HandleFootstep` (`TacticalCalloutSystem.cs`):** verificar obrigatoriamente se quem emitiu o passo pertence ao time adversário (`stepper.Team != listenerBot.Team`). Jamais registrar passos de aliados como `isEnemy: true`.
+2. **Helper Central de Percepção Legítima (`CanBotPerceiveEnemy`):** implementar validação centralizada para `TacticalCalloutSystem`, `SiteClearAndPlantController` e `CombatAdapter`:
+   - Um bot só percebe um inimigo se:
+     a) O inimigo estiver dentro do cone de visão (FOV ~95° a partir do `EyeAngles` do bot), sem smoke ativa bloqueando o segmento entre ambos e com `SpottedByMask` / linha geométrica válida; **OU**
+     b) O inimigo tiver emitido som audível (`Footstep`, `WeaponFire`, dano) naquele setor nos últimos `4.0 segundos`.
+   - Substituir checagens cegas de distância global (`Utilities.GetPlayers()` + raio puro) por esse método.
+
+### Bloco 2: Ativação Real do Gate Anti-Dupla Smoke (`F-015`)
+- Conectar `UtilityAndClockCoordinator.CanThrowUtilityAt` e o registro de bloqueio de chokepoint diretamente no fluxo de arremesso (`BotLocomotionDriver.ThrowUtility` e controladores de utilitárias), garantindo que dois bots não joguem Smoke/Molotov repetida no mesmo chokepoint enquanto ele já estiver bloqueado.
+
+### Bloco 3: Sincronia Imediata do Save CT com o Guard de Defuse (`F-005`)
+- Em `CsBotManagerPlugin.cs` (`OnBombPlanted`), executar `_locomotionDriver.NotifyBombState(..., _currentPlan.IsTacticalSaveActive)` **após** `_midRoundAdapter.HandleBombPlanted(...)` definir se o time entrou em `SAVE TÁTICO`.
+- Atualizar `NotifyBombState` sempre que `IsTacticalSaveActive` mudar para `true` no `MidRoundAdapter` ou `UtilityAndClockCoordinator`.
+- Garantir que `IsTacticalSaveActive == true` bloqueie imediatamente qualquer tentativa de defuse ou corrida para a C4.
+
+### Bloco 4: Hierarquia Leve de Prioridade e Cancelamento Atômico no `BotLocomotionDriver` (`F-007` e `F-016`)
+1. **Cancelamento de `ActiveMovementId` (`F-007`):** em `NavigateToSpot`, `NavigateToPosition` e `HoldPosition`, antes de sobrescrever `_botStates[slot]`, verificar `ActiveMovementId != 0` no estado anterior e cancelar imediatamente na `BotControllerApi`.
+2. **Semântica Real de `HoldDurationRemaining` (`F-016`):** respeitar `HoldDurationRemaining` no `UpdateTick` sem sobrescrita indevida pelo `WaitTimer` da stance.
+3. **Prioridade de Ordem Enxuta (`BotOrderPriority`):** adicionar enum no `BotLocomotionDriver`:
+   - `Low_Default = 10`
+   - `Medium_Tactical = 30`
+   - `High_CombatFallback = 50`
+   - `Critical_SaveOrPivot = 80`
+   - `Absolute_PlantOrDefuse = 100`
+
+   e bloquear trocas para faca no `MobilityController` quando prioridade `>= High_CombatFallback`.
+
+### Bloco 5: Guard de Round/Sequência do Ollama, Lock de Perfil e Registry de Timers por Round (`F-001`, `F-002`, `F-003`, `F-004`, `F-006`)
+1. **Sequenciamento e cancelamento do Ollama (`F-001`, `F-002`, `F-003`):**
+   - adicionar `_iglRequestSequence` monotônico e `CancellationTokenSource` por round em `CsBotManagerPlugin.cs` (cancelado em `OnRoundEnd` e `Unload`);
+   - no callback `Server.NextFrame`, validar `if (capturedRound != _currentRound || requestSeq != _iglRequestSequence) return;` antes de aplicar `_currentPlan`.
+2. **Thread-safety em `MapProfileManager` (`F-004`):** proteger leitura/escrita de `_spotsById` com `lock (_profileLock)`.
+3. **Rastreamento central de timers de round (`F-006`):** criar helper `AddRoundTimer(float delay, Action callback)` no plugin para registrar timers do round (incluindo encadeados/aninhados de `CtDefenseController`, `MidRoundAdapter`, `PacingAndFallbackController`, `TrMacroPivotController` e `CtRetakeAndDefuseBrain`) em `_activeRoundTimers`, com `Kill()` global em `OnRoundEnd` e `OnRoundStart`.
+
+### Bloco 6: Invariantes de Inventário e C4 Única (`F-008`)
+- Em `EconomyManager.cs` (`DropWeaponForPlayer`, `TryCoordinateTeamAwpDrop`, `EnforceC4Discipline`, `PerformPostRoundLooting`):
+  - implementar remoção segura por slot (`RemoveWeaponInSlot`) com validação `IsValid` antes de conceder nova primária;
+  - em `EnforceC4Discipline`, conceder `weapon_c4` ao `Rotator` apenas após confirmar remoção física da C4 do portador anterior, garantindo invariante de **1 única C4**;
+  - em `PerformPostRoundLooting`, remover entidade da arma no chão (`groundWeapon.Remove()`) e remover arma inferior antiga do bot antes de equipar arma coletada.
+
+### Bloco 7: Escape HTML no HUD e Validação Defensiva de Entidades (`F-011` e `F-012`)
+- Aplicar `System.Net.WebUtility.HtmlEncode(...)` em textos dinâmicos (`TacticName`, `TacticSummary`, `LastVoiceCommand`) em `TacticalHudRenderer.cs` (`F-011`).
+- Garantir validação `IsValid` no ponto exato de uso dentro de loops de armas e callbacks tardios mapeados em `F-012` (`CtRetakeAndDefuseBrain`, `TacticalCalloutSystem`, `MobilityController`).
+
+### Bloco 8: Correção dos JSONs (`de_dust2` / `de_inferno`), Limpeza de Legado e Log do `rawIglJson` (`Seção 13.1`, `13.2`, `13.3`)
+1. Corrigir `fallback_spot_id` órfãos em `MapProfiles/de_dust2.json` (`ct_d2_spawn`, `tr_d2_spawn`) e `MapProfiles/de_inferno.json` (`ct_inf_spawn`, `tr_inf_spawn`), cadastrando spots ou apontando para IDs válidos do mesmo arquivo.
+2. Remover arquivo legado duplicado `src/CsBotManager/TacticalSpots_de_mirage.json`, mantendo `MapProfiles/de_mirage.json` como fonte única.
+3. Em `CsBotManagerPlugin.cs`, armazenar e repassar o `rawIglJson` real retornado pelo `OllamaIglService` para o `MatchTelemetryLogger.OnRoundStart` (substituindo `string.Empty`).
+
+### Critério de aceite do plano definitivo
+
+A próxima etapa de implementação deve seguir exclusivamente os 8 blocos acima, mantendo o foco em correções cirúrgicas e evitando reescritas arquiteturais amplas.
 
 ---
 
@@ -714,10 +719,8 @@ Nenhum comando de build, restore, inicialização de servidor, pull de modelo, e
 | F-006 | 🟠 | Timers | múltiplos controladores | Timers aninhados sem cancelamento total | Estática direta | Ações tardias em fase errada | Alta | Engine timers | Sim | P1 |
 | F-007 | 🟠 | Locomotion usercmd | `BotLocomotionDriver.cs:L160-L190;L476-L482` | Cancelamento de movimento pode ser perdido | Estática direta | Conflito físico de movimento | Alta | BotControllerApi | Sim | P1 |
 | F-009 | 🟠 | Percepção tática | `TacticalCalloutSystem.cs`, `SiteClearAndPlantController.cs`, `CombatAdapter.cs` | Decisão por scans globais/raio | Estática direta | Conhecimento privilegiado | Alta | APIs de visão | Sim | P1 |
-| F-010 | 🟠 | Voice bridge | `VoiceCommandBridge.cs:L94-L97;L119-L122` | Payload sem limite e erro HTTP incompleto | Estática direta | degradação/instabilidade local | Alta | Cliente local | Sim | P1 |
 | F-011 | 🟠 | HUD | `TacticalHudRenderer.cs:L144-L150` | Texto externo sem escape em HTML | Estática direta | Forja visual/layout break | Alta | Voz/LLM | Sim | P1 |
 | F-012 | 🟠 | Validação entidades | `CtRetakeAndDefuseBrain.cs:L320-L324`, etc. | Checks de validade incompletos | Estática direta | null/invalid handle em bordas | Médio-Alto | Engine lifecycle | Sim | P1 |
-| F-013 | 🟠 | Portabilidade | `start_cs2_ai_server.bat`, `CsBotManager.csproj` | Hardcode de `H:` e deploy absoluto | Configuração | Setup não portátil | Alta | Infra host | Não | P2 |
 | F-015 | 🟠 | Utilidades | `UtilityAndClockCoordinator.cs:L36-L54` | Gate anti-duplicação não utilizado | Estática direta | Gasto redundante de util | Alta | Dinâmica round | Sim | P2 |
 
 ### 🟡 Otimização e polimento
@@ -737,223 +740,23 @@ A auditoria extraiu evidência estática robusta do conteúdo versionado e separ
 
 # BÔNUS — Como evoluir os bots para uma experiência competitiva e orgânica
 
-Objetivo deste bônus: propor evolução **incremental** para que os bots joguem mais como equipe de CS2 (autônomos, cooperativos, adaptativos), sem wallhack/reação sobre-humana e sem colocar LLM no caminho crítico por tick.
+A evolução propositiva foi consolidada no **Plano de Execução Definitivo da Seção 22**.
 
-## Princípios de evolução (compatíveis com jogo legítimo)
+Para manter foco e evitar dispersão, este documento passa a adotar como trilha oficial apenas os 8 blocos cirúrgicos, com a seguinte progressão prática:
 
-1. **Percepção legítima primeiro**: informação tática nasce de visão/som/eventos válidos; nunca de posição global crua.
-2. **Orquestração com ownership**: cada recurso (nav, stance, util, defuse, economia) precisa de dono, prioridade e validade temporal.
-3. **Ciclos curtos e robustos**: decisões pesadas fora do tick; execução física determinística no tick.
-4. **Variedade controlada**: estilos diferentes por round sem quebrar consistência (cadência, trade, util, disciplina econômica).
+1. **Estabilidade e integridade tática**: Blocos 3, 4, 5 e 6.
+2. **Percepção legítima e utilitárias inteligentes**: Blocos 1 e 2.
+3. **Qualidade de interface e robustez defensiva**: Bloco 7.
+4. **Consistência de dados e telemetria forense**: Bloco 8.
 
-## Ganhos rápidos (baixo risco / alta alavancagem)
+## Critérios objetivos de sucesso (competitivo + orgânico)
 
-### GQ-1) Camada de Percepção Legítima (sem LLM)
-- **Reaproveita:** `TacticalCalloutSystem`, `ContextualSmokeAndAudioBrain`, `MapProfileManager`, `PlayerIntentTracker`.
-- **Impede hoje:** uso frequente de `Utilities.GetPlayers()` + raio para inferência de inimigo.
-- **Integração necessária:** callout + plant + combat passam a consultar uma mesma `PerceptionStore` com TTL.
-- **Novo subsistema:** `PerceptionStore` (`SeenEnemy`, `HeardSteps`, `DamageSource`, `SpottedByTeammate`, `Confidence`, `ExpiresAt`).
-- **Impacto:** alto (remove “onisciência”, aumenta naturalidade).
-- **Risco:** médio (pode reduzir agressividade inicial dos bots).
-- **Complexidade:** média.
-- **Prioridade:** P0.
-- **Exemplo em partida:** bot A ouve 2 passos em B túnel, não “vê” ninguém em A por raio, chama rotação parcial (1 rotator), não full-rotate instantâneo.
+- Queda de callouts falsos por leitura indevida de aliados/raio puro.
+- Zero aplicação de plano de round antigo após troca de round.
+- Zero conflito persistente de movimento órfão (`ActiveMovementId`) após troca de ordem.
+- Invariante estrita de inventário: 1 C4 no lado TR e ausência de duplicação de primária por bot.
+- Redução de utilitárias redundantes no mesmo chokepoint.
+- Melhoria percebida de coordenação de time (trades, saves, retakes e rotações mais coerentes).
 
-### GQ-2) Registry central de timers por round (sem LLM)
-- **Reaproveita:** timers existentes em `PacingAndFallbackController`, `CtDefenseController`, `MidRoundAdapter`, `TrMacroPivotController`.
-- **Impede hoje:** timers aninhados sem cancelamento global.
-- **Integração necessária:** todos os `AddTimer` passam por um `RoundTaskRegistry`.
-- **Novo subsistema:** `RoundTaskRegistry` com `RoundId`, `OwnerModule`, `KillAll(roundId)`.
-- **Impacto:** alto (elimina ações fantasmas entre rounds).
-- **Risco:** baixo.
-- **Complexidade:** baixa/média.
-- **Prioridade:** P0.
-- **Exemplo:** fim de round cancela sequência de fake pendente antes de o callback reposicionar bot no round seguinte.
+Em resumo: a experiência “mais competitiva e orgânica” será medida por **comportamento consistente em partida real**, não por aumento de complexidade arquitetural.
 
-### GQ-3) Sanitização de saída para HUD/voz (sem LLM)
-- **Reaproveita:** `TacticalHudRenderer`, `VoiceCommandBridge`.
-- **Impede hoje:** renderização de texto externo sem escape.
-- **Integração necessária:** encode central (`HudTextSanitizer`).
-- **Novo subsistema:** utilitário pequeno de encoding e truncamento seguro.
-- **Impacto:** médio.
-- **Risco:** baixo.
-- **Complexidade:** baixa.
-- **Prioridade:** P0.
-- **Exemplo:** comando de voz com caracteres especiais não quebra HUD.
-
-## Melhorias estruturais (fundação para jogo em equipe)
-
-### MS-1) Arbitrador de Ordens (Order Arbitration Layer)
-- **Reaproveita:** `BotLocomotionDriver`, `PacingAndFallbackController`, `CtDefenseController`, `MidRoundAdapter`, `MobilityController`, `CombatAdapter`.
-- **Impede hoje:** last-write-wins em nav/stance/util/defuse.
-- **Integração necessária:** controladores publicam intenção; arbitrador resolve conflito por prioridade e contexto.
-- **Novo subsistema:** `OrderBus` + `Arbitrator` com campos: `OrderId`, `RoundId`, `Owner`, `Priority`, `LeaseMs`, `Preemptible`.
-- **Impacto:** muito alto.
-- **Risco:** médio/alto (refatoração transversal).
-- **Complexidade:** alta.
-- **Prioridade:** P0/P1.
-- **Exemplo:** `PlantController` ganha lock exclusivo de ação por 3.4s; `MobilityController` e `CombatAdapter` não podem trocar arma nesse período.
-
-### MS-2) Máquina de estados táticos por bot
-- **Reaproveita:** `TrackedBotNavState`, `Models.cs` (fases/stances), `RoleManager`.
-- **Impede hoje:** flags espalhadas e sem transição formal.
-- **Integração necessária:** todos os módulos consultam e alteram estado via transições válidas.
-- **Novo subsistema:** `BotStateMachine` (ex.: `Rotate`, `Hold`, `Entry`, `Planting`, `Defusing`, `Save`, `Retake`).
-- **Impacto:** alto.
-- **Risco:** médio.
-- **Complexidade:** alta.
-- **Prioridade:** P1.
-- **Exemplo:** bot que entrou em `Defusing` só sai por `BombDefused`, `InterruptedByDamage`, `YieldToKitCarrier`.
-
-### MS-3) Pipeline transacional de inventário/C4
-- **Reaproveita:** `EconomyManager`, `RoleManager`, `BotLocomotionDriver`.
-- **Impede hoje:** grants diretos sem pós-condições invariantes.
-- **Integração necessária:** toda ação de inventário passa por API única com validação antes/depois.
-- **Novo subsistema:** `InventoryTransactionService` (`Acquire`, `Drop`, `TransferC4`, `VerifyInvariant`).
-- **Impacto:** muito alto.
-- **Risco:** médio.
-- **Complexidade:** média/alta.
-- **Prioridade:** P0/P1.
-- **Exemplo:** após troca de C4, assert runtime: “exatamente 1 C4 entre TR vivos”.
-
-## Inteligência coletiva (cooperação e jogo de equipe)
-
-### IC-1) Memória de round com confiança e expiração (sem LLM)
-- **Reaproveita:** `MatchTelemetryLogger`, `TacticalCalloutSystem`, `ContextualSmokeAndAudioBrain`.
-- **Impede hoje:** decisões locais sem memória coletiva consistente.
-- **Integração necessária:** store de “última info confirmada” para time inteiro.
-- **Novo subsistema:** `TeamIntelBoard` (eventos classificados: confirmado/provável/ruído).
-- **Impacto:** alto.
-- **Risco:** médio.
-- **Complexidade:** média.
-- **Prioridade:** P1.
-- **Exemplo:** após kill em B com confirmação visual da C4, time segura anti-fake por 8s antes de full-rotate.
-
-### IC-2) Sistema de trade e spacing
-- **Reaproveita:** `RoleManager`, `PacingAndFallbackController`, `MidRoundAdapter`, `BotLocomotionDriver`.
-- **Impede hoje:** entradas e recuos sem regra explícita de distância/tempo de trade.
-- **Integração necessária:** anchor/entry/rotator recebem pares e janelas de trade.
-- **Novo subsistema:** `TradeCoordinator` (buddy pairs, max gap, peek window).
-- **Impacto:** alto (partida “humana”).
-- **Risco:** médio.
-- **Complexidade:** média.
-- **Prioridade:** P1.
-- **Exemplo:** entry abre A; buddy segura 250–450u atrás e repica em 0.7–1.2s após contato.
-
-### IC-3) Rotação progressiva (semi-commit -> full-commit)
-- **Reaproveita:** `CtDefenseController`, `UtilityAndClockCoordinator`, `TacticalCalloutSystem`.
-- **Impede hoje:** rotações podem ocorrer por sinais frágeis.
-- **Integração necessária:** policy de rotação por nível de evidência (1, 2, 3).
-- **Novo subsistema:** `RotationPolicyEngine`.
-- **Impacto:** alto.
-- **Risco:** baixo/médio.
-- **Complexidade:** média.
-- **Prioridade:** P1.
-- **Exemplo:** 1 passo isolado em A => apenas rotator ajusta; C4 confirmada em A => full retake path.
-
-## Funcionalidades avançadas
-
-### FA-1) Playbook tático modular (sem LLM no tick)
-- **Reaproveita:** `MapProfiles/*.json`, `TacticalProbabilityEngine`, `PacingAndFallbackController`.
-- **Impede hoje:** variabilidade pouco controlada e lógica espalhada.
-- **Integração necessária:** separar “plays” em DSL/JSON de alto nível com pré-condições.
-- **Novo subsistema:** `PlaybookEngine` (entrada default, split, fake-contact, late lurk, anti-eco, retake kit-priority).
-- **Impacto:** muito alto (variedade + previsibilidade de manutenção).
-- **Risco:** médio.
-- **Complexidade:** alta.
-- **Prioridade:** P1/P2.
-- **Exemplo:** round anti-eco CT: 2-1-2 passivo até 55s, depois push coordenado de informação em um setor.
-
-### FA-2) Ollama como “coach entre rounds”, não como executor por tick
-- **Reaproveita:** `OllamaIglService`, histórico de 5 rounds, telemetry.
-- **Impede hoje:** risco de resposta tardia concorrente afetando controle crítico.
-- **Integração necessária:** LLM só sugere macro-ajustes no freeze (plano candidato), sujeito a validação estrita e timeout curto.
-- **Novo subsistema:** `PlanCandidateValidator` + `PlanCommitPolicy`.
-- **Impacto:** médio/alto (mais variedade estratégica sem instabilidade de tick).
-- **Risco:** médio.
-- **Complexidade:** média.
-- **Prioridade:** P2.
-- **Exemplo:** após 3 perdas em B, coach sugere mudar para default com foco mid-control e economia de util para retake.
-
-### FA-3) Modelos de personalidade tática por time
-- **Reaproveita:** `TacticalProbabilityEngine`, `RoleManager`, `UtilityAndClockCoordinator`.
-- **Impede hoje:** estilo de jogo relativamente homogêneo.
-- **Integração necessária:** presets (`disciplinado`, `caótico`, `metódico`) alterando thresholds e cadência.
-- **Novo subsistema:** `TeamStyleProfile`.
-- **Impacto:** médio (diversão e replayability).
-- **Risco:** baixo.
-- **Complexidade:** baixa/média.
-- **Prioridade:** P3.
-- **Exemplo:** estilo “metódico” faz mais fakes longos e retakes com util guardada.
-
-## Ideias não recomendadas na arquitetura atual
-
-1. **LLM decidir micro-ação por tick** (alto risco de latência/race e quebra de determinismo).
-2. **Aumentar agressividade com informação global de posição inimiga** (vira percepção ilegítima).
-3. **Adicionar mais timers ad-hoc por controlador sem registry/ownership** (amplia conflitos atuais).
-4. **Expandir funcionalidades de inventário antes de fechar invariantes de C4/primária** (aumenta chance de corrupção de estado).
-
-## Roadmap incremental (prático)
-
-### Fase R1 (P0) — Estabilidade competitiva mínima
-- Round/request guard para IA + cancelamento/concurrency limit.
-- Timer registry por round.
-- Sanitização HUD/voz.
-- Invariantes de inventário/C4 (telemetria assertiva).
-
-**Critérios objetivos de sucesso (R1):**
-- 0 callbacks de round anterior aplicados em round novo (telemetria).
-- 0 rounds com C4 duplicada/ausente entre TR vivos.
-- 0 exceções por handle inválido em callbacks monitorados.
-
-### Fase R2 (P1) — Coesão tática real
-- PerceptionStore + TeamIntelBoard.
-- RotationPolicyEngine.
-- TradeCoordinator.
-- Primeira versão de BotStateMachine (plant/defuse/save/retake).
-
-**Critérios objetivos (R2):**
-- Redução de callouts falsos por oclusão (métrica manual/telemetria).
-- Aumento da taxa de trade kill (Kx após morte de entry em janela de 2s).
-- Menos rotações completas erradas por round.
-
-### Fase R3 (P1/P2) — Orquestração madura
-- Arbitrador de ordens + OrderBus com prioridade/lease.
-- Migração gradual dos controladores para publicar intenção.
-
-**Critérios objetivos (R3):**
-- Queda de conflitos de comando simultâneo por bot (nav vs util vs plant/defuse).
-- Menor variação caótica de stance sem motivo tático.
-
-### Fase R4 (P2/P3) — Variedade estratégica e diversão
-- PlaybookEngine modular.
-- Ollama como coach de freeze (fora do caminho crítico).
-- Perfis de estilo tático por time.
-
-**Critérios objetivos (R4):**
-- Aumento da diversidade de execuções válidas por mapa.
-- Maior equilíbrio entre previsibilidade e surpresa (fakes/retakes/saves sem comportamento “robótico”).
-- Feedback qualitativo de jogadores: partidas mais desafiadoras e “humanas”.
-
-## Métricas recomendadas para validar “mais competitivo, variado e divertido”
-
-1. **Competitividade:**
-   - taxa de conversão 5v5 -> round win por lado;
-   - retake success rate com e sem kit;
-   - economia preservada em rounds de save.
-2. **Coordenação:**
-   - taxa de trade em 2s;
-   - % de utilitária com propósito (bloqueio/entry/retake);
-   - conflitos de comando por bot/round.
-3. **Orgânico (anti-robótico):**
-   - repetição de mesma opening em rounds consecutivos;
-   - tempo médio até primeira rotação por nível de evidência;
-   - callouts corretos vs falsos positivos.
-4. **Diversão percebida (qualitativo):**
-   - avaliação pós-partida de imprevisibilidade justa;
-   - clareza de comportamento dos bots para o humano aliado;
-   - sensação de “time que pensa junto” vs “agentes isolados”.
-
----
-
-**Síntese final do bônus:** com a base atual, o maior salto não vem de “mais features soltas”, mas de **arquitetura de coordenação** (percepção legítima + arbitragem de ordens + invariantes de inventário + timers sob controle). Depois disso, Playbook + Ollama de suporte entre rounds tende a elevar bastante a qualidade competitiva sem sacrificar estabilidade.
