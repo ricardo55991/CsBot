@@ -9,7 +9,7 @@ namespace CsBotManager;
 
 public class CtDefenseController
 {
-    private readonly BasePlugin _plugin;
+    private readonly CsBotManagerPlugin _plugin;
     private readonly MapProfileManager _mapProfileManager;
     private readonly RoleManager _roleManager;
     private readonly BotLocomotionDriver _locomotionDriver;
@@ -23,7 +23,7 @@ public class CtDefenseController
     public AlertLevel CurrentAlertLevel => _currentAlertLevel;
 
     public CtDefenseController(
-        BasePlugin plugin,
+        CsBotManagerPlugin plugin,
         MapProfileManager mapProfileManager,
         RoleManager roleManager,
         BotLocomotionDriver locomotionDriver)
@@ -127,8 +127,8 @@ public class CtDefenseController
         string duoName = plan.CtDuoPlay == CtDuoPlayType.DominioCavernaRamp ? "Caverna/Rampa A" : "Meio/Conector";
         Server.PrintToChatAll($" {ChatColors.Green}[CT Duo Play]{ChatColors.Default} Jogada ensaiada ativada: {ChatColors.Gold}{duoName}{ChatColors.Default} ({supportBot.PlayerName} + {entryBot.PlayerName})!");
 
-        // 1.5s após freeze: Support prepara e arremessa a flash de domínio
-        _duoTimer = _plugin.AddTimer(1.5f, () =>
+        // 1.5s após freeze: Support prepara e arremessa a flash de domínio (F-006: AddRoundTimer)
+        _duoTimer = _plugin.AddRoundTimer(1.5f, () =>
         {
             if (!supportBot.IsValid || !entryBot.IsValid) return;
 
@@ -136,7 +136,7 @@ public class CtDefenseController
             Server.PrintToChatAll($" {ChatColors.LightBlue}[CT Duo Play]{ChatColors.Default} {supportBot.PlayerName} arremessou POP-FLASH de domínio no setor {duoName}!");
 
             // 1.0s após a flash: Entry avança para o pixel agressivo via NavMesh (C-01C)
-            _plugin.AddTimer(1.0f, () =>
+            _plugin.AddRoundTimer(1.0f, () =>
             {
                 if (!entryBot.IsValid || !entryBot.PawnIsAlive) return;
 
@@ -160,7 +160,7 @@ public class CtDefenseController
             });
 
             // 6.0s após o avanço: Support volta para sua posição segura via NavMesh (C-01C)
-            _plugin.AddTimer(6.0f, () =>
+            _plugin.AddRoundTimer(6.0f, () =>
             {
                 if (!supportBot.IsValid || !supportBot.PawnIsAlive) return;
 
@@ -297,7 +297,7 @@ public class CtDefenseController
         _locomotionDriver.ThrowUtility(closestBot, 43); // 43 = Flashbang
         Server.PrintToChatAll($" {ChatColors.Green}[CT Duo com Humano]{ChatColors.Default} {closestBot.PlayerName} preparando POP-FLASH para {human.PlayerName} abrir {sector.ToUpper()}!");
 
-        _plugin.AddTimer(1.2f, () =>
+        _plugin.AddRoundTimer(1.2f, () =>
         {
             human.PrintToCenterHtml("<font color='#00FF66' size='4'><b>⚡ FLASH LANÇADA! ABRA O PIXEL AGORA! ⚡</b></font>");
         });

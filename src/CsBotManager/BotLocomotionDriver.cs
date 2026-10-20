@@ -7,6 +7,15 @@ using BotControllerApi;
 
 namespace CsBotManager;
 
+public enum BotOrderPriority
+{
+    Low_Default = 10,
+    Medium_Tactical = 30,
+    High_CombatFallback = 50,
+    Critical_SaveOrPivot = 80,
+    Absolute_PlantOrDefuse = 100
+}
+
 public class TrackedBotNavState
 {
     public int Slot { get; set; }
@@ -26,6 +35,7 @@ public class TrackedBotNavState
     public bool HasReachedDestination { get; set; }
     public float HoldDurationRemaining { get; set; }
     public bool ForceCrouch { get; set; }
+    public BotOrderPriority Priority { get; set; } = BotOrderPriority.Medium_Tactical;
 }
 
 public class BotLocomotionDriver
@@ -38,10 +48,13 @@ public class BotLocomotionDriver
     private bool _isBombPlanted = false;
     private Vector? _bombPosition = null;
     private bool _isTacticalSaveActive = false;
+    private float _lastTickTime = 0f;
 
-    // Controladores Integrados (Sistemas 1 e 2)
+    // Controladores Integrados
     public SiteClearAndPlantController? PlantController { get; set; }
     public CtRetakeAndDefuseBrain? RetakeBrain { get; set; }
+    public UtilityAndClockCoordinator? UtilityCoordinator { get; set; }
+    public MapProfileManager? MapProfileManager { get; set; }
     public float RoundTimeRemaining { get; set; } = 115.0f;
 
     public const ulong IN_ATTACK = 1UL << 0;
@@ -75,6 +88,11 @@ public class BotLocomotionDriver
     {
         _isBombPlanted = isPlanted;
         _bombPosition = bombPosition;
+        _isTacticalSaveActive = isSaveActive;
+    }
+
+    public void NotifySaveState(bool isSaveActive)
+    {
         _isTacticalSaveActive = isSaveActive;
     }
 
@@ -119,9 +137,25 @@ public class BotLocomotionDriver
         return _botStates.TryGetValue(slot, out var s) ? s : null;
     }
 
-    public void NavigateToSpot(CCSPlayerController controller, TacticalSpot spot, bool hurry = false, EngagementStance? stanceOverride = null)
+    public void NavigateToSpot(CCSPlayerController controller, TacticalSpot spot, bool hurry = false, EngagementStance? stanceOverride = null, BotOrderPriority priority = BotOrderPriority.Medium_Tactical)
     {
         if (controller == null || !controller.IsValid || !controller.PawnIsAlive) return;
+
+        if (_botStates.TryGetValue(controller.Slot, out var existingState))
+        {
+            if (existingState.Priority > priority && (existingState.HoldDurationRemaining > 0 || !existingState.HasReachedDestination))
+            {
+                return;
+            }
+            if (existingState.ActiveMovementId != 0)
+            {
+                try
+                {
+                    BotApi?.CancelUsercmdMovement(controller.Slot, existingState.ActiveMovementId);
+                }
+                catch { }
+            }
+        }
 
         float? lookX = null;
         float? lookY = null;
@@ -154,16 +188,33 @@ public class BotLocomotionDriver
             ActiveMovementId = 0,
             HasReachedDestination = false,
             HoldDurationRemaining = 0,
-            ForceCrouch = spot.IsOffAngle && spot.RecommendedStance == EngagementStance.PASSIVE_HOLD
+            ForceCrouch = spot.IsOffAngle && spot.RecommendedStance == EngagementStance.PASSIVE_HOLD,
+            Priority = priority
         };
 
         _botStates[controller.Slot] = state;
         ApplyImmediateNavmeshTarget(controller, state);
     }
 
-    public void NavigateToPosition(CCSPlayerController controller, float x, float y, float z, float? lookX = null, float? lookY = null, float? lookZ = null, bool hurry = false, EngagementStance stance = EngagementStance.PASSIVE_HOLD)
+    public void NavigateToPosition(CCSPlayerController controller, float x, float y, float z, float? lookX = null, float? lookY = null, float? lookZ = null, bool hurry = false, EngagementStance stance = EngagementStance.PASSIVE_HOLD, BotOrderPriority priority = BotOrderPriority.Medium_Tactical)
     {
         if (controller == null || !controller.IsValid || !controller.PawnIsAlive) return;
+
+        if (_botStates.TryGetValue(controller.Slot, out var existingState))
+        {
+            if (existingState.Priority > priority && (existingState.HoldDurationRemaining > 0 || !existingState.HasReachedDestination))
+            {
+                return;
+            }
+            if (existingState.ActiveMovementId != 0)
+            {
+                try
+                {
+                    BotApi?.CancelUsercmdMovement(controller.Slot, existingState.ActiveMovementId);
+                }
+                catch { }
+            }
+        }
 
         var state = new TrackedBotNavState
         {
@@ -183,26 +234,41 @@ public class BotLocomotionDriver
             ActiveMovementId = 0,
             HasReachedDestination = false,
             HoldDurationRemaining = 0,
-            ForceCrouch = false
+            ForceCrouch = false,
+            Priority = priority
         };
 
         _botStates[controller.Slot] = state;
         ApplyImmediateNavmeshTarget(controller, state);
     }
 
-    public void NavigateToPoint(CCSPlayerController controller, Vector point, bool hurry = false, EngagementStance stance = EngagementStance.PASSIVE_HOLD)
+    public void NavigateToPoint(CCSPlayerController controller, Vector point, bool hurry = false, EngagementStance stance = EngagementStance.PASSIVE_HOLD, BotOrderPriority priority = BotOrderPriority.Medium_Tactical)
     {
-        NavigateToPosition(controller, point.X, point.Y, point.Z, null, null, null, hurry, stance);
+        NavigateToPosition(controller, point.X, point.Y, point.Z, null, null, null, hurry, stance, priority);
     }
 
-    public void HoldPosition(CCSPlayerController controller, float duration = 3.0f, bool crouch = false)
+    public void HoldPosition(CCSPlayerController controller, float duration = 3.0f, bool crouch = false, BotOrderPriority priority = BotOrderPriority.Medium_Tactical)
     {
         if (controller == null || !controller.IsValid || !controller.PawnIsAlive) return;
 
         if (_botStates.TryGetValue(controller.Slot, out var state))
         {
+            if (state.Priority > priority && state.HoldDurationRemaining > 0)
+            {
+                return;
+            }
+            if (state.ActiveMovementId != 0)
+            {
+                try
+                {
+                    BotApi?.CancelUsercmdMovement(controller.Slot, state.ActiveMovementId);
+                }
+                catch { }
+                state.ActiveMovementId = 0;
+            }
             state.HoldDurationRemaining = duration;
             state.ForceCrouch = crouch;
+            state.Priority = priority;
         }
         else
         {
@@ -210,11 +276,12 @@ public class BotLocomotionDriver
             if (pawn != null && pawn.AbsOrigin != null)
             {
                 var curPos = pawn.AbsOrigin;
-                NavigateToPosition(controller, curPos.X, curPos.Y, curPos.Z, null, null, null, false, EngagementStance.PASSIVE_HOLD);
+                NavigateToPosition(controller, curPos.X, curPos.Y, curPos.Z, null, null, null, false, EngagementStance.PASSIVE_HOLD, priority);
                 if (_botStates.TryGetValue(controller.Slot, out var created))
                 {
                     created.HoldDurationRemaining = duration;
                     created.ForceCrouch = crouch;
+                    created.Priority = priority;
                 }
             }
         }
@@ -276,6 +343,8 @@ public class BotLocomotionDriver
     public void UpdateTick(float currentTime)
     {
         var api = BotApi;
+        float dt = _lastTickTime > 0f ? Math.Clamp(currentTime - _lastTickTime, 0.001f, 0.1f) : 0.015625f;
+        _lastTickTime = currentTime;
 
         foreach (var kvp in _botStates)
         {
@@ -296,6 +365,22 @@ public class BotLocomotionDriver
             float curX = pawn.AbsOrigin.X;
             float curY = pawn.AbsOrigin.Y;
             float curZ = pawn.AbsOrigin.Z;
+
+            // =========================================================================
+            // SEMÂNTICA DETERMINÍSTICA DE HOLD (F-016)
+            // =========================================================================
+            if (state.HoldDurationRemaining > 0f)
+            {
+                state.HoldDurationRemaining = Math.Max(0f, state.HoldDurationRemaining - dt);
+                bot.WaitTimer.Duration = state.HoldDurationRemaining;
+                bot.WaitTimer.Timestamp = currentTime + state.HoldDurationRemaining;
+                bot.IsStopping = true;
+                if (state.ForceCrouch && api != null)
+                {
+                    api.InjectUsercmd(slot, IN_DUCK, 250);
+                }
+                continue;
+            }
 
             // =========================================================================
             // SALVAGUARDA 1: PRIORIDADE MÁXIMA DE OBJETIVO - C4 PLANT (SISTEMA 1)
@@ -343,62 +428,80 @@ public class BotLocomotionDriver
             }
 
             // =========================================================================
-            // SALVAGUARDA 2: PRIORIDADE MÁXIMA DE OBJETIVO - C4 DEFUSE (SISTEMA 2)
+            // SALVAGUARDA 2: PRIORIDADE MÁXIMA DE OBJETIVO - C4 DEFUSE & SAVE CT (SISTEMA 2 / F-005)
             // =========================================================================
-            if (controller.Team == CsTeam.CounterTerrorist && _isBombPlanted && !_isTacticalSaveActive)
+            if (controller.Team == CsTeam.CounterTerrorist)
             {
-                bool isDefusing = false;
-                try
+                if (_isTacticalSaveActive)
                 {
-                    isDefusing = pawn.IsDefusing;
-                }
-                catch { }
-
-                float distToBombSq = float.MaxValue;
-                if (_bombPosition != null)
-                {
-                    float bx = curX - _bombPosition.X;
-                    float by = curY - _bombPosition.Y;
-                    float bz = curZ - _bombPosition.Z;
-                    distToBombSq = (bx * bx) + (by * by) + (bz * bz);
-                }
-
-                if (isDefusing || distToBombSq <= (220.0f * 220.0f))
-                {
-                    bot.IsStopping = false;
-                    bot.WaitTimer.Duration = 0f;
-                    bot.WaitTimer.Timestamp = 0f;
-
-                    var allPlayers = Utilities.GetPlayers();
-                    int aliveTrs = allPlayers.Count(p => p != null && p.IsValid && p.PawnIsAlive && p.Team == CsTeam.Terrorist);
-                    var ctBots = allPlayers.Where(p => p != null && p.IsValid && p.IsBot && p.Team == CsTeam.CounterTerrorist).ToList();
-
-                    if (RetakeBrain != null && _bombPosition != null)
+                    // No SAVE TÁTICO, bloqueia imediatamente qualquer tentativa de defuse ou aproximação da C4
+                    bool isDefusing = false;
+                    try
                     {
-                        float bombTimeRemaining = GetBombTimeRemaining();
-                        RetakeBrain.TryDeploySmokeOnC4(controller, _bombPosition, bombTimeRemaining, ctBots);
+                        isDefusing = pawn.IsDefusing;
+                    }
+                    catch { }
 
-                        // Prioridade inteligente de Defuse (Módulo 2): cede a vez caso não tenha kit e um aliado com kit esteja próximo
-                        if (!CtRetakeAndDefuseBrain.HasDefuser(controller))
+                    if (isDefusing)
+                    {
+                        controller.ExecuteClientCommand("-use; slot1");
+                    }
+                }
+                else if (_isBombPlanted)
+                {
+                    bool isDefusing = false;
+                    try
+                    {
+                        isDefusing = pawn.IsDefusing;
+                    }
+                    catch { }
+
+                    float distToBombSq = float.MaxValue;
+                    if (_bombPosition != null)
+                    {
+                        float bx = curX - _bombPosition.X;
+                        float by = curY - _bombPosition.Y;
+                        float bz = curZ - _bombPosition.Z;
+                        distToBombSq = (bx * bx) + (by * by) + (bz * bz);
+                    }
+
+                    if (isDefusing || distToBombSq <= (220.0f * 220.0f))
+                    {
+                        bot.IsStopping = false;
+                        bot.WaitTimer.Duration = 0f;
+                        bot.WaitTimer.Timestamp = 0f;
+
+                        var allPlayers = Utilities.GetPlayers();
+                        int aliveTrs = allPlayers.Count(p => p != null && p.IsValid && p.PawnIsAlive && p.Team == CsTeam.Terrorist);
+                        var ctBots = allPlayers.Where(p => p != null && p.IsValid && p.IsBot && p.Team == CsTeam.CounterTerrorist).ToList();
+
+                        if (RetakeBrain != null && _bombPosition != null)
                         {
-                            RetakeBrain.CheckAndEnforceSmartDefusePriority(controller, _bombPosition, ctBots);
-                        }
+                            float bombTimeRemaining = GetBombTimeRemaining();
+                            RetakeBrain.TryDeploySmokeOnC4(controller, _bombPosition, bombTimeRemaining, ctBots);
 
-                        if (isDefusing && RetakeBrain.CurrentDefuseAction == DefuseAction.NormalStick)
-                        {
-                            RetakeBrain.OnDefuseTapped(controller, _bombPosition, bombTimeRemaining, aliveTrs);
-                        }
+                            // Prioridade inteligente de Defuse (Módulo 2): cede a vez caso não tenha kit e um aliado com kit esteja próximo
+                            if (!CtRetakeAndDefuseBrain.HasDefuser(controller))
+                            {
+                                RetakeBrain.CheckAndEnforceSmartDefusePriority(controller, _bombPosition, ctBots);
+                            }
 
-                        if (RetakeBrain.ShouldInjectDefuseInput(controller) && api != null)
+                            if (isDefusing && RetakeBrain.CurrentDefuseAction == DefuseAction.NormalStick)
+                            {
+                                RetakeBrain.OnDefuseTapped(controller, _bombPosition, bombTimeRemaining, aliveTrs);
+                            }
+
+                            if (RetakeBrain.ShouldInjectDefuseInput(controller) && api != null)
+                            {
+                                api.InjectUsercmd(slot, IN_USE, 300);
+                            }
+                        }
+                        else if (api != null)
                         {
                             api.InjectUsercmd(slot, IN_USE, 300);
                         }
+                        continue;
                     }
-                    else if (api != null)
-                    {
-                        api.InjectUsercmd(slot, IN_USE, 300);
-                    }
-                    continue;
                 }
             }
 
@@ -455,9 +558,12 @@ public class BotLocomotionDriver
                 {
                     case EngagementStance.PASSIVE_HOLD:
                     case EngagementStance.ONE_AND_DONE:
-                        bot.WaitTimer.Duration = 2.5f;
-                        bot.WaitTimer.Timestamp = currentTime + 2.5f;
                         bot.IsStopping = true;
+                        if (bot.WaitTimer.Timestamp < currentTime)
+                        {
+                            bot.WaitTimer.Duration = 2.0f;
+                            bot.WaitTimer.Timestamp = currentTime + 2.0f;
+                        }
                         if (state.ForceCrouch && api != null)
                         {
                             api.InjectUsercmd(slot, IN_DUCK, 250);
@@ -493,7 +599,7 @@ public class BotLocomotionDriver
     }
 
     // =========================================================================
-    // ARCO PARABÓLICO DE ELEVAÇÃO VERTICAL (PARTE A - ITEM 1)
+    // ARCO PARABÓLICO DE ELEVAÇÃO VERTICAL E GATE ANTI-DUPLA SMOKE (PARTE A - ITEM 1 / F-015)
     // =========================================================================
     public void ThrowUtility(CCSPlayerController controller, int weaponDefIndex, Vector target)
     {
@@ -536,6 +642,25 @@ public class BotLocomotionDriver
             targetLookX = eyeX + MathF.Cos(yawRad) * 450f;
             targetLookY = eyeY + MathF.Sin(yawRad) * 450f;
             targetLookZ = eyeZ + 240f; // elevação vertical de ~28 graus
+        }
+
+        // Gate Anti-Dupla Smoke / Molotov (F-015)
+        if (weaponDefIndex == 45 || weaponDefIndex == 46 || weaponDefIndex == 48)
+        {
+            string utilType = weaponDefIndex == 45 ? "Smoke" : "Molotov";
+            float checkX = aimX ?? targetLookX;
+            float checkY = aimY ?? targetLookY;
+            float checkZ = aimZ ?? (targetLookZ - 240f);
+
+            var cp = MapProfileManager?.FindChokepointAt(checkX, checkY, checkZ);
+            if (cp != null && UtilityCoordinator != null)
+            {
+                if (!UtilityCoordinator.CanThrowUtilityAt(cp.Id, utilType))
+                {
+                    return; // Chokepoint já bloqueado; suprime arremesso redundante
+                }
+                UtilityCoordinator.RegisterUtilityDetonation(checkX, checkY, checkZ, utilType, controller.Slot);
+            }
         }
 
         bot.LookAtSpot[0] = targetLookX;

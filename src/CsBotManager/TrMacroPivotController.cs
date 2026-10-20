@@ -9,7 +9,7 @@ namespace CsBotManager;
 
 public class TrMacroPivotController
 {
-    private readonly BasePlugin _plugin;
+    private readonly CsBotManagerPlugin _plugin;
     private readonly MapProfileManager _mapProfileManager;
     private readonly RoleManager _roleManager;
     private readonly MidRoundAdapter _midRoundAdapter;
@@ -29,7 +29,7 @@ public class TrMacroPivotController
     private readonly Dictionary<int, float> _lastDamageTimeBySlot = new();
 
     public TrMacroPivotController(
-        BasePlugin plugin,
+        CsBotManagerPlugin plugin,
         MapProfileManager mapProfileManager,
         RoleManager roleManager,
         MidRoundAdapter midRoundAdapter,
@@ -168,8 +168,8 @@ public class TrMacroPivotController
             }
         }
 
-        // Aguarda 16s (fumaças dissiparem) e repete o avanço
-        _plugin.AddTimer(16.0f, () =>
+        // Aguarda 16s (fumaças dissiparem) e repete o avanço (F-006: AddRoundTimer)
+        _plugin.AddRoundTimer(16.0f, () =>
         {
             var currentAlive = aliveTrs.Where(b => b.IsValid && b.PawnIsAlive).ToList();
             if (currentAlive.Count > 0 && !plan.IsTacticalSaveActive)
@@ -260,8 +260,8 @@ public class TrMacroPivotController
             {
                 _pendingLurkerChecks[killer.Slot] = (Server.CurrentTime, bombKilledIn, new Vector(killerPawn.AbsOrigin.X, killerPawn.AbsOrigin.Y, killerPawn.AbsOrigin.Z));
 
-                // Validação de Limpeza (Clearance Check de 2.5s)
-                _plugin.AddTimer(2.5f, () =>
+                // Validação de Limpeza (Clearance Check de 2.5s - F-006: AddRoundTimer)
+                _plugin.AddRoundTimer(2.5f, () =>
                 {
                     ValidateLurkerClearance(killer, bombKilledIn, plan, trBots);
                 });

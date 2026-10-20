@@ -15,7 +15,7 @@ public enum DefuseAction
 
 public class CtRetakeAndDefuseBrain
 {
-    private readonly BasePlugin _plugin;
+    private readonly CsBotManagerPlugin _plugin;
     private readonly MapProfileManager _mapProfileManager;
     private readonly RoleManager _roleManager;
     private readonly BotLocomotionDriver _locomotionDriver;
@@ -41,7 +41,7 @@ public class CtRetakeAndDefuseBrain
     public int PriorityKitCarrierSlot => _priorityKitCarrierSlot;
 
     public CtRetakeAndDefuseBrain(
-        BasePlugin plugin,
+        CsBotManagerPlugin plugin,
         MapProfileManager mapProfileManager,
         RoleManager roleManager,
         BotLocomotionDriver locomotionDriver)
@@ -172,9 +172,9 @@ public class CtRetakeAndDefuseBrain
 
         if (action == DefuseAction.SmokeTapAndStepOut)
         {
-            // Toca por 0.5s e dá passo lateral com rifle
+            // Toca por 0.5s e dá passo lateral com rifle (F-006: AddRoundTimer)
             _isFakeDefuseInProgress = true;
-            _plugin.AddTimer(0.5f, () =>
+            _plugin.AddRoundTimer(0.5f, () =>
             {
                 if (!defuserBot.IsValid || !defuserBot.PawnIsAlive) return;
 
@@ -186,7 +186,7 @@ public class CtRetakeAndDefuseBrain
                     _locomotionDriver.NavigateToPoint(defuserBot, stepOut, hurry: false, EngagementStance.PASSIVE_HOLD);
                 }
 
-                _plugin.AddTimer(2.0f, () =>
+                _plugin.AddRoundTimer(2.0f, () =>
                 {
                     _isFakeDefuseInProgress = false; // Retoma o defuse real
                 });
@@ -194,9 +194,9 @@ public class CtRetakeAndDefuseBrain
         }
         else if (action == DefuseAction.ClassicFakeTapAndBait)
         {
-            // Toca por 0.5s para fazer barulho, cancela e crava mira por 2.5s
+            // Toca por 0.5s para fazer barulho, cancela e crava mira por 2.5s (F-006: AddRoundTimer)
             _isFakeDefuseInProgress = true;
-            _plugin.AddTimer(0.5f, () =>
+            _plugin.AddRoundTimer(0.5f, () =>
             {
                 if (!defuserBot.IsValid || !defuserBot.PawnIsAlive) return;
 
@@ -207,7 +207,7 @@ public class CtRetakeAndDefuseBrain
                     _locomotionDriver.HoldPosition(defuserBot, duration: 2.5f, crouch: true);
                 }
 
-                _plugin.AddTimer(2.5f, () =>
+                _plugin.AddRoundTimer(2.5f, () =>
                 {
                     _isFakeDefuseInProgress = false; // Retoma o defuse real
                 });
@@ -215,16 +215,16 @@ public class CtRetakeAndDefuseBrain
         }
         else if (action == DefuseAction.HalfDefuseBait)
         {
-            // Segura por 2.8s e solta
+            // Segura por 2.8s e solta (F-006: AddRoundTimer)
             _isFakeDefuseInProgress = false;
-            _plugin.AddTimer(2.8f, () =>
+            _plugin.AddRoundTimer(2.8f, () =>
             {
                 if (!defuserBot.IsValid || !defuserBot.PawnIsAlive) return;
 
                 _isFakeDefuseInProgress = true;
                 _locomotionDriver.HoldPosition(defuserBot, duration: 2.0f, crouch: false);
 
-                _plugin.AddTimer(2.0f, () =>
+                _plugin.AddRoundTimer(2.0f, () =>
                 {
                     _isFakeDefuseInProgress = false; // Retoma defuse final
                 });
@@ -320,7 +320,7 @@ public class CtRetakeAndDefuseBrain
         foreach (var handle in weaponServices.MyWeapons)
         {
             var w = handle.Value;
-            if (w != null && w.DesignerName != null && w.DesignerName.Contains("smoke", StringComparison.OrdinalIgnoreCase))
+            if (w != null && w.IsValid && w.DesignerName != null && w.DesignerName.Contains("smoke", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }

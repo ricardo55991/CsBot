@@ -8,14 +8,14 @@ namespace CsBotManager;
 
 public class MapProfileManager
 {
-    private readonly Dictionary<string, TacticalSpot> _spotsById = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, TacticalSpot> _spotsById = new(StringComparer.OrdinalIgnoreCase);
+    private readonly object _profileLock = new();
     private readonly Random _random = new();
 
     public MapProfile CurrentProfile { get; private set; } = new();
 
     public void LoadProfile(string mapName, string? pluginDir = null)
     {
-        _spotsById.Clear();
         string cleanMap = mapName.ToLowerInvariant().Trim();
         string fileName = $"{cleanMap}.json";
         string filePath = string.Empty;
@@ -52,12 +52,19 @@ public class MapProfileManager
                 var profile = JsonSerializer.Deserialize<MapProfile>(json);
                 if (profile != null && profile.Spots.Count > 0)
                 {
-                    CurrentProfile = profile;
+                    var newSpots = new Dictionary<string, TacticalSpot>(StringComparer.OrdinalIgnoreCase);
                     foreach (var spot in profile.Spots)
                     {
-                        _spotsById[spot.Id] = spot;
+                        newSpots[spot.Id] = spot;
                     }
-                    Server.PrintToConsole($"[MapProfileManager] Perfil universal '{profile.FriendlyName}' carregado ({_spotsById.Count} spots, {profile.Chokepoints.Count} chokepoints).");
+
+                    lock (_profileLock)
+                    {
+                        CurrentProfile = profile;
+                        _spotsById = newSpots;
+                    }
+
+                    Server.PrintToConsole($"[MapProfileManager] Perfil universal '{profile.FriendlyName}' carregado ({newSpots.Count} spots, {profile.Chokepoints.Count} chokepoints).");
                     return;
                 }
             }
@@ -68,33 +75,50 @@ public class MapProfileManager
         }
 
         // Se o mapa não tiver um JSON específico, gera um perfil padrão genérico (Fallback Universal)
-        CurrentProfile = GenerateUniversalFallbackProfile(cleanMap);
-        foreach (var spot in CurrentProfile.Spots)
+        var fallbackProfile = GenerateUniversalFallbackProfile(cleanMap);
+        var fallbackSpots = new Dictionary<string, TacticalSpot>(StringComparer.OrdinalIgnoreCase);
+        foreach (var spot in fallbackProfile.Spots)
         {
-            _spotsById[spot.Id] = spot;
+            fallbackSpots[spot.Id] = spot;
         }
-        Server.PrintToConsole($"[MapProfileManager] Perfil genérico universal ativado para '{cleanMap}' ({_spotsById.Count} spots).");
+
+        lock (_profileLock)
+        {
+            CurrentProfile = fallbackProfile;
+            _spotsById = fallbackSpots;
+        }
+
+        Server.PrintToConsole($"[MapProfileManager] Perfil genérico universal ativado para '{cleanMap}' ({fallbackSpots.Count} spots).");
     }
 
     public TacticalSpot? GetSpotById(string? id)
     {
         if (string.IsNullOrEmpty(id)) return null;
-        return _spotsById.TryGetValue(id, out var spot) ? spot : null;
+        lock (_profileLock)
+        {
+            return _spotsById.TryGetValue(id, out var spot) ? spot : null;
+        }
     }
 
     public List<TacticalSpot> GetSpotsForSector(string sector, string side)
     {
-        return _spotsById.Values
-            .Where(s => s.Sector.Equals(sector, StringComparison.OrdinalIgnoreCase) &&
-                       (s.Side.Equals(side, StringComparison.OrdinalIgnoreCase) || s.Side.Equals("ANY", StringComparison.OrdinalIgnoreCase)))
-            .ToList();
+        lock (_profileLock)
+        {
+            return _spotsById.Values
+                .Where(s => s.Sector.Equals(sector, StringComparison.OrdinalIgnoreCase) &&
+                           (s.Side.Equals(side, StringComparison.OrdinalIgnoreCase) || s.Side.Equals("ANY", StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+        }
     }
 
     public List<TacticalSpot> GetSpotsForTeam(string side)
     {
-        return _spotsById.Values
-            .Where(s => s.Side.Equals(side, StringComparison.OrdinalIgnoreCase) || s.Side.Equals("ANY", StringComparison.OrdinalIgnoreCase))
-            .ToList();
+        lock (_profileLock)
+        {
+            return _spotsById.Values
+                .Where(s => s.Side.Equals(side, StringComparison.OrdinalIgnoreCase) || s.Side.Equals("ANY", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
     }
 
     public TacticalSpot? PickRandomSpotForSector(string sector, string side)

@@ -9,7 +9,7 @@ namespace CsBotManager;
 
 public class MidRoundAdapter
 {
-    private readonly BasePlugin _plugin;
+    private readonly CsBotManagerPlugin _plugin;
     private readonly MapProfileManager _mapProfileManager;
     private readonly RoleManager _roleManager;
     private readonly CtDefenseController _ctController;
@@ -19,7 +19,7 @@ public class MidRoundAdapter
     private CsTimer? _fakeTimer;
 
     public MidRoundAdapter(
-        BasePlugin plugin,
+        CsBotManagerPlugin plugin,
         MapProfileManager mapProfileManager,
         RoleManager roleManager,
         CtDefenseController ctController,
@@ -75,8 +75,8 @@ public class MidRoundAdapter
 
         Server.PrintToChatAll($" {ChatColors.Yellow}[TR Fake Group]{ChatColors.Default} Grupo Barulho ({string.Join(", ", noiseBots.Select(b => b.PlayerName))}) avançando para simular entrada no Bomb A!");
 
-        // 6.0s após saída do spawn: Grupo Barulho faz barulho em A e em seguida recua
-        _fakeTimer = _plugin.AddTimer(6.0f, () =>
+        // 6.0s após saída do spawn: Grupo Barulho faz barulho em A e em seguida recua (F-006: AddRoundTimer)
+        _fakeTimer = _plugin.AddRoundTimer(6.0f, () =>
         {
             foreach (var bot in noiseBots)
             {
@@ -88,8 +88,8 @@ public class MidRoundAdapter
             _ctController.ReportBombPressure("Bombsite A", plan, ctBots);
             Server.PrintToChatAll($" {ChatColors.Gold}[TR Fake]{ChatColors.Default} Utilitárias caíram no A! Barulho concluído. Grupo de barulho recuando com vida!");
 
-            // 4.0s depois do fake: Grupo Silencioso com C4 explode no Bomb B
-            _plugin.AddTimer(4.0f, () =>
+            // 4.0s depois do fake: Grupo Silencioso com C4 explode no Bomb B (F-006: AddRoundTimer)
+            _plugin.AddRoundTimer(4.0f, () =>
             {
                 Server.PrintToChatAll($" {ChatColors.Green}[TR Fake]{ChatColors.Default} ⚡ {ChatColors.Gold}HORA DO VERDADEIRO EXECUTE NO BOMB B!{ChatColors.Default} Entrada coordenada!");
 
@@ -177,9 +177,9 @@ public class MidRoundAdapter
             int actionRoll = _random.Next(100);
             if (actionRoll < 25)
             {
-                // Pop-flash e repique
+                // Pop-flash e repique (F-006: AddRoundTimer)
                 _locomotionDriver.ThrowUtility(killer, 43); // 43 = Flashbang
-                _plugin.AddTimer(1.5f, () =>
+                _plugin.AddRoundTimer(1.5f, () =>
                 {
                     if (killer.IsValid && killer.PawnIsAlive)
                     {
@@ -216,12 +216,14 @@ public class MidRoundAdapter
                 // 6%: Tentativa heroica de retake no clutch
                 plan.IsHeroicAttempt = true;
                 plan.IsTacticalSaveActive = false;
+                _locomotionDriver.NotifySaveState(false);
                 UtilityAndClockCoordinator.PrintTeamChatAndRadio(ctSpeakerBot, CsTeam.CounterTerrorist, ctSpeaker, $"Bomba plantada no {site}! Tamo em {aliveCts.Count}x{aliveTrs.Count}, mas vamo tentar o retake heroico no clutch!", "go");
             }
             else
             {
                 // 94%: Save inteligente de CT
                 plan.IsTacticalSaveActive = true;
+                _locomotionDriver.NotifySaveState(true);
                 UtilityAndClockCoordinator.PrintTeamChatAndRadio(ctSpeakerBot, CsTeam.CounterTerrorist, ctSpeaker, $"Bomba plantada no {site} e tamo em {aliveCts.Count}x{aliveTrs.Count}... Impossível retake! SALVA AS ARMAS E KITS! (SAVE)", "fallback");
 
                 foreach (var bot in aliveCts)
@@ -233,6 +235,7 @@ public class MidRoundAdapter
         else
         {
             plan.IsTacticalSaveActive = false;
+            _locomotionDriver.NotifySaveState(false);
             UtilityAndClockCoordinator.PrintTeamChatAndRadio(aliveCts.FirstOrDefault(), CsTeam.CounterTerrorist, ctSpeaker, $"Bomba plantada no {site}! Retake coordenado com kits e utilitárias!", "needbackup");
         }
 
@@ -280,7 +283,7 @@ public class MidRoundAdapter
             "CT tocou na defuse! Segura o pixel que pode ser fake... vou espiar no tempo!",
             "holdpos");
 
-        _plugin.AddTimer(delay, () =>
+        _plugin.AddRoundTimer(delay, () =>
         {
             if (checkerBot.IsValid && checkerBot.PawnIsAlive)
             {

@@ -7,9 +7,12 @@ namespace CsBotManager;
 
 public class CombatAdapter
 {
-    private readonly BasePlugin _plugin;
+    private readonly CsBotManagerPlugin _plugin;
     private readonly BotLocomotionDriver _locomotionDriver;
     private readonly MidRoundAdapter _midRoundAdapter;
+
+    public TacticalCalloutSystem? CalloutSystem { get; set; }
+    public MapProfileManager? MapProfileManager { get; set; }
 
     // Cooldown para evitar re-gatilhos contínuos enquanto o bot troca de arma ou recua
     private readonly Dictionary<int, float> _actionCooldowns = new();
@@ -17,7 +20,7 @@ public class CombatAdapter
     private float _lastTickCheck = 0.0f;
 
     public CombatAdapter(
-        BasePlugin plugin,
+        CsBotManagerPlugin plugin,
         BotLocomotionDriver locomotionDriver,
         MidRoundAdapter midRoundAdapter)
     {
@@ -108,6 +111,9 @@ public class CombatAdapter
             var enemyPawn = p.PlayerPawn.Value;
             if (enemyPawn?.AbsOrigin == null) continue;
 
+            // Bloco 1 / F-009: Percepção legítima sem wallhack de raio cego
+            if (!TacticalCalloutSystem.CanBotPerceiveEnemy(bot, p, CalloutSystem, MapProfileManager)) continue;
+
             float dist = (enemyPawn.AbsOrigin - botPos).Length();
             if (dist < minEnemyDist)
             {
@@ -153,9 +159,9 @@ public class CombatAdapter
             // Recua para cobertura furtiva e não fica aberto no meio do bomb
             _midRoundAdapter.ApplyAction(bot, MidRoundAction.HIDE_COVER, null);
 
-            // Inicia recarga protegida atrás da parede
+            // Inicia recarga protegida atrás da parede (F-006: AddRoundTimer)
             bot.ExecuteClientCommand("+reload");
-            _plugin.AddTimer(0.1f, () =>
+            _plugin.AddRoundTimer(0.1f, () =>
             {
                 if (bot.IsValid && bot.PawnIsAlive)
                 {
@@ -172,8 +178,8 @@ public class CombatAdapter
 
             Server.PrintToChatAll($" {ChatColors.Yellow}[Combate Micro]{ChatColors.Default} {bot.PlayerName} zerou o pente ({minEnemyDist:F0}u >= 500u) -> {ChatColors.Green}RECUOU PARA COBERTURA PARA RECARREGAR!{ChatColors.Default}");
 
-            // Após tempo seguro de recarga (~2.4s), retoma o combate com Jiggle Peek
-            _plugin.AddTimer(2.4f, () =>
+            // Após tempo seguro de recarga (~2.4s), retoma o combate com Jiggle Peek (F-006: AddRoundTimer)
+            _plugin.AddRoundTimer(2.4f, () =>
             {
                 if (bot.IsValid && bot.PawnIsAlive)
                 {

@@ -104,9 +104,9 @@ public class MobilityController
             }
 
             var navState = _locomotionDriver.GetNavState(bot.Slot);
-            if (navState == null || navState.HasReachedDestination || navState.HoldDurationRemaining > 0)
+            if (navState == null || navState.HasReachedDestination || navState.HoldDurationRemaining > 0 || navState.Priority >= BotOrderPriority.High_CombatFallback)
             {
-                // Parado ou chegou no destino: nunca fica de faca na mão
+                // Parado, segurando hold ou em prioridade de combate/save/plant/defuse: nunca fica de faca na mão
                 ApplyTacticalBrake(bot);
                 continue;
             }
@@ -174,7 +174,7 @@ public class MobilityController
             {
                 var pawn = bot.PlayerPawn.Value;
                 var active = pawn?.WeaponServices?.ActiveWeapon.Value;
-                if (active != null && active.DesignerName.Contains("knife", StringComparison.OrdinalIgnoreCase))
+                if (active != null && active.IsValid && !string.IsNullOrEmpty(active.DesignerName) && active.DesignerName.Contains("knife", StringComparison.OrdinalIgnoreCase))
                 {
                     bot.ExecuteClientCommand("slot2");
                 }

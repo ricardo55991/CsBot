@@ -9,7 +9,7 @@ namespace CsBotManager;
 
 public class PlayerIntentTracker
 {
-    private readonly BasePlugin _plugin;
+    private readonly CsBotManagerPlugin _plugin;
     private readonly RoleManager _roleManager;
     private readonly MapProfileManager _mapProfileManager;
 
@@ -17,7 +17,7 @@ public class PlayerIntentTracker
     private float _roundStartTime = 0.0f;
     private bool _hasSwappedThisRound = false;
 
-    public PlayerIntentTracker(BasePlugin plugin, RoleManager roleManager, MapProfileManager mapProfileManager)
+    public PlayerIntentTracker(CsBotManagerPlugin plugin, RoleManager roleManager, MapProfileManager mapProfileManager)
     {
         _plugin = plugin;
         _roleManager = roleManager;
@@ -39,8 +39,8 @@ public class PlayerIntentTracker
 
         if (human == null || !human.IsValid) return;
 
-        // Monitora o deslocamento do jogador a cada 0.4s durante os primeiros 6 segundos
-        _trackingTimer = _plugin.AddTimer(0.4f, () =>
+        // Monitora o deslocamento do jogador a cada 0.4s durante os primeiros 6 segundos (F-006: AddRoundTimer)
+        _trackingTimer = _plugin.AddRoundTimer(0.4f, () =>
         {
             if (_hasSwappedThisRound || human == null || !human.IsValid || human.PlayerPawn.Value == null)
             {

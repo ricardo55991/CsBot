@@ -48,7 +48,8 @@ public class OllamaIglService
         int avgMoney,
         string? customPlayerCall,
         bool isRejection,
-        MapProfileManager? mapProfileManager = null)
+        MapProfileManager? mapProfileManager = null,
+        CancellationToken cancellationToken = default)
     {
         List<RoundHistoryItem> historySnapshot;
         bool wasLastRoundFastContact;
@@ -208,16 +209,17 @@ Responda APENAS um JSON válido seguindo esta estrutura exata:
                 }
             };
 
-            var response = await _httpClient.PostAsJsonAsync(OllamaEndpoint, requestBody);
+            var response = await _httpClient.PostAsJsonAsync(OllamaEndpoint, requestBody, cancellationToken);
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadFromJsonAsync<JsonElement>();
+                var content = await response.Content.ReadFromJsonAsync<JsonElement>(cancellationToken: cancellationToken);
                 if (content.TryGetProperty("response", out var rawJson))
                 {
                     string jsonString = rawJson.GetString() ?? string.Empty;
                     var parsed = JsonSerializer.Deserialize<TacticalPlan>(jsonString);
                     if (parsed != null && !string.IsNullOrEmpty(parsed.TacticName))
                     {
+                        parsed.RawJson = jsonString;
                         parsed.IsCustomPlayerCall = !string.IsNullOrEmpty(customPlayerCall);
 
                         // Aplica a restrição de cadência estrita
@@ -298,7 +300,8 @@ Responda APENAS um JSON válido seguindo esta estrutura exata:
             TacticName = isCt ? "Defesa Padrão Cadenciada" : "Controle de Mapa Padrão",
             TacticSummary = isCt ? "Controle de posições 2-1-2 com paciência" : "Staging nos acessos e invasão coordenada",
             RoundTempo = buyState == BuyState.FORCE_BUY ? RoundTempo.FAST_CONTACT : RoundTempo.SLOW_DEFAULT,
-            StagingDurationSeconds = buyState == BuyState.FORCE_BUY ? 0.0f : 18.0f
+            StagingDurationSeconds = buyState == BuyState.FORCE_BUY ? 0.0f : 18.0f,
+            RawJson = "{\"fallback\": true, \"tactic_name\": \"" + (isCt ? "Defesa Padrão Cadenciada" : "Controle de Mapa Padrão") + "\"}"
         };
 
         EnsureValidBotOrders(plan, team, mapProfileManager);

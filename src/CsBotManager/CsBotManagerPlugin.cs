@@ -54,11 +54,54 @@ public class CsBotManagerPlugin : BasePlugin
     private int _ctLossStreak = 1;
     private int _trLossStreak = 1;
 
+    // Sequenciamento de requisições Ollama e timers seguros por round (F-001, F-002, F-003, F-006)
+    private int _iglRequestSequence = 0;
+    private CancellationTokenSource? _roundCts;
+    private readonly List<CounterStrikeSharp.API.Modules.Timers.Timer> _activeRoundTimers = new();
+
     // Cache de renderização HTML da HUD a 1Hz (O-01)
     private string _cachedHudHtml = string.Empty;
     private int _cachedHumanSlot = -1;
 
     public int GetLossBonus(int streak) => Math.Clamp(1400 + (streak - 1) * 500, 1400, 3400);
+
+    public CounterStrikeSharp.API.Modules.Timers.Timer AddRoundTimer(float delay, Action callback, TimerFlags flags = 0)
+    {
+        CounterStrikeSharp.API.Modules.Timers.Timer? timer = null;
+        timer = AddTimer(delay, () =>
+        {
+            if (timer != null && (flags & TimerFlags.REPEAT) == 0)
+            {
+                lock (_activeRoundTimers)
+                {
+                    _activeRoundTimers.Remove(timer);
+                }
+            }
+            callback();
+        }, flags);
+
+        lock (_activeRoundTimers)
+        {
+            _activeRoundTimers.Add(timer);
+        }
+        return timer;
+    }
+
+    public void ClearRoundTimers()
+    {
+        lock (_activeRoundTimers)
+        {
+            foreach (var t in _activeRoundTimers)
+            {
+                try
+                {
+                    t.Kill();
+                }
+                catch { }
+            }
+            _activeRoundTimers.Clear();
+        }
+    }
 
     public override void Load(bool hotReload)
     {
@@ -85,6 +128,11 @@ public class CsBotManagerPlugin : BasePlugin
 
         _locomotionDriver.PlantController = _clearAndPlantController;
         _locomotionDriver.RetakeBrain = _retakeAndDefuseBrain;
+        _locomotionDriver.UtilityCoordinator = _utilityCoordinator;
+        _locomotionDriver.MapProfileManager = _mapProfileManager;
+        _clearAndPlantController.CalloutSystem = _calloutSystem;
+        _combatAdapter.CalloutSystem = _calloutSystem;
+        _combatAdapter.MapProfileManager = _mapProfileManager;
 
         _voiceBridge = new VoiceCommandBridge(
             this,
@@ -130,6 +178,10 @@ public class CsBotManagerPlugin : BasePlugin
     public override void Unload(bool hotReload)
     {
         _voiceBridge?.Stop();
+        _roundCts?.Cancel();
+        _roundCts?.Dispose();
+        _roundCts = null;
+        ClearRoundTimers();
         _locomotionDriver.ResetRound();
         base.Unload(hotReload);
     }
@@ -162,6 +214,11 @@ public class CsBotManagerPlugin : BasePlugin
         _currentRound++;
         _isFreezeTime = true;
         _isBombPlanted = false;
+
+        ClearRoundTimers();
+        _roundCts?.Cancel();
+        _roundCts?.Dispose();
+        _roundCts = new CancellationTokenSource();
 
         if (_currentRound == 1 || _currentRound == 13)
         {
@@ -247,21 +304,38 @@ public class CsBotManagerPlugin : BasePlugin
                 int capturedHumanSlot = human?.Slot ?? -1;
                 var currentBuyState = _economyManager.CurrentBuyState;
 
+                int requestSeq = Interlocked.Increment(ref _iglRequestSequence);
+                var token = _roundCts?.Token ?? CancellationToken.None;
+
                 Task.Run(async () =>
                 {
-                    var plan = await _iglService.GetTacticalDecisionAsync(
-                        mapName,
-                        capturedHumanTeam,
-                        currentBuyState,
-                        capturedRound,
-                        capturedMoney,
-                        null,
-                        false,
-                        _mapProfileManager);
+                    TacticalPlan plan;
+                    try
+                    {
+                        plan = await _iglService.GetTacticalDecisionAsync(
+                            mapName,
+                            capturedHumanTeam,
+                            currentBuyState,
+                            capturedRound,
+                            capturedMoney,
+                            null,
+                            false,
+                            _mapProfileManager,
+                            token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        return;
+                    }
 
                     // C-04B: Retorna para a Game Thread e revalida os ponteiros
                     Server.NextFrame(() =>
                     {
+                        if (capturedRound != _currentRound || requestSeq != _iglRequestSequence)
+                        {
+                            return;
+                        }
+
                         var freshPlayers = GetActivePlayers();
                         var freshHuman = freshPlayers.FirstOrDefault(p => p.Slot == capturedHumanSlot && !p.IsBot);
                         var freshCtBots = freshPlayers.Where(p => p.Team == CsTeam.CounterTerrorist && p.IsBot).ToList();
@@ -326,8 +400,13 @@ public class CsBotManagerPlugin : BasePlugin
             var teamBots = players.Where(p => p.Team == humanTeam && p.IsBot).ToList();
             var enemyBots = players.Where(p => p.Team == enemyTeam && p.IsBot).ToList();
 
+            var ctBots = players.Where(p => p.Team == CsTeam.CounterTerrorist && p.IsBot).ToList();
+
             // Compra dos aliados
             _economyManager.ExecuteDeterministicBuys(teamBots, _economyManager.CurrentBuyState, humanTeam, _roleManager, _currentPlan, _locomotionDriver);
+
+            // Setup de Double AWP no CT se economia permitir (Módulo 1)
+            _economyManager.TryCoordinateDoubleAwpSetup(ctBots, _roleManager, _currentPlan, humanTeam);
 
             // C-05A: Compra dos inimigos com IA econômica determinística
             int enemyLossBonus = enemyTeam == CsTeam.CounterTerrorist ? GetLossBonus(_ctLossStreak) : GetLossBonus(_trLossStreak);
@@ -335,7 +414,7 @@ public class CsBotManagerPlugin : BasePlugin
             var enemyBuyState = _economyManager.AnalyzeTeamEconomy(enemyMembers, _currentRound, enemyLossBonus, enemyTeam);
             _economyManager.ExecuteDeterministicBuys(enemyBots, enemyBuyState, enemyTeam, _roleManager, _currentPlan, _locomotionDriver);
 
-            // Telemetria Forense: Registra resumo inicial completo do round
+            // Telemetria Forense: Registra resumo inicial completo do round (F-013 / Bloco 8.3)
             _telemetryLogger?.OnRoundStart(
                 _currentRound,
                 _ctScore,
@@ -343,16 +422,16 @@ public class CsBotManagerPlugin : BasePlugin
                 humanTeam == CsTeam.CounterTerrorist ? _economyManager.CurrentBuyState : enemyBuyState,
                 humanTeam == CsTeam.Terrorist ? _economyManager.CurrentBuyState : enemyBuyState,
                 _currentPlan,
-                string.Empty,
+                _currentPlan != null ? _currentPlan.RawJson : string.Empty,
                 players);
 
-            if (human != null)
+            if (human != null && _currentPlan != null)
             {
                 human.PrintToChat($" {ChatColors.Green}[CsBot IGL]{ChatColors.Default} Tática: {ChatColors.Gold}{_currentPlan.TacticName}{ChatColors.Default} | Ritmo: {ChatColors.LightBlue}{_currentPlan.RoundTempo}{ChatColors.Default}!");
             }
 
-            // 11.5s: Disciplina da C4 no Freeze Time (Parte A - Item 2)
-            AddTimer(0.5f, () =>
+            // 11.5s: Disciplina da C4 no Freeze Time (Parte A - Item 2 / Bloco 5.3)
+            AddRoundTimer(0.5f, () =>
             {
                 var curPlayers = GetActivePlayers();
                 var curHuman = curPlayers.FirstOrDefault(p => !p.IsBot);
@@ -420,6 +499,11 @@ public class CsBotManagerPlugin : BasePlugin
     private HookResult OnRoundEnd(EventRoundEnd @event, GameEventInfo info)
     {
         _isFreezeTime = false;
+        _roundCts?.Cancel();
+        _roundCts?.Dispose();
+        _roundCts = null;
+        ClearRoundTimers();
+
         _hudTimer?.Kill();
         _hudTimer = null;
         _cachedHudHtml = string.Empty;
@@ -551,11 +635,13 @@ public class CsBotManagerPlugin : BasePlugin
         {
             bombPos = c4.AbsOrigin;
         }
-        _locomotionDriver.NotifyBombState(true, bombPos, _currentPlan.IsTacticalSaveActive);
 
         _telemetryLogger?.LogEvent("BOMBA", "C4 plantada no bombsite!");
 
+        // Bloco 3 / F-005: Executa HandleBombPlanted para definir se o time entrou em SAVE TÁTICO antes de notificar o locomotionDriver
         _midRoundAdapter?.HandleBombPlanted(@event, _currentPlan, ctBots, trBots);
+        _locomotionDriver.NotifyBombState(true, bombPos, _currentPlan.IsTacticalSaveActive);
+
         return HookResult.Continue;
     }
 
@@ -715,22 +801,38 @@ public class CsBotManagerPlugin : BasePlugin
         int capturedRound = _currentRound;
         int capturedMoney = _economyManager.TeamAverageMoney;
         var buyState = _economyManager.CurrentBuyState;
+        int requestSeq = Interlocked.Increment(ref _iglRequestSequence);
+        var token = _roundCts?.Token ?? CancellationToken.None;
 
         Task.Run(async () =>
         {
-            var newPlan = await _iglService.GetTacticalDecisionAsync(
-                mapName,
-                pTeam,
-                buyState,
-                capturedRound,
-                capturedMoney,
-                call,
-                false,
-                _mapProfileManager);
+            TacticalPlan newPlan;
+            try
+            {
+                newPlan = await _iglService.GetTacticalDecisionAsync(
+                    mapName,
+                    pTeam,
+                    buyState,
+                    capturedRound,
+                    capturedMoney,
+                    call,
+                    false,
+                    _mapProfileManager,
+                    token);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
 
             // C-04B: Revalida na Game Thread
             Server.NextFrame(() =>
             {
+                if (capturedRound != _currentRound || requestSeq != _iglRequestSequence)
+                {
+                    return;
+                }
+
                 var targetPlayer = Utilities.GetPlayerFromSlot(pSlot);
                 _currentPlan = newPlan;
                 _currentPlan.CurrentPhase = _isFreezeTime ? RoundPhase.FreezeTime : RoundPhase.Staging;
@@ -757,22 +859,38 @@ public class CsBotManagerPlugin : BasePlugin
         int capturedRound = _currentRound;
         int capturedMoney = _economyManager.TeamAverageMoney;
         var buyState = _economyManager.CurrentBuyState;
+        int requestSeq = Interlocked.Increment(ref _iglRequestSequence);
+        var token = _roundCts?.Token ?? CancellationToken.None;
 
         Task.Run(async () =>
         {
-            var newPlan = await _iglService.GetTacticalDecisionAsync(
-                mapName,
-                pTeam,
-                buyState,
-                capturedRound,
-                capturedMoney,
-                null,
-                true,
-                _mapProfileManager);
+            TacticalPlan newPlan;
+            try
+            {
+                newPlan = await _iglService.GetTacticalDecisionAsync(
+                    mapName,
+                    pTeam,
+                    buyState,
+                    capturedRound,
+                    capturedMoney,
+                    null,
+                    true,
+                    _mapProfileManager,
+                    token);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
 
             // C-04B: Revalida na Game Thread
             Server.NextFrame(() =>
             {
+                if (capturedRound != _currentRound || requestSeq != _iglRequestSequence)
+                {
+                    return;
+                }
+
                 var targetPlayer = Utilities.GetPlayerFromSlot(pSlot);
                 _currentPlan = newPlan;
                 _currentPlan.CurrentPhase = _isFreezeTime ? RoundPhase.FreezeTime : RoundPhase.Staging;

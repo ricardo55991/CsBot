@@ -119,6 +119,12 @@ public class EconomyManager
         richestBot.InGameMoneyServices.Account -= cost;
         Utilities.SetStateChanged(richestBot, "CCSPlayerController", "m_pInGameMoneyServices");
 
+        // Remove arma primária antiga antes de conceder nova (F-008 / Bloco 6)
+        if (CombatAdapter.IsPrimaryWeapon($"weapon_{weaponToBuy}"))
+        {
+            RemovePrimaryWeapons(player);
+        }
+
         // Dá a arma diretamente ao jogador humano (sem arremesso no chão e sem perder a própria arma do bot)
         player.GiveNamedItem($"weapon_{weaponToBuy}");
 
@@ -149,6 +155,7 @@ public class EconomyManager
             donorBot.InGameMoneyServices.Account -= 4750;
             Utilities.SetStateChanged(donorBot, "CCSPlayerController", "m_pInGameMoneyServices");
 
+            RemovePrimaryWeapons(awpBot);
             awpBot.GiveNamedItem("weapon_awp");
             UtilityAndClockCoordinator.PrintTeamChat(team, donorBot.PlayerName, $"Comprei AWP pra você, {awpBot.PlayerName}! Destrói eles!");
         }
@@ -191,6 +198,7 @@ public class EconomyManager
                 {
                     donorBot.InGameMoneyServices.Account -= 4750;
                     Utilities.SetStateChanged(donorBot, "CCSPlayerController", "m_pInGameMoneyServices");
+                    RemovePrimaryWeapons(anchorBot);
                     anchorBot.GiveNamedItem("weapon_awp");
                     hasAwp = true;
                     UtilityAndClockCoordinator.PrintTeamChat(team, donorBot.PlayerName, $"Comprei a segunda AWP pra você, {anchorBot.PlayerName}! Double AWP no setup!");
@@ -437,6 +445,7 @@ public class EconomyManager
             if (receiverBot != null)
             {
                 var pawn = c4Bot.PlayerPawn.Value;
+                bool c4Removed = false;
                 if (pawn?.WeaponServices?.MyWeapons != null)
                 {
                     foreach (var handle in pawn.WeaponServices.MyWeapons)
@@ -445,18 +454,42 @@ public class EconomyManager
                         if (w != null && w.IsValid && !string.IsNullOrEmpty(w.DesignerName) && w.DesignerName.Contains("c4", StringComparison.OrdinalIgnoreCase))
                         {
                             w.Remove();
+                            c4Removed = true;
                             break;
                         }
                     }
                 }
 
-                receiverBot.GiveNamedItem("weapon_c4");
-                UtilityAndClockCoordinator.PrintTeamChatAndRadio(
-                    c4Bot,
-                    CsTeam.Terrorist,
-                    c4Bot.PlayerName,
-                    $"Passei a C4 pro suporte ({receiverBot.PlayerName}) pra eu abrir espaço na frente!",
-                    "affirmative");
+                // Invariante de 1 única C4 (Bloco 6 / F-008): Só entrega C4 após confirmar remoção física do portador anterior
+                if (c4Removed && !BotLocomotionDriver.HasC4(receiverBot))
+                {
+                    receiverBot.GiveNamedItem("weapon_c4");
+                    UtilityAndClockCoordinator.PrintTeamChatAndRadio(
+                        c4Bot,
+                        CsTeam.Terrorist,
+                        c4Bot.PlayerName,
+                        $"Passei a C4 pro suporte ({receiverBot.PlayerName}) pra eu abrir espaço na frente!",
+                        "affirmative");
+                }
+            }
+        }
+    }
+
+    public static void RemovePrimaryWeapons(CCSPlayerController player)
+    {
+        if (player == null || !player.IsValid) return;
+        var pawn = player.PlayerPawn.Value;
+        if (pawn?.WeaponServices?.MyWeapons == null) return;
+
+        foreach (var handle in pawn.WeaponServices.MyWeapons)
+        {
+            var w = handle.Value;
+            if (w != null && w.IsValid && !string.IsNullOrEmpty(w.DesignerName))
+            {
+                if (CombatAdapter.IsPrimaryWeapon(w.DesignerName))
+                {
+                    w.Remove();
+                }
             }
         }
     }
@@ -512,10 +545,10 @@ public class EconomyManager
 
             if (dist <= 140.0f)
             {
-                // Coleta imediata
-                bot.ExecuteClientCommand("drop");
+                // Coleta imediata: remove primária antiga e consome o drop do chão (F-008 / Bloco 6)
+                RemovePrimaryWeapons(bot);
+                if (bestWeapon.IsValid) bestWeapon.Remove();
                 bot.GiveNamedItem(designer);
-                bestWeapon.Remove();
 
                 UtilityAndClockCoordinator.PrintTeamChatAndRadio(
                     bot,
@@ -532,9 +565,9 @@ public class EconomyManager
                 {
                     if (bot.IsValid && bot.PawnIsAlive && bestWeapon.IsValid)
                     {
-                        bot.ExecuteClientCommand("drop");
-                        bot.GiveNamedItem(designer);
+                        RemovePrimaryWeapons(bot);
                         bestWeapon.Remove();
+                        bot.GiveNamedItem(designer);
                         UtilityAndClockCoordinator.PrintTeamChatAndRadio(
                             bot,
                             bot.Team,

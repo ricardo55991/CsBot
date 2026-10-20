@@ -140,6 +140,36 @@
       "is_off_angle": false,
       "fallback_spot_id": "tr_inf_staging_banana",
       "description": "Invasão Bomb B"
+    },
+    {
+      "id": "ct_inf_spawn",
+      "name": "Base CT / Recuo Seguro",
+      "sector": "Bombsite A",
+      "side": "CT",
+      "x": 2000.0,
+      "y": 2500.0,
+      "z": 120.0,
+      "pitch": 0.0,
+      "yaw": 180.0,
+      "recommended_stance": "PASSIVE_HOLD",
+      "is_off_angle": false,
+      "fallback_spot_id": "ct_inf_spawn",
+      "description": "Base CT ponto seguro de recuo"
+    },
+    {
+      "id": "tr_inf_spawn",
+      "name": "Base TR / Recuo Seguro",
+      "sector": "Bombsite B",
+      "side": "TR",
+      "x": -1000.0,
+      "y": -500.0,
+      "z": 60.0,
+      "pitch": 0.0,
+      "yaw": 0.0,
+      "recommended_stance": "PASSIVE_HOLD",
+      "is_off_angle": false,
+      "fallback_spot_id": "tr_inf_spawn",
+      "description": "Base TR ponto seguro de recuo"
     }
   ],
   "voice_synonyms": {

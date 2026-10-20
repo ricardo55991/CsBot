@@ -9,7 +9,7 @@ namespace CsBotManager;
 
 public class PacingAndFallbackController
 {
-    private readonly BasePlugin _plugin;
+    private readonly CsBotManagerPlugin _plugin;
     private readonly MapProfileManager _mapProfileManager;
     private readonly RoleManager _roleManager;
     private readonly BotLocomotionDriver _locomotionDriver;
@@ -25,7 +25,7 @@ public class PacingAndFallbackController
     public Action<TacticalPlan>? OnExecuteStarted { get; set; }
 
     public PacingAndFallbackController(
-        BasePlugin plugin,
+        CsBotManagerPlugin plugin,
         MapProfileManager mapProfileManager,
         RoleManager roleManager,
         BotLocomotionDriver locomotionDriver)
@@ -140,7 +140,7 @@ public class PacingAndFallbackController
                 }
             }
 
-            _plugin.AddTimer(0.8f, () =>
+            _plugin.AddRoundTimer(0.8f, () =>
             {
                 var flasher = teamBots.FirstOrDefault(b => b.PawnIsAlive);
                 if (flasher != null)

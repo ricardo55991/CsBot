@@ -346,6 +346,9 @@ public class TacticalPlan
 
     [JsonIgnore]
     public bool IsCustomPlayerCall { get; set; } = false;
+
+    [JsonIgnore]
+    public string RawJson { get; set; } = string.Empty;
 }
 
 public class VoiceCommandPayload

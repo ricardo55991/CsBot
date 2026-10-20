@@ -7,7 +7,7 @@ namespace CsBotManager;
 
 public class TacticalCalloutSystem
 {
-    private readonly BasePlugin _plugin;
+    private readonly CsBotManagerPlugin _plugin;
     private readonly MapProfileManager _mapProfileManager;
     private readonly RoleManager _roleManager;
 
@@ -30,7 +30,7 @@ public class TacticalCalloutSystem
 
     private readonly Random _random = new();
 
-    public TacticalCalloutSystem(BasePlugin plugin, MapProfileManager mapProfileManager, RoleManager roleManager)
+    public TacticalCalloutSystem(CsBotManagerPlugin plugin, MapProfileManager mapProfileManager, RoleManager roleManager)
     {
         _plugin = plugin;
         _mapProfileManager = mapProfileManager;
@@ -48,6 +48,96 @@ public class TacticalCalloutSystem
         _calloutCooldowns.Clear();
         _recentSectorActivity.Clear();
         _rushAlertedBombs.Clear();
+    }
+
+    // ==============================================================================
+    // HELPER CENTRAL DE PERCEPÇÃO LEGÍTIMA SEM WALLHACK POR RAIO (F-009 / BLOCO 1)
+    // ==============================================================================
+    public static bool CanBotPerceiveEnemy(
+        CCSPlayerController bot,
+        CCSPlayerController enemy,
+        TacticalCalloutSystem? calloutSystem = null,
+        MapProfileManager? mapProfile = null)
+    {
+        if (bot == null || !bot.IsValid || !bot.PawnIsAlive) return false;
+        if (enemy == null || !enemy.IsValid || !enemy.PawnIsAlive || enemy.Team == bot.Team) return false;
+
+        var botPawn = bot.PlayerPawn.Value;
+        var enemyPawn = enemy.PlayerPawn.Value;
+        if (botPawn?.AbsOrigin == null || enemyPawn?.AbsOrigin == null) return false;
+
+        var botPos = botPawn.AbsOrigin;
+        var enemyPos = enemyPawn.AbsOrigin;
+
+        float dist = (enemyPos - botPos).Length();
+        if (dist > 2500.0f) return false;
+
+        // 1. Linha de Visão / Spotted direto do engine
+        bool isSpottedByMask = false;
+        try
+        {
+            var mask = enemyPawn.EntitySpottedState.SpottedByMask;
+            int idx = bot.Slot / 32;
+            int bit = bot.Slot % 32;
+            if (idx >= 0 && idx < mask.Length)
+            {
+                isSpottedByMask = (mask[idx] & (1u << bit)) != 0;
+            }
+        }
+        catch { }
+
+        // 2. Cone de Visão (FOV ~95°, +/- 47.5 graus do EyeAngles do bot)
+        bool isInFov = false;
+        if (botPawn.EyeAngles != null)
+        {
+            float botYaw = botPawn.EyeAngles.Y;
+            float dx = enemyPos.X - botPos.X;
+            float dy = enemyPos.Y - botPos.Y;
+            float angleToEnemy = (float)(Math.Atan2(dy, dx) * 180.0 / Math.PI);
+            float diff = angleToEnemy - botYaw;
+            while (diff < -180.0f) diff += 360.0f;
+            while (diff > 180.0f) diff -= 360.0f;
+
+            if (Math.Abs(diff) <= 47.5f)
+            {
+                isInFov = true;
+            }
+        }
+
+        if (isInFov && (isSpottedByMask || dist <= 2000.0f))
+        {
+            return true;
+        }
+
+        // 3. Percepção Sonora: Inimigo emitiu som audível (Footstep, WeaponFire, Dano) naquele setor nos últimos 4.0s
+        if (calloutSystem != null && mapProfile != null)
+        {
+            var enemyCp = mapProfile.FindChokepointAt(enemyPos.X, enemyPos.Y, enemyPos.Z);
+            if (enemyCp != null)
+            {
+                if (calloutSystem.HasRecentEnemyAudioInSector(enemyCp.Name, 4.0f))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public bool HasRecentEnemyAudioInSector(string sector, float maxSecondsAgo = 4.0f)
+    {
+        if (string.IsNullOrEmpty(sector)) return false;
+        float now = Server.CurrentTime;
+
+        if (_recentSectorActivity.TryGetValue(sector, out var activities))
+        {
+            lock (activities)
+            {
+                return activities.Any(a => now - a.Time <= maxSecondsAgo && a.IsEnemy);
+            }
+        }
+        return false;
     }
 
     // ==============================================================================
@@ -81,7 +171,7 @@ public class TacticalCalloutSystem
                     attacker.PlayerPawn.Value.AbsOrigin.Z);
             }
 
-            // Registra atividade sonora/tiro no setor do atacante
+            // Registra atividade sonora/tiro no setor do atacante (isEnemy true apenas se time for oposto)
             if (attacker.PlayerPawn.Value?.AbsOrigin != null)
             {
                 var attackerCp = _mapProfileManager.FindChokepointAt(
@@ -90,7 +180,8 @@ public class TacticalCalloutSystem
                     attacker.PlayerPawn.Value.AbsOrigin.Z);
                 if (attackerCp != null)
                 {
-                    RecordAudioActivity(attackerCp.Name, attacker.Slot, isEnemy: true, isGrenade: false);
+                    bool isAttackerEnemy = attacker.Team != victim.Team;
+                    RecordAudioActivity(attackerCp.Name, attacker.Slot, isEnemy: isAttackerEnemy, isGrenade: false);
                 }
             }
         }
@@ -118,12 +209,11 @@ public class TacticalCalloutSystem
             return;
         }
 
-        // Determina inimigos visíveis ou próximos no setor
+        // Determina inimigos perceptíveis no setor de forma legítima (sem raio cego)
         var allPlayers = Utilities.GetPlayers();
         var enemiesInSector = allPlayers
             .Where(p => p != null && p.IsValid && p.PawnIsAlive && p.Team != victim.Team)
-            .Where(p => p.PlayerPawn.Value?.AbsOrigin != null &&
-                        (p.PlayerPawn.Value.AbsOrigin - victimPos).Length() <= 900.0f)
+            .Where(p => CanBotPerceiveEnemy(victim, p, this, _mapProfileManager))
             .ToList();
 
         int enemyCount = Math.Max(1, enemiesInSector.Count);
@@ -170,18 +260,20 @@ public class TacticalCalloutSystem
         float now = Server.CurrentTime;
         var allPlayers = Utilities.GetPlayers();
 
-        // Conta inimigos vivos correndo ou muito próximos do mesmo chokepoint (raio <= 700u)
+        // Conta inimigos vivos perceptíveis no chokepoint
         var nearbyEnemies = allPlayers
             .Where(p => p != null && p.IsValid && p.PawnIsAlive && p.Team != bot.Team)
-            .Where(p => p.PlayerPawn.Value?.AbsOrigin != null &&
-                        (p.PlayerPawn.Value.AbsOrigin - botPos).Length() <= 750.0f)
+            .Where(p => CanBotPerceiveEnemy(bot, p, this, _mapProfileManager))
             .ToList();
 
         // Checa histórico de passos / tiros nos últimos 3.5s no setor
         int recentEnemyEvents = 0;
         if (_recentSectorActivity.TryGetValue(sectorName, out var activities))
         {
-            recentEnemyEvents = activities.Count(a => now - a.Time <= 3.5f && a.IsEnemy);
+            lock (activities)
+            {
+                recentEnemyEvents = activities.Count(a => now - a.Time <= 3.5f && a.IsEnemy);
+            }
         }
 
         if (nearbyEnemies.Count >= 3 || (nearbyEnemies.Count >= 2 && recentEnemyEvents >= 3))
@@ -213,9 +305,11 @@ public class TacticalCalloutSystem
             deathPos = new Vector(victim.PlayerPawn.Value.AbsOrigin.X, victim.PlayerPawn.Value.AbsOrigin.Y, victim.PlayerPawn.Value.AbsOrigin.Z);
         }
 
-        // Delay humano natural de 1.0s para a call pós-morte
-        _plugin.AddTimer(1.0f, () =>
+        // Delay humano natural de 1.0s para a call pós-morte rastreado pelo timer central do round (F-006 / F-012)
+        _plugin.AddRoundTimer(1.0f, () =>
         {
+            if (victim == null || !victim.IsValid) return;
+
             string sector = "o setor";
             if (deathPos != null)
             {
@@ -223,13 +317,13 @@ public class TacticalCalloutSystem
                 sector = cp?.Name ?? "o bomb";
             }
 
-            int killerSlot = killer?.Slot ?? -1;
-            string killerName = killer?.PlayerName ?? "Inimigo";
+            int killerSlot = (killer != null && killer.IsValid) ? killer.Slot : -1;
+            string killerName = (killer != null && killer.IsValid) ? killer.PlayerName : "Inimigo";
             string weapon = @event.Weapon ?? "";
 
             // Verifica dano causado pela vítima no round
             int dmgDealtToKiller = killerSlot >= 0 ? _damageMatrix.GetValueOrDefault((victimSlot, killerSlot), 0) : 0;
-            int killerHp = killer?.PlayerPawn.Value?.Health ?? 100;
+            int killerHp = (killer != null && killer.IsValid) ? killer.PlayerPawn.Value?.Health ?? 100 : 100;
 
             // Verifica se deixou alguém miado no round
             int maxDmg = 0;
@@ -280,7 +374,7 @@ public class TacticalCalloutSystem
     }
 
     // ==============================================================================
-    // 4. Callout de Som / Passos Próximos (Audio Cue Callout)
+    // 4. Callout de Som / Passos Próximos (Audio Cue Callout - Bloco 1 / F-009)
     // ==============================================================================
     public void HandleFootstep(EventPlayerFootstep @event)
     {
@@ -296,17 +390,7 @@ public class TacticalCalloutSystem
 
         if (string.IsNullOrEmpty(sectorName)) return;
 
-        // Registra som para a roleta contextual de smokes
-        RecordAudioActivity(sectorName, walker.Slot, isEnemy: true, isGrenade: false);
-
-        float now = Server.CurrentTime;
-        string cooldownKey = $"audio_{sectorName}";
-        if (_calloutCooldowns.TryGetValue(cooldownKey, out float lastAudioCall) && now - lastAudioCall < 15.0f)
-        {
-            return;
-        }
-
-        // Procura um bot aliado próximo (<= 750 unidades) que possa escutar
+        // Procura um bot adversário próximo (<= 750 unidades) que possa escutar
         var allPlayers = Utilities.GetPlayers();
         var listenerBot = allPlayers
             .Where(p => p != null && p.IsValid && p.IsBot && p.PawnIsAlive && p.Team != walker.Team)
@@ -316,8 +400,21 @@ public class TacticalCalloutSystem
 
         if (listenerBot != null)
         {
-            _calloutCooldowns[cooldownKey] = now;
-            PrintTeamCallout(listenerBot, $"👂 Ouvi passos perto de {sectorName}.", "holdpos");
+            // O passo veio de um ADVERSÁRIO em relação ao ouvinte: registra como inimigo
+            RecordAudioActivity(sectorName, walker.Slot, isEnemy: true, isGrenade: false);
+
+            float now = Server.CurrentTime;
+            string cooldownKey = $"audio_{sectorName}";
+            if (!_calloutCooldowns.TryGetValue(cooldownKey, out float lastAudioCall) || now - lastAudioCall >= 15.0f)
+            {
+                _calloutCooldowns[cooldownKey] = now;
+                PrintTeamCallout(listenerBot, $"👂 Ouvi passos perto de {sectorName}.", "holdpos");
+            }
+        }
+        else
+        {
+            // O passo veio de um ALIADO ou nenhum inimigo estava no alcance: NUNCA marcar como isEnemy: true
+            RecordAudioActivity(sectorName, walker.Slot, isEnemy: false, isGrenade: false);
         }
     }
 
@@ -334,10 +431,12 @@ public class TacticalCalloutSystem
         }
 
         var list = _recentSectorActivity[sector];
-        list.Add((now, playerSlot, isEnemy, isGrenade));
-
-        // Limpa eventos com mais de 10s
-        list.RemoveAll(a => now - a.Time > 10.0f);
+        lock (list)
+        {
+            list.Add((now, playerSlot, isEnemy, isGrenade));
+            // Limpa eventos com mais de 10s
+            list.RemoveAll(a => now - a.Time > 10.0f);
+        }
     }
 
     public bool HasRecentAudioNear(string sector, float maxSecondsAgo = 5.0f)
@@ -416,8 +515,12 @@ public class TacticalCalloutSystem
     {
         var weaponServices = player.PlayerPawn.Value?.WeaponServices;
         var activeWeapon = weaponServices?.ActiveWeapon.Value;
-        string wname = activeWeapon?.DesignerName ?? "";
-        return wname.Contains("awp", StringComparison.OrdinalIgnoreCase);
+        if (activeWeapon != null && activeWeapon.IsValid)
+        {
+            string wname = activeWeapon.DesignerName ?? "";
+            return wname.Contains("awp", StringComparison.OrdinalIgnoreCase);
+        }
+        return false;
     }
 
     private static bool HasC4Equipped(CCSPlayerController player)
@@ -428,7 +531,7 @@ public class TacticalCalloutSystem
         foreach (var handle in weaponServices.MyWeapons)
         {
             var w = handle.Value;
-            if (w != null && w.DesignerName != null && w.DesignerName.Contains("c4", StringComparison.OrdinalIgnoreCase))
+            if (w != null && w.IsValid && !string.IsNullOrEmpty(w.DesignerName) && w.DesignerName.Contains("c4", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }

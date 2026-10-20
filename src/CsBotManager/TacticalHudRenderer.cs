@@ -141,12 +141,16 @@ public class TacticalHudRenderer
         string voiceHeader = "";
         if (voiceBridge != null && !string.IsNullOrEmpty(voiceBridge.LastVoiceCommand))
         {
-            voiceHeader = $"<font color='#00FFCC' size='2'>🎙️ <i>\"{voiceBridge.LastVoiceCommand}\"</i></font><br>";
+            string sanitizedVoiceCmd = System.Net.WebUtility.HtmlEncode(voiceBridge.LastVoiceCommand);
+            voiceHeader = $"<font color='#00FFCC' size='2'>🎙️ <i>\"{sanitizedVoiceCmd}\"</i></font><br>";
         }
 
+        string sanitizedTacticName = System.Net.WebUtility.HtmlEncode(plan.TacticName ?? "");
+        string sanitizedTacticSummary = System.Net.WebUtility.HtmlEncode(plan.TacticSummary ?? "");
+
         return $@"
-{voiceHeader}<font color='{stateColor}' size='3'><b>[{stateName}]</b></font> {tierBadge} <font color='{tempoColor}' size='3'><b>[{tempoName}]</b></font> {phaseBadge}{tacticalBadge}{clockBadge} <font color='#00E5FF' size='3'><b>⚡ {plan.TacticName}</b></font><br>
-<font color='#FFFFFF' size='2'>{plan.TacticSummary}</font><br>
+{voiceHeader}<font color='{stateColor}' size='3'><b>[{stateName}]</b></font> {tierBadge} <font color='{tempoColor}' size='3'><b>[{tempoName}]</b></font> {phaseBadge}{tacticalBadge}{clockBadge} <font color='#00E5FF' size='3'><b>⚡ {sanitizedTacticName}</b></font><br>
+<font color='#FFFFFF' size='2'>{sanitizedTacticSummary}</font><br>
 <font color='#DDDDDD' size='2'>{botSummary}</font><br>
 <font color='#888888' size='1'><i>[!executar / !go | !tatica &lt;call&gt; | !pos &lt;setor&gt; | !flash &lt;setor&gt; | PTT: Segure V]</i></font>
 ";

@@ -18,6 +18,7 @@ public class SiteClearAndPlantController
 
     public bool IsClearingActive => _isClearingActive;
     public bool HasAnnouncedPlant => _hasAnnouncedPlant;
+    public TacticalCalloutSystem? CalloutSystem { get; set; }
 
     public SiteClearAndPlantController(
         BasePlugin plugin,
@@ -91,11 +92,10 @@ public class SiteClearAndPlantController
             return false;
         }
 
-        // b) Condição: Nenhum CT visível ou vivo dentro da área imediata do bomb (raio <= 750u)
+        // b) Condição: Nenhum CT perceptível de forma legítima na área imediata do bomb (F-009 / Bloco 1)
         bool enemyInSite = allPlayers
             .Where(p => p != null && p.IsValid && p.PawnIsAlive && p.Team == CsTeam.CounterTerrorist)
-            .Any(p => p.PlayerPawn.Value?.AbsOrigin != null &&
-                      (p.PlayerPawn.Value.AbsOrigin - botPos).Length() <= 750.0f);
+            .Any(enemy => TacticalCalloutSystem.CanBotPerceiveEnemy(carrierBot, enemy, CalloutSystem, _mapProfileManager));
 
         if (enemyInSite)
         {
