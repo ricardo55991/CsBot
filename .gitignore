@@ -1,0 +1,72 @@
+# ==============================================================================
+# .gitignore - CsBot (CS2 Source 2 C# .NET 10.0, Python, Server & Tooling)
+# ==============================================================================
+
+# --- Compilação & Build (.NET / C#) ---
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+*.pdb
+*.ilk
+*.exp
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.pidb
+*.booproj
+*.svclog
+
+# Binários de compilação gerados (as DLLs implantadas vivem no servidor dedicado)
+src/**/bin/
+src/**/obj/
+*.dll.config
+
+# --- IDEs & Editores de Código ---
+.vs/
+.vscode/
+.idea/
+*.swp
+*~
+*.bak
+
+# --- Graphify & Cache de Grafo de Conhecimento ---
+graphify-out/
+.graphify*
+needs_update
+
+# --- Python (__pycache__, Ambientes Virtuais & Cache) ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.pytest_cache/
+.mypy_cache/
+env/
+venv/
+.venv/
+ENV/
+
+# --- Logs, Telemetria & Arquivos de Execução ---
+*.log
+debug_logs/
+*.tmp
+
+# --- Banco de Dados Local & Dumps ---
+*.sqlite
+*.sqlite3
+*.db
+
+# --- Sistema Operacional (Windows / macOS) ---
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
+
+# --- Arquivos Temporários / Documentos de Transcrição Pessoal ---
+ConversaInicial.pdf

@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <AssemblyName>CsBotManager</AssemblyName>
+    <RootNamespace>CsBotManager</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="CounterStrikeSharp.API">
+      <HintPath>H:\CS2_AI_Server\game\csgo\addons\counterstrikesharp\api\CounterStrikeSharp.API.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BotControllerApi">
+      <HintPath>H:\CS2_AI_Server\game\csgo\addons\counterstrikesharp\shared\BotControllerApi\BotControllerApi.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MapProfiles\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="DeployPlugin" AfterTargets="Build">
+    <ItemGroup>
+      <PluginFiles Include="$(TargetDir)$(TargetName).dll" />
+      <PluginFiles Include="$(TargetDir)$(TargetName).pdb" Condition="Exists('$(TargetDir)$(TargetName).pdb')" />
+      <PluginFiles Include="$(TargetDir)*.json" />
+      <MapProfileFiles Include="$(TargetDir)MapProfiles\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="H:\CS2_AI_Server\game\csgo\addons\counterstrikesharp\plugins\CsBotManager\" />
+    <Copy SourceFiles="@(MapProfileFiles)" DestinationFolder="H:\CS2_AI_Server\game\csgo\addons\counterstrikesharp\plugins\CsBotManager\MapProfiles\" />
+  </Target>
+
+</Project>

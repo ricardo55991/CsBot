@@ -1,0 +1,215 @@
+{
+  "map_name": "de_dust2",
+  "friendly_name": "Dust II",
+  "chokepoints": [
+    {
+      "id": "fundo_a",
+      "name": "Portas do Fundo A",
+      "sector": "Bombsite A",
+      "associated_bomb": "A",
+      "x": 1200.0,
+      "y": 2400.0,
+      "z": 60.0,
+      "radius": 400.0,
+      "synonyms": [
+        "fundo",
+        "long",
+        "long a",
+        "portas fundo"
+      ]
+    },
+    {
+      "id": "varanda_d2",
+      "name": "Varanda A",
+      "sector": "Bombsite A",
+      "associated_bomb": "A",
+      "x": 200.0,
+      "y": 1800.0,
+      "z": 100.0,
+      "radius": 350.0,
+      "synonyms": [
+        "varanda",
+        "short",
+        "catwalk"
+      ]
+    },
+    {
+      "id": "portas_meio",
+      "name": "Portas do Meio",
+      "sector": "Mid",
+      "associated_bomb": "Mid",
+      "x": -400.0,
+      "y": 1500.0,
+      "z": -50.0,
+      "radius": 320.0,
+      "synonyms": [
+        "portas meio",
+        "meio",
+        "mid doors"
+      ]
+    },
+    {
+      "id": "escuro_b",
+      "name": "Túnel Escuro B",
+      "sector": "Bombsite B",
+      "associated_bomb": "B",
+      "x": -800.0,
+      "y": 1000.0,
+      "z": 50.0,
+      "radius": 360.0,
+      "synonyms": [
+        "escuro",
+        "tunnels",
+        "b tunnels",
+        "tunel b"
+      ]
+    },
+    {
+      "id": "portas_b",
+      "name": "Portas do Bomb B",
+      "sector": "Bombsite B",
+      "associated_bomb": "B",
+      "x": -1400.0,
+      "y": 2200.0,
+      "z": 0.0,
+      "radius": 300.0,
+      "synonyms": [
+        "portas b",
+        "b doors",
+        "porta b"
+      ]
+    }
+  ],
+  "spots": [
+    {
+      "id": "ct_d2_a_car",
+      "name": "Carro Fundo A",
+      "sector": "Bombsite A",
+      "side": "CT",
+      "x": 1600.0,
+      "y": 2100.0,
+      "z": 60.0,
+      "pitch": 0.0,
+      "yaw": 90.0,
+      "recommended_stance": "PASSIVE_HOLD",
+      "is_off_angle": false,
+      "fallback_spot_id": "ct_d2_a_site",
+      "description": "Controle longo de Fundo"
+    },
+    {
+      "id": "ct_d2_a_site",
+      "name": "Plataforma A",
+      "sector": "Bombsite A",
+      "side": "CT",
+      "x": 1000.0,
+      "y": 2400.0,
+      "z": 90.0,
+      "pitch": 0.0,
+      "yaw": 45.0,
+      "recommended_stance": "PASSIVE_HOLD",
+      "is_off_angle": false,
+      "fallback_spot_id": "ct_d2_spawn",
+      "description": "Marcação de cruzamento Fundo e Varanda"
+    },
+    {
+      "id": "ct_d2_mid_doors",
+      "name": "Portas do Meio CT",
+      "sector": "Mid",
+      "side": "CT",
+      "x": -350.0,
+      "y": 1900.0,
+      "z": -40.0,
+      "pitch": 0.0,
+      "yaw": -90.0,
+      "recommended_stance": "JIGGLE_INFO",
+      "is_off_angle": false,
+      "fallback_spot_id": "ct_d2_spawn",
+      "description": "Controle com AWP na fresta do meio"
+    },
+    {
+      "id": "ct_d2_b_car",
+      "name": "Carro B",
+      "sector": "Bombsite B",
+      "side": "CT",
+      "x": -1500.0,
+      "y": 2500.0,
+      "z": 10.0,
+      "pitch": 0.0,
+      "yaw": -45.0,
+      "recommended_stance": "PASSIVE_HOLD",
+      "is_off_angle": false,
+      "fallback_spot_id": "ct_d2_b_window",
+      "description": "Âncora defensiva de túneis"
+    },
+    {
+      "id": "ct_d2_b_window",
+      "name": "Janela B",
+      "sector": "Bombsite B",
+      "side": "CT",
+      "x": -1300.0,
+      "y": 2700.0,
+      "z": 50.0,
+      "pitch": 0.0,
+      "yaw": -30.0,
+      "recommended_stance": "ONE_AND_DONE",
+      "is_off_angle": true,
+      "fallback_spot_id": "ct_d2_spawn",
+      "description": "Off-angle na janela do Bomb B"
+    },
+    {
+      "id": "tr_d2_staging_t_spawn",
+      "name": "Staging Base TR",
+      "sector": "Mid",
+      "side": "TR",
+      "x": -300.0,
+      "y": -800.0,
+      "z": 100.0,
+      "pitch": 0.0,
+      "yaw": 90.0,
+      "recommended_stance": "PASSIVE_HOLD",
+      "is_off_angle": false,
+      "fallback_spot_id": "tr_d2_spawn",
+      "description": "Staging inicial"
+    },
+    {
+      "id": "tr_d2_exec_b_site",
+      "name": "Exec Bomb B",
+      "sector": "Bombsite B",
+      "side": "TR",
+      "x": -1600.0,
+      "y": 2400.0,
+      "z": 10.0,
+      "pitch": 0.0,
+      "yaw": 45.0,
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "is_off_angle": false,
+      "fallback_spot_id": "tr_d2_staging_t_spawn",
+      "description": "Invasão Bomb B"
+    },
+    {
+      "id": "tr_d2_exec_a_site",
+      "name": "Exec Bomb A",
+      "sector": "Bombsite A",
+      "side": "TR",
+      "x": 1100.0,
+      "y": 2300.0,
+      "z": 90.0,
+      "pitch": 0.0,
+      "yaw": 90.0,
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "is_off_angle": false,
+      "fallback_spot_id": "tr_d2_staging_t_spawn",
+      "description": "Invasão Bomb A"
+    }
+  ],
+  "voice_synonyms": {
+    "fundo": "Fundo A",
+    "long": "Fundo A",
+    "varanda": "Varanda A",
+    "short": "Varanda A",
+    "meio": "Meio",
+    "escuro": "Túnel Escuro",
+    "tunel": "Túnel Escuro",
+    "porta b": "Portas B"
+  }
+}
