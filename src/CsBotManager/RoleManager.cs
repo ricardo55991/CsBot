@@ -24,13 +24,18 @@ public class RoleManager
         LockedSectorName = string.Empty;
     }
 
-    public void AssignRolesToBots(List<CCSPlayerController> bots)
+    public void AssignRolesToBots(List<CCSPlayerController> bots, bool clearExisting = false)
     {
-        _botRoles.Clear();
-        var roles = new[] { BotRole.AWPer, BotRole.EntryFragger, BotRole.Rotator, BotRole.Anchor };
+        if (clearExisting)
+        {
+            _botRoles.Clear();
+        }
+
+        var roles = new[] { BotRole.AWPer, BotRole.EntryFragger, BotRole.Rotator, BotRole.Anchor, BotRole.Rotator };
 
         for (int i = 0; i < bots.Count; i++)
         {
+            if (bots[i] == null || !bots[i].IsValid) continue;
             var role = roles[i % roles.Length];
             _botRoles[bots[i].Slot] = role;
         }

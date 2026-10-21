@@ -334,6 +334,7 @@ public class TacticalCalloutSystem
         var victimTeam = victim.Team;
         string victimName = victim.PlayerName;
         int victimSlot = victim.Slot;
+        string capturedWeapon = @event.Weapon ?? "";
 
         // Posição de onde a vítima morreu
         Vector? deathPos = null;
@@ -356,7 +357,7 @@ public class TacticalCalloutSystem
 
             int killerSlot = (killer != null && killer.IsValid) ? killer.Slot : -1;
             string killerName = (killer != null && killer.IsValid) ? killer.PlayerName : "Inimigo";
-            string weapon = @event.Weapon ?? "";
+            string weapon = capturedWeapon;
 
             // Verifica dano causado pela vítima no round
             int dmgDealtToKiller = killerSlot >= 0 ? _damageMatrix.GetValueOrDefault((victimSlot, killerSlot), 0) : 0;

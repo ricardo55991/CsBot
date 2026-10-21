@@ -9,7 +9,7 @@ public class OllamaIglService
     private readonly HttpClient _httpClient;
     private readonly List<RoundHistoryItem> _history = new();
     private readonly object _historyLock = new();
-    private const string OllamaEndpoint = "http://localhost:11434/api/generate";
+    private const string OllamaEndpoint = "http://127.0.0.1:11434/api/generate";
 
     public OllamaIglService()
     {
@@ -204,8 +204,8 @@ Responda APENAS um JSON válido seguindo esta estrutura exata:
                 keep_alive = -1,
                 options = new
                 {
-                    temperature = 0.25,
-                    num_predict = 500
+                    temperature = 0.4,
+                    num_predict = 220
                 }
             };
 
@@ -215,7 +215,20 @@ Responda APENAS um JSON válido seguindo esta estrutura exata:
                 var content = await response.Content.ReadFromJsonAsync<JsonElement>(cancellationToken: cancellationToken);
                 if (content.TryGetProperty("response", out var rawJson))
                 {
-                    string jsonString = rawJson.GetString() ?? string.Empty;
+                    string jsonString = (rawJson.GetString() ?? string.Empty).Trim();
+                    if (jsonString.StartsWith("```json", StringComparison.OrdinalIgnoreCase))
+                    {
+                        jsonString = jsonString.Substring(7);
+                    }
+                    else if (jsonString.StartsWith("```"))
+                    {
+                        jsonString = jsonString.Substring(3);
+                    }
+                    if (jsonString.EndsWith("```"))
+                    {
+                        jsonString = jsonString.Substring(0, jsonString.Length - 3);
+                    }
+                    jsonString = jsonString.Trim();
                     var parsed = JsonSerializer.Deserialize<TacticalPlan>(jsonString);
                     if (parsed != null && !string.IsNullOrEmpty(parsed.TacticName))
                     {
@@ -301,11 +314,11 @@ Responda APENAS um JSON válido seguindo esta estrutura exata:
         bool isCt = team == CsTeam.CounterTerrorist;
         var plan = new TacticalPlan
         {
-            TacticName = isCt ? "Defesa Padrão Cadenciada" : "Controle de Mapa Padrão",
-            TacticSummary = isCt ? "Controle de posições 2-1-2 com paciência" : "Staging nos acessos e invasão coordenada",
-            RoundTempo = buyState == BuyState.FORCE_BUY ? RoundTempo.FAST_CONTACT : RoundTempo.SLOW_DEFAULT,
-            StagingDurationSeconds = buyState == BuyState.FORCE_BUY ? 0.0f : 18.0f,
-            RawJson = "{\"fallback\": true, \"tactic_name\": \"" + (isCt ? "Defesa Padrão Cadenciada" : "Controle de Mapa Padrão") + "\"}"
+            TacticName = isCt ? "Defesa Padrão 2-1-2" : (buyState == BuyState.FORCE_BUY ? "Rush B com Smoke Janela" : "Execução A com Domínio Palácio"),
+            TacticSummary = isCt ? "Marcação de posições 2 A, 1 Meio e 2 B com paciência e crossfire" : (buyState == BuyState.FORCE_BUY ? "Entrada rápida na B explorando o apartamento" : "Staging controlado no palácio e rampa A com utilitárias"),
+            RoundTempo = (isCt || buyState != BuyState.FORCE_BUY) ? RoundTempo.SLOW_DEFAULT : RoundTempo.FAST_CONTACT,
+            StagingDurationSeconds = (isCt || buyState != BuyState.FORCE_BUY) ? 18.0f : 0.0f,
+            RawJson = "{\"fallback\": true, \"side\": \"" + (isCt ? "CT" : "TR") + "\"}"
         };
 
         EnsureValidBotOrders(plan, team, mapProfileManager);

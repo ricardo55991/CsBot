@@ -38,6 +38,7 @@ public class CsBotManagerPlugin : BasePlugin
     private TrMacroPivotController? _trPivotController;
     private MobilityController? _mobilityController;
     private CombatAdapter? _combatAdapter;
+    private MicroMoveEngine? _microMoveEngine;
 
     private TacticalPlan _currentPlan = new();
     private int _currentRound = 0;
@@ -108,6 +109,7 @@ public class CsBotManagerPlugin : BasePlugin
         base.Load(hotReload);
 
         _mapProfileManager.LoadProfile(Server.MapName, ModuleDirectory);
+        _microMoveEngine?.TryLoadMapModel(Server.MapName);
 
         _pacingController = new PacingAndFallbackController(this, _mapProfileManager, _roleManager, _locomotionDriver);
         _ctController = new CtDefenseController(this, _mapProfileManager, _roleManager, _locomotionDriver);
@@ -125,9 +127,22 @@ public class CsBotManagerPlugin : BasePlugin
 
         _mobilityController = new MobilityController(this, _mapProfileManager, _locomotionDriver);
         _combatAdapter = new CombatAdapter(this, _locomotionDriver, _midRoundAdapter);
+        _microMoveEngine = new MicroMoveEngine(_mapProfileManager, _roleManager)
+        {
+            TelemetryLogger = _telemetryLogger, CalloutSystem = _calloutSystem
+        };
+        _microMoveEngine.TryLoadMapModel(Server.MapName);
 
         _locomotionDriver.PlantController = _clearAndPlantController;
         _locomotionDriver.RetakeBrain = _retakeAndDefuseBrain;
+        _locomotionDriver.MicroMoveEngine = _microMoveEngine;
+        _locomotionDriver.SetPlugin(this);
+
+        RegisterListener<Listeners.OnMapStart>(mapName =>
+        {
+            _mapProfileManager.LoadProfile(mapName, ModuleDirectory);
+            _microMoveEngine?.TryLoadMapModel(mapName);
+        });
         _locomotionDriver.UtilityCoordinator = _utilityCoordinator;
         _locomotionDriver.MapProfileManager = _mapProfileManager;
         if (_utilityCoordinator != null)
@@ -250,12 +265,20 @@ public class CsBotManagerPlugin : BasePlugin
 
         _mapProfileManager.LoadProfile(Server.MapName, ModuleDirectory);
 
+        // 0.05s: Higienizacao preventiva de compras frame-0 nativas da Valve
+        AddRoundTimer(0.05f, () =>
+        {
+            var pList = GetActivePlayers().Where(p => p.IsBot).ToList();
+            _economyManager.SanitizeNativePurchasesAndRefund(pList);
+        });
+
         // 0.3s: Análise Econômica e Decisão Tática
         AddRoundTimer(0.3f, () =>
         {
             var players = GetActivePlayers();
             var human = players.FirstOrDefault(p => !p.IsBot);
-            var humanTeam = human?.Team ?? CsTeam.CounterTerrorist;
+            bool isSpectatorMode = (human == null || human.Team == CsTeam.Spectator || human.Team == CsTeam.None);
+            var humanTeam = isSpectatorMode ? CsTeam.CounterTerrorist : (human?.Team ?? CsTeam.CounterTerrorist);
             var enemyTeam = humanTeam == CsTeam.CounterTerrorist ? CsTeam.Terrorist : CsTeam.CounterTerrorist;
 
             var teamMembers = players.Where(p => p.Team == humanTeam).ToList();
@@ -265,10 +288,24 @@ public class CsBotManagerPlugin : BasePlugin
             var ctBots = players.Where(p => p.Team == CsTeam.CounterTerrorist && p.IsBot).ToList();
             var trBots = players.Where(p => p.Team == CsTeam.Terrorist && p.IsBot).ToList();
 
-            _roleManager.AssignRolesToBots(teamBots);
+            // Item 1: Limpa qualquer arma bloqueada comprada no frame-0 e estorna saldo antes da analise
+            _economyManager.SanitizeNativePurchasesAndRefund(players.Where(p => p.IsBot).ToList());
 
-            var enemySetup = _mapProfileManager.GenerateEnemyTeamSetup(enemyBots, enemyTeam);
-            _roleManager.SetEnemyBotSpots(enemySetup);
+            // Item 2: Atribui papeis taticos a AMBOS os times (5 slots sem duplicar AWPer)
+            _roleManager.AssignRolesToBots(ctBots, clearExisting: true);
+            _roleManager.AssignRolesToBots(trBots, clearExisting: false);
+
+            if (isSpectatorMode)
+            {
+                // Modo Espectador (Steam Link): Atribui spots TR para trBots
+                var enemySetup = _mapProfileManager.GenerateEnemyTeamSetup(trBots, CsTeam.Terrorist);
+                _roleManager.SetEnemyBotSpots(enemySetup);
+            }
+            else
+            {
+                var enemySetup = _mapProfileManager.GenerateEnemyTeamSetup(enemyBots, enemyTeam);
+                _roleManager.SetEnemyBotSpots(enemySetup);
+            }
 
             int humanLossBonus = humanTeam == CsTeam.CounterTerrorist ? GetLossBonus(_ctLossStreak) : GetLossBonus(_trLossStreak);
             var buyState = _economyManager.AnalyzeTeamEconomy(teamMembers, _currentRound, humanLossBonus, humanTeam);
@@ -455,7 +492,8 @@ public class CsBotManagerPlugin : BasePlugin
 
         var players = GetActivePlayers();
         var human = players.FirstOrDefault(p => !p.IsBot);
-        var humanTeam = human?.Team ?? CsTeam.CounterTerrorist;
+        bool isSpectatorMode = (human == null || human.Team == CsTeam.Spectator || human.Team == CsTeam.None);
+        var humanTeam = isSpectatorMode ? CsTeam.CounterTerrorist : (human?.Team ?? CsTeam.CounterTerrorist);
         var enemyTeam = humanTeam == CsTeam.CounterTerrorist ? CsTeam.Terrorist : CsTeam.CounterTerrorist;
 
         var teamBots = players.Where(p => p.Team == humanTeam && p.IsBot).ToList();
@@ -464,14 +502,21 @@ public class CsBotManagerPlugin : BasePlugin
         var ctBots = players.Where(p => p.Team == CsTeam.CounterTerrorist && p.IsBot).ToList();
         var trBots = players.Where(p => p.Team == CsTeam.Terrorist && p.IsBot).ToList();
 
-        // C-01A & C-01B: Despacha posições físicas via NavMesh para aliados E inimigos
-        _pacingController?.OnRoundFreezeEnd(_currentPlan, teamBots, enemyBots);
-
-        // Controladores da Fase 4
-        _ctController?.OnRoundFreezeEnd(_currentPlan, ctBots);
-        // C-02B: Passa ctBots para o MidRoundAdapter
-        _midRoundAdapter?.OnRoundFreezeEnd(_currentPlan, trBots, ctBots, human);
-        _intentTracker?.OnRoundFreezeEnd(_currentPlan, human, teamBots);
+        if (isSpectatorMode)
+        {
+            // Modo Espectador (Steam Link): Ambos os times entram em combate tático coordenado
+            _ctController?.OnRoundFreezeEnd(_currentPlan, ctBots);
+            _pacingController?.OnRoundFreezeEnd(_currentPlan, ctBots, trBots);
+            _midRoundAdapter?.OnRoundFreezeEnd(_currentPlan, trBots, ctBots, null);
+        }
+        else
+        {
+            // C-01A & C-01B: Despacha posições físicas via NavMesh para aliados E inimigos
+            _pacingController?.OnRoundFreezeEnd(_currentPlan, teamBots, enemyBots);
+            _ctController?.OnRoundFreezeEnd(_currentPlan, ctBots);
+            _midRoundAdapter?.OnRoundFreezeEnd(_currentPlan, trBots, ctBots, human);
+            _intentTracker?.OnRoundFreezeEnd(_currentPlan, human, teamBots);
+        }
 
         // Clock Sense Tracker
         _clockTimer?.Kill();
@@ -592,6 +637,12 @@ public class CsBotManagerPlugin : BasePlugin
         var victim = @event.Userid;
         var killer = @event.Attacker;
 
+        // PONTO 6: Trade Kill e Alerta de Ameaça Imediata para aliados próximos (< 1100u)
+        if (victim != null && killer != null && killer.IsValid && killer.PlayerPawn.Value?.AbsOrigin != null)
+        {
+            _locomotionDriver.AlertNearbyTeammatesOfThreat(killer.PlayerPawn.Value.AbsOrigin, victim.Slot, victim.Team, 1100f);
+        }
+
         var allTrBots = players.Where(p => p.Team == CsTeam.Terrorist && p.IsBot).ToList();
         if (victim != null && victim.Team == CsTeam.Terrorist)
         {
@@ -651,7 +702,7 @@ public class CsBotManagerPlugin : BasePlugin
 
         // Bloco 3 / F-005: Executa HandleBombPlanted para definir se o time entrou em SAVE TÁTICO antes de notificar o locomotionDriver
         _midRoundAdapter?.HandleBombPlanted(@event, _currentPlan, ctBots, trBots);
-        _locomotionDriver.NotifyBombState(true, bombPos, _currentPlan.IsTacticalSaveActive);
+        _locomotionDriver.NotifyBombState(true, bombPos, _currentPlan.IsTacticalSaveActive, ctBots);
 
         return HookResult.Continue;
     }
@@ -999,6 +1050,42 @@ public class CsBotManagerPlugin : BasePlugin
 
         string noteText = string.Join(" ", Enumerable.Range(1, info.ArgCount - 1).Select(i => info.GetArg(i)));
         _telemetryLogger?.RecordPlayerNote(player, noteText, GetActivePlayers(), _currentPlan);
+    }
+
+    [ConsoleCommand("css_mlmove", "Exibe status e benchmark do motor MLMove 16Hz / ONNX")]
+    [ConsoleCommand("css_mlmove_status", "Exibe status e benchmark do motor MLMove 16Hz / ONNX")]
+    public void CommandMlMoveStatus(CCSPlayerController? player, CommandInfo info)
+    {
+        if (_microMoveEngine == null) return;
+        _microMoveEngine.TryLoadMapModel(Server.MapName);
+        string status = _microMoveEngine.BackendName;
+        string msg = $"[CsBot MLMove 16Hz] Status: {status} | Inferências Totais: {_microMoveEngine.TotalOnnxInferences} | Última Latência CPU: {_microMoveEngine.LastInferenceLatencyMs:F2}ms";
+        Server.PrintToConsole(msg);
+        if (player != null && player.IsValid)
+        {
+            player.PrintToChat($" {ChatColors.Green}[CsBot MLMove]{ChatColors.Default} {status} (Inferências: {_microMoveEngine.TotalOnnxInferences})");
+        }
+        else
+        {
+            Server.PrintToChatAll($" {ChatColors.Green}[CsBot MLMove]{ChatColors.Default} {status}");
+        }
+    }
+
+    [ConsoleCommand("css_gravardemo", "Inicia ou para gravacao de demo CSTV para o pipeline MLMove")]
+    public void CommandGravarDemo(CCSPlayerController? player, CommandInfo info)
+    {
+        string arg = info.ArgCount >= 2 ? info.GetArg(1).ToLowerInvariant() : "start";
+        if (arg == "stop" || arg == "parar" || arg == "0")
+        {
+            Server.ExecuteCommand("tv_stoprecord");
+            Server.PrintToChatAll($" {ChatColors.Yellow}[CsBot CSTV]{ChatColors.Default} Gravação de demo CSTV encerrada.");
+        }
+        else
+        {
+            string demoName = $"csbot_{Server.MapName}_{DateTime.Now:yyyyMMdd_HHmmss}";
+            Server.ExecuteCommand($"tv_record {demoName}");
+            Server.PrintToChatAll($" {ChatColors.Green}[CsBot CSTV]{ChatColors.Default} Gravando demo CSTV: {ChatColors.Gold}{demoName}.dem{ChatColors.Default}");
+        }
     }
 
     private List<CCSPlayerController> GetActivePlayers()

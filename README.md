@@ -25,7 +25,7 @@
   - *Smoke Defuse & Fake Roulette:* Lança smoke na bomba antes de desarmar e varia entre fake clássico, tap & step out, half defuse e stick a frio.
   - *Prioridade Inteligente de Defuse:* CT sem kit cede imediatamente a vez para aliado com kit a até 400u, reduzindo o tempo de 10s para 5s enquanto o bot sem kit dá cobertura agachado.
 * **Macro-Pivôs TR de Mid-Round:** Reação a paredão de utilitárias (*Brick Wall Pivot* com 60% espera, 34% default, 6% giro pro outro bomb), oportunidade de invasão rápida com abate do Lurker isolado e conversão de first-kill em split.
-* **Arsenal Web UI (Porta 8080):** Painel web visual conectado ao banco MariaDB portátil local (`weaponpaints`) para escolher facas, luvas, float wear e presets de 1 clique para Gemas Doppler raras (Ruby, Sapphire, Black Pearl, Emerald, Fade 100% e Blue Gem).
+* **Arsenal Web UI & Launcher Unificado (`abrir_arsenal_skins.bat`):** Painel web visual (FastAPI + JS) conectado ao banco MariaDB portátil local (`weaponpaints`) na porta `8080`. Conta com catálogo completo de 20 modelos de facas (556 pinturas mapeadas com preview global simultâneo de acabamentos), 35 armas convencionais (1.456 skins completas), 94 luvas, 15 presets de acabamentos (Doppler Phases 1-4, Ruby, Sapphire, Black Pearl, Emerald, Gamma, Fade 100%, Fire & Ice, Blue Gem), resolução inteligente de Paint IDs específicos da Valve, aviso visual para skins inexistentes no CS2 e aba "Arsenal Equipado" com fotos em alta definição, StatTrak, NameTags, desgaste de float e filtro dinâmico em tempo real por equipe (CT / TR / AMBOS).
 * **Telemetria Forense sob Demanda (`!debug` e `!nota`):** Gravação de relatórios de partida estruturados em Markdown com snapshots instantâneos de coordenadas, vida, inventário e detector automático de anomalias.
 
 ---
@@ -36,6 +36,7 @@
 CsBot/
 ├── .gitignore                      # Regras otimizadas para .NET 10, Python e CS2
 ├── README.md                       # Documentação principal do projeto
+├── abrir_arsenal_skins.bat         # Launcher unificado do Arsenal Web UI (FastAPI + MariaDB + Navegador)
 ├── start_cs2_ai_server.bat         # Inicializador do servidor dedicado isolado
 │
 ├── docs/                           # Documentação detalhada e relatórios técnicos
@@ -109,13 +110,23 @@ No console do seu cliente CS2 Vanilla, conecte-se via:
 connect 127.0.0.1:27016
 ```
 
+### 4. Personalização de Skins e Arsenal (Web UI)
+Para abrir o catálogo visual de facas, luvas e skins a qualquer momento:
+
+```cmd
+abrir_arsenal_skins.bat
+```
+
+O launcher verifica a conectividade com o MariaDB, sobe o backend FastAPI na porta `8080` e abre seu navegador padrão automaticamente. No CS2, basta digitar `!wp` no chat para sincronizar suas novas facas e pinturas instantaneamente.
+
 ---
 
 ## 📖 Manuais e Referências
 
 * Para aprender todos os comandos de texto e chamadas por voz: [**Manual do Jogador & Guia de Comandos**](docs/MANUAL_DO_JOGADOR_E_COMANDOS.md).
 * Para a especificação técnica aprofundada de todas as fases: [**Guia de Arquitetura do Projeto**](docs/GUIA_PROJETO_CSBOT.md).
-* Para a auditoria forense do código e motor físico: [**Relatório de Auditoria Técnica**](docs/RELATORIO_AUDITORIA_TECNICA.md).
+* Para a auditoria técnica aprofundada do motor físico e regras de integridade: [**Relatório de Auditoria Técnica V2**](docs/RELATORIO_AUDITORIA_TECNICA_V2.md) e [**Bateria de Ajuste e Validação**](docs/BATERIA_SEGUNDO_AJUSTE_VALIDACAO.md).
+* Para a auditoria forense inicial do código: [**Relatório de Auditoria Técnica**](docs/RELATORIO_AUDITORIA_TECNICA.md).
 
 ---
 

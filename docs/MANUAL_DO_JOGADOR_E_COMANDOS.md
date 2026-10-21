@@ -209,12 +209,37 @@ Durante toda a partida, uma barra visual leve é renderizada no topo central da 
 * **Economia:** Status econômico do round (`FULL_BUY`, `FORCE`, `ECO`).
 
 ### 🎨 Arsenal Web UI (Painel de Skins & Facas na Porta 8080)
-Conectado ao banco MariaDB portátil local (`weaponpaints`), o servidor disponibiliza uma interface web no navegador (`http://localhost:8080`):
-* **Facas e Luvas:** Escolha entre Karambit, Butterfly, M9 Bayonet, Skeleton, Talon e luvas Specialist, Sport, Moto, etc.
-* **Gemas Doppler Raras (1 Clique):** Presets automáticos para **Ruby (415)**, **Sapphire (416)**, **Black Pearl (417)**, **Emerald (568)**, **Fade 100% (38)** e **Blue Gem (44 / Seed 661)**.
-* **Float Wear:** Slider de desgaste de 0.0001 (Factory New) a 0.9999 (Battle-Scarred).
-* **StatTrak & NameTag:** Contador de abates e personalização de nomes.
-* **Sincronização no Jogo:** As escolhas feitas na Web UI refletem imediatamente no jogo através do comando `!wp`.
+Conectado ao banco MariaDB portátil local (`weaponpaints`), o CsBot disponibiliza uma interface web no navegador (`http://localhost:8080`) com a mesma identidade visual Panorama do CS2:
+
+#### 🚀 Como Abrir o Painel (Launcher 1-Clique)
+Basta dar um duplo clique no arquivo `abrir_arsenal_skins.bat` na raiz do projeto `CsBot/`.
+1. O script verifica se o MariaDB está rodando na porta 3306 (e o inicializa automaticamente se estiver desligado).
+2. Sobe o backend unificado FastAPI na porta 8080.
+3. Abre seu navegador padrão já posicionado no painel (`http://localhost:8080`).
+
+#### 🔪 Catálogo de 20 Facas & Visualização Global de Acabamentos
+* **20 Modelos de Facas Oficiais:** Karambit, Butterfly, M9 Bayonet, Bayonet, Flip, Gut, Huntsman, Falchion, Shadow Daggers, Bowie, Ursus, Navaja, Stiletto, Talon, Classic Knife, Skeleton, Survival, Nomad, Paracord e Kukri.
+* **15 Presets de 1 Clique:** Doppler Phase 1 a 4, **Ruby (415)**, **Sapphire (416 / 619)**, **Black Pearl (417 / 617)**, **Emerald (568)**, Gamma Doppler Phase 1 a 4, **Fade 100% (38)**, **Fire & Ice (Marble Fade)**, **Blue Gem (44 / Seed 661)**, **Tiger Tooth**, **Lore** e **Autotronic**.
+* **Visualização Simultânea no Grid:** Ao clicar em qualquer preset de acabamento, **todos os 20 cards de facas atualizam sua foto em tempo real**, permitindo comparar instantaneamente o visual do acabamento entre a Butterfly, Karambit, M9, Talon, etc.
+* **Aviso de Compatibilidade da Valve:** A Valve nunca produziu acabamentos Doppler para determinadas facas mais recentes ou clássicas (como *Kukri Knife* ou *Classic Knife*). Nesses casos, o painel exibe o selo claro **"NÃO DISPONÍVEL NO CS2"**, informando que se trata de uma limitação oficial do próprio jogo, e não de falha de carregamento.
+
+#### 🔫 Armas Convencionais (1.456 Skins) & 94 Luvas
+* **35 Armas Mapeadas:** AK-47, AWP, M4A1-S, M4A4, Desert Eagle, USP-S, Glock-18 e todas as demais com seu acervo completo de skins sem cortes artificiais.
+* **Busca Instantânea:** Filtre qualquer skin digitando parte do nome da arma ou da pintura.
+* **Luvas Realistas:** Luvas Sport, Specialist, Driver, Moto, Hand Wraps, Broken Fang, Hydra e Bloodhound.
+* **Ajustes Finos:** Slider de Float Wear (0.0001 FN a 0.9999 BS), Paint Seed, NameTag personalizado e StatTrak.
+
+#### 🛡️ Aba "Arsenal Equipado" & Filtro CT / TR
+* **Inspeção Visual Completa:** Aba exclusiva para conferir visualmente tudo o que você tem equipado no banco de dados, com fotos HD de cada arma, faca e luva.
+* **Dados Detalhados:** Exibe StatTrak com contador de abates, etiqueta NameTag, desgaste de float wear e lado designado.
+* **Filtros Rápidos em Tempo Real:** Botões `TODOS`, `CT` e `TR` para filtrar a exibição instantaneamente no grid.
+
+#### 🔄 Sincronização no Jogo (!wp)
+Após salvar qualquer faca, luva ou arma no painel, vá para o CS2 e digite:
+```text
+!wp
+```
+Suas novas skins são aplicadas imediatamente nas suas mãos na rodada seguinte!
 
 ---
 

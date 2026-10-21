@@ -56,13 +56,15 @@ public class MatchTelemetryLogger
             var sb = new StringBuilder();
             sb.AppendLine($"# CsBot - Telemetria Forense de Partida");
             sb.AppendLine($"**Data/Hora:** {DateTime.Now:yyyy-MM-dd HH:mm:ss} | **Mapa:** {Server.MapName}");
-            sb.AppendLine($"**Status:** Gravação Ativa | **Arquivo:** `{Path.GetFileName(_currentFilePath)}`");
+            string mlMoveBackend = _locomotionDriver.MicroMoveEngine?.BackendName ?? "PotentialFields-16Hz-CPU";
+            sb.AppendLine($"**Status:** Gravação Ativa | **Arquivo:** `{Path.GetFileName(_currentFilePath)}` | **Motor MLMove:** `{mlMoveBackend}`");
             sb.AppendLine();
             sb.AppendLine("---");
             sb.AppendLine();
 
             AppendToFile(sb.ToString());
-            Server.PrintToChatAll($" {ChatColors.Green}[CsBot Debug]{ChatColors.Default} Telemetria forense {ChatColors.Gold}ATIVADA{ChatColors.Default}! Gravando em: {ChatColors.LightBlue}{Path.GetFileName(_currentFilePath)}{ChatColors.Default}");
+            Server.PrintToChatAll($" {ChatColors.Green}[CsBot Debug]{ChatColors.Default} Telemetria {ChatColors.Gold}ATIVADA{ChatColors.Default} ({ChatColors.LightBlue}{mlMoveBackend}{ChatColors.Default})! Gravando em: {ChatColors.LightBlue}{Path.GetFileName(_currentFilePath)}{ChatColors.Default}");
+            Server.PrintToConsole($"[CsBot Debug] Telemetria forense ATIVADA -> {_currentFilePath} | Motor MLMove: {mlMoveBackend}");
         }
         else
         {
@@ -88,6 +90,7 @@ public class MatchTelemetryLogger
         sb.AppendLine($"- **BuyState CT:** `{ctBuy}` | **BuyState TR:** `{trBuy}`");
         sb.AppendLine($"- **Tática Escolhida:** `{plan.TacticName}` (Tier: `{plan.PlayTier}`, Ritmo: `{plan.RoundTempo}`)");
         sb.AppendLine($"- **Resumo Tático:** {plan.TacticSummary}");
+        sb.AppendLine($"- **Motor Micro-Movimento (16Hz):** `{_locomotionDriver.MicroMoveEngine?.BackendName ?? "PotentialFields-16Hz-CPU"}`");
         sb.AppendLine();
 
         // Inventário e Economia de Cada Jogador
@@ -203,6 +206,11 @@ public class MatchTelemetryLogger
             }
 
             string locoStatus = speed > 15.0f ? "Movendo" : "Parado";
+            var microTraj = _locomotionDriver.MicroMoveEngine?.GetTrajectory(p.Slot);
+            if (microTraj != null && microTraj.IsOverrideActive)
+            {
+                locoStatus += $" [{microTraj.ActiveBehaviorTag}]";
+            }
             sb.AppendLine($"| {p.Slot} | {p.PlayerName} ({role}) | {team} | {hp} | {activeWeapon} | {sector} | `{pos.X:F0},{pos.Y:F0},{pos.Z:F0}` | `{pitch:F0}°,{yaw:F0}°` | {speed:F1} | {stance} | {locoStatus} |");
 
             // ======================================================================

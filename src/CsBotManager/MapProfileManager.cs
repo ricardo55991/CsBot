@@ -14,9 +14,9 @@ public class MapProfileManager
 
     public MapProfile CurrentProfile { get; private set; } = new();
 
-    public void LoadProfile(string mapName, string? pluginDir = null)
+    public void LoadProfile(string? mapName, string? pluginDir = null)
     {
-        string cleanMap = mapName.ToLowerInvariant().Trim();
+        string cleanMap = string.IsNullOrWhiteSpace(mapName) ? "de_mirage" : mapName.ToLowerInvariant().Trim();
         string fileName = $"{cleanMap}.json";
         string filePath = string.Empty;
 

@@ -60,8 +60,8 @@ Um servidor de CS2 opera a 64 ticks por segundo (~15.6 ms por tick). Nenhum mode
    - Modelo de ~1.9 GB que roda confortavelmente na GPU com tempo de resposta de 200–400ms em modo estruturado (JSON Schema).
 5. **faster-whisper**:
    - Modelo Whisper (small/base int8) para transcrição de áudio via Push-to-Talk na GPU, capturando comandos em português brasileiro.
-6. **Arsenal Web UI (FastAPI + Vanilla JS)**:
-   - Painel web moderno rodando na porta 8080 conectado ao MariaDB para seleção visual de facas, gemas Doppler, luvas e skins.
+6. **Arsenal Web UI & Launcher Unificado (FastAPI + Vanilla JS)**:
+   - Painel web moderno rodando na porta `8080` conectado ao banco MariaDB local (`weaponpaints`). Inicializado de forma autônoma via `abrir_arsenal_skins.bat` ou pelo servidor. Oferece catálogo completo de 20 modelos de facas, 1.456 skins de armas, 94 luvas, 15 presets de acabamentos com preview global simultâneo, resolução de Paint IDs da Valve e aba visual de itens equipados com filtro em tempo real (CT/TR).
 
 ---
 
@@ -184,18 +184,61 @@ O cálculo econômico **nunca** é delegado ao LLM. O C# avalia as carteiras e o
     - *Média / Longa Distância (>= 500u)*: Aborta a exposição, aciona recuo imediato para cobertura furtiva (`MidRoundAction.HIDE_COVER`), recarrega em segurança atrás da parede e repica com Jiggle Peek após o tempo de recarga.
 
 ### Fase 5 (Concluída): Arsenal Web UI (Painel Visual de Skins & Gemas Doppler)
-- **Servidor Web FastAPI (`H:\CS2_AI_Server\arsenal_web\app.py`)**:
-  - Porta 8080 com inicialização automática via `start_cs2_ai_server.bat`.
+- **Servidor Web FastAPI (`H:\CS2_AI_Server\arsenal_web\app.py`) & Launcher Unificado**:
+  - Porta `8080` com inicialização independente via `abrir_arsenal_skins.bat` na raiz do projeto ou automática via `start_cs2_ai_server.bat`.
+  - Verificação e ativação autônoma do serviço MariaDB portátil (`H:\CS2_AI_Server\database\mariadb\bin\mysqld.exe`, porta 3306).
   - Conexão direta com MariaDB (`weaponpaints`) nas tabelas `wp_player_knife`, `wp_player_skins`, `wp_player_gloves`.
-- **Catálogo Visual Completo**:
-  - 15 modelos de facas (Karambit, Butterfly, M9, Talon, Skeleton, etc.).
-  - 94 luvas (Sport Gloves, Specialist, Driver, Moto, Hand Wraps).
-  - 35 armas e mais de 1.450 skins reais renderizadas via Nereziel CDN.
-- **Painel de Customização Estilo Panorama UI CS2**:
-  - Presets de 1 clique para Gemas Doppler Raras: **Ruby (415)**, **Sapphire (416)**, **Black Pearl (417)**, **Emerald (568)**, **Fade 100% (38)** e **Blue Gem (44 / Seed 661)**.
-  - Slider contínuo de Float Wear (0.0001 a 0.9999) com indicação automática da condição (FN, MW, FT, WW, BS).
-  - Seletores de Paint Seed, NameTag personalizado e StatTrak com contador de abates.
-  - Seleção de equipe alvo (Ambos, TR, CT) e aviso flutuante de sincronização no jogo (`!wp`).
+- **Catálogo Visual e Mapeamento Completo**:
+  - **20 Modelos de Facas**: Karambit, Butterfly, M9 Bayonet, Bayonet, Flip, Gut, Huntsman, Falchion, Shadow Daggers, Bowie, Ursus, Navaja, Stiletto, Talon, Classic Knife, Skeleton, Survival, Nomad, Paracord e Kukri.
+  - **556 Pinturas de Facas Mapeadas**: Incluindo as 14 variantes de Doppler/Gamma Doppler, Fade, Marble Fade, Tiger Tooth, Lore, Autotronic, Crimson Web, Slaughter e Case Hardened.
+  - **35 Categorias de Armas e 1.456 Skins Reais**: Catálogo completo sem cortes artificiais, com busca instantânea por nome da arma e nome da skin renderizadas via CDN Nereziel.
+  - **94 Luvas Reais**: Sport Gloves, Specialist, Driver, Moto, Hand Wraps, Broken Fang, Hydra e Bloodhound.
+- **Preview Global Simultâneo de Acabamentos**:
+  - Ao clicar em qualquer um dos 15 presets de acabamentos (ex: Doppler Ruby, Sapphire, Black Pearl, Emerald, Fade 100%, Tiger Tooth, Lore), a imagem de visualização e o badge de todos os 20 cards de facas no grid se atualizam simultaneamente em tempo real.
+- **Resolução Inteligente de Paint IDs Específicos da Valve**:
+  - Tratamento nativo das idiossincrasias do CS2 da Valve:
+    - Butterfly e Shadow Daggers Phase 2 utilizam Paint ID `618` (e não `419`).
+    - Butterfly e Shadow Daggers Sapphire utilizam Paint ID `619` (e não `416`).
+    - Butterfly e Shadow Daggers Black Pearl utilizam Paint ID `617` (e não `417`).
+    - Talon Knife Phase 2 utiliza Paint ID `853` (e não `419`).
+    - Pinturas de Lore e Autotronic mapeadas conforme a tabela de identificadores por modelo de faca.
+- **Salvaguarda Visual de Incompatibilidade Nativas da Valve**:
+  - Facas que a Valve nunca lançou em determinadas famílias de pinturas no CS2 (como *Kukri Doppler* ou *Classic Knife Doppler*) exibem visualmente o badge **"NÃO DISPONÍVEL NO CS2"**, mantendo a imagem base do modelo e alertando o usuário de forma transparente que se trata de uma limitação do próprio jogo da Valve, e não de falha de carregamento.
+- **Aba "Arsenal Equipado" com Renders Visuais e Filtro em Tempo Real**:
+  - Inspeção visual de todos os itens configurados no banco de dados para o jogador: facas, luvas e armas convencionais.
+  - Cards detalhados com foto HD da skin, nome oficial, selo de StatTrak (com contador de kills ativo), etiqueta NameTag personalizada e barra de desgaste de Float Wear (FN, MW, FT, WW, BS).
+  - **Filtro em Tempo Real por Equipe**: Botões rápidos `TODOS`, `CT (Contraterroristas)` e `TR (Terroristas)` que filtram instantaneamente o inventário renderizado no grid sem recarregar a página.
+- **Sincronização In-Game**:
+  - Qualquer alteração salva na Web UI reflete instantaneamente no servidor CS2 ativo digitando `!wp` no chat do jogo.
+
+### Fase 6 (Concluída): Arquitetura MLMove em 3 Camadas (Micro-Movimento Coordenado a 16Hz + Pipeline de Treinamento)
+Inspirada no artigo acadêmico *MLMove (Dr. David Durst, Stanford / `csknow`)*, une o nosso cérebro Macro (Ollama IGL + Setups Táticos) a um motor de Micro-Locomoção Multi-Agente operando a **16 Hz (a cada 62.5ms / 4 ticks)**:
+- **Camada 1 (`MicroMoveEngine.cs` — Concluída e Ativa no Servidor)**:
+  - **Espaço de 97 Ações Discretas**: Codifica e decodifica `StandStill` (Ação `0`) + `96 combinações dinâmicas` (16 direções angulares de 22.5° × 3 velocidades [Run 250u/s, Walk/Shift 130u/s, Crouch 85u/s] × 2 estados de pulo), convertendo vetores globais para coordenadas relativas ao `EyeAngles.Y` do bot no `UserCmd`.
+  - **Buffer de Inércia Multi-Horizonte (`0ms`, `+125ms`, `+250ms`)**: Estrutura `MicroMoveTrajectory` que armazena `Step0_Now`, `Step1_125ms` e `Step2_250ms` para eliminar tremedeiras (*jitter*) de mudanças de direção a cada tick isolado.
+  - **Campos Potenciais Multi-Agente ($N \times N$)**:
+    1. *Wall-Hugging / Geometria como Cover*: Ao cruzar chokepoints ou áreas de risco, puxa o vetor de movimento tangencialmente para as bordas/paredes, evitando caminhar exposto no meio do aberto.
+    2. *Trade Spacing ($N \times N$ Attention entre Aliados)*: Aplica força de repulsão lateral quando dois aliados estão muito colados (`< 140 unidades`) para evitar bloqueio de strafe e morte dupla no mesmo spray; e posiciona o suporte na janela ideal de **250 a 400 unidades** com abertura escalonada (*Wide Swing* coordenado após `0.6s` de contato do Entry) para garantir o *trade kill*.
+    3. *Counter-Strafe no Ápice do Movimento (`Velocity Zeroing`)*: Ao entrar em duelo de tiro com rifle/AWP em movimento (`>= 65 u/s`), injeta em `t=0ms` um pulso reverso de `80ms–120ms` exatamente oposto ao vetor velocidade atual seguido de `StandStill` em `+125ms` e `+250ms`, zerando a velocidade horizontal no disparo.
+  - **Conector Pronto para Modelo Neural `.onnx` (`IMicroMovePredictor`)**: Monta a cada 62.5ms o tensor padronizado `[10, 18]` dos 10 jogadores (Posição normalizada, Velocidade, Direção de Visão, HP, Armor, Categoria da Arma, Role, Estado da C4 e Tempo) e monitora `H:\CS2_AI_Server\models\mlmove_<mapname>.onnx` com hot-swap automático via `FileSystemWatcher`.
+  - **Integração com Telemetria Forense (`!debug`)**: Registra automaticamente eventos de `[MLMOVE - COUNTER-STRAFE]` e `[MLMOVE - TRADE SPACING]` nos logs de partida.
+- **Camada 2 (Minerador e Extrator de Demos Reais a 16Hz — Concluído)**:
+  - **Minerador Multi-Fonte (`tools/mlmove_pipeline/real_demo_miner.py`)**:
+    * Controle de Estado Anti-Duplicação (`miner_state.json`) com hashing SHA256.
+    * Validação Estrita de Header Source 2 (`PBDEMS2`), rejeitando demos antigas de CS:GO (`HL2DEMO`) e arquivos HTML de erro para proteger o parser.
+    * Fonte 1: HuggingFace Datasets (`huggingface_hub`).
+    * Fonte 2: Crawler HLTV / Faceit / URLs com `cloudscraper` (download streaming + barra `tqdm`).
+    * Fonte 3: Ingestão de pasta local e gravações CSTV automáticas (`H:\CS2_AI_Server\game\csgo\csbot_*.dem`).
+    * Descompactador seletivo: extrai apenas `*mirage*.dem` de pacotes `.zip`, `.rar`, `.7z`, `.zst` e apaga o arquivo bruto compactado imediatamente.
+  - **Extrator `demoparser2` (`tools/mlmove_pipeline/extract_16hz_tensors.py`)**: Extrai a 16Hz tensores `X [N, 10, 18]` (com máscara Fog of War anti-wallhack) e rótulos `Y [N, 10, 3]` (`0..96`).
+- **Camada 3 (Treinamento PyTorch -> Exportação `.onnx` — Concluído)**:
+  - Treinador PyTorch (`tools/mlmove_pipeline/train_and_export_onnx.py`) com **Transformer Encoder Multi-Agente** (~5.47M parâmetros, ~21 MB) otimizado com `DirectMLAdamW` na GPU **AMD Radeon RX 6600M** e fallback para CPU multi-thread.
+  - Exportação direta para `H:\CS2_AI_Server\models\mlmove_de_mirage.onnx` com validação de consistência via `onnx.checker` e benchmark de latência.
+- **Orquestrador em Lotes Contínuo com Limpeza de Disco (`run_mining_and_training_loop.py` e `minerar_e_treinar.bat`)**:
+  - Processamento em lotes configuráveis (`--batch-size 25`, `--epochs 15`).
+  - Limpeza automática de disco: apaga o arquivo `.dem` de 200MB logo após extrair o `.npz` de ~4MB, economizando dezenas de gigabytes de armazenamento.
+  - Fine-tuning incremental a partir do melhor checkpoint (`mlmove_de_mirage_best.pt`).
+  - Relatório de precisão com cálculo de **Top-1 e Top-3 Accuracy** nos horizontes `0ms`, `+125ms` e `+250ms`.
 
 ---
 
@@ -204,4 +247,5 @@ O cálculo econômico **nunca** é delegado ao LLM. O C# avalia as carteiras e o
 - **GPU**: AMD Radeon RX 6600M (8 GB VRAM dedicado).
 - **Memória RAM**: 32 GB de RAM física do sistema.
 - **Cliente CS2 (Steam - Vanilla)**: Localizado em `H:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive` (100% original, sem mods, risco ZERO de VAC Ban).
-- **Servidor Dedicado e IA (Instância Isolada)**: Localizado em `H:\CS2_AI_Server` (instância segregada, Metamod, CounterStrikeSharp, WeaponPaints, CsBotManager, Voice IGL e Arsenal Web UI).
+- **Servidor Dedicado e IA (Instância Isolada)**: Localizado em `H:\CS2_AI_Server` (instância segregada, Metamod, CounterStrikeSharp, WeaponPaints, CsBotManager, Voice IGL, Arsenal Web UI e modelos neurais `H:\CS2_AI_Server\models\mlmove_de_mirage.onnx`).
+- **Pipeline Pesado de Demos e Treinamento MLMove (NVMe 1 TB Isolado)**: Localizado em `D:\CS2_MLMove_Pipeline\` (`venv\`, `raw_demos\de_mirage\`, `extracted_tensors\de_mirage\`, `checkpoints\mlmove_de_mirage_best.pt` e atalho `treinar_lote_demos.bat`), mantendo o repositório Git (`tools/mlmove_pipeline/`) leve apenas com código-fonte (`contract_spec.py`, `demo_collector.py`, `extract_16hz_tensors.py`, `model_mlmove.py`, `generate_bootstrap_dataset.py`, `train_and_export_onnx.py` e `validate_e2e_onnx.py`).

@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AssemblyName>CsBotManager</AssemblyName>
     <RootNamespace>CsBotManager</RootNamespace>
   </PropertyGroup>
@@ -29,15 +29,21 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.31.0" />
+  </ItemGroup>
+
   <Target Name="DeployPlugin" AfterTargets="Build">
     <ItemGroup>
-      <PluginFiles Include="$(TargetDir)$(TargetName).dll" />
+      <PluginFiles Include="$(TargetDir)*.dll" />
       <PluginFiles Include="$(TargetDir)$(TargetName).pdb" Condition="Exists('$(TargetDir)$(TargetName).pdb')" />
       <PluginFiles Include="$(TargetDir)*.json" />
+      <NativeOnnxFiles Include="$(TargetDir)runtimes\win-x64\native\*.dll" Condition="Exists('$(TargetDir)runtimes\win-x64\native')" />
       <MapProfileFiles Include="$(TargetDir)MapProfiles\**\*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="H:\CS2_AI_Server\game\csgo\addons\counterstrikesharp\plugins\CsBotManager\" />
-    <Copy SourceFiles="@(MapProfileFiles)" DestinationFolder="H:\CS2_AI_Server\game\csgo\addons\counterstrikesharp\plugins\CsBotManager\MapProfiles\" />
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="H:\CS2_AI_Server\game\csgo\addons\counterstrikesharp\plugins\CsBotManager\" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(NativeOnnxFiles)" DestinationFolder="H:\CS2_AI_Server\game\csgo\addons\counterstrikesharp\plugins\CsBotManager\" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(MapProfileFiles)" DestinationFolder="H:\CS2_AI_Server\game\csgo\addons\counterstrikesharp\plugins\CsBotManager\MapProfiles\" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>

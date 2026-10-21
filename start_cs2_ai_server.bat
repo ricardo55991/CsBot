@@ -11,11 +11,21 @@ echo ========================================================
 powershell -NoProfile -ExecutionPolicy Bypass -File "scripts\check_env.ps1"
 
 echo.
+echo [*] Iniciando Voice IGL Client (Push-to-Talk via Faster-Whisper)...
+start "CsBot Voice IGL (PTT: Segure V)" cmd /k "cd /d H:\CS2_AI_Server\voice_client && python voice_igl_client.py"
+
+echo.
+echo [*] Iniciando Arsenal Web UI (Painel de Skins, Luvas e Facas Doppler)...
+start "CsBot Arsenal Web UI" /min cmd /c "cd /d H:\CS2_AI_Server\arsenal_web && python app.py"
+
+echo.
 echo ========================================================
 echo Servidor iniciando na porta 27016...
 echo Executavel isolado: H:\CS2_AI_Server\game\bin\win64\cs2.exe
 echo Mapa: de_mirage ^| Modo: Competitivo 5v5 ^| Bots: 10
-echo Plugins: Metamod, CounterStrikeSharp, CS2-Bot-Improver, WeaponPaints, CsBotManager (IA IGL)
+echo Plugins: Metamod, CounterStrikeSharp, CS2-Bot-Improver, WeaponPaints, CsBotManager
+echo Voice Bridge: http://127.0.0.1:27080/voice/ (Segure 'V' para falar)
+echo Arsenal Web UI: http://localhost:8080 (Painel Visual de Skins e Gemas Doppler)
 echo Para entrar no servidor pelo CS2 (no mesmo PC), abra o console e digite:
 echo      connect 127.0.0.1:27016
 echo ========================================================

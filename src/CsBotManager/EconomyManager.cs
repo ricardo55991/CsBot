@@ -16,6 +16,84 @@ public class EconomyManager
         IsDoubleAwpActive = false;
     }
 
+    private static readonly Dictionary<string, int> NativeBlockedWeapons = new(StringComparer.OrdinalIgnoreCase)
+    {
+        { "weapon_xm1014", 2000 },
+        { "weapon_nova", 1050 },
+        { "weapon_mag7", 1300 },
+        { "weapon_sawedoff", 1100 },
+        { "weapon_m249", 5200 },
+        { "weapon_negev", 1700 }
+    };
+
+    public void SanitizeNativePurchasesAndRefund(List<CCSPlayerController> bots)
+    {
+        foreach (var bot in bots)
+        {
+            if (bot == null || !bot.IsValid || !bot.IsBot) continue;
+            var pawn = bot.PlayerPawn.Value;
+            if (pawn?.WeaponServices?.MyWeapons == null) continue;
+
+            int refundAmount = 0;
+            foreach (var handle in pawn.WeaponServices.MyWeapons)
+            {
+                var w = handle.Value;
+                if (w != null && w.IsValid && !string.IsNullOrEmpty(w.DesignerName))
+                {
+                    if (NativeBlockedWeapons.TryGetValue(w.DesignerName, out int cost))
+                    {
+                        refundAmount += cost;
+                        w.Remove();
+                    }
+                }
+            }
+
+            if (refundAmount > 0 && bot.InGameMoneyServices != null)
+            {
+                bot.InGameMoneyServices.Account += refundAmount;
+                Utilities.SetStateChanged(bot, "CCSPlayerController", "m_pInGameMoneyServices");
+            }
+        }
+    }
+
+    private void EnsureUtility(CCSPlayerController bot, string weaponName, int cost)
+    {
+        if (bot.InGameMoneyServices == null) return;
+        string subName = weaponName.Replace("weapon_", "");
+        if (!HasSpecificWeapon(bot, subName))
+        {
+            if (bot.InGameMoneyServices.Account >= cost)
+            {
+                bot.InGameMoneyServices.Account -= cost;
+                Utilities.SetStateChanged(bot, "CCSPlayerController", "m_pInGameMoneyServices");
+                bot.GiveNamedItem(weaponName);
+            }
+            else
+            {
+                bot.ExecuteClientCommand($"buy {subName}");
+            }
+        }
+    }
+
+    private void EnsureAwp(CCSPlayerController bot)
+    {
+        if (bot.InGameMoneyServices == null) return;
+        if (!HasSpecificWeapon(bot, "awp"))
+        {
+            if (bot.InGameMoneyServices.Account >= 4750)
+            {
+                RemovePrimaryWeapons(bot);
+                bot.InGameMoneyServices.Account -= 4750;
+                Utilities.SetStateChanged(bot, "CCSPlayerController", "m_pInGameMoneyServices");
+                bot.GiveNamedItem("weapon_awp");
+            }
+            else
+            {
+                bot.ExecuteClientCommand("buy awp");
+            }
+        }
+    }
+
     public BuyState AnalyzeTeamEconomy(List<CCSPlayerController> teamMembers, int roundNumber, int lossBonus, CsTeam team)
     {
         if (teamMembers.Count == 0) return BuyState.FULL_BUY;
@@ -251,16 +329,18 @@ public class EconomyManager
             switch (buyState)
             {
                 case BuyState.FULL_BUY:
-                    // I-04D: Prioridade Rifle > Capacete para não falir o bot antes do rifle
-                    if (!alreadyHasRifleOrSniper)
+                    if (role == BotRole.AWPer)
+                    {
+                        EnsureAwp(bot);
+                        if (botMoney >= 1000) bot.ExecuteClientCommand("buy vesthelm");
+                        else if (botMoney >= 650) bot.ExecuteClientCommand("buy vest");
+                        if (isCt && botMoney >= 400) bot.ExecuteClientCommand("buy defuser");
+                    }
+                    else if (!alreadyHasRifleOrSniper)
                     {
                         if (isCt)
                         {
-                            if (role == BotRole.AWPer && botMoney >= 4750)
-                            {
-                                bot.ExecuteClientCommand("buy awp");
-                            }
-                            else if (botMoney >= 2900)
+                            if (botMoney >= 2900)
                             {
                                 bot.ExecuteClientCommand("buy m4a1_silencer");
                             }
@@ -301,16 +381,16 @@ public class EconomyManager
                         if (isCt) bot.ExecuteClientCommand("buy defuser");
                     }
 
-                    // Utilitárias por função
-                    bot.ExecuteClientCommand("buy smokegrenade");
-                    bot.ExecuteClientCommand("buy flashbang");
+                    // Utilitárias garantidas por função (C-05A)
+                    EnsureUtility(bot, "weapon_smokegrenade", 300);
+                    EnsureUtility(bot, "weapon_flashbang", 200);
                     if (role == BotRole.EntryFragger || role == BotRole.Anchor)
                     {
-                        bot.ExecuteClientCommand(isCt ? "buy incgrenade" : "buy molotov");
+                        EnsureUtility(bot, isCt ? "weapon_incgrenade" : "weapon_molotov", isCt ? 600 : 400);
                     }
                     else
                     {
-                        bot.ExecuteClientCommand("buy hegrenade");
+                        EnsureUtility(bot, "weapon_hegrenade", 300);
                     }
                     break;
 
@@ -332,8 +412,8 @@ public class EconomyManager
                         }
                     }
                     bot.ExecuteClientCommand("buy vest");
-                    bot.ExecuteClientCommand("buy flashbang");
-                    bot.ExecuteClientCommand("buy smokegrenade");
+                    EnsureUtility(bot, "weapon_smokegrenade", 300);
+                    EnsureUtility(bot, "weapon_flashbang", 200);
                     break;
 
                 case BuyState.HALF_BUY:
