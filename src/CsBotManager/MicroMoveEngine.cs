@@ -19,21 +19,46 @@ public enum MicroSpeedTier
 
 public enum AdrenalineTriggerType
 {
-    None_SafeTransitGps = 0, // Fora de perigo: GPS (NavMesh) conduz 100% da viagem longa (evita Covariate Shift)
+    None_SafeTransitGps = 0, // Fora de perigo: GPS (NavMesh) conduz 100% da viagem longa
     Vision_Spotted = 1,      // Gatilho 1: Visão legítima (SpottedByMask / IsEnemyVisible)
     Audio_HeardCue = 2,      // Gatilho 2: Pista sonora legítima (~1000u passos / tiros recentes no setor)
     Hotzone_PreMapped = 3    // Gatilho 3: Zona de Perigo / Staging Area pré-mapeada ("fatiando a torta")
 }
 
-/// <summary>
-/// Representa 1 passo discreto dentro do espaço de 97 ações do MLMove (David Durst, Stanford):
-/// - ActionId 0: Stand Still (Parado)
-/// - ActionId 1..96: 16 direções angulares (22.5° cada) x 3 velocidades (Run, Walk, Crouch) x 2 estados de pulo (Ground, Jump)
-/// </summary>
+public sealed class TradeSpacingPairState
+{
+    public int BotSlotA { get; init; }
+    public int BotSlotB { get; init; }
+    public float LastTriggeredAtTime { get; set; }
+    public float CooldownUntilTime { get; set; }
+    public float DistanceBefore2D { get; set; }
+    public float DistanceAfter2D { get; set; }
+    public int YieldingBotSlot { get; set; }
+    public int PriorityBotSlot { get; set; }
+    public string ActionApplied { get; set; } = string.Empty;
+    public bool SharedTargetDetected { get; set; }
+    public Vector OffsetTargetPosition { get; set; } = new(0, 0, 0);
+}
+
+public sealed class CounterStrafeDiagnostic
+{
+    public bool Triggered { get; init; }
+    public string SuppressionReason { get; init; } = "NONE";
+    public float SpeedBefore2D { get; init; }
+    public float TargetDistance2D { get; init; }
+    public float AimErrorDegrees { get; init; }
+    public bool HasLineOfSight { get; init; }
+    public bool WeaponReady { get; init; }
+    public int AmmoAvailable { get; init; }
+    public bool AttackIntent { get; init; }
+    public int ReverseActionId { get; init; }
+    public float PulseDurationMs { get; init; }
+}
+
 public struct MicroMoveStep
 {
     public int ActionId { get; set; }
-    public int DirectionIndex { get; set; } // -1 para StandStill, 0..15 para 0°..337.5°
+    public int DirectionIndex { get; set; }
     public MicroSpeedTier SpeedTier { get; set; }
     public bool IsJump { get; set; }
     public float WorldDirX { get; set; }
@@ -116,10 +141,40 @@ public struct MicroMoveStep
         };
     }
 
-    /// <summary>
-    /// Converte o vetor de direção global (WorldDirX, WorldDirY) para comandos relativos ao EyeAngles.Y (Yaw) do bot
-    /// para injeção direta no UserCmd (forwardmove, sidemove).
-    /// </summary>
+    public readonly string ToReadableString(float botYaw = 0f)
+    {
+        if (ActionId <= 0 || ActionId > 96)
+            return "Parado (0u)";
+
+        float worldAngleDeg = DirectionIndex * 22.5f;
+        float relAngle = worldAngleDeg - botYaw;
+        while (relAngle > 180f) relAngle -= 360f;
+        while (relAngle < -180f) relAngle += 360f;
+
+        string dirName = relAngle switch
+        {
+            >= -22.5f and <= 22.5f => "Avanco",
+            > 22.5f and <= 67.5f => "Diag-Dir",
+            > 67.5f and <= 112.5f => "Strafe-Dir",
+            > 112.5f and <= 157.5f => "Recuo-Dir",
+            < -22.5f and >= -67.5f => "Diag-Esq",
+            < -67.5f and >= -112.5f => "Strafe-Esq",
+            < -112.5f and >= -157.5f => "Recuo-Esq",
+            _ => "Recuo"
+        };
+
+        string speedName = SpeedTier switch
+        {
+            MicroSpeedTier.Run => "250u",
+            MicroSpeedTier.WalkShift => "Shift",
+            MicroSpeedTier.Crouch => "Duck",
+            _ => "Run"
+        };
+
+        string extra = IsJump ? "+Jump" : "";
+        return $"{dirName}({speedName}{extra})";
+    }
+
     public readonly (float ForwardMove, float SideMove) ToBotRelativeMoves(float botYawDegrees)
     {
         if (ActionId == 0 || SpeedScale <= 0.01f)
@@ -130,8 +185,6 @@ public struct MicroMoveStep
         float yawRad = botYawDegrees * (MathF.PI / 180.0f);
         float forwardX = MathF.Cos(yawRad);
         float forwardY = MathF.Sin(yawRad);
-
-        // Na Source 2, o eixo Direito (Right / +SideMove) está a -90 graus do Forward no plano XY
         float rightX = MathF.Sin(yawRad);
         float rightY = -MathF.Cos(yawRad);
 
@@ -142,10 +195,6 @@ public struct MicroMoveStep
     }
 }
 
-/// <summary>
-/// Buffer de Inércia Multi-Horizonte (t=0ms, t=+125ms, t=+250ms) por bot.
-/// Evita o tremor (jitter) de decisões isoladas a cada tick.
-/// </summary>
 public class MicroMoveTrajectory
 {
     public int Slot { get; set; }
@@ -157,6 +206,8 @@ public class MicroMoveTrajectory
     public string ActiveBehaviorTag { get; set; } = "None";
     public AdrenalineTriggerType LastTrigger { get; set; } = AdrenalineTriggerType.None_SafeTransitGps;
     public float OverrideExpiresAt { get; set; }
+    public MovementIntentSource IntentPriority { get; set; } = MovementIntentSource.MicroMove;
+    public Vector? SuggestedGoalOverride { get; set; }
 
     public MicroMoveStep GetStepForElapsed(float currentTime)
     {
@@ -173,10 +224,6 @@ public class MicroMoveTrajectory
     }
 }
 
-/// <summary>
-/// Interface padronizada de predição multi-agente para o motor de 16Hz (execução 100% em CPU / L3 Cache).
-/// Permite alternar sem atrito entre o Modelo Neural .ONNX (Camadas 2/3) e o Motor de Campos Potenciais (Camada 1).
-/// </summary>
 public interface IMicroMovePredictor
 {
     string BackendName { get; }
@@ -190,16 +237,18 @@ public interface IMicroMovePredictor
         float currentTime);
 }
 
-/// <summary>
-/// Fase 6A (Camada 1 da Arquitetura MLMove):
-/// Motor de Micro-Movimento Coordenado a 16Hz (a cada 4 ticks / 62.5ms) em CPU (Cache L3) com:
-/// - Anti-Wallhack Fog-of-War Tensor Masking ([0,0,0] para inimigos não percebidos legitimamente)
-/// - 3 Gatilhos de Percepção Legítima (Visão SpottedByMask, Áudio ~1000u, Hotzones pré-mapeadas)
-/// - Amostragem Estocástica Softmax ("Dado Viciado") sobre 97 ações em 3 horizontes (0ms, 125ms, 250ms)
-/// - Wall-Hugging, Trade Spacing (N x N) e Counter-Strafe (Velocity Zeroing).
-/// </summary>
-public class MicroMoveEngine : IMicroMovePredictor
+public class MicroMoveEngine : IMicroMovePredictor, IDisposable
 {
+    public CsBotManagerPlugin? Plugin { get; set; }
+    public BotSystemConfig Config { get; set; } = BotSystemConfig.Default;
+    public MovementArbitrator? Arbitrator { get; set; }
+
+    private readonly Dictionary<(int Slot, string ChokepointName), float> _hotzoneEntryTimes = new();
+    private readonly Dictionary<(int Slot, string ChokepointName), float> _hotzoneCooldowns = new();
+    private readonly Dictionary<int, (Vector Pos, float SinceTime)> _stationaryTrackers = new();
+    private readonly Dictionary<int, float> _standStillAccumulatedSeconds = new();
+    private readonly Dictionary<(int SlotA, int SlotB), TradeSpacingPairState> _pairSpacingStates = new();
+
     public const int MaxPlayers = 10;
     public const int FeatureDim = 18;
     public const int HorizonsCount = 3;
@@ -217,22 +266,16 @@ public class MicroMoveEngine : IMicroMovePredictor
     public TacticalCalloutSystem? CalloutSystem { get; set; }
 
     private readonly ConcurrentDictionary<int, MicroMoveTrajectory> _trajectories = new();
-
-    // Tensores separados com "Venda nos Olhos" (Fog of War) para CT e TR: inimigos não vistos/ouvidos recebem [0,0,0]
     private readonly float[,] _ctFogInputTensor = new float[MaxPlayers, FeatureDim];
     private readonly float[,] _trFogInputTensor = new float[MaxPlayers, FeatureDim];
-
-    // Buffers pré-alocados para inferência ONNX em lote [2, 10, 18] -> [2, 10, 3, 97] (zero GC no loop de 16Hz)
     private readonly float[] _onnxBatchInputBuffer = new float[2 * MaxPlayers * FeatureDim];
     private readonly float[,,,] _onnxBatchOutputLogits = new float[2, MaxPlayers, HorizonsCount, ActionSpaceSize];
     private InferenceSession? _onnxSession;
     private static bool _nativeOnnxLoaded;
 
-    // Rastreamento temporal para Counter-Strafe, Trade Swing (0.6s delay) e Cooldowns de Telemetria
     private readonly Dictionary<int, float> _counterStrafeCooldownUntil = new();
     private readonly Dictionary<int, float> _entryContactStartTime = new();
     private readonly Dictionary<int, float> _lastDebugLogTime = new();
-    private readonly ConcurrentDictionary<int, long> _activeMicroMoveCmdIds = new();
 
     private int _tickCounter = 0;
     private long _pendingModelReloadAtMs = 0;
@@ -255,6 +298,239 @@ public class MicroMoveEngine : IMicroMovePredictor
         _mapProfileManager = mapProfileManager;
         _roleManager = roleManager;
         EnsureModelsDirectory();
+    }
+
+    /// <summary>
+    /// Determina deterministicamente qual bot tem prioridade e qual bot deve ceder espaço no par (Bug 4).
+    /// Hierarquia de prioridade: Portador da C4 > Em Combate Ativo > EntryFragger > AWPer > Menor Slot.
+    /// Retorna (PriorityBotSlot, YieldingBotSlot).
+    /// </summary>
+    public static (int PrioritySlot, int YieldingSlot) ResolvePairPriority(
+        int slotA,
+        bool aHasC4,
+        bool aInCombat,
+        BotRole roleA,
+        int slotB,
+        bool bHasC4,
+        bool bInCombat,
+        BotRole roleB)
+    {
+        if (aHasC4 != bHasC4)
+            return aHasC4 ? (slotA, slotB) : (slotB, slotA);
+
+        if (aInCombat != bInCombat)
+            return aInCombat ? (slotA, slotB) : (slotB, slotA);
+
+        int rankA = GetRolePriorityRank(roleA);
+        int rankB = GetRolePriorityRank(roleB);
+        if (rankA != rankB)
+            return rankA < rankB ? (slotA, slotB) : (slotB, slotA);
+
+        return slotA < slotB ? (slotA, slotB) : (slotB, slotA);
+    }
+
+    private static int GetRolePriorityRank(BotRole role) => role switch
+    {
+        BotRole.EntryFragger => 1,
+        BotRole.AWPer => 2,
+        BotRole.Rotator => 3,
+        BotRole.Anchor => 4,
+        _ => 5
+    };
+
+    /// <summary>
+    /// Avalia se o par (slotA, slotB) pode acionar repulsão de Trade Spacing agora, respeitando cooldown de par (2.5s),
+    /// registrando `shared_target_detected` quando `dist2D < 1.0f` e deslocando o destino no NavMesh para o bot que cede.
+    /// </summary>
+    public TradeSpacingPairState? TryEvaluatePairRepulsion(
+        int currentBotSlot,
+        float curX,
+        float curY,
+        float curZ,
+        bool currentHasC4,
+        bool currentInCombat,
+        BotRole currentRole,
+        int allySlot,
+        float allyX,
+        float allyY,
+        float allyZ,
+        bool allyHasC4,
+        bool allyInCombat,
+        BotRole allyRole,
+        float currentTime,
+        out int repulseActionId)
+    {
+        repulseActionId = 0;
+        float dx = curX - allyX;
+        float dy = curY - allyY;
+        float dist2D = MathF.Sqrt(dx * dx + dy * dy);
+
+        var pairKey = currentBotSlot < allySlot ? (currentBotSlot, allySlot) : (allySlot, currentBotSlot);
+        if (_pairSpacingStates.TryGetValue(pairKey, out var existingState))
+        {
+            existingState.DistanceAfter2D = dist2D;
+            if (currentTime < existingState.CooldownUntilTime)
+            {
+                return null;
+            }
+        }
+
+        if (dist2D >= Config.TradeSpacingMinDist2D)
+        {
+            return null;
+        }
+
+        var (prioritySlot, yieldingSlot) = ResolvePairPriority(
+            currentBotSlot, currentHasC4, currentInCombat, currentRole,
+            allySlot, allyHasC4, allyInCombat, allyRole);
+
+        // Apenas o bot que cede (YieldingSlot) executa o recuo/offset lateral; o bot prioritário mantém sua rota!
+        if (currentBotSlot != yieldingSlot)
+        {
+            return null;
+        }
+
+        bool sharedTarget = dist2D < 1.5f;
+        float awayAngle = sharedTarget
+            ? ((yieldingSlot % 2 == 0) ? (MathF.PI * 0.5f) : -(MathF.PI * 0.5f))
+            : MathF.Atan2(dy, dx) + ((yieldingSlot % 2 == 0) ? 0.55f : -0.55f);
+
+        int repulseDirIdx = MicroMoveStep.QuantizeAngleToDirectionIndex(awayAngle);
+        repulseActionId = MicroMoveStep.EncodeAction(repulseDirIdx, MicroSpeedTier.Run, isJump: false);
+
+        float offsetDist = Config.TradeSpacingNavOffsetUnits;
+        var offsetPos = new Vector(
+            curX + MathF.Cos(awayAngle) * offsetDist,
+            curY + MathF.Sin(awayAngle) * offsetDist,
+            curZ);
+
+        var state = new TradeSpacingPairState
+        {
+            BotSlotA = pairKey.Item1,
+            BotSlotB = pairKey.Item2,
+            LastTriggeredAtTime = currentTime,
+            CooldownUntilTime = currentTime + Config.TradeSpacingPairCooldownSeconds,
+            DistanceBefore2D = dist2D,
+            DistanceAfter2D = dist2D,
+            PriorityBotSlot = prioritySlot,
+            YieldingBotSlot = yieldingSlot,
+            ActionApplied = $"RepulseAction_{repulseActionId}_Offset_{offsetDist:F0}u",
+            SharedTargetDetected = sharedTarget,
+            OffsetTargetPosition = offsetPos
+        };
+
+        _pairSpacingStates[pairKey] = state;
+        return state;
+    }
+
+    /// <summary>
+    /// Verifica se a distância 2D ao aliado em combate está estritamente dentro da janela configurada de Wide Swing [250u, 400u].
+    /// </summary>
+    public bool IsWithinWideSwingWindow(float dist2D)
+    {
+        return dist2D >= Config.WideSwingMinDist2D && dist2D <= Config.WideSwingMaxDist2D;
+    }
+
+    /// <summary>
+    /// Avalia de forma pura e determinística todos os critérios de engajamento real iminente para Counter-Strafe (Bug 4).
+    /// </summary>
+    public CounterStrafeDiagnostic EvaluateCounterStrafeEligibility(
+        int botSlot,
+        float currentTime,
+        float speed2D,
+        float vx,
+        float vy,
+        string weaponName,
+        bool isPrecisionWeapon,
+        bool hasValidAliveTarget,
+        bool hasLineOfSight,
+        float aimErrorDegrees,
+        bool weaponReady,
+        int ammoAvailable,
+        bool isReloading,
+        bool attackIntent,
+        float targetDistance2D)
+    {
+        if (_counterStrafeCooldownUntil.TryGetValue(botSlot, out float cdUntil) && currentTime < cdUntil)
+        {
+            return new CounterStrafeDiagnostic { Triggered = false, SuppressionReason = "COOLDOWN_ACTIVE", SpeedBefore2D = speed2D };
+        }
+        if (!isPrecisionWeapon)
+        {
+            return new CounterStrafeDiagnostic { Triggered = false, SuppressionReason = "NOT_PRECISION_WEAPON", SpeedBefore2D = speed2D };
+        }
+        if (speed2D < Config.CounterStrafeMinSpeed2D)
+        {
+            return new CounterStrafeDiagnostic { Triggered = false, SuppressionReason = "SPEED_BELOW_THRESHOLD", SpeedBefore2D = speed2D };
+        }
+        if (!hasValidAliveTarget)
+        {
+            return new CounterStrafeDiagnostic { Triggered = false, SuppressionReason = "NO_VALID_TARGET", SpeedBefore2D = speed2D };
+        }
+        if (!hasLineOfSight)
+        {
+            return new CounterStrafeDiagnostic { Triggered = false, SuppressionReason = "NO_LINE_OF_SIGHT", SpeedBefore2D = speed2D };
+        }
+        if (!weaponReady || isReloading || ammoAvailable <= 0)
+        {
+            return new CounterStrafeDiagnostic
+            {
+                Triggered = false,
+                SuppressionReason = "WEAPON_NOT_READY_OR_EMPTY",
+                SpeedBefore2D = speed2D,
+                WeaponReady = weaponReady,
+                AmmoAvailable = ammoAvailable
+            };
+        }
+        if (!attackIntent)
+        {
+            return new CounterStrafeDiagnostic { Triggered = false, SuppressionReason = "NO_ATTACK_INTENT", SpeedBefore2D = speed2D };
+        }
+        if (aimErrorDegrees > Config.CounterStrafeMaxAimErrorDegrees)
+        {
+            return new CounterStrafeDiagnostic
+            {
+                Triggered = false,
+                SuppressionReason = $"AIM_ERROR_TOO_HIGH({aimErrorDegrees:F1}>{Config.CounterStrafeMaxAimErrorDegrees:F1})",
+                SpeedBefore2D = speed2D,
+                AimErrorDegrees = aimErrorDegrees
+            };
+        }
+
+        float reverseAngleRad = MathF.Atan2(-vy, -vx);
+        int reverseDirIdx = MicroMoveStep.QuantizeAngleToDirectionIndex(reverseAngleRad);
+        int reverseActionId = MicroMoveStep.EncodeAction(reverseDirIdx, MicroSpeedTier.Run, isJump: false);
+        float pulseDurationMs = Math.Clamp(speed2D * 0.45f, 80.0f, 120.0f);
+
+        _counterStrafeCooldownUntil[botSlot] = currentTime + Config.CounterStrafeCooldownSeconds;
+
+        return new CounterStrafeDiagnostic
+        {
+            Triggered = true,
+            SuppressionReason = "NONE",
+            SpeedBefore2D = speed2D,
+            TargetDistance2D = targetDistance2D,
+            AimErrorDegrees = aimErrorDegrees,
+            HasLineOfSight = hasLineOfSight,
+            WeaponReady = weaponReady,
+            AmmoAvailable = ammoAvailable,
+            AttackIntent = attackIntent,
+            ReverseActionId = reverseActionId,
+            PulseDurationMs = pulseDurationMs
+        };
+    }
+
+    public static float ComputeAimErrorDegrees2D(float botX, float botY, float botYawDeg, float targetX, float targetY)
+    {
+        float dx = targetX - botX;
+        float dy = targetY - botY;
+        if (MathF.Abs(dx) < 0.001f && MathF.Abs(dy) < 0.001f) return 0f;
+
+        float desiredYawDeg = MathF.Atan2(dy, dx) * (180.0f / MathF.PI);
+        float diff = desiredYawDeg - botYawDeg;
+        while (diff > 180f) diff -= 360f;
+        while (diff < -180f) diff += 360f;
+        return MathF.Abs(diff);
     }
 
     private static void EnsureNativeOnnxRuntimeLoaded()
@@ -310,30 +586,40 @@ public class MicroMoveEngine : IMicroMovePredictor
         if (!string.IsNullOrEmpty(_loadedMapName) &&
             fullPath.Contains(_loadedMapName, StringComparison.OrdinalIgnoreCase))
         {
-            // Agenda o hot-swap para a Game Thread (debounce de 1.2s após término da gravação do arquivo .onnx)
             Interlocked.Exchange(ref _pendingModelReloadAtMs, Environment.TickCount64 + 1200L);
         }
     }
 
     public void ResetRound(IBotControllerApi? api)
     {
-        if (api != null)
-        {
-            foreach (var kvp in _activeMicroMoveCmdIds)
-            {
-                if (kvp.Value != 0)
-                {
-                    try { api.CancelUsercmdMovement(kvp.Key, kvp.Value); } catch { }
-                }
-            }
-        }
-
-        _activeMicroMoveCmdIds.Clear();
         _trajectories.Clear();
         _counterStrafeCooldownUntil.Clear();
         _entryContactStartTime.Clear();
         _lastDebugLogTime.Clear();
+        _hotzoneEntryTimes.Clear();
+        _hotzoneCooldowns.Clear();
+        _stationaryTrackers.Clear();
+        _standStillAccumulatedSeconds.Clear();
+        _pairSpacingStates.Clear();
         _tickCounter = 0;
+    }
+
+    public void Dispose()
+    {
+        if (_onnxWatcher != null)
+        {
+            try
+            {
+                _onnxWatcher.EnableRaisingEvents = false;
+                _onnxWatcher.Dispose();
+            }
+            catch { }
+        }
+        lock (_onnxLock)
+        {
+            _onnxSession?.Dispose();
+            _onnxSession = null;
+        }
     }
 
     public bool TryLoadMapModel(string? mapName, string modelsDir = DefaultModelsDir)
@@ -388,7 +674,6 @@ public class MicroMoveEngine : IMicroMovePredictor
                         _isNeuralModelLoaded = true;
                     }
 
-                    // Warmup pass imediato no Cache L3 da CPU para zerar jitter no primeiro tick de combate
                     RunOnnxBatchInference(_ctFogInputTensor, _trFogInputTensor);
 
                     Server.PrintToConsole($"[MicroMoveEngine] [Modo ONNX Ativo] Modelo ONNX (CPU L3 Cache) carregado para {cleanMap}: {candidatePath} ({info.Length / 1024} KB | Warmup: {LastInferenceLatencyMs:F2}ms).");
@@ -407,10 +692,6 @@ public class MicroMoveEngine : IMicroMovePredictor
         return false;
     }
 
-    /// <summary>
-    /// Executa a inferência em lote [2, 10, 18] (Batch 0 = Perspectiva CT com Fog-of-War, Batch 1 = Perspectiva TR com Fog-of-War)
-    /// diretamente no Cache L3 da CPU via Microsoft.ML.OnnxRuntime, preenchendo _onnxBatchOutputLogits [2, 10, 3, 97].
-    /// </summary>
     public bool RunOnnxBatchInference(float[,] ctFogTensor, float[,] trFogTensor)
     {
         if (!_isNeuralModelLoaded || _onnxSession == null) return false;
@@ -485,7 +766,6 @@ public class MicroMoveEngine : IMicroMovePredictor
                 }
 
                 long t1 = Stopwatch.GetTimestamp();
-                // Latência por lote de 10 jogadores (média das 2 perspectivas CT e TR processadas juntas)
                 LastInferenceLatencyMs = (float)((t1 - t0) * 500.0 / Stopwatch.Frequency);
                 TotalOnnxInferences++;
                 return true;
@@ -503,11 +783,6 @@ public class MicroMoveEngine : IMicroMovePredictor
         return _trajectories.TryGetValue(slot, out var traj) ? traj : null;
     }
 
-    /// <summary>
-    /// Amostrador Estocástico ("Dado Viciado" com Temperatura Softmax) sobre o espaço de 97 ações.
-    /// Evita comportamento robótico previsível: se a distribuição indicar [70% Recuar, 25% Jiggle, 5% Avançar],
-    /// sorteia proporcionalmente às probabilidades.
-    /// </summary>
     public int SampleActionFromLogits(ReadOnlySpan<float> logits, float temperature = 0.85f)
     {
         int len = Math.Min(logits.Length, ActionSpaceSize);
@@ -545,13 +820,6 @@ public class MicroMoveEngine : IMicroMovePredictor
         return len - 1;
     }
 
-    /// <summary>
-    /// Avalia os 3 Filtros de Percepção Legítima (Sem Wallhack por distância cega) para decidir se o
-    /// Piloto de Fuga (MicroMoveEngine/ONNX) assume o teclado ou deixa o GPS (NavMesh) conduzir:
-    /// 1) Gatilho de Visão (SpottedByMask / IsEnemyVisible)
-    /// 2) Gatilho de Áudio (Passos ~1000u / Tiros / Dano recente no setor via TacticalCalloutSystem)
-    /// 3) Gatilho de Hotzone (Chokepoint / Staging Area pré-mapeada onde pros abrem "fatiando a torta")
-    /// </summary>
     public AdrenalineTriggerType EvaluateLegitimateAdrenalineTrigger(
         CCSPlayerController bot,
         List<CCSPlayerController> allPlayers)
@@ -563,7 +831,6 @@ public class MicroMoveEngine : IMicroMovePredictor
             return AdrenalineTriggerType.None_SafeTransitGps;
         }
 
-        // 1. Gatilho de Visão Direta (SpottedByMask / IsEnemyVisible)
         if (csBot.IsEnemyVisible)
         {
             return AdrenalineTriggerType.Vision_Spotted;
@@ -578,7 +845,6 @@ public class MicroMoveEngine : IMicroMovePredictor
             }
         }
 
-        // 2. Gatilho de Áudio Legítimo (Passos / Tiros ouvidos no setor ou aliado próximo <= 600u trocando tiro)
         float curX = pawn.AbsOrigin.X;
         float curY = pawn.AbsOrigin.Y;
         float curZ = pawn.AbsOrigin.Z;
@@ -603,10 +869,35 @@ public class MicroMoveEngine : IMicroMovePredictor
             }
         }
 
-        // 3. Gatilho de "Zona de Perigo" (Hotzone pré-mapeada: boca da Caverna, Palácio, Janela, Conector, Tapete)
         if (currentCp != null)
         {
+            float nowTime = Server.CurrentTime;
+            var hzKey = (bot.Slot, currentCp.Name);
+
+            if (_hotzoneCooldowns.TryGetValue(hzKey, out float cdExpire) && nowTime < cdExpire)
+            {
+                return AdrenalineTriggerType.None_SafeTransitGps;
+            }
+
+            if (!_hotzoneEntryTimes.TryGetValue(hzKey, out float entryTime))
+            {
+                _hotzoneEntryTimes[hzKey] = nowTime;
+                return AdrenalineTriggerType.Hotzone_PreMapped;
+            }
+
+            if ((nowTime - entryTime) > Config.HotzoneMaxActiveSeconds)
+            {
+                _hotzoneCooldowns[hzKey] = nowTime + Config.HotzoneCooldownSeconds;
+                _hotzoneEntryTimes.Remove(hzKey);
+                return AdrenalineTriggerType.None_SafeTransitGps;
+            }
+
             return AdrenalineTriggerType.Hotzone_PreMapped;
+        }
+        else
+        {
+            var keysToRemove = _hotzoneEntryTimes.Keys.Where(k => k.Slot == bot.Slot).ToList();
+            foreach (var k in keysToRemove) _hotzoneEntryTimes.Remove(k);
         }
 
         return AdrenalineTriggerType.None_SafeTransitGps;
@@ -614,8 +905,8 @@ public class MicroMoveEngine : IMicroMovePredictor
 
     /// <summary>
     /// Chamado no OnTick principal (64Hz).
-    /// A cada 4 ticks (16Hz = 62.5ms), reconstrói os tensores [10, 18] com Fog-of-War Anti-Wallhack
-    /// e atualiza as trajetórias de todos os 10 bots em lote na CPU.
+    /// A cada 4 ticks (16Hz = 62.5ms), reconstrói os tensores [10, 18] e publica MovementIntents no MovementArbitrator.
+    /// NENHUMA escrita direta é feita em CCSBot.IsStopping, WaitTimer ou StartUsercmdMovement aqui (Regra 3).
     /// </summary>
     public void UpdateTick(
         float currentTime,
@@ -625,6 +916,7 @@ public class MicroMoveEngine : IMicroMovePredictor
         IBotControllerApi? botApi)
     {
         _tickCounter++;
+        int gameTick = Server.TickCount;
 
         long reloadTargetMs = Interlocked.Read(ref _pendingModelReloadAtMs);
         if (reloadTargetMs > 0L && Environment.TickCount64 >= reloadTargetMs)
@@ -633,7 +925,6 @@ public class MicroMoveEngine : IMicroMovePredictor
             TryLoadMapModel(_loadedMapName, DefaultModelsDir);
         }
 
-        // Ciclo de 16 Hz (1x a cada 4 ticks do servidor 64-tick -> 62.5ms)
         if (_tickCounter % 4 == 0)
         {
             var allPlayers = Utilities.GetPlayers()
@@ -643,15 +934,13 @@ public class MicroMoveEngine : IMicroMovePredictor
                 .Take(MaxPlayers)
                 .ToList();
 
-            // Monta os tensores com "Venda nos Olhos" (Fog of War): inimigos ocultos viram [0,0,0]
             BuildFogOfWarInputTensorForTeam(_ctFogInputTensor, CsTeam.CounterTerrorist, allPlayers, roundTimeRemaining, isBombPlanted);
             BuildFogOfWarInputTensorForTeam(_trFogInputTensor, CsTeam.Terrorist, allPlayers, roundTimeRemaining, isBombPlanted);
 
             PredictBatch16Hz(_ctFogInputTensor, _trFogInputTensor, allPlayers, _trajectories, currentTime);
         }
 
-        // Aplicação suave dos horizontes (Step0_Now, Step1_125ms, Step2_250ms) para bots com override micro ativo
-        if (botApi == null) return;
+        if (Arbitrator == null) return;
 
         foreach (var kvp in _trajectories)
         {
@@ -660,10 +949,6 @@ public class MicroMoveEngine : IMicroMovePredictor
 
             if (!traj.IsOverrideActive || currentTime > traj.OverrideExpiresAt)
             {
-                if (_activeMicroMoveCmdIds.TryRemove(slot, out long oldCmdId) && oldCmdId != 0)
-                {
-                    try { botApi.CancelUsercmdMovement(slot, oldCmdId); } catch { }
-                }
                 traj.IsOverrideActive = false;
                 continue;
             }
@@ -671,62 +956,100 @@ public class MicroMoveEngine : IMicroMovePredictor
             var bot = Utilities.GetPlayerFromSlot(slot);
             if (bot == null || !bot.IsValid || !bot.PawnIsAlive)
             {
-                _activeMicroMoveCmdIds.TryRemove(slot, out _);
+                traj.IsOverrideActive = false;
                 continue;
             }
 
-            // Salvaguarda: Nunca interrompe bot plantando ou defusando a C4
             var pawn = bot.PlayerPawn.Value;
             if (pawn == null || pawn.AbsOrigin == null) continue;
             bool isDefusing = false;
             try { isDefusing = pawn.IsDefusing; } catch { }
             if (isDefusing) continue;
 
+            // Cancelamento imediato de Counter-Strafe se o inimigo morreu ou saiu de visão (Bug 4)
+            if (traj.ActiveBehaviorTag == "CounterStrafe" && !(pawn.Bot?.IsEnemyVisible ?? false))
+            {
+                traj.IsOverrideActive = false;
+                continue;
+            }
+
             var activeStep = traj.GetStepForElapsed(currentTime);
 
-            // Se a ação for StandStill (ex: metade final do Counter-Strafe para precisão de tiro)
             if (activeStep.ActionId == 0 || activeStep.SpeedScale <= 0.1f)
             {
-                if (_activeMicroMoveCmdIds.TryRemove(slot, out long prevId) && prevId != 0)
+                bool isTrObjectiveBot = bot.Team == CsTeam.Terrorist &&
+                    (BotLocomotionDriver.HasC4(bot) ||
+                     pawn.InBombZone ||
+                     (Plugin?.CurrentPlan?.CurrentPhase == RoundPhase.Executing) ||
+                     (Plugin?.TrPivotController?.HasPivotedThisRound == true));
+
+                if (isTrObjectiveBot && !(pawn.Bot?.IsEnemyVisible ?? false))
                 {
-                    try { botApi.CancelUsercmdMovement(slot, prevId); } catch { }
+                    traj.IsOverrideActive = false;
+                    continue;
                 }
 
-                if (pawn.Bot != null)
+                // Teto contextual de StandStill (Bug 3: impede congelar indefinidamente em StandStill sem contato)
+                float dt = 0.015625f;
+                float accum = _standStillAccumulatedSeconds.GetValueOrDefault(slot, 0f) + dt;
+                _standStillAccumulatedSeconds[slot] = accum;
+                float maxAllowedStandStill = (pawn.Bot?.IsEnemyVisible ?? false)
+                    ? Config.StandStillMaxDefensiveSeconds
+                    : Config.StandStillMaxAggressiveSeconds;
+
+                if (accum > maxAllowedStandStill)
                 {
-                    pawn.Bot.IsStopping = true;
-                    pawn.Bot.WaitTimer.Duration = 0.12f;
-                    pawn.Bot.WaitTimer.Timestamp = currentTime + 0.12f;
+                    traj.IsOverrideActive = false;
+                    _standStillAccumulatedSeconds[slot] = 0f;
+                    continue;
                 }
+
+                Arbitrator.PublishIntent(new MovementIntent
+                {
+                    BotSlot = slot,
+                    BotName = bot.PlayerName,
+                    GameTick = gameTick,
+                    CurrentTime = currentTime,
+                    Source = traj.IntentPriority,
+                    Kind = MovementCommandKind.HoldStop,
+                    Reason = $"{traj.ActiveBehaviorTag}_StandStill",
+                    ExpiresAtTime = traj.OverrideExpiresAt,
+                    IsStopping = true,
+                    WaitDurationSeconds = 0.12f,
+                    GoalX = traj.SuggestedGoalOverride?.X,
+                    GoalY = traj.SuggestedGoalOverride?.Y,
+                    GoalZ = traj.SuggestedGoalOverride?.Z
+                });
             }
             else
             {
+                _standStillAccumulatedSeconds[slot] = 0f;
                 float botYaw = pawn.EyeAngles?.Y ?? 0.0f;
                 var (forwardMove, sideMove) = activeStep.ToBotRelativeMoves(botYaw);
 
-                if (_activeMicroMoveCmdIds.TryGetValue(slot, out long prevId) && prevId != 0)
+                Arbitrator.PublishIntent(new MovementIntent
                 {
-                    try { botApi.CancelUsercmdMovement(slot, prevId); } catch { }
-                }
-
-                try
-                {
-                    long newCmdId = botApi.StartUsercmdMovement(slot, forwardMove, sideMove);
-                    _activeMicroMoveCmdIds[slot] = newCmdId;
-
-                    if (activeStep.Buttons != 0UL)
-                    {
-                        botApi.InjectUsercmd(slot, activeStep.Buttons, (int)Math.Clamp(activeStep.DurationMs, 60f, 150f));
-                    }
-                }
-                catch { }
+                    BotSlot = slot,
+                    BotName = bot.PlayerName,
+                    GameTick = gameTick,
+                    CurrentTime = currentTime,
+                    Source = traj.IntentPriority,
+                    Kind = MovementCommandKind.UsercmdVector,
+                    Reason = $"{traj.ActiveBehaviorTag}_Act{activeStep.ActionId}",
+                    ExpiresAtTime = traj.OverrideExpiresAt,
+                    UseUsercmdVelocity = true,
+                    ForwardMove = forwardMove,
+                    SideMove = sideMove,
+                    Buttons = activeStep.Buttons,
+                    ButtonsDurationMs = (int)Math.Clamp(activeStep.DurationMs, 60f, 150f),
+                    GoalX = traj.SuggestedGoalOverride?.X,
+                    GoalY = traj.SuggestedGoalOverride?.Y,
+                    GoalZ = traj.SuggestedGoalOverride?.Z
+                });
             }
         }
     }
 
-    /// <summary>
-    /// Contrato oficial C# &lt;-&gt; Python (Etapa 1): Monta o tensor padronizado [10, 18] com Fog-of-War Anti-Wallhack.
-    /// </summary>
     public void BuildStandardizedInputTensor(
         float[,] targetTensor,
         CsTeam observerTeam,
@@ -737,11 +1060,6 @@ public class MicroMoveEngine : IMicroMovePredictor
         BuildFogOfWarInputTensorForTeam(targetTensor, observerTeam, orderedPlayers, roundTimeRemaining, isBombPlanted);
     }
 
-    /// <summary>
-    /// Monta o tensor de entrada padronizado [10, 18] com "Venda nos Olhos" (Anti-Wallhack / Fog of War):
-    /// Se um jogador pertence ao time adversário e NENHUM bot vivo do observerTeam o viu (SpottedByMask/FOV)
-    /// ou ouviu (Audio cue legítimo), suas coordenadas X,Y,Z, velocidade, mira e arma são ZERADAS ([0,0,0])!
-    /// </summary>
     public void BuildFogOfWarInputTensorForTeam(
         float[,] targetTensor,
         CsTeam observerTeam,
@@ -773,7 +1091,6 @@ public class MicroMoveEngine : IMicroMovePredictor
 
             if (!isAlive || pawn == null || pawn.AbsOrigin == null) continue;
 
-            // Filtro Anti-Wallhack (Item 1): Se for inimigo, verifica se algum aliado tem Percepção Legítima dele
             if (!isTeammate)
             {
                 bool isPerceivedByTeam = false;
@@ -788,7 +1105,6 @@ public class MicroMoveEngine : IMicroMovePredictor
 
                 if (!isPerceivedByTeam)
                 {
-                    // Venda nos olhos da IA: zera coordenadas [0,0,0], velocidade, mira e arma do inimigo oculto!
                     continue;
                 }
             }
@@ -830,10 +1146,6 @@ public class MicroMoveEngine : IMicroMovePredictor
         }
     }
 
-    /// <summary>
-    /// Executa a predição em lote (16Hz) das trajetórias nos 3 horizontes (0ms, 125ms, 250ms) para os 10 bots.
-    /// Só assume o volante quando ativado por um dos 3 Gatilhos de Percepção Legítima (Visão, Áudio ou Hotzone).
-    /// </summary>
     public void PredictBatch16Hz(
         float[,] ctFogTensor,
         float[,] trFogTensor,
@@ -841,7 +1153,6 @@ public class MicroMoveEngine : IMicroMovePredictor
         ConcurrentDictionary<int, MicroMoveTrajectory> trajectories,
         float currentTime)
     {
-        // Fase 1 da Matriz N x N: Atualiza timestamps de contato de aliados (para o delay de 0.6s do Wide Swing de Trade)
         foreach (var p in orderedPlayers)
         {
             if (p == null || !p.IsValid || !p.PawnIsAlive || !p.IsBot) continue;
@@ -859,10 +1170,8 @@ public class MicroMoveEngine : IMicroMovePredictor
             }
         }
 
-        // Executa inferência neural ONNX em lote [2, 10, 18] -> [2, 10, 3, 97] no Cache L3 da CPU (~0.25ms)
         bool onnxRan = _isNeuralModelLoaded && RunOnnxBatchInference(ctFogTensor, trFogTensor);
 
-        // Fase 2 da Matriz N x N: Calcula as 97 ações em 3 horizontes para cada bot vivo
         Span<float> logits = stackalloc float[ActionSpaceSize];
         for (int playerRowIdx = 0; playerRowIdx < orderedPlayers.Count && playerRowIdx < MaxPlayers; playerRowIdx++)
         {
@@ -875,23 +1184,21 @@ public class MicroMoveEngine : IMicroMovePredictor
             if (pawn == null || csBot == null || pawn.AbsOrigin == null) continue;
 
             var traj = trajectories.GetOrAdd(bot.Slot, s => new MicroMoveTrajectory { Slot = s });
+            traj.SuggestedGoalOverride = null;
 
-            // Se um pulso crítico de Counter-Strafe ainda estiver em execução (< 160ms), preserva até concluir
             if (traj.IsOverrideActive &&
                 traj.ActiveBehaviorTag == "CounterStrafe" &&
-                currentTime < traj.OverrideExpiresAt)
+                currentTime < traj.OverrideExpiresAt &&
+                csBot.IsEnemyVisible)
             {
                 continue;
             }
 
-            // ITEM 4 & ITEM 9: Sinergia GPS (NavMesh) vs. Piloto de Fuga (MicroMove/ONNX)
-            // Verifica os 3 Filtros de Percepção Legítima (Visão, Áudio ~1000u ou Hotzone pré-mapeada)
             var trigger = EvaluateLegitimateAdrenalineTrigger(bot, orderedPlayers);
             traj.LastTrigger = trigger;
 
             if (trigger == AdrenalineTriggerType.None_SafeTransitGps)
             {
-                // Fora de zona de perigo e sem pistas visuais/sonoras: o GPS (NavMesh) conduz 100% da rota
                 traj.IsOverrideActive = false;
                 traj.ActiveBehaviorTag = "NavMesh_GPS";
                 continue;
@@ -903,43 +1210,100 @@ public class MicroMoveEngine : IMicroMovePredictor
             float vx = pawn.AbsVelocity?.X ?? 0f;
             float vy = pawn.AbsVelocity?.Y ?? 0f;
             float speed2D = MathF.Sqrt(vx * vx + vy * vy);
-            string weaponName = pawn.WeaponServices?.ActiveWeapon.Value?.DesignerName ?? "";
+            float botYaw = pawn.EyeAngles?.Y ?? 0f;
 
-            // =========================================================================
-            // 1. COUNTER-STRAFE NO ÁPICE DO MOVIMENTO (Velocity Zeroing: t=0ms Reverse -> Stand Still)
-            // =========================================================================
-            bool isRifleOrSniper = IsPrecisionWeapon(weaponName);
-            bool canCounterStrafe = !_counterStrafeCooldownUntil.TryGetValue(bot.Slot, out float csCd) || currentTime >= csCd;
+            var activeWep = pawn.WeaponServices?.ActiveWeapon.Value;
+            string weaponName = activeWep?.DesignerName ?? "";
+            int ammoClip = activeWep?.Clip1 ?? 0;
 
-            if (trigger == AdrenalineTriggerType.Vision_Spotted && isRifleOrSniper && speed2D >= 65.0f && canCounterStrafe)
+            bool isStationary = false;
+            if (_stationaryTrackers.TryGetValue(bot.Slot, out var stPosTime))
             {
-                float reverseAngleRad = MathF.Atan2(-vy, -vx);
-                int reverseDirIdx = MicroMoveStep.QuantizeAngleToDirectionIndex(reverseAngleRad);
-                int reverseActionId = MicroMoveStep.EncodeAction(reverseDirIdx, MicroSpeedTier.Run, isJump: false);
-
-                float pulseDurationMs = Math.Clamp(speed2D * 0.45f, 80.0f, 120.0f);
-
-                traj.Step0_Now = MicroMoveStep.FromActionId(reverseActionId, durationMs: pulseDurationMs);
-                traj.Step1_125ms = MicroMoveStep.StandStill(durationMs: 125.0f);
-                traj.Step2_250ms = MicroMoveStep.StandStill(durationMs: 125.0f);
-                traj.GeneratedAtTime = currentTime;
-                traj.IsOverrideActive = true;
-                traj.ActiveBehaviorTag = "CounterStrafe";
-                traj.OverrideExpiresAt = currentTime + 0.24f;
-
-                _counterStrafeCooldownUntil[bot.Slot] = currentTime + 1.35f;
-
-                LogDebugWithCooldown(
-                    bot.Slot,
-                    currentTime,
-                    2.5f,
-                    "MLMOVE - COUNTER-STRAFE",
-                    $"**{bot.PlayerName}** aplicou *Velocity Zeroing* (Vel: `{speed2D:F0} u/s -> 0 u/s`, Pulso `{pulseDurationMs:F0}ms` Action `{reverseActionId}` -> `StandStill`) com `{weaponName.Replace("weapon_", "")}`.");
-                continue;
+                float dX = curX - stPosTime.Pos.X;
+                float dY = curY - stPosTime.Pos.Y;
+                float distMoved2D = MathF.Sqrt(dX * dX + dY * dY);
+                if (distMoved2D > 50.0f)
+                {
+                    _stationaryTrackers[bot.Slot] = (new Vector(curX, curY, curZ), currentTime);
+                }
+                else if ((currentTime - stPosTime.SinceTime) > 3.0f)
+                {
+                    isStationary = true;
+                }
+            }
+            else
+            {
+                _stationaryTrackers[bot.Slot] = (new Vector(curX, curY, curZ), currentTime);
             }
 
             // =========================================================================
-            // 2. MATRIZ N x N DE TRADE SPACING (Repulsão < 140u e Wide Swing 250-400u após 0.6s)
+            // 1. COUNTER-STRAFE COM CRITÉRIOS ESTRITOS DE ENGAJAMENTO IMINENTE (Bug 4)
+            // =========================================================================
+            if (trigger == AdrenalineTriggerType.Vision_Spotted && csBot.IsEnemyVisible)
+            {
+                CCSPlayerController? bestEnemy = null;
+                float bestEnemyDist2D = float.MaxValue;
+                float bestAimError = 180.0f;
+
+                foreach (var enemy in orderedPlayers)
+                {
+                    if (enemy == null || !enemy.IsValid || !enemy.PawnIsAlive || enemy.Team == bot.Team) continue;
+                    var eOrigin = enemy.PlayerPawn.Value?.AbsOrigin;
+                    if (eOrigin == null) continue;
+                    if (!TacticalCalloutSystem.CanBotPerceiveEnemy(bot, enemy, CalloutSystem, _mapProfileManager)) continue;
+
+                    float edx = eOrigin.X - curX;
+                    float edy = eOrigin.Y - curY;
+                    float eDist2D = MathF.Sqrt(edx * edx + edy * edy);
+                    float aimErr = ComputeAimErrorDegrees2D(curX, curY, botYaw, eOrigin.X, eOrigin.Y);
+                    if (aimErr < bestAimError)
+                    {
+                        bestAimError = aimErr;
+                        bestEnemyDist2D = eDist2D;
+                        bestEnemy = enemy;
+                    }
+                }
+
+                var csDiag = EvaluateCounterStrafeEligibility(
+                    botSlot: bot.Slot,
+                    currentTime: currentTime,
+                    speed2D: speed2D,
+                    vx: vx,
+                    vy: vy,
+                    weaponName: weaponName,
+                    isPrecisionWeapon: IsPrecisionWeapon(weaponName),
+                    hasValidAliveTarget: bestEnemy != null,
+                    hasLineOfSight: csBot.IsEnemyVisible && bestEnemy != null,
+                    aimErrorDegrees: bestAimError,
+                    weaponReady: !BotLocomotionDriver.IsGrenadeWeapon(weaponName) && !weaponName.Contains("knife", StringComparison.OrdinalIgnoreCase),
+                    ammoAvailable: ammoClip,
+                    isReloading: ammoClip <= 0,
+                    attackIntent: csBot.IsEnemyVisible && bestAimError <= Config.CounterStrafeMaxAimErrorDegrees,
+                    targetDistance2D: bestEnemyDist2D);
+
+                if (csDiag.Triggered && bestEnemy != null)
+                {
+                    traj.Step0_Now = MicroMoveStep.FromActionId(csDiag.ReverseActionId, durationMs: csDiag.PulseDurationMs);
+                    traj.Step1_125ms = MicroMoveStep.StandStill(durationMs: 110.0f);
+                    traj.Step2_250ms = MicroMoveStep.StandStill(durationMs: 90.0f);
+                    traj.GeneratedAtTime = currentTime;
+                    traj.IsOverrideActive = true;
+                    traj.ActiveBehaviorTag = "CounterStrafe";
+                    traj.IntentPriority = MovementIntentSource.CounterStrafe;
+                    traj.OverrideExpiresAt = currentTime + Config.CounterStrafeDurationSeconds;
+
+                    LogDebugWithCooldown(
+                        bot.Slot,
+                        currentTime,
+                        Config.CounterStrafeCooldownSeconds,
+                        "MLMOVE - COUNTER-STRAFE",
+                        $"**{bot.PlayerName}** aplicou *Velocity Zeroing* contra **{bestEnemy.PlayerName}** (`dist_2d={csDiag.TargetDistance2D:F0}u`, `aim_error={csDiag.AimErrorDegrees:F1}° <= {Config.CounterStrafeMaxAimErrorDegrees:F0}°`, `vel_before={csDiag.SpeedBefore2D:F0} u/s`, `ammo={csDiag.AmmoAvailable}`, `pulso={csDiag.PulseDurationMs:F0}ms`, `action={csDiag.ReverseActionId}`) com `{weaponName.Replace("weapon_", "")}`.");
+                    continue;
+                }
+            }
+
+            // =========================================================================
+            // 2. MATRIZ N x N DE TRADE SPACING (Repulsão c/ Cooldown por Par e Wide Swing [250u, 400u])
             // =========================================================================
             CCSPlayerController? closestAlly = null;
             float closestAllyDist = float.MaxValue;
@@ -967,43 +1331,60 @@ public class MicroMoveEngine : IMicroMovePredictor
                 }
 
                 bool allyInFirefight = other.PlayerPawn.Value?.Bot?.IsEnemyVisible ?? false;
-                if (allyInFirefight && dist2D < combatAllyDist && dist2D <= 600.0f)
+                if (allyInFirefight && IsWithinWideSwingWindow(dist2D) && dist2D < combatAllyDist)
                 {
                     combatAllyDist = dist2D;
                     combatAllyInFront = other;
                 }
             }
 
-            // 2A. Repulsão Lateral Anti-Stack / Anti-Spray Duplo (< 140 unidades em Hotzone/Combate)
-            if (closestAlly != null && closestAllyDist < 140.0f && closestAlly.PlayerPawn.Value?.AbsOrigin != null)
+            // 2A. Repulsão Lateral Anti-Stack com Cooldown por Par (2.5s) e Cede-Vez Único
+            if (closestAlly != null && closestAllyDist < Config.TradeSpacingMinDist2D && closestAlly.PlayerPawn.Value?.AbsOrigin != null)
             {
-                var allyPos = closestAlly.PlayerPawn.Value.AbsOrigin;
-                float awayX = curX - allyPos.X;
-                float awayY = curY - allyPos.Y;
+                var allyOrigin = closestAlly.PlayerPawn.Value.AbsOrigin;
+                var pairState = TryEvaluatePairRepulsion(
+                    currentBotSlot: bot.Slot,
+                    curX: curX,
+                    curY: curY,
+                    curZ: curZ,
+                    currentHasC4: BotLocomotionDriver.HasC4(bot),
+                    currentInCombat: csBot.IsEnemyVisible,
+                    currentRole: _roleManager.GetBotRole(bot) ?? BotRole.Rotator,
+                    allySlot: closestAlly.Slot,
+                    allyX: allyOrigin.X,
+                    allyY: allyOrigin.Y,
+                    allyZ: allyOrigin.Z,
+                    allyHasC4: BotLocomotionDriver.HasC4(closestAlly),
+                    allyInCombat: closestAlly.PlayerPawn.Value?.Bot?.IsEnemyVisible ?? false,
+                    allyRole: _roleManager.GetBotRole(closestAlly) ?? BotRole.Rotator,
+                    currentTime: currentTime,
+                    out int repulseAction);
 
-                float awayAngle = MathF.Atan2(awayY, awayX) + (bot.Slot % 2 == 0 ? 0.55f : -0.55f);
-                int repulseDirIdx = MicroMoveStep.QuantizeAngleToDirectionIndex(awayAngle);
-                int repulseAction = MicroMoveStep.EncodeAction(repulseDirIdx, MicroSpeedTier.Run, isJump: false);
+                if (pairState != null && repulseAction != 0)
+                {
+                    traj.Step0_Now = MicroMoveStep.FromActionId(repulseAction, 95f);
+                    traj.Step1_125ms = MicroMoveStep.FromActionId(repulseAction, 95f);
+                    traj.Step2_250ms = MicroMoveStep.StandStill(60f);
+                    traj.GeneratedAtTime = currentTime;
+                    traj.IsOverrideActive = true;
+                    traj.ActiveBehaviorTag = "TradeSpacing_Repulsion";
+                    traj.IntentPriority = MovementIntentSource.TradeSpacing;
+                    traj.SuggestedGoalOverride = pairState.OffsetTargetPosition;
+                    traj.OverrideExpiresAt = currentTime + 0.19f;
 
-                traj.Step0_Now = MicroMoveStep.FromActionId(repulseAction, 90f);
-                traj.Step1_125ms = MicroMoveStep.FromActionId(repulseAction, 90f);
-                traj.Step2_250ms = MicroMoveStep.StandStill(80f);
-                traj.GeneratedAtTime = currentTime;
-                traj.IsOverrideActive = true;
-                traj.ActiveBehaviorTag = "TradeSpacing_Repulsion";
-                traj.OverrideExpiresAt = currentTime + 0.18f;
-
-                LogDebugWithCooldown(
-                    bot.Slot,
-                    currentTime,
-                    4.0f,
-                    "MLMOVE - TRADE SPACING",
-                    $"**{bot.PlayerName}** aplicou repulsão lateral de **{closestAlly.PlayerName}** (Dist: `{closestAllyDist:F0}u < 140u`, Action `{repulseAction}`, Gatilho: `{trigger}`) evitando spray duplo.");
-                continue;
+                    LogDebugWithCooldown(
+                        bot.Slot,
+                        currentTime,
+                        Config.TradeSpacingPairCooldownSeconds,
+                        "MLMOVE - TRADE SPACING",
+                        $"**{bot.PlayerName}** (`yielding_slot={pairState.YieldingBotSlot}`) cedeu espaço para **{closestAlly.PlayerName}** (`priority_slot={pairState.PriorityBotSlot}`) | `dist_before={pairState.DistanceBefore2D:F0}u < {Config.TradeSpacingMinDist2D:F0}u` | `shared_target={pairState.SharedTargetDetected}` | `cooldown={Config.TradeSpacingPairCooldownSeconds:F1}s` | `action={repulseAction}`.");
+                    continue;
+                }
             }
 
-            // 2B. Trade Kill Window (250 a 400 unidades) + Wide Swing Coordenado após 0.6s de contato do Entry
+            // 2B. Trade Kill Window ESTRITAMENTE dentro de [WideSwingMinDist2D, WideSwingMaxDist2D] (250u-400u)
             if (combatAllyInFront != null &&
+                IsWithinWideSwingWindow(combatAllyDist) &&
                 !csBot.IsEnemyVisible &&
                 combatAllyInFront.PlayerPawn.Value?.AbsOrigin != null &&
                 _entryContactStartTime.TryGetValue(combatAllyInFront.Slot, out float contactStart) &&
@@ -1015,24 +1396,14 @@ public class MicroMoveEngine : IMicroMovePredictor
                 float baseAngleToAlly = MathF.Atan2(toAllyY, toAllyX);
 
                 float swingOffsetRad = (bot.Slot % 2 == 0) ? (MathF.PI / 3.2f) : -(MathF.PI / 3.2f);
-                if (combatAllyDist > 400.0f)
-                {
-                    swingOffsetRad *= 0.45f;
-                }
-                else if (combatAllyDist < 250.0f)
-                {
-                    swingOffsetRad *= 1.35f;
-                }
-
                 float wideSwingAngle = baseAngleToAlly + swingOffsetRad;
                 int swingDirIdx = MicroMoveStep.QuantizeAngleToDirectionIndex(wideSwingAngle);
 
-                // Usa amostragem estocástica ("dado viciado") entre a direção principal do Wide Swing e a adjacente
                 logits.Fill(-10.0f);
                 int primaryAction = MicroMoveStep.EncodeAction(swingDirIdx, MicroSpeedTier.Run, isJump: false);
                 int altAction = MicroMoveStep.EncodeAction((swingDirIdx + 1) % 16, MicroSpeedTier.Run, isJump: false);
-                logits[primaryAction] = 2.2f; // ~75% probabilidade
-                logits[altAction] = 1.1f;     // ~25% probabilidade
+                logits[primaryAction] = 2.2f;
+                logits[altAction] = 1.1f;
                 int sampledSwingAction = SampleActionFromLogits(logits, temperature: 0.85f);
 
                 traj.Step0_Now = MicroMoveStep.FromActionId(sampledSwingAction, 125f);
@@ -1041,14 +1412,15 @@ public class MicroMoveEngine : IMicroMovePredictor
                 traj.GeneratedAtTime = currentTime;
                 traj.IsOverrideActive = true;
                 traj.ActiveBehaviorTag = "TradeSpacing_WideSwing";
-                traj.OverrideExpiresAt = currentTime + 0.28f;
+                traj.IntentPriority = MovementIntentSource.TradeSpacing;
+                traj.OverrideExpiresAt = currentTime + 0.25f;
 
                 LogDebugWithCooldown(
                     bot.Slot,
                     currentTime,
                     4.0f,
                     "MLMOVE - TRADE SPACING",
-                    $"**{bot.PlayerName}** iniciou *Wide Swing* escalonado (`+0.6s`, Dist: `{combatAllyDist:F0}u` na janela `250-400u`, Action `{sampledSwingAction}`) para cobrir/trocar **{combatAllyInFront.PlayerName}**!");
+                    $"**{bot.PlayerName}** iniciou *Wide Swing* escalonado (`+0.6s`, Dist2D: `{combatAllyDist:F0}u` dentro da janela `[{Config.WideSwingMinDist2D:F0}u, {Config.WideSwingMaxDist2D:F0}u]`, Action `{sampledSwingAction}`) para cobrir/trocar **{combatAllyInFront.PlayerName}**!");
                 continue;
             }
 
@@ -1085,6 +1457,7 @@ public class MicroMoveEngine : IMicroMovePredictor
                         traj.GeneratedAtTime = currentTime;
                         traj.IsOverrideActive = true;
                         traj.ActiveBehaviorTag = onnxRan ? "ONNX_WallHugging" : "WallHugging_Hotzone";
+                        traj.IntentPriority = MovementIntentSource.MicroMove;
                         traj.OverrideExpiresAt = currentTime + 0.14f;
                         continue;
                     }
@@ -1094,7 +1467,7 @@ public class MicroMoveEngine : IMicroMovePredictor
             // =========================================================================
             // 4. INFERÊNCIA DIRETA DO TRANSFORMER ONNX (Multi-Horizonte: 0ms, 125ms, 250ms)
             // =========================================================================
-            if (onnxRan && (trigger == AdrenalineTriggerType.Vision_Spotted || trigger == AdrenalineTriggerType.Audio_HeardCue))
+            if (onnxRan && (trigger == AdrenalineTriggerType.Vision_Spotted || trigger == AdrenalineTriggerType.Audio_HeardCue || trigger == AdrenalineTriggerType.Hotzone_PreMapped))
             {
                 for (int a = 0; a < ActionSpaceSize; a++)
                     logits[a] = _onnxBatchOutputLogits[teamBatchIdx, playerRowIdx, 0, a];
@@ -1108,20 +1481,86 @@ public class MicroMoveEngine : IMicroMovePredictor
                     logits[a] = _onnxBatchOutputLogits[teamBatchIdx, playerRowIdx, 2, a];
                 int act2 = SampleActionFromLogits(logits, temperature: 0.85f);
 
+                if (act0 == 0 && speed2D < 25.0f)
+                {
+                    if (act1 != 0)
+                    {
+                        act0 = act1;
+                    }
+                    else if (act2 != 0)
+                    {
+                        act0 = act2;
+                    }
+                    else
+                    {
+                        int bestAct = 0;
+                        float bestLogit = float.NegativeInfinity;
+                        int secondAct = 0;
+                        float secondLogit = float.NegativeInfinity;
+                        for (int a = 0; a < ActionSpaceSize; a++)
+                        {
+                            float val = _onnxBatchOutputLogits[teamBatchIdx, playerRowIdx, 0, a];
+                            if (val > bestLogit)
+                            {
+                                secondLogit = bestLogit;
+                                secondAct = bestAct;
+                                bestLogit = val;
+                                bestAct = a;
+                            }
+                            else if (val > secondLogit)
+                            {
+                                secondLogit = val;
+                                secondAct = a;
+                            }
+                        }
+                        if (secondAct != 0 && (bestLogit - secondLogit) < 2.5f)
+                        {
+                            act0 = secondAct;
+                        }
+                    }
+                }
+
+                bool isTrObjective = bot.Team == CsTeam.Terrorist &&
+                    (BotLocomotionDriver.HasC4(bot) ||
+                     pawn.InBombZone ||
+                     (Plugin?.CurrentPlan?.CurrentPhase == RoundPhase.Executing) ||
+                     (Plugin?.TrPivotController?.HasPivotedThisRound == true) ||
+                     (isStationary && !csBot.IsEnemyVisible));
+
+                if (isTrObjective && trigger == AdrenalineTriggerType.Hotzone_PreMapped)
+                {
+                    if (act0 == 0)
+                    {
+                        if (act1 != 0) act0 = act1;
+                        else if (act2 != 0) act0 = act2;
+                        else
+                        {
+                            traj.IsOverrideActive = false;
+                            traj.ActiveBehaviorTag = "NavMesh_TR_Advance";
+                            continue;
+                        }
+                    }
+                }
+
                 traj.Step0_Now = MicroMoveStep.FromActionId(act0, 125f);
                 traj.Step1_125ms = MicroMoveStep.FromActionId(act1, 125f);
                 traj.Step2_250ms = MicroMoveStep.FromActionId(act2, 125f);
                 traj.GeneratedAtTime = currentTime;
                 traj.IsOverrideActive = true;
                 traj.ActiveBehaviorTag = $"ONNX_{trigger}";
+                traj.IntentPriority = MovementIntentSource.MicroMove;
                 traj.OverrideExpiresAt = currentTime + 0.25f;
+
+                string h0 = traj.Step0_Now.ToReadableString(botYaw);
+                string h1 = traj.Step1_125ms.ToReadableString(botYaw);
+                string h2 = traj.Step2_250ms.ToReadableString(botYaw);
 
                 LogDebugWithCooldown(
                     bot.Slot,
                     currentTime,
-                    4.0f,
+                    3.0f,
                     "MLMOVE - ONNX 16HZ",
-                    $"`[Modo ONNX Ativo]` **{bot.PlayerName}** ({trigger}, Latência CPU: `{LastInferenceLatencyMs:F2}ms`) -> Horizontes `[{act0}, {act1}, {act2}]`.");
+                    $"`[Modo ONNX Ativo]` **{bot.PlayerName}** acionou `{trigger}` em `({curX:F0}, {curY:F0}, {curZ:F0})` [Mira: Yaw {botYaw:F0}° | CPU: `{LastInferenceLatencyMs:F2}ms`] -> Horizontes: **0ms:** `{h0}` | **125ms:** `{h1}` | **250ms:** `{h2}`");
                 continue;
             }
 
@@ -1143,7 +1582,7 @@ public class MicroMoveEngine : IMicroMovePredictor
         TelemetryLogger.LogEvent(category, message);
     }
 
-    private static bool IsPrecisionWeapon(string weaponDesignerName)
+    public static bool IsPrecisionWeapon(string weaponDesignerName)
     {
         if (string.IsNullOrEmpty(weaponDesignerName)) return false;
         return weaponDesignerName.Contains("ak47", StringComparison.OrdinalIgnoreCase) ||

@@ -240,6 +240,53 @@ Inspirada no artigo acadêmico *MLMove (Dr. David Durst, Stanford / `csknow`)*, 
   - Fine-tuning incremental a partir do melhor checkpoint (`mlmove_de_mirage_best.pt`).
   - Relatório de precisão com cálculo de **Top-1 e Top-3 Accuracy** nos horizontes `0ms`, `+125ms` e `+250ms`.
 
+### Fase 7 (Concluída): Arquitetura Forense V4 — Arbitragem de Movimento, Idempotência de Ciclo de Vida e Telemetria de Alta Fidelidade
+
+Implementada após a auditoria forense do log `debug_match_20261023_012334.md`, estruturando os 11 pontos arquiteturais identificados e aprovados para produção:
+
+1. **`MovementArbitrator.cs` (Autoridade Única de Movimentação)**:
+   - Elimina colisões e sobrescritas concorrentes entre `MicroMoveEngine`, `BotLocomotionDriver`, `CombatAdapter` e `MobilityController`.
+   - Separação estrita em duas fases:
+     * `CollectAndResolveIntents`: Coleta intenções categorizadas por prioridade (`EMERGENCY_RECOVERY` > `COMBAT_COUNTER_STRAFE` > `TRADE_SPACING` > `TACTICAL_MICRO_MOVE` > `PATH_LOCOMOTION`), aplicando histerese temporal anti-jitter.
+     * `ApplyWinningIntent`: Ponto único de aplicação física por bot por tick, com clamp determinístico de velocidade horizontal 2D em 250 u/s (`ClampMaxSpeed2D`).
+
+2. **`RoundLifecycleManager.cs` (Ciclo de Vida Idempotente e Relógio Monotônico)**:
+   - Máquina de estados formal (`WARMUP`, `LIVE`, `RESTART_PENDING`, `MAP_CHANGE`, `PLUGIN_SHUTDOWN`).
+   - Guarda estrita de idempotência em `TryBeginRound` e `TrySealRound`: impede soma duplicada de placar, callbacks fora de ordem ou reabertura de rounds já selados.
+   - Envelopamento de admissão (`EventAdmissionEnvelope`) com classificação de `LateEvent` e auditoria isolada em `### 🕒 Auditoria de Eventos Atrasados (Late Events)`.
+   - Tradução oficial de códigos de vitória/término da Valve (`RoundEndReason`), traduzindo códigos nativos (1=TargetBombed, 7=BombDefused, 8=CTsWin, 9=TerroristsWin, 12=TargetSaved, 16=GameCommencing).
+
+3. **`MirageSectorClassifier.cs` (Geografia 3D e Desambiguação de Cotas Z)**:
+   - Resolução determinística de setores da `de_mirage` combinando `pawn.LastPlaceName` da Source 2 com caixas delimitadoras 3D validadas.
+   - Desambiguação vertical explícita de cotas Z (ex: Underpass subterrâneo em `Z <= -185` vs. Catwalk/Short superior em `Z > -185`; Palácio A elevado vs. Rampa A).
+   - Eliminação completa de fallbacks genéricos de telemetria como `"o Meio"` ou `"Em Trânsito"`.
+   - Validação estrita de perímetro de plant (`IsInsideBombsitePlantPerimeter`) com dwell time mínimo de 2.0s sem dano para declarações de *"Bomb limpo!"*.
+
+4. **`EconomyManager.cs` (Desacoplamento Econômico CT e TR)**:
+   - Estrutura `TeamEconomySnapshot` independente para CT e TR (`_ctSnapshot` e `_trSnapshot`), impedindo contaminação cruzada de saldo ou intenção.
+   - Classificação pós-compra (`ClassifyPostBuySnapshot`) baseada em inventário real após o Freeze Time.
+   - Reconciliação segura de roles e armas salvas (`BotRoleAssignmentState`): proteção a AWPs salvas por sobreviventes sem forçar compra redundante ou deleção acidental.
+   - Telemetria de compras detalhada sob a tag `[ECONOMIA - ITEM]`.
+
+5. **`OllamaIglService.cs` (Decisões Táticas Concorrentes e Penalidade de Repetição)**:
+   - Execução concorrente de CT e TR (`Task.WhenAll`) via `GetConcurrentRoundDecisionsAsync`, com timeouts independentes (`CancellationTokenSource.CreateLinkedTokenSource`).
+   - Avaliação e score ponderado de candidatas táticas (`EvaluateCandidateTactics`) com penalidade contextual de repetição (`TacticRepetitionPenaltyScore`), erradicando o viés monótono por *"Defesa Posicional 2-1-2"*.
+   - Template JSON neutro e dinâmico, alimentado pelo candidato de maior pontuação do round.
+
+6. **`BotLocomotionDriver.cs` & `MicroMoveEngine.cs` (Anti-Inércia, Anti-Stuck 2D e Trade Spacing)**:
+   - Promoção automática de horizontes futuros (`Step1_125ms` / `Step2_250ms`) quando o bot estiver parado com `vel2D < 25 u/s`, quebrando a armadilha de inércia do 0ms.
+   - Detecção contínua de travamento em janela deslizante 2D (`EvaluateStuck2DWindow`: deslocamento < 40u em 3.5s no plano XY), com lista de waypoints em cooldown e escalonamento de desobstrução.
+   - Trade Spacing com estado de par (`TradeSpacingPairState`), cooldown de 2.5s, abertura escalonada Wide Swing (`[250u, 400u]`) e limitação do Counter-Strafe a duelos iminentes com erro angular <= 16°.
+
+7. **`MatchTelemetryLogger.cs` (Telemetria Forense Precisa)**:
+   - Rastreamento individual de HP por jogador com cálculo exato de dano aplicado (`AppliedDamage = hpBefore - hpAfter`), dano bruto e overkill.
+   - Deduplicação de eventos de dano no mesmo tick e classificação explícita de `[IMPACTO SEM DANO]` com causa raiz (`VICTIM_ALREADY_DEAD`, `ABSORBED_BY_ARMOR`).
+   - Separação métrica de velocidade horizontal 2D de componentes verticais e estados aéreos (`velZ / 3D aéreo`).
+   - Rodapé formal de fechamento de captura (`CloseCapture`) com `capture_end_reason`, contagem de rounds completos e sequenciamento monotônico.
+
+8. **Suíte de Testes Automatizados (`tests/CsBotManager.Tests`)**:
+   - 23 testes unitários cobrindo ciclo de vida de rounds, economia, IGL, arbitragem de movimento, detector anti-stuck, geografia de setores 3D, macro-pivô TR, telemetria e cálculo de dano.
+
 ---
 
 ## 8. Ambiente Local e Alocação de Hardware
@@ -248,4 +295,4 @@ Inspirada no artigo acadêmico *MLMove (Dr. David Durst, Stanford / `csknow`)*, 
 - **Memória RAM**: 32 GB de RAM física do sistema.
 - **Cliente CS2 (Steam - Vanilla)**: Localizado em `H:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive` (100% original, sem mods, risco ZERO de VAC Ban).
 - **Servidor Dedicado e IA (Instância Isolada)**: Localizado em `H:\CS2_AI_Server` (instância segregada, Metamod, CounterStrikeSharp, WeaponPaints, CsBotManager, Voice IGL, Arsenal Web UI e modelos neurais `H:\CS2_AI_Server\models\mlmove_de_mirage.onnx`).
-- **Pipeline Pesado de Demos e Treinamento MLMove (NVMe 1 TB Isolado)**: Localizado em `D:\CS2_MLMove_Pipeline\` (`venv\`, `raw_demos\de_mirage\`, `extracted_tensors\de_mirage\`, `checkpoints\mlmove_de_mirage_best.pt` e atalho `treinar_lote_demos.bat`), mantendo o repositório Git (`tools/mlmove_pipeline/`) leve apenas com código-fonte (`contract_spec.py`, `demo_collector.py`, `extract_16hz_tensors.py`, `model_mlmove.py`, `generate_bootstrap_dataset.py`, `train_and_export_onnx.py` e `validate_e2e_onnx.py`).
+- **Pipeline Pesado de Demos e Treinamento MLMove (NVMe 1 TB Isolado)**: Localizado em `F:\CS2_MLMove_Pipeline\` (`venv\`, `raw_demos\de_mirage\`, `extracted_tensors\de_mirage\`, `checkpoints\mlmove_de_mirage_best.pt` e atalho `treinar_lote_demos.bat`), mantendo o repositório Git (`tools/mlmove_pipeline/`) leve apenas com código-fonte (`contract_spec.py`, `demo_collector.py`, `extract_16hz_tensors.py`, `model_mlmove.py`, `generate_bootstrap_dataset.py`, `train_and_export_onnx.py` e `validate_e2e_onnx.py`).

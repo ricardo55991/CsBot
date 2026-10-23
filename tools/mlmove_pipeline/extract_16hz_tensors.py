@@ -23,17 +23,42 @@ import numpy as np
 from demoparser2 import DemoParser
 from tqdm import tqdm
 
-from contract_spec import (
-    EXTRACTED_TENSORS_DIR_D,
-    FEATURE_DIM,
-    HORIZONS_COUNT,
-    MAX_PLAYERS,
-    RAW_DEMOS_DIR_D,
-    build_standardized_player_row,
-    can_team_perceive_enemy_2d,
-     encode_weapon_category,
-    velocity_to_action_id,
-)
+try:
+    from contract_spec import (
+        EXTRACTED_TENSORS_DIR_D,
+        FEATURE_DIM,
+        HORIZONS_COUNT,
+        MAX_PLAYERS,
+        RAW_DEMOS_DIR_D,
+        build_standardized_player_row,
+        can_team_perceive_enemy_2d,
+        encode_weapon_category,
+        velocity_to_action_id,
+    )
+except ImportError:
+    from tools.mlmove_pipeline.contract_spec import (
+        EXTRACTED_TENSORS_DIR_D,
+        FEATURE_DIM,
+        HORIZONS_COUNT,
+        MAX_PLAYERS,
+        RAW_DEMOS_DIR_D,
+        build_standardized_player_row,
+        can_team_perceive_enemy_2d,
+        encode_weapon_category,
+        velocity_to_action_id,
+    )
+import math
+from typing import Any
+
+def safe_float(val: Any, default: float = 0.0) -> float:
+    if val is None:
+        return default
+    try:
+        f = float(val)
+        return default if (math.isnan(f) or math.isinf(f)) else f
+    except Exception:
+        return default
+
 
 
 TICK_STRIDE_16HZ = 4       # 64Hz / 4 = 16Hz (62.5ms)
@@ -45,6 +70,23 @@ def extract_single_demo(demo_path: Path) -> Tuple[np.ndarray, np.ndarray]:
     """
     Extrai os tensores X [N, 10, 18] e Y [N, 10, 3] de um arquivo .dem do CS2 usando demoparser2.
     """
+    # Bloco 4: Validação do cabeçalho Source 2 CS2 (PBDEMS2)
+    try:
+        with open(demo_path, "rb") as f_head:
+            header = f_head.read(7)
+            if header != b"PBDEMS2":
+                print(f"[extract_16hz_tensors] Pulando demo não-CS2 ou corrompida: {demo_path.name}")
+                return (
+                    np.empty((0, MAX_PLAYERS, FEATURE_DIM), dtype=np.float32),
+                    np.empty((0, MAX_PLAYERS, HORIZONS_COUNT), dtype=np.uint8),
+                )
+    except Exception as exc:
+        print(f"[extract_16hz_tensors] Erro ao ler cabeçalho de {demo_path.name}: {exc}")
+        return (
+            np.empty((0, MAX_PLAYERS, FEATURE_DIM), dtype=np.float32),
+            np.empty((0, MAX_PLAYERS, HORIZONS_COUNT), dtype=np.uint8),
+        )
+
     parser = DemoParser(str(demo_path))
 
     wanted_props = [
@@ -61,7 +103,7 @@ def extract_single_demo(demo_path: Path) -> Tuple[np.ndarray, np.ndarray]:
         "active_weapon_name",
         "team_num",
         "is_alive",
-        "is_Freeze_period",
+        "is_freeze_period",
         "is_warmup_period",
         "is_walking",
         "duck_amount",
@@ -77,8 +119,8 @@ def extract_single_demo(demo_path: Path) -> Tuple[np.ndarray, np.ndarray]:
     # Filtro 1: Remove Warmup e Freeze Time
     if "is_warmup_period" in df.columns:
         df = df[df["is_warmup_period"] == False]  # noqa: E712
-    if "is_Freeze_period" in df.columns:
-        df = df[df["is_Freeze_period"] == False]  # noqa: E712
+    if "is_freeze_period" in df.columns:
+        df = df[df["is_freeze_period"] == False]  # noqa: E712
 
     # Filtra apenas jogadores em times ativos (2 = Terrorist, 3 = CounterTerrorist)
     df = df[df["team_num"].isin([2, 3])]
@@ -141,35 +183,35 @@ def extract_single_demo(demo_path: Path) -> Tuple[np.ndarray, np.ndarray]:
             sid = p.get("steamid")
             alive = bool(p.get("is_alive", False)) and float(p.get("health", 0) or 0) > 0
             alive_flags[idx] = alive
-            teams[idx] = int(p.get("team_num", 0) or 0)
-            positions[idx, 0] = float(p.get("X", 0.0) or 0.0)
-            positions[idx, 1] = float(p.get("Y", 0.0) or 0.0)
-            positions[idx, 2] = float(p.get("Z", 0.0) or 0.0)
-            yaws[idx] = float(p.get("yaw", 0.0) or 0.0)
+            teams[idx] = int(safe_float(p.get("team_num", 0)))
+            positions[idx, 0] = safe_float(p.get("X", 0.0))
+            positions[idx, 1] = safe_float(p.get("Y", 0.0))
+            positions[idx, 2] = safe_float(p.get("Z", 0.0))
+            yaws[idx] = safe_float(p.get("yaw", 0.0))
 
-            vx0 = float(p.get("velocity_X", 0.0) or 0.0)
-            vy0 = float(p.get("velocity_Y", 0.0) or 0.0)
-            vz0 = float(p.get("velocity_Z", 0.0) or 0.0)
+            vx0 = safe_float(p.get("velocity_X", 0.0))
+            vy0 = safe_float(p.get("velocity_Y", 0.0))
+            vz0 = safe_float(p.get("velocity_Z", 0.0))
             speeds_2d[idx] = float(np.hypot(vx0, vy0))
 
             if alive:
-                duck0 = float(p.get("duck_amount", 0.0) or 0.0) > 0.45
+                duck0 = safe_float(p.get("duck_amount", 0.0)) > 0.45
                 walk0 = bool(p.get("is_walking", False))
                 actions_3h[idx, 0] = velocity_to_action_id(vx0, vy0, vz0, duck0, walk0)
 
                 p1 = g1_map.get(sid, p)
-                vx1 = float(p1.get("velocity_X", 0.0) or 0.0)
-                vy1 = float(p1.get("velocity_Y", 0.0) or 0.0)
-                vz1 = float(p1.get("velocity_Z", 0.0) or 0.0)
-                duck1 = float(p1.get("duck_amount", 0.0) or 0.0) > 0.45
+                vx1 = safe_float(p1.get("velocity_X", 0.0))
+                vy1 = safe_float(p1.get("velocity_Y", 0.0))
+                vz1 = safe_float(p1.get("velocity_Z", 0.0))
+                duck1 = safe_float(p1.get("duck_amount", 0.0)) > 0.45
                 walk1 = bool(p1.get("is_walking", False))
                 actions_3h[idx, 1] = velocity_to_action_id(vx1, vy1, vz1, duck1, walk1)
 
                 p2 = g2_map.get(sid, p)
-                vx2 = float(p2.get("velocity_X", 0.0) or 0.0)
-                vy2 = float(p2.get("velocity_Y", 0.0) or 0.0)
-                vz2 = float(p2.get("velocity_Z", 0.0) or 0.0)
-                duck2 = float(p2.get("duck_amount", 0.0) or 0.0) > 0.45
+                vx2 = safe_float(p2.get("velocity_X", 0.0))
+                vy2 = safe_float(p2.get("velocity_Y", 0.0))
+                vz2 = safe_float(p2.get("velocity_Z", 0.0))
+                duck2 = safe_float(p2.get("duck_amount", 0.0)) > 0.45
                 walk2 = bool(p2.get("is_walking", False))
                 actions_3h[idx, 2] = velocity_to_action_id(vx2, vy2, vz2, duck2, walk2)
 
@@ -193,28 +235,33 @@ def extract_single_demo(demo_path: Path) -> Tuple[np.ndarray, np.ndarray]:
                     is_masked = not perceived
 
                 tensor_step[idx] = build_standardized_player_row(
-                    x=float(positions[idx, 0]),
-                    y=float(positions[idx, 1]),
-                    z=float(positions[idx, 2]),
-                    vx=float(p.get("velocity_X", 0.0) or 0.0),
-                    vy=float(p.get("velocity_Y", 0.0) or 0.0),
-                    vz=float(p.get("velocity_Z", 0.0) or 0.0),
-                    yaw_deg=float(yaws[idx]),
-                    pitch_deg=float(p.get("pitch", 0.0) or 0.0),
-                    health=float(p.get("health", 0.0) or 0.0),
-                    armor=float(p.get("armor_value", 0.0) or 0.0),
+                    x=safe_float(positions[idx, 0]),
+                    y=safe_float(positions[idx, 1]),
+                    z=safe_float(positions[idx, 2]),
+                    vx=safe_float(p.get("velocity_X", 0.0)),
+                    vy=safe_float(p.get("velocity_Y", 0.0)),
+                    vz=safe_float(p.get("velocity_Z", 0.0)),
+                    yaw_deg=safe_float(yaws[idx]),
+                    pitch_deg=safe_float(p.get("pitch", 0.0)),
+                    health=safe_float(p.get("health", 0.0)),
+                    armor=safe_float(p.get("armor_value", 0.0)),
                     weapon_name=str(p.get("active_weapon_name", "") or ""),
                     role_code=role_cycle[idx % len(role_cycle)],
                     is_terrorist=(teams[idx] == 2),
                     is_alive=bool(alive_flags[idx]),
-                    has_c4=False,
+                    has_c4=("c4" in str(p.get("active_weapon_name", "") or "").lower()),
                     is_bomb_planted=False,
-                    round_time_remaining=75.0,
+                    round_time_remaining=max(5.0, 115.0 - ((t0 - all_ticks[0]) % (115 * 64)) / 64.0),
                     is_masked_enemy=is_masked,
                 )
 
             X_list.append(tensor_step)
             Y_list.append(actions_3h.copy())
+
+    del df
+    del grouped
+    import gc
+    gc.collect()
 
     if not X_list:
         return (
@@ -234,7 +281,7 @@ def process_demos_folder(
     raw_dir.mkdir(parents=True, exist_ok=True)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    demos = sorted(raw_dir.glob("*.dem"))
+    demos = sorted(raw_dir.rglob("*.dem"))
     if not demos:
         print(f"[extract_16hz_tensors] Nenhuma demo .dem pendente em {raw_dir}.")
         return 0
@@ -242,14 +289,24 @@ def process_demos_folder(
     total_samples = 0
     for dem_path in tqdm(demos, desc=f"Extraindo 16Hz ({map_name})"):
         out_npz = out_dir / f"{dem_path.stem}_16hz.npz"
+        if out_npz.exists() and out_npz.stat().st_size > 100_000:
+            try:
+                with np.load(out_npz) as existing_data:
+                    c = len(existing_data["X"])
+                    total_samples += c
+                    print(f"\n[extract_16hz_tensors] {out_npz.name} já extraído ({c} steps 16Hz).", flush=True)
+                    if delete_after_extract:
+                        dem_path.unlink(missing_ok=True)
+                    continue
+            except Exception:
+                pass
+
         try:
             X, Y = extract_single_demo(dem_path)
             if len(X) > 0:
                 np.savez_compressed(out_npz, X=X, Y=Y)
                 total_samples += len(X)
-                print(
-                    f"[extract_16hz_tensors] {dem_path.name} -> {out_npz.name} ({len(X)} steps 16Hz, {out_npz.stat().st_size // 1024} KB)"
-                )
+                print(f"\n[extract_16hz_tensors] {dem_path.name} -> {out_npz.name} ({len(X)} steps 16Hz, {out_npz.stat().st_size // 1024} KB)", flush=True)
             if delete_after_extract:
                 dem_path.unlink(missing_ok=True)
         except Exception as exc:

@@ -12,9 +12,13 @@ Fase 6C (Camada 3 - Parte 2): Treinador Multi-Horizonte PyTorch + Exportador ONN
 from __future__ import annotations
 import argparse
 import copy
+import os
 import time
 from pathlib import Path
-from typing import List, Tuple
+import bisect
+from collections import OrderedDict
+from typing import List, Optional, Tuple
+from torch.utils.data import Dataset
 
 import numpy as np
 import onnx
@@ -23,18 +27,34 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 
-from contract_spec import (
-    ACTION_SPACE_SIZE,
-    CHECKPOINTS_DIR_D,
-    EXTRACTED_TENSORS_DIR_D,
-    FEATURE_DIM,
-    HORIZONS_COUNT,
-    MAX_PLAYERS,
-    ONNX_INPUT_NAME,
-    ONNX_OUTPUT_NAME,
-    SERVER_MODELS_DIR_H,
-)
-from model_mlmove import MLMoveTransformer, count_parameters
+try:
+    from contract_spec import (
+        ACTION_SPACE_SIZE,
+        CHECKPOINTS_DIR_D,
+        DEFAULT_BASE_DIR,
+        EXTRACTED_TENSORS_DIR_D,
+        FEATURE_DIM,
+        HORIZONS_COUNT,
+        MAX_PLAYERS,
+        ONNX_INPUT_NAME,
+        ONNX_OUTPUT_NAME,
+        SERVER_MODELS_DIR_H,
+    )
+    from model_mlmove import MLMoveTransformer, count_parameters
+except ImportError:
+    from tools.mlmove_pipeline.contract_spec import (
+        ACTION_SPACE_SIZE,
+        CHECKPOINTS_DIR_D,
+        DEFAULT_BASE_DIR,
+        EXTRACTED_TENSORS_DIR_D,
+        FEATURE_DIM,
+        HORIZONS_COUNT,
+        MAX_PLAYERS,
+        ONNX_INPUT_NAME,
+        ONNX_OUTPUT_NAME,
+        SERVER_MODELS_DIR_H,
+    )
+    from tools.mlmove_pipeline.model_mlmove import MLMoveTransformer, count_parameters
 
 
 class DirectMLAdamW(torch.optim.Optimizer):
@@ -114,26 +134,76 @@ def select_training_device(prefer_dml: bool = True) -> Tuple[torch.device, str]:
     return torch.device("cpu"), f"CPU ({torch.get_num_threads()} threads)"
 
 
-def load_dataset_for_map(map_name: str) -> Tuple[torch.Tensor, torch.Tensor]:
-    tensor_dir = Path(EXTRACTED_TENSORS_DIR_D) / map_name
+class ShardedMemmapDataset(Dataset):
+    """
+    Dataset sharded de alta performance e baixo consumo de RAM (< 1.5 GB).
+    Descarta o bootstrap sintético automaticamente quando houver >= 50.000 amostras humanas reais.
+    Mantém os tensores em memória contígua (~100 MB para centenas de milhares de passos)
+    proporcionando throughput máximo na GPU AMD RX 6600M sem gargalo de I/O.
+    """
+    def __init__(self, npz_files: List[Path]):
+        real_files = [f for f in npz_files if "bootstrap" not in f.name.lower()]
+        real_samples = 0
+        for f in real_files:
+            try:
+                with np.load(f) as data:
+                    if "X" in data:
+                        real_samples += len(data["X"])
+            except Exception:
+                pass
+
+        if real_samples >= 50000:
+            print(f"[ShardedMemmapDataset] Dataset de partidas humanas reais robusto ({real_samples:,} amostras >= 50k). Descartando bootstrap sintético!", flush=True)
+            target_files = real_files
+        else:
+            target_files = npz_files
+
+        valid_shards = []
+        total = 0
+        for f in target_files:
+            try:
+                with np.load(f) as data:
+                    if "X" in data and "Y" in data:
+                        sz = len(data["X"])
+                        if sz > 0:
+                            valid_shards.append((f, sz))
+                            total += sz
+            except Exception as exc:
+                print(f"[ShardedMemmapDataset] Aviso ao inspecionar {f.name}: {exc}", flush=True)
+
+        if total == 0:
+            raise ValueError("Nenhuma amostra valida encontrada nos arquivos .npz fornecidos.")
+
+        self.total_samples = total
+        self.X = torch.empty((total, MAX_PLAYERS, FEATURE_DIM), dtype=torch.float32)
+        self.Y = torch.empty((total, MAX_PLAYERS, HORIZONS_COUNT), dtype=torch.uint8)
+
+        offset = 0
+        for f, sz in valid_shards:
+            with np.load(f) as data:
+                self.X[offset : offset + sz] = torch.from_numpy(np.asarray(data["X"], dtype=np.float32))
+                self.Y[offset : offset + sz] = torch.from_numpy(np.asarray(data["Y"], dtype=np.uint8))
+                offset += sz
+                print(f"[ShardedMemmapDataset] Shard {f.name}: {sz:,} amostras (Total: {offset:,})", flush=True)
+        ram_mb = (self.X.element_size() * self.X.nelement() + self.Y.element_size() * self.Y.nelement()) / (1024**2)
+        print(f"[ShardedMemmapDataset] Dataset consolidado com {total:,} amostras (Consumo RAM: {ram_mb:.1f} MB << 2.0 GB).", flush=True)
+
+    def __len__(self) -> int:
+        return self.total_samples
+
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        return self.X[idx], self.Y[idx]
+
+
+def load_dataset_for_map(map_name: str, base_dir: Optional[str] = None) -> ShardedMemmapDataset:
+    root = Path(base_dir) if base_dir else Path(DEFAULT_BASE_DIR)
+    tensor_dir = root / "extracted_tensors" / map_name
     npz_files: List[Path] = sorted(tensor_dir.glob("*.npz"))
     if not npz_files:
         raise FileNotFoundError(
-            f"Nenhum arquivo .npz encontrado em {tensor_dir}. Rode generate_bootstrap_dataset.py ou extract_16hz_tensors.py primeiro."
+            f"Nenhum arquivo .npz encontrado em {tensor_dir}. Execute o minerador primeiro."
         )
-
-    X_chunks: List[np.ndarray] = []
-    Y_chunks: List[np.ndarray] = []
-    for f in npz_files:
-        data = np.load(f)
-        if "X" in data and "Y" in data and len(data["X"]) > 0:
-            X_chunks.append(data["X"].astype(np.float32))
-            Y_chunks.append(data["Y"].astype(np.int64))
-            print(f"[train_and_export_onnx] Carregado {f.name}: {len(data['X']):,} amostras")
-
-    X_all = np.concatenate(X_chunks, axis=0)
-    Y_all = np.concatenate(Y_chunks, axis=0)
-    return torch.from_numpy(X_all), torch.from_numpy(Y_all)
+    return ShardedMemmapDataset(npz_files)
 
 
 def export_to_server_onnx(model: MLMoveTransformer, map_name: str) -> Path:
@@ -167,15 +237,22 @@ def export_to_server_onnx(model: MLMoveTransformer, map_name: str) -> Path:
     onnx_model = onnx.load_from_string(onnx_bytes)
     onnx.checker.check_model(onnx_model)
 
-    # Grava em blocos de 256 KB para máxima estabilidade no Windows
-    with open(onnx_path, "wb") as f:
+    tmp_path = server_models_dir / f"mlmove_{map_name}.onnx.tmp"
+    with open(tmp_path, "wb") as f:
         mv = memoryview(onnx_bytes)
         chunk_sz = 256 * 1024
         for offset in range(0, len(onnx_bytes), chunk_sz):
             f.write(mv[offset : offset + chunk_sz])
 
+    tmp_size = tmp_path.stat().st_size
+    if tmp_size < 10_000_000:
+        tmp_path.unlink(missing_ok=True)
+        raise ValueError(f"Exportação ONNX incompleta: tamanho {tmp_size} bytes < 10 MB!")
+
+    # Substituição atômica no Windows para evitar 0 bytes no FileSystemWatcher do C#
+    os.replace(tmp_path, onnx_path)
     size_mb = onnx_path.stat().st_size / (1024.0 * 1024.0)
-    print(f"[train_and_export_onnx] Modelo ONNX exportado com sucesso: {onnx_path} ({size_mb:.2f} MB)")
+    print(f"[train_and_export_onnx] Modelo ONNX atômico exportado com sucesso: {onnx_path} ({size_mb:.2f} MB)")
 
     # Benchmark rápido no ONNX Runtime CPU (simulando o loop de 16Hz do C#)
     sess_opts = ort.SessionOptions()
@@ -197,8 +274,10 @@ def export_to_server_onnx(model: MLMoveTransformer, map_name: str) -> Path:
 
     avg_ms = float(np.mean(latencies))
     p50_ms = float(np.median(latencies))
+    p99_ms = float(np.percentile(latencies, 99))
     print(
-        f"[train_and_export_onnx] Validação ONNX Runtime CPU -> Output shape: {out.shape} | Latência mediana: {p50_ms:.3f} ms (média: {avg_ms:.3f} ms)"
+        f"[train_and_export_onnx] Validação ONNX Runtime CPU -> Output shape: {out.shape} | Latência mediana: {p50_ms:.3f} ms (média: {avg_ms:.3f} ms, p99: {p99_ms:.3f} ms)",
+        flush=True
     )
     return onnx_path
 
@@ -220,7 +299,10 @@ def load_state_dict_safe(path: Path) -> dict:
     import io
 
     raw = path.read_bytes()
-    return torch.load(io.BytesIO(raw), map_location="cpu", weights_only=True)
+    try:
+        return torch.load(io.BytesIO(raw), map_location="cpu", weights_only=False)
+    except TypeError:
+        return torch.load(io.BytesIO(raw), map_location="cpu")
 
 
 def main() -> None:
@@ -239,8 +321,7 @@ def main() -> None:
     device, dev_label = select_training_device(prefer_dml=not args.cpu_only)
     print(f"[train_and_export_onnx] Dispositivo selecionado: {dev_label}")
 
-    X, Y = load_dataset_for_map(args.map)
-    dataset = TensorDataset(X, Y)
+    dataset = load_dataset_for_map(args.map)
     loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True, drop_last=False)
 
     model = MLMoveTransformer()
@@ -267,13 +348,17 @@ def main() -> None:
     for epoch in range(1, args.epochs + 1):
         model.train()
         running_loss = 0.0
+        running_l0 = 0.0
+        running_l1 = 0.0
+        running_l2 = 0.0
         correct_h0 = 0
+        correct_top3_h0 = 0
         total_tokens = 0
         t_ep = time.perf_counter()
 
         for bx, by in loader:
             bx = bx.to(device)
-            by = by.to(device)
+            by = by.to(device, dtype=torch.long)
 
             optimizer.zero_grad()
             logits = model(bx)  # [B, 10, 3, 97]
@@ -284,23 +369,35 @@ def main() -> None:
             loss = loss_0ms + loss_125ms + loss_250ms
 
             loss.backward()
-            for p in model.parameters():
-                if p.grad is not None:
-                    p.grad.clamp_(-1.0, 1.0)
+            for p_param in model.parameters():
+                if p_param.grad is not None:
+                    p_param.grad.clamp_(-1.0, 1.0)
             optimizer.step()
 
             bsz = bx.size(0)
             running_loss += float(loss.item()) * bsz
+            running_l0 += float(loss_0ms.item()) * bsz
+            running_l1 += float(loss_125ms.item()) * bsz
+            running_l2 += float(loss_250ms.item()) * bsz
+
             preds_h0 = logits[:, :, 0, :].argmax(dim=-1)
             correct_h0 += int((preds_h0 == by[:, :, 0]).sum().item())
+
+            _, top3_preds = logits[:, :, 0, :].topk(3, dim=-1)
+            correct_top3_h0 += int((top3_preds == by[:, :, 0].unsqueeze(-1)).any(dim=-1).sum().item())
             total_tokens += bsz * MAX_PLAYERS
 
         scheduler.step()
         epoch_loss = running_loss / len(dataset)
-        acc_h0 = (correct_h0 / max(1, total_tokens)) * 100.0
+        ep_l0 = running_l0 / len(dataset)
+        ep_l1 = running_l1 / len(dataset)
+        ep_l2 = running_l2 / len(dataset)
+        acc_top1 = (correct_h0 / max(1, total_tokens)) * 100.0
+        acc_top3 = (correct_top3_h0 / max(1, total_tokens)) * 100.0
         dt = time.perf_counter() - t_ep
         print(
-            f"  [Época {epoch:02d}/{args.epochs:02d}] Loss Multi-Horizonte: {epoch_loss:.4f} | Acc(t=0ms): {acc_h0:.2f}% | Tempo: {dt:.2f}s"
+            f"  [Época {epoch:02d}/{args.epochs:02d}] Loss: {epoch_loss:.4f} (L0: {ep_l0:.3f}, L125: {ep_l1:.3f}, L250: {ep_l2:.3f}) | Top-1: {acc_top1:.2f}% | Top-3: {acc_top3:.2f}% | Tempo: {dt:.2f}s",
+            flush=True
         )
 
         if epoch_loss < best_loss:

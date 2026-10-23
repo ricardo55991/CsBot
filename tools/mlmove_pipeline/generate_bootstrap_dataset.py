@@ -1,6 +1,6 @@
 """
 Fase 6C / Etapa 5 (Bootstrap Dataset Generator):
-Gera em `D:\CS2_MLMove_Pipeline\extracted_tensors\de_mirage\bootstrap_mirage_16hz.npz` um dataset tático inicial
+Gera em `F:\CS2_MLMove_Pipeline\extracted_tensors\de_mirage\bootstrap_mirage_16hz.npz` um dataset tático inicial
 de trajetórias coordenadas da `de_mirage` a 16Hz, lendo os 35 Spots e 13 Chokepoints reais de
 `src/CsBotManager/MapProfiles/de_mirage.json` (e também extraindo demos `.dem` locais se existirem).
 
@@ -216,7 +216,7 @@ def main() -> None:
     out_dir = Path(EXTRACTED_TENSORS_DIR_D) / args.map
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # 1. Processa demos .dem reais caso existam em D:\CS2_MLMove_Pipeline\raw_demos\de_mirage
+    # 1. Processa demos .dem reais caso existam em F:\CS2_MLMove_Pipeline\raw_demos\de_mirage
     real_samples = process_demos_folder(map_name=args.map, delete_after_extract=False)
 
     # 2. Gera o dataset bootstrap estruturado sobre os 35 Spots e 13 Chokepoints da de_mirage

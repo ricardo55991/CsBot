@@ -16,6 +16,11 @@ import os
 from pathlib import Path
 import site
 import sys
+if sys.stdout and hasattr(sys.stdout, 'reconfigure'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
 import time
 from typing import Dict, List, Optional, Tuple
 
@@ -37,6 +42,7 @@ from tqdm import tqdm
 from contract_spec import (
     ACTION_SPACE_SIZE,
     CHECKPOINTS_DIR_D,
+    DEFAULT_BASE_DIR,
     EXTRACTED_TENSORS_DIR_D,
     FEATURE_DIM,
     HORIZONS_COUNT,
@@ -102,7 +108,6 @@ def evaluate_top1_top3_metrics(
         "h0_top3": (correct_top3[0] / denom) * 100.0,
         "h1_top1": (correct_top1[1] / denom) * 100.0,
         "h1_top3": (correct_top3[1] / denom) * 100.0,
-        "h2_top1": (correct_top2[2] if False else correct_top1[2] / denom) * 100.0,
         "h2_top1": (correct_top1[2] / denom) * 100.0,
         "h2_top3": (correct_top3[2] / denom) * 100.0,
     }
@@ -125,7 +130,7 @@ def process_single_batch_extraction(
     raw_dir.mkdir(parents=True, exist_ok=True)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    dem_files = sorted(list(raw_dir.glob("*.dem")))
+    dem_files = sorted(list(raw_dir.rglob("*.dem")))
     if not dem_files:
         return 0, 0
 
@@ -279,7 +284,7 @@ def train_incremental_batch(
     metrics = evaluate_top1_top3_metrics(model, val_loader, eval_device)
 
     print("\n" + "=" * 65)
-    print("      📊 RELATÓRIO DE PRECISÃO MULTI-HORIZONTE (MLMove 16Hz)")
+    print("      [RELATÓRIO DE PRECISÃO MULTI-HORIZONTE (MLMove 16Hz)]")
     print("=" * 65)
     print(f"  * Horizonte 0ms   (Imediato) : Top-1: {metrics['h0_top1']:5.2f}% | Top-3: {metrics['h0_top3']:5.2f}%")
     print(f"  * Horizonte +125ms (Curto)    : Top-1: {metrics['h1_top1']:5.2f}% | Top-3: {metrics['h1_top3']:5.2f}%")
@@ -363,7 +368,7 @@ def run_mining_and_training_loop(
             print("[Loop] Nenhum tensor disponível ainda. Adicione demos ou URLs para iniciar.")
 
         # Se não houve novas demos neste lote e já processamos todas as pendentes
-        remaining_raw = list(raw_dir.glob("*.dem"))
+        remaining_raw = list(raw_dir.rglob("*.dem"))
         if demos_extracted == 0 and len(remaining_raw) == 0:
             print("[Loop] Nenhuma nova demo pendente. Lote concluído.")
             break

@@ -1,6 +1,6 @@
 """
 Fase 6B (Camada 2 - Parte 1): Gerenciador de Coleta e Descompactação de Demos em Lotes no Disco D:\
-Armazenamento estrito em `D:\CS2_MLMove_Pipeline\raw_demos\<map>\`.
+Armazenamento estrito em `F:\CS2_MLMove_Pipeline\raw_demos\<map>\`.
 
 Recursos:
 1. Download em lotes (`--batch-size 50 --map de_mirage`) a partir de listas de URLs ou manifestos públicos.
@@ -206,7 +206,7 @@ def download_urls_batch(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Coletor em Lotes de Demos CS2 (Disco D:\\)")
+    parser = argparse.ArgumentParser(description="Coletor em Lotes de Demos CS2 (Disco F:\\)")
     parser.add_argument("--map", type=str, default="de_mirage", help="Mapa alvo (default: de_mirage)")
     parser.add_argument("--batch-size", type=int, default=50, help="Tamanho máximo do lote de demos")
     parser.add_argument("--ingest-dir", type=str, default="", help="Pasta local com arquivos .dem/.rar/.zip/.zst")
@@ -229,7 +229,7 @@ def main() -> None:
             ingest_directory(Path(args.ingest_dir), args.map, args.batch_size, delete_archives=args.delete_after_extract)
         )
 
-    # Descompacta qualquer arquivo compactado já colocado manualmente em D:\CS2_MLMove_Pipeline\raw_demos\<map>
+    # Descompacta qualquer arquivo compactado já colocado manualmente em F:\CS2_MLMove_Pipeline\raw_demos\<map>
     collected.extend(ingest_directory(dest_dir, args.map, args.batch_size, delete_archives=args.delete_after_extract))
 
     urls: List[str] = list(args.url)

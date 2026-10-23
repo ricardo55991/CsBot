@@ -5,10 +5,31 @@ namespace CsBotManager;
 
 public enum BuyState
 {
-    FULL_BUY,
+    PISTOL_ROUND,
+    FULL_ECO,
+    LIGHT_BUY,
     FORCE_BUY,
     HALF_BUY,
-    FULL_ECO
+    FULL_BUY,
+    SAVE_WITH_WEAPONS,
+    UNKNOWN_INCOMPLETE_BUY
+}
+
+public enum BuyCompletionState
+{
+    PENDING,
+    STABILIZED,
+    TIMEOUT,
+    INCOMPLETE
+}
+
+public enum TacticalDecisionSource
+{
+    OLLAMA,
+    FALLBACK_PRESET,
+    CACHE,
+    STATIC_DEFAULT,
+    RECOVERED_PREVIOUS_VALID_PLAN
 }
 
 public enum BotRole
@@ -349,6 +370,143 @@ public class TacticalPlan
 
     [JsonIgnore]
     public string RawJson { get; set; } = string.Empty;
+
+    // =========================================================================
+    // Versionamento Obrigatório do Plano Tático (Bug 6) & Auditoria IGL (Bug 7)
+    // =========================================================================
+    [JsonIgnore]
+    public string DecisionId { get; set; } = string.Empty;
+
+    [JsonIgnore]
+    public int RoundId { get; set; }
+
+    [JsonIgnore]
+    public CsTeam TeamSide { get; set; } = CsTeam.None;
+
+    [JsonIgnore]
+    public int RequestedAtTick { get; set; }
+
+    [JsonIgnore]
+    public int CompletedAtTick { get; set; }
+
+    [JsonIgnore]
+    public double LatencyMs { get; set; }
+
+    [JsonIgnore]
+    public TacticalDecisionSource Source { get; set; } = TacticalDecisionSource.FALLBACK_PRESET;
+
+    [JsonIgnore]
+    public bool CacheHit { get; set; }
+
+    [JsonIgnore]
+    public string CacheKey { get; set; } = string.Empty;
+
+    [JsonIgnore]
+    public bool FallbackUsed { get; set; }
+
+    [JsonIgnore]
+    public string FallbackReason { get; set; } = "NONE";
+
+    [JsonIgnore]
+    public string ParseStatus { get; set; } = "PENDING";
+
+    [JsonIgnore]
+    public string ModelResponseStatus { get; set; } = "PENDING";
+
+    [JsonIgnore]
+    public string SelectedTactic { get; set; } = string.Empty;
+
+    [JsonIgnore]
+    public List<string> CandidateTactics { get; set; } = new();
+
+    [JsonIgnore]
+    public Dictionary<string, double> SelectionScores { get; set; } = new();
+
+    [JsonIgnore]
+    public string SelectionReason { get; set; } = string.Empty;
+
+    [JsonIgnore]
+    public bool RepetitionPenaltyApplied { get; set; }
+
+    [JsonIgnore]
+    public string InitialTactic { get; set; } = "Padrão Tático Cadenciado";
+
+    [JsonIgnore]
+    public string CurrentTactic { get; set; } = "Padrão Tático Cadenciado";
+
+    [JsonIgnore]
+    public int TacticRevision { get; set; } = 1;
+
+    [JsonIgnore]
+    public string TacticSource { get; set; } = "FALLBACK_PRESET";
+
+    [JsonIgnore]
+    public int ChangedAtTick { get; set; }
+
+    [JsonIgnore]
+    public string ChangedAtRoundTime { get; set; } = "01:55";
+
+    [JsonIgnore]
+    public string ChangeReason { get; set; } = "Initial round plan";
+
+    [JsonIgnore]
+    public string TriggeringEvent { get; set; } = "RoundStart";
+
+    [JsonIgnore]
+    public string PreviousTargetSite { get; set; } = "A";
+
+    [JsonIgnore]
+    public string CurrentTargetSite { get; set; } = "A";
+
+    [JsonIgnore]
+    public float Confidence { get; set; } = 1.0f;
+
+    public void InitializeVersioning(string tacticName, string targetSite, TacticalDecisionSource source, int tick, string roundTime = "01:55")
+    {
+        TacticName = tacticName;
+        InitialTactic = tacticName;
+        CurrentTactic = tacticName;
+        SelectedTactic = tacticName;
+        TacticRevision = 1;
+        Source = source;
+        TacticSource = source.ToString();
+        ChangedAtTick = tick;
+        ChangedAtRoundTime = roundTime;
+        ChangeReason = "Initial round plan";
+        TriggeringEvent = "RoundStart";
+        PreviousTargetSite = targetSite;
+        CurrentTargetSite = targetSite;
+        RealTargetSite = targetSite;
+    }
+
+    public void ApplyPivotRevision(
+        string newTacticName,
+        string newTargetSite,
+        string changeReason,
+        string triggeringEvent,
+        int gameTick,
+        string roundTime,
+        float confidence,
+        List<string>? candidates = null)
+    {
+        PreviousTargetSite = CurrentTargetSite;
+        CurrentTargetSite = newTargetSite;
+        RealTargetSite = newTargetSite;
+        TacticName = newTacticName;
+        CurrentTactic = newTacticName;
+        SelectedTactic = newTacticName;
+        TacticRevision++;
+        TacticSource = "TACTICAL_PIVOT";
+        ChangedAtTick = gameTick;
+        ChangedAtRoundTime = roundTime;
+        ChangeReason = changeReason;
+        TriggeringEvent = triggeringEvent;
+        Confidence = confidence;
+        if (candidates != null && candidates.Count > 0)
+        {
+            CandidateTactics = candidates;
+        }
+    }
 }
 
 public class VoiceCommandPayload

@@ -209,4 +209,15 @@ public class CombatAdapter
 
         return true;
     }
+
+    public static bool IsSecondaryWeapon(string? weaponDesignerName)
+    {
+        if (string.IsNullOrEmpty(weaponDesignerName)) return false;
+        string name = weaponDesignerName.ToLowerInvariant();
+
+        return name.Contains("glock") || name.Contains("usp") || name.Contains("hkp2000") ||
+               name.Contains("p250") || name.Contains("deagle") || name.Contains("fiveseven") ||
+               name.Contains("tec9") || name.Contains("cz75a") || name.Contains("revolver") ||
+               name.Contains("elite");
+    }
 }

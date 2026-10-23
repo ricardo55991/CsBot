@@ -41,6 +41,41 @@ public class CsBotManagerPlugin : BasePlugin
     private MicroMoveEngine? _microMoveEngine;
 
     private TacticalPlan _currentPlan = new();
+
+    private TacticalPlan _currentTrPlan = new();
+    private TacticalPlan _currentCtPlan = new();
+
+    // V4: ciclo de vida idempotente de rounds e captura limitada por rounds
+    private readonly RoundLifecycleManager _lifecycle = new();
+    private int _debugTargetRounds = 0;
+    private int _debugRoundsSealed = 0;
+
+    private static bool IsEngineWarmup()
+    {
+        try
+        {
+            var rules = Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").FirstOrDefault()?.GameRules;
+            return rules?.WarmupPeriod ?? false;
+        }
+        catch { return false; }
+    }
+
+    /// <summary>Verifica admissão do evento no round atual. Eventos atrasados vão para a auditoria separada.</summary>
+    private bool AdmitEvent(string eventName, string details)
+    {
+        var env = _lifecycle.CreateEventEnvelope(Server.TickCount, _telemetryLogger?.GetRoundClockFormatted() ?? "00:00", eventName);
+        if (env.LateEvent)
+        {
+            _telemetryLogger?.LogLateEvent(env, eventName, details);
+            return false;
+        }
+        return true;
+    }
+
+    public TrMacroPivotController? TrPivotController => _trPivotController;
+    public PacingAndFallbackController? PacingController => _pacingController;
+
+    public TacticalPlan CurrentPlan => _currentPlan;
     private int _currentRound = 0;
     private int _ctScore = 0;
     private int _trScore = 0;
@@ -63,6 +98,7 @@ public class CsBotManagerPlugin : BasePlugin
     // Cache de renderização HTML da HUD a 1Hz (O-01)
     private string _cachedHudHtml = string.Empty;
     private int _cachedHumanSlot = -1;
+    private readonly Dictionary<int, float> _lastHurtThreatAlertTime = new();
 
     public int GetLossBonus(int streak) => Math.Clamp(1400 + (streak - 1) * 500, 1400, 3400);
 
@@ -109,7 +145,7 @@ public class CsBotManagerPlugin : BasePlugin
         base.Load(hotReload);
 
         _mapProfileManager.LoadProfile(Server.MapName, ModuleDirectory);
-        _microMoveEngine?.TryLoadMapModel(Server.MapName);
+        // Bloco 1: MicroMoveEngine e carregado apos sua instanciacao completa abaixo
 
         _pacingController = new PacingAndFallbackController(this, _mapProfileManager, _roleManager, _locomotionDriver);
         _ctController = new CtDefenseController(this, _mapProfileManager, _roleManager, _locomotionDriver);
@@ -129,8 +165,9 @@ public class CsBotManagerPlugin : BasePlugin
         _combatAdapter = new CombatAdapter(this, _locomotionDriver, _midRoundAdapter);
         _microMoveEngine = new MicroMoveEngine(_mapProfileManager, _roleManager)
         {
-            TelemetryLogger = _telemetryLogger, CalloutSystem = _calloutSystem
+            TelemetryLogger = _telemetryLogger, CalloutSystem = _calloutSystem, Plugin = this
         };
+        _iglService.TelemetryLogger = _telemetryLogger;
         _microMoveEngine.TryLoadMapModel(Server.MapName);
 
         _locomotionDriver.PlantController = _clearAndPlantController;
@@ -198,11 +235,16 @@ public class CsBotManagerPlugin : BasePlugin
     public override void Unload(bool hotReload)
     {
         _voiceBridge?.Stop();
+        _lifecycle.NotifyPluginShutdown(Server.TickCount);
+        _telemetryLogger?.CloseCapture(CaptureEndReason.PLUGIN_UNLOAD, _lifecycle);
         _roundCts?.Cancel();
         _roundCts?.Dispose();
         _roundCts = null;
         ClearRoundTimers();
         _locomotionDriver.ResetRound();
+        _microMoveEngine?.Dispose();
+        _microMoveEngine = null;
+        _lastHurtThreatAlertTime.Clear();
         base.Unload(hotReload);
     }
 
@@ -214,6 +256,10 @@ public class CsBotManagerPlugin : BasePlugin
         if (!_isFreezeTime)
         {
             var aliveBots = Utilities.GetPlayers().Where(p => p != null && p.IsValid && p.IsBot && p.PawnIsAlive).ToList();
+            foreach (var b in aliveBots)
+            {
+                _locomotionDriver?.CheckGrenadeEquipWatchdog(b, currentTime);
+            }
             _mobilityController?.UpdateTick(currentTime, _currentPlan, aliveBots);
             _combatAdapter?.UpdateTick(currentTime, aliveBots);
         }
@@ -231,9 +277,28 @@ public class CsBotManagerPlugin : BasePlugin
 
     private HookResult OnRoundStart(EventRoundStart @event, GameEventInfo info)
     {
-        _currentRound++;
+        bool isWarmup = IsEngineWarmup();
+        if (!_lifecycle.TryBeginRound(isWarmup, Server.TickCount, _ctScore, _trScore, out var roundRecord, out var autoSealed))
+        {
+            // Callback duplicado de RoundStart: idempotência V4
+            return HookResult.Continue;
+        }
+        if (autoSealed != null)
+        {
+            _telemetryLogger?.LogRoundSealed(autoSealed);
+        }
+        if (!isWarmup && roundRecord.OfficialRoundNumber == 1)
+        {
+            _ctScore = 0;
+            _trScore = 0;
+        }
+        _currentRound = isWarmup ? 0 : roundRecord.OfficialRoundNumber;
+        var capturedRoundRecord = roundRecord;
         _isFreezeTime = true;
         _isBombPlanted = false;
+
+        // Correcao 3: Bloqueia compra autonoma nativa no frame 0
+        Server.ExecuteCommand("bot_eco_limit 16000; bot_autobuy 0;");
 
         ClearRoundTimers();
         _roundCts?.Cancel();
@@ -251,6 +316,7 @@ public class CsBotManagerPlugin : BasePlugin
         _clockTimer?.Kill();
         _pacingController?.ResetRound();
         _locomotionDriver.ResetRound();
+        _lastHurtThreatAlertTime.Clear();
         _intentTracker?.OnRoundStart();
         _utilityCoordinator?.OnRoundStart();
         _calloutSystem?.OnRoundStart();
@@ -261,6 +327,7 @@ public class CsBotManagerPlugin : BasePlugin
         _mobilityController?.OnRoundStart();
         _combatAdapter?.OnRoundStart();
 
+                var currentPlayersList = GetActivePlayers();
         _currentPlan.CurrentPhase = RoundPhase.FreezeTime;
 
         _mapProfileManager.LoadProfile(Server.MapName, ModuleDirectory);
@@ -342,32 +409,32 @@ public class CsBotManagerPlugin : BasePlugin
                 string mapName = Server.MapName;
                 CsTeam capturedHumanTeam = humanTeam;
                 int capturedRound = _currentRound;
-                int capturedMoney = _economyManager.TeamAverageMoney;
+                int capturedInternalId = capturedRoundRecord.InternalRoundId;
                 int capturedHumanSlot = human?.Slot ?? -1;
-                var currentBuyState = _economyManager.CurrentBuyState;
+
+                // V4 (Bug 3/7): snapshots econômicos independentes por time
+                var ctMembers = players.Where(p => p.Team == CsTeam.CounterTerrorist).ToList();
+                var trMembers = players.Where(p => p.Team == CsTeam.Terrorist).ToList();
+                var ctEcon = _economyManager.CapturePreBuySnapshot(ctMembers, Math.Max(1, _currentRound), GetLossBonus(_ctLossStreak), CsTeam.CounterTerrorist);
+                var trEcon = _economyManager.CapturePreBuySnapshot(trMembers, Math.Max(1, _currentRound), GetLossBonus(_trLossStreak), CsTeam.Terrorist);
 
                 int requestSeq = Interlocked.Increment(ref _iglRequestSequence);
                 var token = _roundCts?.Token ?? CancellationToken.None;
 
                 Task.Run(async () =>
                 {
-                    TacticalPlan plan;
+                    TacticalPlan ctPlan;
+                    TacticalPlan trPlan;
                     try
                     {
-                        plan = await _iglService.GetTacticalDecisionAsync(
-                            mapName,
-                            capturedHumanTeam,
-                            currentBuyState,
-                            capturedRound,
-                            capturedMoney,
-                            null,
-                            false,
-                            _mapProfileManager,
-                            token);
+                        (ctPlan, trPlan) = await _iglService.GetConcurrentRoundDecisionsAsync(
+                            mapName, capturedInternalId, Math.Max(1, capturedRound), ctEcon, trEcon, _mapProfileManager, null, token);
                     }
-                    catch (OperationCanceledException)
+                    catch (OperationCanceledException) when (token.IsCancellationRequested) { return; }
+                    catch (Exception ex)
                     {
-                        return;
+                        ctPlan = _iglService.GenerateDeterministicFallbackPlan(CsTeam.CounterTerrorist, ctEcon.PurchaseIntent, _mapProfileManager, ex.Message);
+                        trPlan = _iglService.GenerateDeterministicFallbackPlan(CsTeam.Terrorist, trEcon.PurchaseIntent, _mapProfileManager, ex.Message);
                     }
 
                     // C-04B: Retorna para a Game Thread e revalida os ponteiros
@@ -384,10 +451,13 @@ public class CsBotManagerPlugin : BasePlugin
                         var freshTrBots = freshPlayers.Where(p => p.Team == CsTeam.Terrorist && p.IsBot).ToList();
                         var freshTeamBots = freshPlayers.Where(p => p.Team == capturedHumanTeam && p.IsBot).ToList();
 
-                        _currentPlan = plan;
+                        _currentPlan = (capturedHumanTeam == CsTeam.CounterTerrorist) ? ctPlan : trPlan;
+                        _currentTrPlan = trPlan;
+                        _currentCtPlan = ctPlan;
                         _currentPlan.PlayTier = tacticalDecision.Tier;
                         _currentPlan.PlayId = tacticalDecision.PlayId;
                         _currentPlan.CurrentPhase = RoundPhase.FreezeTime;
+                        _currentTrPlan.CurrentPhase = RoundPhase.FreezeTime;
 
                         // C-03: Re-aplica automaticamente posição travada do humano se existir
                         if (_roleManager.IsHumanPositionLocked && freshHuman != null && !string.IsNullOrEmpty(_roleManager.LockedSectorName))
@@ -395,10 +465,10 @@ public class CsBotManagerPlugin : BasePlugin
                             _roleManager.ClaimPositionForPlayer(freshHuman, _roleManager.LockedSectorName, freshTeamBots, _currentPlan, _mapProfileManager);
                         }
 
-                        _ctController?.OnRoundStart(_currentPlan, freshCtBots);
-                        _midRoundAdapter?.OnRoundStart(_currentPlan, freshTrBots, freshHuman);
+                        _ctController?.OnRoundStart(ctPlan, freshCtBots);
+                        _midRoundAdapter?.OnRoundStart(trPlan, freshTrBots, freshHuman);
 
-                        UtilityAndClockCoordinator.PrintTeamChat(capturedHumanTeam, iglName, $"⚡ Tática: {plan.TacticName} | {plan.TacticSummary}");
+                        UtilityAndClockCoordinator.PrintTeamChat(capturedHumanTeam, iglName, $"⚡ Tática: {_currentPlan.TacticName} | {_currentPlan.TacticSummary}");
                     });
                 });
             }
@@ -456,26 +526,39 @@ public class CsBotManagerPlugin : BasePlugin
             var enemyBuyState = _economyManager.AnalyzeTeamEconomy(enemyMembers, _currentRound, enemyLossBonus, enemyTeam);
             _economyManager.ExecuteDeterministicBuys(enemyBots, enemyBuyState, enemyTeam, _roleManager, _currentPlan, _locomotionDriver);
 
-            // Telemetria Forense: Registra resumo inicial completo do round (F-013 / Bloco 8.3)
-            _telemetryLogger?.OnRoundStart(
-                _currentRound,
-                _ctScore,
-                _trScore,
-                humanTeam == CsTeam.CounterTerrorist ? _economyManager.CurrentBuyState : enemyBuyState,
-                humanTeam == CsTeam.Terrorist ? _economyManager.CurrentBuyState : enemyBuyState,
-                _currentPlan,
-                _currentPlan != null ? _currentPlan.RawJson : string.Empty,
-                players);
+            // V4: consolida snapshots pós-compra independentes por time e registra cabeçalho forense
+            // (RawJson CT e TR nunca são cruzados entre times)
+            AddRoundTimer(0.6f, () =>
+            {
+                var postPlayers = GetActivePlayers();
+                var ctPost = _economyManager.ConsolidatePostBuySnapshot(postPlayers.Where(p => p.Team == CsTeam.CounterTerrorist).ToList(), CsTeam.CounterTerrorist);
+                var trPost = _economyManager.ConsolidatePostBuySnapshot(postPlayers.Where(p => p.Team == CsTeam.Terrorist).ToList(), CsTeam.Terrorist);
+
+                _telemetryLogger?.OnRoundStartV4(
+                    capturedRoundRecord,
+                    _ctScore,
+                    _trScore,
+                    ctPost,
+                    trPost,
+                    _currentCtPlan ?? new TacticalPlan(),
+                    _currentTrPlan ?? new TacticalPlan(),
+                    postPlayers);
+            });
 
             if (human != null && _currentPlan != null)
             {
                 human.PrintToChat($" {ChatColors.Green}[CsBot IGL]{ChatColors.Default} Tática: {ChatColors.Gold}{_currentPlan.TacticName}{ChatColors.Default} | Ritmo: {ChatColors.LightBlue}{_currentPlan.RoundTempo}{ChatColors.Default}!");
             }
 
-            // 11.5s: Disciplina da C4 no Freeze Time (Parte A - Item 2 / Bloco 5.3)
+            // 11.5s: Disciplina da C4 no Freeze Time e Garantia de Arma em Maos (Correcao 3)
             AddRoundTimer(0.5f, () =>
             {
                 var curPlayers = GetActivePlayers();
+                foreach (var b in curPlayers.Where(p => p != null && p.IsValid && p.IsBot && p.PawnIsAlive))
+                {
+                    EconomyManager.EquipBestWeapon(b);
+                }
+
                 var curHuman = curPlayers.FirstOrDefault(p => !p.IsBot);
                 var curTrBots = curPlayers.Where(p => p.Team == CsTeam.Terrorist && p.IsBot).ToList();
                 _economyManager.EnforceC4Discipline(curTrBots, curHuman, _roleManager);
@@ -487,6 +570,7 @@ public class CsBotManagerPlugin : BasePlugin
 
     private HookResult OnRoundFreezeEnd(EventRoundFreezeEnd @event, GameEventInfo info)
     {
+        _lifecycle.TryTransitionToActivePhase(Server.TickCount);
         _isFreezeTime = false;
         _roundFreezeEndTime = Server.CurrentTime;
 
@@ -572,26 +656,32 @@ public class CsBotManagerPlugin : BasePlugin
         _economyManager.PerformPostRoundLooting(aliveBots, _locomotionDriver);
 
         _locomotionDriver.ResetRound();
+        _lastHurtThreatAlertTime.Clear();
 
         var winner = (CsTeam)@event.Winner;
-        string reason = @event.Reason.ToString();
+        int reasonCode = @event.Reason;
 
-        // I-04E: Atualiza loss streak e placar
-        if (winner == CsTeam.CounterTerrorist)
+        // V4 (Bug 1): selagem idempotente — nunca soma placar ou emite FIM_ROUND duas vezes
+        if (!_lifecycle.TrySealRound(reasonCode, winner, Server.TickCount, ref _ctScore, ref _trScore, ref _ctLossStreak, ref _trLossStreak, out var sealedRec) || sealedRec == null)
         {
-            _ctScore++;
-            _ctLossStreak = Math.Max(1, _ctLossStreak - 1);
-            _trLossStreak = Math.Min(5, _trLossStreak + 1);
-        }
-        else if (winner == CsTeam.Terrorist)
-        {
-            _trScore++;
-            _trLossStreak = Math.Max(1, _trLossStreak - 1);
-            _ctLossStreak = Math.Min(5, _ctLossStreak + 1);
+            var env = _lifecycle.CreateEventEnvelope(Server.TickCount, _telemetryLogger?.GetRoundClockFormatted() ?? "00:00", "EventRoundEnd");
+            _telemetryLogger?.LogLateEvent(env, "RoundEnd(duplicado)", $"winner={winner} reason={reasonCode}");
+            return HookResult.Continue;
         }
 
-        _telemetryLogger?.LogEvent("FIM_ROUND", $"Round finalizado! Vencedor: {winner} | Motivo: {reason} | Placar atual: CT {_ctScore} x {_trScore} TR");
-        _iglService.RecordRoundResult(_currentRound, winner, reason, null, _currentPlan.TacticName, _currentPlan.RoundTempo);
+        _telemetryLogger?.LogRoundSealed(sealedRec);
+        _iglService.RecordRoundResult(_currentRound, winner, sealedRec.EndReasonEnum, null, _currentPlan.TacticName, _currentPlan.RoundTempo);
+
+        if (sealedRec.MatchPhase == MatchLifecyclePhase.LIVE && _debugTargetRounds > 0 && _telemetryLogger != null && _telemetryLogger.IsEnabled)
+        {
+            _debugRoundsSealed++;
+            if (_debugRoundsSealed >= _debugTargetRounds)
+            {
+                _telemetryLogger.CloseCapture(CaptureEndReason.MATCH_COMPLETED, _lifecycle);
+                Server.PrintToConsole($"[CsBot Debug] Captura encerrada automaticamente após {_debugRoundsSealed} rounds.");
+                _debugTargetRounds = 0;
+            }
+        }
         return HookResult.Continue;
     }
 
@@ -609,16 +699,30 @@ public class CsBotManagerPlugin : BasePlugin
         _mobilityController?.OnPlayerHurt(@event);
         _combatAdapter?.OnPlayerHurt(@event);
 
+        if (@event.Userid != null && @event.Userid.IsValid && @event.Userid.IsBot)
+        {
+            _locomotionDriver?.CheckGrenadeHurtWatchdog(@event.Userid);
+        }
+
         var victim = @event.Userid;
         var attacker = @event.Attacker;
         if (victim != null && attacker != null && victim.IsValid && attacker.IsValid)
         {
             float dist = 0.0f;
-            if (victim.PlayerPawn.Value?.AbsOrigin != null && attacker.PlayerPawn.Value?.AbsOrigin != null)
+            var victimPawn = victim.PlayerPawn.Value;
+            var attackerPawn = attacker.PlayerPawn.Value;
+            if (victimPawn?.AbsOrigin != null && attackerPawn?.AbsOrigin != null)
             {
-                dist = (victim.PlayerPawn.Value.AbsOrigin - attacker.PlayerPawn.Value.AbsOrigin).Length();
+                var attackerPos = attackerPawn.AbsOrigin;
+                dist = (victimPawn.AbsOrigin - attackerPos).Length();
+
+                if (!_lastHurtThreatAlertTime.TryGetValue(attacker.Slot, out float lastAlert) || (Server.CurrentTime - lastAlert) >= 1.0f)
+                {
+                    _lastHurtThreatAlertTime[attacker.Slot] = Server.CurrentTime;
+                    _locomotionDriver?.AlertNearbyTeammatesOfThreat(attackerPos, victim.Slot, victim.Team, 950f);
+                }
             }
-            _telemetryLogger?.LogCombat(attacker, victim, @event.Weapon ?? "arma", @event.DmgHealth, @event.Health, dist);
+            _telemetryLogger?.LogCombatV4(attacker, victim, @event.Weapon ?? "arma", @event.DmgHealth, @event.Health, dist, @event.DmgArmor);
         }
 
         return HookResult.Continue;
@@ -640,7 +744,7 @@ public class CsBotManagerPlugin : BasePlugin
         // PONTO 6: Trade Kill e Alerta de Ameaça Imediata para aliados próximos (< 1100u)
         if (victim != null && killer != null && killer.IsValid && killer.PlayerPawn.Value?.AbsOrigin != null)
         {
-            _locomotionDriver.AlertNearbyTeammatesOfThreat(killer.PlayerPawn.Value.AbsOrigin, victim.Slot, victim.Team, 1100f);
+            _locomotionDriver?.AlertNearbyTeammatesOfThreat(killer.PlayerPawn.Value.AbsOrigin, victim.Slot, victim.Team, 1100f);
         }
 
         var allTrBots = players.Where(p => p.Team == CsTeam.Terrorist && p.IsBot).ToList();
@@ -654,14 +758,9 @@ public class CsBotManagerPlugin : BasePlugin
             _trPivotController?.CheckMidRoundExploitPick(killer, victim, _currentPlan, allTrBots);
         }
 
-        if (victim != null && killer != null && victim.IsValid && killer.IsValid)
+        if (victim != null && killer != null && victim.IsValid && killer.IsValid && AdmitEvent("EventPlayerDeath", $"{killer.PlayerName} -> {victim.PlayerName}"))
         {
-            string sector = "Transição";
-            if (victim.PlayerPawn.Value?.AbsOrigin != null)
-            {
-                var cp = _mapProfileManager.FindChokepointAt(victim.PlayerPawn.Value.AbsOrigin.X, victim.PlayerPawn.Value.AbsOrigin.Y, victim.PlayerPawn.Value.AbsOrigin.Z);
-                sector = cp?.Name ?? "Transição";
-            }
+            string sector = MirageSectorClassifier.ClassifyPlayer(victim).SectorName;
             _telemetryLogger?.LogDeath(killer, victim, @event.Weapon ?? "arma", @event.Headshot, sector);
         }
 
@@ -1033,6 +1132,18 @@ public class CsBotManagerPlugin : BasePlugin
             string arg = info.GetArg(1).ToLowerInvariant();
             if (arg == "on" || arg == "1" || arg == "true") force = true;
             else if (arg == "off" || arg == "0" || arg == "false") force = false;
+            else if (int.TryParse(arg, out int rounds) && rounds > 0)
+            {
+                // !debug <N>: captura N rounds oficiais e encerra automaticamente com rodapé
+                force = true;
+                _debugTargetRounds = rounds;
+                _debugRoundsSealed = 0;
+            }
+        }
+        if (force == false && _telemetryLogger != null && _telemetryLogger.IsEnabled)
+        {
+            _telemetryLogger.CloseCapture(CaptureEndReason.MANUAL_STOP, _lifecycle);
+            return;
         }
         _telemetryLogger?.ToggleLogging(force);
     }

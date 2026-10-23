@@ -1,5 +1,5 @@
 # CS2 MLMove Pipeline (Fase 6B & 6C)
-# Ambiente isolado em D:\CS2_MLMove_Pipeline\venv
+# Ambiente isolado em F:\CS2_MLMove_Pipeline\venv
 demoparser2>=0.40.0
 numpy>=2.0.0
 torch>=2.4.0

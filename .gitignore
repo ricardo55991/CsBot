@@ -55,6 +55,8 @@ ENV/
 *.log
 debug_logs/
 *.tmp
+step_*.json
+step_*.py
 
 # --- Banco de Dados Local & Dumps ---
 *.sqlite

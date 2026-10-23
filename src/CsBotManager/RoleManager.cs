@@ -3,9 +3,35 @@ using CounterStrikeSharp.API.Modules.Utils;
 
 namespace CsBotManager;
 
+public sealed class BotRoleAssignmentState
+{
+    public int Slot { get; init; }
+    public string PlayerName { get; set; } = string.Empty;
+    public BotRole ProfileRole { get; set; } = BotRole.Rotator;
+    public BotRole RoundRole { get; set; } = BotRole.Rotator;
+    public BotRole AssignedWeaponRole { get; set; } = BotRole.Rotator;
+    public string CurrentWeapon { get; set; } = "none";
+    public string RoleAssignmentReason { get; set; } = "INITIAL_PROFILE_ROLE";
+    public bool EconomyOverride { get; set; }
+    public bool PickupOverride { get; set; }
+
+    public string FormatRoleSummary()
+    {
+        if (ProfileRole == RoundRole && !EconomyOverride && !PickupOverride)
+        {
+            return $"{RoundRole}";
+        }
+        string flags = "";
+        if (PickupOverride) flags += ",pickup_override=true";
+        if (EconomyOverride) flags += ",econ_override=true";
+        return $"{RoundRole} [perfil:{ProfileRole}, arma_role:{AssignedWeaponRole}, motivo:{RoleAssignmentReason}{flags}]";
+    }
+}
+
 public class RoleManager
 {
     private readonly Dictionary<int, BotRole> _botRoles = new();
+    private readonly Dictionary<int, BotRoleAssignmentState> _roleStates = new();
     private readonly Dictionary<int, string> _claimedPositions = new();
     private readonly Dictionary<int, TacticalSpot> _enemyBotSpots = new();
 
@@ -29,25 +55,137 @@ public class RoleManager
         if (clearExisting)
         {
             _botRoles.Clear();
+            _roleStates.Clear();
         }
 
         var roles = new[] { BotRole.AWPer, BotRole.EntryFragger, BotRole.Rotator, BotRole.Anchor, BotRole.Rotator };
+        var validBots = bots.Where(b => b != null && b.IsValid).OrderBy(b => b.Slot).ToList();
 
-        for (int i = 0; i < bots.Count; i++)
+        int roleIdx = 0;
+        foreach (var bot in validBots)
         {
-            if (bots[i] == null || !bots[i].IsValid) continue;
-            var role = roles[i % roles.Length];
-            _botRoles[bots[i].Slot] = role;
+            var assigned = roles[roleIdx % roles.Length];
+            _botRoles[bot.Slot] = assigned;
+            _roleStates[bot.Slot] = new BotRoleAssignmentState
+            {
+                Slot = bot.Slot,
+                PlayerName = bot.PlayerName ?? $"Bot_{bot.Slot}",
+                ProfileRole = assigned,
+                RoundRole = assigned,
+                AssignedWeaponRole = assigned,
+                CurrentWeapon = "none",
+                RoleAssignmentReason = "INITIAL_PROFILE_ROLE",
+                EconomyOverride = false,
+                PickupOverride = false
+            };
+            roleIdx++;
         }
+    }
+
+    public void AssignInitialRoleForSlot(int slot, string playerName, BotRole profileRole)
+    {
+        _botRoles[slot] = profileRole;
+        _roleStates[slot] = new BotRoleAssignmentState
+        {
+            Slot = slot,
+            PlayerName = playerName,
+            ProfileRole = profileRole,
+            RoundRole = profileRole,
+            AssignedWeaponRole = profileRole,
+            CurrentWeapon = "none",
+            RoleAssignmentReason = "INITIAL_PROFILE_ROLE",
+            EconomyOverride = false,
+            PickupOverride = false
+        };
+    }
+
+    public void ReconcileWeaponRoleOverride(
+        int slot,
+        string currentWeapon,
+        bool hasSavedAwp,
+        bool teamAlreadyHasSavedAwpOnTeammate,
+        bool couldNotAffordAwp)
+    {
+        if (!_roleStates.TryGetValue(slot, out var state))
+        {
+            var baseRole = _botRoles.GetValueOrDefault(slot, BotRole.Rotator);
+            state = new BotRoleAssignmentState
+            {
+                Slot = slot,
+                ProfileRole = baseRole,
+                RoundRole = baseRole,
+                AssignedWeaponRole = baseRole
+            };
+            _roleStates[slot] = state;
+        }
+
+        state.CurrentWeapon = currentWeapon;
+        bool holdingAwp = currentWeapon.Contains("awp", StringComparison.OrdinalIgnoreCase) || hasSavedAwp;
+
+        if (holdingAwp && state.ProfileRole != BotRole.AWPer)
+        {
+            state.RoundRole = BotRole.AWPer;
+            state.AssignedWeaponRole = BotRole.AWPer;
+            state.PickupOverride = true;
+            state.EconomyOverride = false;
+            state.RoleAssignmentReason = "SAVED_AWP_PICKUP_OVERRIDE";
+            _botRoles[slot] = BotRole.AWPer;
+        }
+        else if (!holdingAwp && state.ProfileRole == BotRole.AWPer)
+        {
+            if (teamAlreadyHasSavedAwpOnTeammate)
+            {
+                state.RoundRole = BotRole.Rotator;
+                state.AssignedWeaponRole = BotRole.Rotator;
+                state.PickupOverride = true;
+                state.EconomyOverride = couldNotAffordAwp;
+                state.RoleAssignmentReason = "TEAMMATE_SAVED_AWP_ROLE_SWAP";
+                _botRoles[slot] = BotRole.Rotator;
+            }
+            else if (couldNotAffordAwp)
+            {
+                state.RoundRole = BotRole.Rotator;
+                state.AssignedWeaponRole = BotRole.Rotator;
+                state.EconomyOverride = true;
+                state.RoleAssignmentReason = "ECONOMY_OVERRIDE_NO_AWP_FUNDS";
+            }
+        }
+        else
+        {
+            state.RoundRole = state.ProfileRole;
+            state.AssignedWeaponRole = holdingAwp ? BotRole.AWPer : state.ProfileRole;
+            state.EconomyOverride = false;
+            state.PickupOverride = false;
+            state.RoleAssignmentReason = "PROFILE_MATCHED";
+            _botRoles[slot] = state.RoundRole;
+        }
+    }
+
+    public BotRoleAssignmentState? GetRoleAssignmentState(int slot)
+    {
+        return _roleStates.TryGetValue(slot, out var state) ? state : null;
     }
 
     public BotRole? GetBotRole(CCSPlayerController bot)
     {
+        if (_roleStates.TryGetValue(bot.Slot, out var st))
+        {
+            return st.RoundRole;
+        }
         if (_botRoles.TryGetValue(bot.Slot, out var role))
         {
             return role;
         }
         return null;
+    }
+
+    public BotRole? GetBotProfileRole(int slot)
+    {
+        if (_roleStates.TryGetValue(slot, out var st))
+        {
+            return st.ProfileRole;
+        }
+        return _botRoles.TryGetValue(slot, out var r) ? r : null;
     }
 
     public CCSPlayerController? GetBotByRole(List<CCSPlayerController> bots, BotRole role)
