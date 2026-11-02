@@ -72,3 +72,10 @@ $RECYCLE.BIN/
 
 # --- Arquivos Temporários / Documentos de Transcrição Pessoal ---
 ConversaInicial.pdf
+
+# --- Auditorias Geradas ---
+AUDITORIA_*.txt
+
+
+# Scratch / Arquivos Temporários de Trabalho do Agente
+scratch/

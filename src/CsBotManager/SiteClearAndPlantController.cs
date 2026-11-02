@@ -125,7 +125,7 @@ public class SiteClearAndPlantController
         var botPawn = carrierBot.PlayerPawn.Value;
         Vector fallbackPos = botPawn?.AbsOrigin != null
             ? new Vector(botPawn.AbsOrigin.X, botPawn.AbsOrigin.Y, botPawn.AbsOrigin.Z)
-            : new Vector(-1280.0f, -420.0f, -160.0f);
+            : new Vector(-1750.0f, 300.0f, -160.0f);
 
         bool isBombA = bombId.Equals("A", StringComparison.OrdinalIgnoreCase);
 
@@ -136,26 +136,26 @@ public class SiteClearAndPlantController
         {
             if (chooseSafe)
             {
-                // Safe Default A (atrás da caixa tripla)
-                return (new Vector(-1280.0f, -420.0f, -160.0f), false, "Caverna");
+                // Safe Default A (atrás da caixa tripla no Bomb A)
+                return (new Vector(-400.0f, -2100.0f, -170.0f), false, "Caverna");
             }
             else
             {
-                // Aberto pra Caverna e Palácio
-                return (new Vector(-1080.0f, -460.0f, -160.0f), true, "Caverna e Palácio");
+                // Aberto pra Caverna e Palácio no Bomb A
+                return (new Vector(-350.0f, -2180.0f, -170.0f), true, "Caverna e Palácio");
             }
         }
         else
         {
             if (chooseSafe)
             {
-                // Safe Default B (colado na van / caixa)
-                return (new Vector(-220.0f, 580.0f, -160.0f), false, "Tapete");
+                // Safe Default B (colado na van / caixa no Bomb B)
+                return (new Vector(-1850.0f, 300.0f, -160.0f), false, "Tapete");
             }
             else
             {
-                // Aberto pros Tapetes e L
-                return (new Vector(-120.0f, 700.0f, -160.0f), true, "Tapetes e L");
+                // Aberto pros Tapetes e L no Bomb B
+                return (new Vector(-1750.0f, 350.0f, -160.0f), true, "Tapetes e L");
             }
         }
     }

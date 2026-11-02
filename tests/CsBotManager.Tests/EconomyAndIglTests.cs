@@ -159,4 +159,56 @@ public class EconomyAndIglTests
         Assert.NotEmpty(ctPlan.CandidateTactics);
         Assert.NotEmpty(ctPlan.SelectionScores);
     }
+
+    [Fact]
+    public void Warmup_Has_NotApplicableBuyState_NeverPistolRound()
+    {
+        // Ajuste 12: RoundNumber <= 0 é Warmup e deve produzir BuyState.NOT_APPLICABLE
+        var preBuy = EconomyManager.DeterminePreBuyIntent(CsTeam.CounterTerrorist, 0, 800, 1400, 0, 0);
+        Assert.Equal(BuyState.NOT_APPLICABLE, preBuy);
+
+        var warmupSnap = new TeamEconomySnapshot
+        {
+            TeamSide = CsTeam.CounterTerrorist,
+            RoundNumber = 0,
+            MatchPhase = MatchLifecyclePhase.WARMUP,
+            RoundNumberInHalf = 0,
+            PistolRound = false,
+            AverageCashBeforeBuy = 800
+        };
+
+        var postBuy = EconomyManager.ClassifyPostBuySnapshot(warmupSnap);
+        Assert.Equal(BuyState.NOT_APPLICABLE, postBuy);
+        Assert.NotEqual(BuyState.PISTOL_ROUND, postBuy);
+    }
+
+    [Fact]
+    public void ValidateTacticalPlanPresets_ValidatesBombsiteSpotConsistency()
+    {
+        var plan = new TacticalPlan
+        {
+            TacticName = "Execução B Padrão",
+            BotOrders =
+            {
+                ["awper"] = new BotTacticalOrder
+                {
+                    TargetArea = "Bombsite B",
+                    StagingSpotId = "tr_staging_b_apps_kitchen",
+                    ExecuteSpotId = "tr_exec_b_site_plant"
+                },
+                ["entry"] = new BotTacticalOrder
+                {
+                    TargetArea = "Bombsite B",
+                    // Spot incompatível: staging de A com target de B
+                    StagingSpotId = "tr_staging_a_ramp",
+                    ExecuteSpotId = "tr_exec_b_site_plant"
+                }
+            }
+        };
+
+        var (valid, invalid, missing) = OllamaIglService.ValidateTacticalPlanPresets(plan, mapProfileManager: null);
+        Assert.Equal(1, valid);
+        Assert.Equal(1, invalid);
+        Assert.Contains("tr_staging_a_ramp", missing);
+    }
 }

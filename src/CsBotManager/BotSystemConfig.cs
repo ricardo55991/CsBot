@@ -20,10 +20,19 @@ public sealed class BotSystemConfig
     public float StandStillMaxDefensiveSeconds { get; set; } = 5.0f;
     public float HotzoneMaxActiveSeconds { get; set; } = 2.0f;
     public float HotzoneCooldownSeconds { get; set; } = 8.0f;
+    public float PhysicalStopLowSpeedThreshold { get; set; } = 10.0f;
+    public float PhysicalStopResetSpeedThreshold { get; set; } = 20.0f;
+    public float PhysicalStopMinDisplacement2D { get; set; } = 5.0f;
+    public float PhysicalStopAggressiveLimitSeconds { get; set; } = 1.6f;
+    public float PhysicalStopDefensiveLimitSeconds { get; set; } = 5.0f;
+    public float PhysicalStopRecoveryCooldownSeconds { get; set; } = 1.5f;
 
-    // 2. Arbitragem de Movimento
+    // 2. Arbitragem de Movimento & Tickrate
     public int ArbitrationHysteresisTicks { get; set; } = 8; // ~125ms em 64Hz
     public float MaxArtificialSpeed2D { get; set; } = 250.0f;
+    public float ServerTickRate { get; set; } = 64.0f;
+    public float ExecutionProgressDistance500Ms { get; set; } = 20.0f;
+    public float ExecutionLowProgressDistance500Ms { get; set; } = 5.0f;
 
     // 3. Trade Spacing & Wide Swing
     public float TradeSpacingMinDist2D { get; set; } = 140.0f;
@@ -69,6 +78,13 @@ public sealed class BotSystemConfig
         errors = new List<string>();
         if (StuckTimeWindowSeconds <= 0.5f) errors.Add("StuckTimeWindowSeconds must be > 0.5s.");
         if (StuckMinDisplacement2D <= 5.0f) errors.Add("StuckMinDisplacement2D must be > 5u.");
+        if (PhysicalStopLowSpeedThreshold <= 0f) errors.Add("PhysicalStopLowSpeedThreshold must be > 0.");
+        if (PhysicalStopResetSpeedThreshold <= PhysicalStopLowSpeedThreshold) errors.Add("PhysicalStopResetSpeedThreshold must be > PhysicalStopLowSpeedThreshold.");
+        if (PhysicalStopMinDisplacement2D <= 0f) errors.Add("PhysicalStopMinDisplacement2D must be > 0.");
+        if (PhysicalStopAggressiveLimitSeconds <= 0.2f) errors.Add("PhysicalStopAggressiveLimitSeconds must be > 0.2s.");
+        if (PhysicalStopDefensiveLimitSeconds <= PhysicalStopAggressiveLimitSeconds) errors.Add("PhysicalStopDefensiveLimitSeconds must be > PhysicalStopAggressiveLimitSeconds.");
+        if (PhysicalStopRecoveryCooldownSeconds < 0f) errors.Add("PhysicalStopRecoveryCooldownSeconds must be >= 0.");
+        if (ServerTickRate <= 0f) errors.Add("ServerTickRate must be > 0.");
         if (TradeSpacingPairCooldownSeconds <= 0.1f) errors.Add("TradeSpacingPairCooldownSeconds must be > 0.1s.");
         if (WideSwingMinDist2D <= 0f || WideSwingMaxDist2D <= WideSwingMinDist2D) errors.Add("Invalid WideSwing distance window.");
         if (CounterStrafeCooldownSeconds <= 0.1f) errors.Add("CounterStrafeCooldownSeconds must be > 0.1s.");
@@ -82,8 +98,8 @@ public sealed class BotSystemConfig
         var sb = new StringBuilder();
         sb.AppendLine("### ⚙️ Parâmetros Configuráveis Ativos (BotSystemConfig V4)");
         sb.AppendLine($"- **Stuck 2D:** janela=`{StuckTimeWindowSeconds:F1}s`, deslocamento_min=`{StuckMinDisplacement2D:F0}u`, progresso_alvo_min=`{StuckMinTargetProgress2D:F0}u`, cooldown_waypoint=`{WaypointBlacklistCooldownSeconds:F1}s`");
-        sb.AppendLine($"- **StandStill:** max_agressivo=`{StandStillMaxAggressiveSeconds:F2}s`, max_defensivo=`{StandStillMaxDefensiveSeconds:F2}s`, hotzone_max=`{HotzoneMaxActiveSeconds:F1}s` (cooldown=`{HotzoneCooldownSeconds:F1}s`)");
-        sb.AppendLine($"- **Arbitragem de Movimento:** histerese=`{ArbitrationHysteresisTicks} ticks`, max_artificial_speed_2d=`{MaxArtificialSpeed2D:F0} u/s`");
+        sb.AppendLine($"- **StandStill & Parada Física:** max_agressivo=`{StandStillMaxAggressiveSeconds:F2}s`, max_defensivo=`{StandStillMaxDefensiveSeconds:F2}s`, low_speed=`{PhysicalStopLowSpeedThreshold:F1}u/s`, reset_speed=`{PhysicalStopResetSpeedThreshold:F1}u/s`, min_disp=`{PhysicalStopMinDisplacement2D:F1}u`, cooldown=`{PhysicalStopRecoveryCooldownSeconds:F1}s`");
+        sb.AppendLine($"- **Arbitragem & Tracker:** histerese=`{ArbitrationHysteresisTicks} ticks`, max_speed_2d=`{MaxArtificialSpeed2D:F0} u/s`, tickrate=`{ServerTickRate:F0}Hz`, progresso_500ms=`[{ExecutionLowProgressDistance500Ms:F0}u, {ExecutionProgressDistance500Ms:F0}u]`");
         sb.AppendLine($"- **Trade Spacing & Wide Swing:** repulsao_min=`{TradeSpacingMinDist2D:F0}u`, pair_cooldown=`{TradeSpacingPairCooldownSeconds:F1}s`, nav_offset=`{TradeSpacingNavOffsetUnits:F0}u`, wide_swing_window=`[{WideSwingMinDist2D:F0}u, {WideSwingMaxDist2D:F0}u]` (2D)");
         sb.AppendLine($"- **Counter-Strafe:** cooldown=`{CounterStrafeCooldownSeconds:F1}s`, max_aim_error=`{CounterStrafeMaxAimErrorDegrees:F1}°`, min_speed_2d=`{CounterStrafeMinSpeed2D:F0} u/s`");
         sb.AppendLine($"- **Bombsite Clear & Pivôs:** permanencia_min=`{BombsiteClearMinDwellSeconds:F1}s`, confianca_min=`{BombsiteClearMinConfidence:F2}`, raio_plant_2d=`{BombsitePlantZoneRadius2D:F0}u`");

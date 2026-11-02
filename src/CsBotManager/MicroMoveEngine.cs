@@ -239,6 +239,26 @@ public interface IMicroMovePredictor
 
 public class MicroMoveEngine : IMicroMovePredictor, IDisposable
 {
+    public static StandstillClassification ClassifyStandstillState(
+        bool isPlantingOrDefusing,
+        bool isAirborne,
+        bool enemyVisible,
+        bool isCounterStrafing,
+        bool isAuthorizedHold,
+        bool isUtilityAction,
+        bool hasActiveUtilityNearby,
+        bool expectedMovement)
+    {
+        if (isPlantingOrDefusing) return StandstillClassification.PlantOrDefuse;
+        if (isAirborne) return StandstillClassification.Airborne;
+        if (enemyVisible) return StandstillClassification.CombatHold;
+        if (isCounterStrafing) return StandstillClassification.CounterStrafe;
+        if (isAuthorizedHold) return StandstillClassification.AuthorizedHold;
+        if (isUtilityAction) return StandstillClassification.UtilityAction;
+        if (hasActiveUtilityNearby) return StandstillClassification.SmokeOrMolotovWait;
+        if (expectedMovement) return StandstillClassification.GeometryBlock;
+        return StandstillClassification.Unknown;
+    }
     public CsBotManagerPlugin? Plugin { get; set; }
     public BotSystemConfig Config { get; set; } = BotSystemConfig.Default;
     public MovementArbitrator? Arbitrator { get; set; }

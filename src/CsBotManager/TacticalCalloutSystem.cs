@@ -607,13 +607,17 @@ public class TacticalCalloutSystem
     {
         string prefix = $" {ChatColors.Red}(Morto) {ChatColors.Green}{speakerName}{ChatColors.Default}: ";
 
-        var players = Utilities.GetPlayers();
-        foreach (var p in players)
+        try
         {
-            if (p != null && p.IsValid && !p.IsHLTV && p.Team == team)
+            var players = Utilities.GetPlayers();
+            foreach (var p in players)
             {
-                p.PrintToChat(prefix + message);
+                if (p != null && p.IsValid && !p.IsHLTV && !p.IsBot && p.Team == team)
+                {
+                    try { p.PrintToChat(prefix + message); } catch { }
+                }
             }
         }
+        catch { }
     }
 }

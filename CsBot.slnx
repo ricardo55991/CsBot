@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CsBotManager/CsBotManager.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CsBotManager.Tests/CsBotManager.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -19,6 +19,7 @@ public class TacticalHudRenderer
             BuyState.FORCE_BUY => "#FFA500",
             BuyState.HALF_BUY => "#FFD700",
             BuyState.FULL_ECO => "#FF3344",
+            BuyState.NOT_APPLICABLE => "#888888",
             _ => "#FFFFFF"
         };
 
@@ -28,6 +29,7 @@ public class TacticalHudRenderer
             BuyState.FORCE_BUY => "FORCE BUY",
             BuyState.HALF_BUY => "HALF BUY",
             BuyState.FULL_ECO => "FULL ECO",
+            BuyState.NOT_APPLICABLE => "N/A (WARMUP)",
             _ => buyState.ToString()
         };
 

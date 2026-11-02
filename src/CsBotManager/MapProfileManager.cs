@@ -14,6 +14,14 @@ public class MapProfileManager
 
     public MapProfile CurrentProfile { get; private set; } = new();
 
+    public void SetSpotsForTesting(IEnumerable<TacticalSpot> spots)
+    {
+        lock (_profileLock)
+        {
+            _spotsById = spots.ToDictionary(s => s.Id, s => s, StringComparer.OrdinalIgnoreCase);
+        }
+    }
+
     public void LoadProfile(string? mapName, string? pluginDir = null)
     {
         string cleanMap = string.IsNullOrWhiteSpace(mapName) ? "de_mirage" : mapName.ToLowerInvariant().Trim();
@@ -98,6 +106,50 @@ public class MapProfileManager
         {
             return _spotsById.TryGetValue(id, out var spot) ? spot : null;
         }
+    }
+
+    public MapPlantZone? GetPlantZone(string? site)
+    {
+        if (string.IsNullOrWhiteSpace(site)) return null;
+        lock (_profileLock)
+        {
+            if (CurrentProfile.PlantZones != null && CurrentProfile.PlantZones.TryGetValue(site.Trim(), out var zone))
+            {
+                return zone;
+            }
+            // Fallback determinístico se não estiver explícito no profile carregado
+            if (site.Equals("A", StringComparison.OrdinalIgnoreCase))
+            {
+                return new MapPlantZone
+                {
+                    Center = new MapVector3 { X = -400.0f, Y = -2100.0f, Z = -170.0f },
+                    BoundsMin = new MapVector3 { X = -650.0f, Y = -2400.0f, Z = -220.0f },
+                    BoundsMax = new MapVector3 { X = -150.0f, Y = -1800.0f, Z = -120.0f },
+                    Radius2D = 380.0f
+                };
+            }
+            if (site.Equals("B", StringComparison.OrdinalIgnoreCase))
+            {
+                return new MapPlantZone
+                {
+                    Center = new MapVector3 { X = -1800.0f, Y = 50.0f, Z = -160.0f },
+                    BoundsMin = new MapVector3 { X = -2200.0f, Y = -200.0f, Z = -220.0f },
+                    BoundsMax = new MapVector3 { X = -1400.0f, Y = 300.0f, Z = -120.0f },
+                    Radius2D = 420.0f
+                };
+            }
+            return null;
+        }
+    }
+
+    public MapPlantZone? GetPlantZone(BombsiteTarget site)
+    {
+        return site switch
+        {
+            BombsiteTarget.A => GetPlantZone("A"),
+            BombsiteTarget.B => GetPlantZone("B"),
+            _ => null
+        };
     }
 
     public List<TacticalSpot> GetSpotsForSector(string sector, string side)
@@ -191,6 +243,8 @@ public class MapProfileManager
         return nearest;
     }
 
+    public IReadOnlyList<MapChokepoint> GetChokepoints() => CurrentProfile.Chokepoints;
+
     public MapChokepoint? FindChokepointByNameOrSynonym(string query)
     {
         string q = query.Trim().ToLowerInvariant();
@@ -282,59 +336,194 @@ public class MapProfileManager
         return result;
     }
 
-    public TacticalSpot? GetMatchingSpotForOrder(BotRole role, string targetArea, CsTeam team, bool isStaging)
+    public TacticalSpot? ResolveBestSpot(
+        BotRole role,
+        BombsiteTarget targetSite,
+        TacticalSpotUsage desiredUsage,
+        CsTeam team,
+        Vector botPosition,
+        HashSet<string>? blacklistedSpotIds = null,
+        HashSet<string>? occupiedSpotIds = null,
+        List<CandidateSpotEvaluation>? outEvaluations = null)
     {
         string side = team == CsTeam.CounterTerrorist ? "CT" : "TR";
-        string normalizedArea = targetArea.ToLowerInvariant();
-
-        string sector = normalizedArea switch
-        {
-            var s when s.Contains("a") || s.Contains("rampa") || s.Contains("palacio") || s.Contains("fundo") || s.Contains("areia") => "Bombsite A",
-            var s when s.Contains("b") || s.Contains("tapete") || s.Contains("van") || s.Contains("banana") || s.Contains("escuro") => "Bombsite B",
-            _ => "Mid"
-        };
-
-        List<TacticalSpot> matching;
+        List<TacticalSpot> spots;
         lock (_profileLock)
         {
-            matching = _spotsById.Values
-                .Where(s => s.Sector.Equals(sector, StringComparison.OrdinalIgnoreCase) &&
-                           (s.Side.Equals(side, StringComparison.OrdinalIgnoreCase) || s.Side.Equals("ANY", StringComparison.OrdinalIgnoreCase)))
-                .ToList();
+            spots = _spotsById.Values.ToList();
+        }
 
-            if (side == "TR")
+        if (spots.Count == 0) return null;
+
+        TacticalSpot? bestSpot = null;
+        float bestScore = float.NegativeInfinity;
+
+        foreach (var spot in spots)
+        {
+            float score = 0f;
+            var sb = new List<string>();
+
+            // 1. Blacklist check
+            bool isBlacklisted = blacklistedSpotIds != null && blacklistedSpotIds.Contains(spot.Id);
+            if (isBlacklisted)
             {
-                var filtered = matching.Where(s => isStaging ? s.Id.Contains("staging") : (s.Id.Contains("exec") || s.Id.Contains("plant"))).ToList();
-                if (filtered.Count > 0) matching = filtered;
+                score -= 1000f;
+                sb.Add("Blacklisted(-1000)");
             }
 
-            if (matching.Count == 0)
+            // 2. Side matching
+            if (!spot.Side.Equals("ANY", StringComparison.OrdinalIgnoreCase) &&
+                !spot.Side.Equals(side, StringComparison.OrdinalIgnoreCase))
             {
-                matching = _spotsById.Values.Where(s => s.Side.Equals(side, StringComparison.OrdinalIgnoreCase)).ToList();
+                score -= 500f;
+                sb.Add($"WrongSide:{spot.Side}(-500)");
+            }
+            else
+            {
+                score += 30f;
+                sb.Add("SideMatch(+30)");
+            }
+
+            // 3. Bombsite Target matching
+            var spotSite = PresetSpatialValidator.DetermineSpotBombsiteTarget(spot);
+            if (targetSite != BombsiteTarget.None && targetSite != BombsiteTarget.Dynamic)
+            {
+                if (spotSite == targetSite)
+                {
+                    score += 100f;
+                    sb.Add($"SiteMatch:{targetSite}(+100)");
+                }
+                else if (spotSite != BombsiteTarget.None && spotSite != BombsiteTarget.Mid)
+                {
+                    score -= 150f;
+                    sb.Add($"WrongSite:{spotSite}vs{targetSite}(-150)");
+                }
+                else if (spotSite == BombsiteTarget.Mid && targetSite == BombsiteTarget.Mid)
+                {
+                    score += 80f;
+                    sb.Add("MidMatch(+80)");
+                }
+            }
+
+            // 4. Usage matching
+            if (desiredUsage == TacticalSpotUsage.Staging)
+            {
+                if ((spot.Usage & SpotUsage.Staging) != 0 || spot.Id.Contains("staging", StringComparison.OrdinalIgnoreCase))
+                {
+                    score += 60f;
+                    sb.Add("StagingUsage(+60)");
+                }
+            }
+            else if (desiredUsage == TacticalSpotUsage.Execute)
+            {
+                if ((spot.Usage & (SpotUsage.Execute | SpotUsage.Plant)) != 0 ||
+                    spot.Id.Contains("exec", StringComparison.OrdinalIgnoreCase) ||
+                    spot.Id.Contains("plant", StringComparison.OrdinalIgnoreCase))
+                {
+                    score += 60f;
+                    sb.Add("ExecuteUsage(+60)");
+                }
+            }
+            else if (desiredUsage == TacticalSpotUsage.Retake)
+            {
+                if ((spot.Usage & SpotUsage.Retake) != 0 || spot.Id.Contains("retake", StringComparison.OrdinalIgnoreCase))
+                {
+                    score += 60f;
+                    sb.Add("RetakeUsage(+60)");
+                }
+            }
+            else if (desiredUsage == TacticalSpotUsage.Lurk)
+            {
+                if ((spot.Usage & SpotUsage.Lurk) != 0 || spot.Id.Contains("lurk", StringComparison.OrdinalIgnoreCase))
+                {
+                    score += 60f;
+                    sb.Add("LurkUsage(+60)");
+                }
+            }
+
+            // 5. BotRole matching
+            if (spot.AllowedRoles.Contains(role))
+            {
+                score += 40f;
+                sb.Add($"AllowedRole:{role}(+40)");
+            }
+            if (role == BotRole.AWPer && (spot.Id.Contains("window") || spot.Id.Contains("ticket") || spot.Id.Contains("car") || spot.Id.Contains("doors")))
+            {
+                score += 50f;
+                sb.Add("AwpVantage(+50)");
+            }
+            if (role == BotRole.EntryFragger && (spot.RecommendedStance == EngagementStance.AGGRESSIVE_POKE || spot.IsOffAngle))
+            {
+                score += 35f;
+                sb.Add("EntryAggressive(+35)");
+            }
+            if (role == BotRole.Anchor && spot.RecommendedStance == EngagementStance.PASSIVE_HOLD)
+            {
+                score += 35f;
+                sb.Add("AnchorHold(+35)");
+            }
+
+            // 6. Occupancy penalty
+            bool isOccupied = occupiedSpotIds != null && occupiedSpotIds.Contains(spot.Id);
+            if (isOccupied)
+            {
+                score -= 80f;
+                sb.Add("OccupiedPenalty(-80)");
+            }
+
+            // 7. Distance scoring (proximidade razoável)
+            float dx = spot.X - botPosition.X;
+            float dy = spot.Y - botPosition.Y;
+            float dist2D = MathF.Sqrt(dx * dx + dy * dy);
+            float distScore = Math.Clamp(60f - (dist2D / 60f), -30f, 30f);
+            score += distScore;
+            sb.Add($"Dist:{dist2D:F0}u({distScore:F1})");
+
+            string breakdown = string.Join("; ", sb);
+
+            outEvaluations?.Add(new CandidateSpotEvaluation(
+                SpotId: spot.Id,
+                SpotName: spot.Name,
+                TargetSite: spotSite,
+                Usage: desiredUsage,
+                Score: score,
+                IsBlacklisted: isBlacklisted,
+                IsOccupied: isOccupied,
+                DistanceToBot: dist2D,
+                ScoreBreakdown: breakdown));
+
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestSpot = spot;
             }
         }
 
-        if (matching.Count == 0) return null;
+        return bestSpot;
+    }
 
-        if (role == BotRole.AWPer)
+    public TacticalSpot? GetMatchingSpotForOrder(BotRole role, string targetArea, CsTeam team, bool isStaging)
+    {
+        BombsiteTarget siteTarget = BombsiteTarget.None;
+        if (!BombsiteParser.TryParseBombsiteTarget(targetArea, out siteTarget))
         {
-            var awpSpot = matching.FirstOrDefault(s => s.Id.Contains("window") || s.Id.Contains("ticket") || s.Id.Contains("car") || s.Id.Contains("doors"));
-            if (awpSpot != null) return awpSpot;
+            string clean = targetArea.Trim().ToLowerInvariant();
+            if (clean.Contains("rampa") || clean.Contains("palacio") || clean.Contains("fundo") || clean.Contains("areia") || clean.Contains("cabecinha") || clean.Contains("tetris"))
+            {
+                siteTarget = BombsiteTarget.A;
+            }
+            else if (clean.Contains("tapete") || clean.Contains("van") || clean.Contains("banana") || clean.Contains("apartments") || clean.Contains("catwalk"))
+            {
+                siteTarget = BombsiteTarget.B;
+            }
+            else if (clean.Contains("mid") || clean.Contains("meio") || clean.Contains("top mid") || clean.Contains("connector") || clean.Contains("window"))
+            {
+                siteTarget = BombsiteTarget.Mid;
+            }
         }
 
-        if (role == BotRole.EntryFragger)
-        {
-            var entrySpot = matching.FirstOrDefault(s => s.RecommendedStance == EngagementStance.AGGRESSIVE_POKE || s.IsOffAngle);
-            if (entrySpot != null) return entrySpot;
-        }
-
-        if (role == BotRole.Anchor)
-        {
-            var anchorSpot = matching.FirstOrDefault(s => s.RecommendedStance == EngagementStance.PASSIVE_HOLD);
-            if (anchorSpot != null) return anchorSpot;
-        }
-
-        return matching[_random.Next(matching.Count)];
+        var desiredUsage = isStaging ? TacticalSpotUsage.Staging : TacticalSpotUsage.Execute;
+        return ResolveBestSpot(role, siteTarget, desiredUsage, team, new Vector(0, 0, 0));
     }
 
     private MapProfile GenerateUniversalFallbackProfile(string mapName)

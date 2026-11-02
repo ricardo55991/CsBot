@@ -42,11 +42,25 @@ public class PacingAndFallbackController
         _stagingTimer?.Kill();
         _stagingTimer = null;
 
-        // C-01B: Despacha movimentação física via NavMesh para a equipe adversária (enemyBots)
+        // V4.2.1: Despacha movimentação física via NavMesh para a equipe adversária (enemyBots)
+        // usando o plano oficial do seu próprio time (sem spots aleatórios descasados)
+        var enemyPlan = enemyBots.FirstOrDefault()?.Team == CsTeam.Terrorist
+            ? (_plugin.CurrentTrPlan ?? plan)
+            : (_plugin.CurrentCtPlan ?? plan);
+
         foreach (var enemyBot in enemyBots)
         {
             if (!enemyBot.IsValid || !enemyBot.PawnIsAlive) continue;
-            var enemySpot = _roleManager.GetEnemyBotSpot(enemyBot.Slot);
+            var role = _roleManager.GetBotRole(enemyBot);
+            TacticalSpot? enemySpot = null;
+            if (role != null && enemyPlan.BotOrders.TryGetValue(RoleManager.GetOrderKey(role.Value), out var order))
+            {
+                enemySpot = _mapProfileManager.GetSpotById(order.StagingSpotId);
+            }
+            if (enemySpot == null)
+            {
+                enemySpot = _roleManager.GetEnemyBotSpot(enemyBot.Slot);
+            }
             if (enemySpot != null)
             {
                 _locomotionDriver.NavigateToSpot(enemyBot, enemySpot, hurry: false, enemySpot.RecommendedStance);

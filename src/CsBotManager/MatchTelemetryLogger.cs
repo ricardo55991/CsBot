@@ -8,57 +8,162 @@ using CounterStrikeSharp.API.Modules.Utils;
 
 namespace CsBotManager;
 
-public class MatchTelemetryLogger
-
+public enum TelemetryAdmissionResult
 {
+    ACCEPT_NORMAL,
+    ACCEPT_ADMINISTRATIVE,
+    ACCEPT_LATE_AUDIT,
+    REJECT_WRONG_ROUND,
+    REJECT_AFTER_SEAL,
+    REJECT_CAPTURE_CLOSED,
+    REJECT_INVALID_SEQUENCE
+}
 
+public class MatchTelemetryLogger
+{
     private readonly BasePlugin _plugin;
-
     private readonly MapProfileManager _mapProfileManager;
-
     private readonly RoleManager _roleManager;
-
     private readonly BotLocomotionDriver _locomotionDriver;
+    public RoundLifecycleManager? Lifecycle { get; set; }
 
     private bool _isEnabled = false;
-
     private string _currentFilePath = string.Empty;
-
     private readonly object _fileLock = new();
+    private readonly HashSet<long> _sealedInternalRoundIds = new();
+
+    // Rastreamento seguro de Thread Principal para invocações assíncronas (ex: IGL Timeout/Continuation)
+    private static int _mainThreadId = -1;
+    private static int _lastMainThreadTick = 0;
+    private static float _lastMainThreadTime = 0.0f;
+
+    public static void RecordMainThreadTick(int tick, float time)
+    {
+        _mainThreadId = Environment.CurrentManagedThreadId;
+        _lastMainThreadTick = tick;
+        _lastMainThreadTime = time;
+    }
+
+    public static bool IsMainThread => _mainThreadId > 0 && Environment.CurrentManagedThreadId == _mainThreadId;
+
+    public static int SafeTickCount
+    {
+        get
+        {
+            if (IsMainThread)
+            {
+                try { _lastMainThreadTick = Server.TickCount; } catch { }
+            }
+            return _lastMainThreadTick;
+        }
+    }
+
+    public static float SafeCurrentTime
+    {
+        get
+        {
+            if (IsMainThread)
+            {
+                try { _lastMainThreadTime = Server.CurrentTime; } catch { }
+            }
+            return _lastMainThreadTime;
+        }
+    }
+
+    public static void SafePrintToConsole(string message)
+    {
+        if (IsMainThread)
+        {
+            try { Server.PrintToConsole(message); } catch { }
+        }
+        else
+        {
+            Console.WriteLine(message);
+        }
+    }
 
     // Rastreamento para Detector de Anomalias: slot -> (LastMovingTime, LowSpeedDuration)
-
     private readonly Dictionary<int, float> _lowSpeedStartTimes = new();
-
     private readonly Dictionary<int, float> _lastVelocities = new();
-
     private float _roundStartTime = 0.0f;
-
-    private int _currentRound = 0;
+    private long _currentInternalRoundId = 0;
+    private int _currentOfficialRoundNumber = 0;
 
     public bool IsEnabled => _isEnabled;
-
     public string CurrentFilePath => _currentFilePath;
 
     public MatchTelemetryLogger(
-
         BasePlugin plugin,
-
         MapProfileManager mapProfileManager,
-
         RoleManager roleManager,
-
-        BotLocomotionDriver locomotionDriver)
+        BotLocomotionDriver locomotionDriver,
+        RoundLifecycleManager? lifecycle = null)
     {
-
         _plugin = plugin;
-
         _mapProfileManager = mapProfileManager;
-
         _roleManager = roleManager;
-
         _locomotionDriver = locomotionDriver;
+        Lifecycle = lifecycle;
     }
+
+    public TelemetryAdmissionResult Admit(
+        string eventType,
+        long? sourceRoundId,
+        int? sourceTick,
+        string sourceComponent,
+        out EventAdmissionEnvelope envelope)
+    {
+        if (!_isEnabled)
+        {
+            envelope = null!;
+            return TelemetryAdmissionResult.REJECT_CAPTURE_CLOSED;
+        }
+
+        int currentTick = SafeTickCount;
+        if (currentTick == 0 && sourceTick.HasValue) currentTick = sourceTick.Value;
+        string clock = GetRoundClockFormatted();
+
+        if (Lifecycle == null)
+        {
+            envelope = new EventAdmissionEnvelope
+            {
+                RoundId = sourceRoundId ?? _currentInternalRoundId,
+                OfficialRoundNumber = _currentOfficialRoundNumber,
+                CurrentActiveRoundId = _currentInternalRoundId,
+                GameTick = currentTick,
+                OriginalGameTick = sourceTick ?? currentTick,
+                MonotonicTimestampMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                EventSequence = 0,
+                RoundTimeFormatted = clock,
+                EventPhase = RoundLifecyclePhase.ROUND_ACTIVE,
+                LateEvent = false,
+                LateReason = LateEventReason.NONE,
+                SourceComponent = sourceComponent,
+                Disposition = "NORMAL"
+            };
+            return TelemetryAdmissionResult.ACCEPT_NORMAL;
+        }
+
+        envelope = Lifecycle.CreateEventEnvelope(
+            gameTick: currentTick,
+            roundTimeFormatted: clock,
+            sourceComponent: sourceComponent,
+            originatingRoundId: sourceRoundId,
+            originatingGameTick: sourceTick);
+
+        if (envelope.LateEvent || _sealedInternalRoundIds.Contains(envelope.RoundId))
+        {
+            return TelemetryAdmissionResult.ACCEPT_LATE_AUDIT;
+        }
+
+        return TelemetryAdmissionResult.ACCEPT_NORMAL;
+    }
+
+    // Rotinas internas de baixo nível (únicas autorizadas a invocar AppendToFile)
+    private void WriteNormal(string text) => AppendToFile(text);
+    private void WriteAdministrative(string text) => AppendToFile(text);
+    private void WriteLateAudit(string text) => AppendToFile(text);
+    private void WriteFooter(string text) => AppendToFile(text);
 
     public void ToggleLogging(bool? forceState = null)
     {
@@ -80,15 +185,44 @@ public class MatchTelemetryLogger
 
             _currentFilePath = Path.Combine(logDir, $"debug_match_{timestamp}.md");
 
+            string[] dllCandidates = new[]
+            {
+                typeof(MatchTelemetryLogger).Assembly.Location,
+                Path.Combine(AppContext.BaseDirectory, "CsBotManager.dll"),
+                _plugin?.ModuleDirectory != null ? Path.Combine(_plugin.ModuleDirectory, "CsBotManager.dll") : null,
+                @"H:\CS2_AI_Server\game\csgo\addons\counterstrikesharp\plugins\CsBotManager\CsBotManager.dll",
+                Path.Combine(Directory.GetCurrentDirectory(), "CsBotManager.dll")
+            }.Where(s => !string.IsNullOrWhiteSpace(s)).Select(s => s!).ToArray();
+
+            string dllSha = ResolveFileSha256(dllCandidates, out string resolvedDllPath);
+
+            string mapClean = Server.MapName?.ToLowerInvariant().Trim() ?? "de_mirage";
+            string[] modelCandidates = new[]
+            {
+                Path.Combine(MicroMoveEngine.DefaultModelsDir, $"mlmove_{mapClean}.onnx"),
+                Path.Combine(MicroMoveEngine.DefaultModelsDir, "mlmove_de_mirage.onnx"),
+                @"H:\CS2_AI_Server\models\mlmove_de_mirage.onnx",
+                @"H:\CS2_AI_Server\game\csgo\models\mlmove_de_mirage.onnx",
+                @"H:\CS2_AI_Server\game\csgo\models\mlmove_cs2.onnx",
+                @"H:\CS2_AI_Server\models\mlmove_cs2.onnx"
+            };
+
+            string modelSha = ResolveFileSha256(modelCandidates, out string resolvedModelPath);
+
+            string pluginVer = _plugin?.ModuleVersion ?? "4.2.0";
+            string assemblyVer = typeof(MatchTelemetryLogger).Assembly.GetName().Version?.ToString() ?? "4.2.0.0";
+            string gitCommit = "v4.2-release";
+
             var sb = new StringBuilder();
 
             sb.AppendLine($"# CsBot - Telemetria Forense de Partida");
-
             sb.AppendLine($"**Data/Hora:** {DateTime.Now:yyyy-MM-dd HH:mm:ss} | **Mapa:** {Server.MapName}");
 
             string mlMoveBackend = _locomotionDriver.MicroMoveEngine?.BackendName ?? "PotentialFields-16Hz-CPU";
 
             sb.AppendLine($"**Status:** Gravação Ativa | **Arquivo:** `{Path.GetFileName(_currentFilePath)}` | **Motor MLMove:** `{mlMoveBackend}`");
+            sb.AppendLine();
+            sb.AppendLine(BuildHeaderMetadata(pluginVer, assemblyVer, gitCommit, dllSha, modelSha));
             sb.AppendLine();
             sb.AppendLine(BotSystemConfig.Default.FormatMarkdownSummary());
 
@@ -98,7 +232,7 @@ public class MatchTelemetryLogger
 
             sb.AppendLine();
 
-            AppendToFile(sb.ToString());
+            WriteAdministrative(sb.ToString());
 
             Server.PrintToChatAll($" {ChatColors.Green}[CsBot Debug]{ChatColors.Default} Telemetria {ChatColors.Gold}ATIVADA{ChatColors.Default} ({ChatColors.LightBlue}{mlMoveBackend}{ChatColors.Default})! Gravando em: {ChatColors.LightBlue}{Path.GetFileName(_currentFilePath)}{ChatColors.Default}");
 
@@ -111,7 +245,7 @@ public class MatchTelemetryLogger
             if (!string.IsNullOrEmpty(_currentFilePath))
             {
 
-                AppendToFile($"\n> [!NOTE]\n> **Gravação de telemetria desativada pelo jogador às {DateTime.Now:HH:mm:ss}.**\n\n");
+                WriteAdministrative($"\n> [!NOTE]\n> **Gravação de telemetria desativada pelo jogador às {DateTime.Now:HH:mm:ss}.**\n\n");
             }
 
             Server.PrintToChatAll($" {ChatColors.Red}[CsBot Debug]{ChatColors.Default} Telemetria forense {ChatColors.Grey}DESATIVADA{ChatColors.Default}.");
@@ -134,18 +268,15 @@ public class MatchTelemetryLogger
             }
         }
 
-        _currentRound = roundNumber;
-
+        _currentOfficialRoundNumber = roundNumber;
+        _currentInternalRoundId = roundNumber;
         _roundStartTime = Server.CurrentTime;
-
         _lowSpeedStartTimes.Clear();
-
         _lastVelocities.Clear();
         ResetHealthTracking();
 
         var sb = new StringBuilder();
-
-        sb.AppendLine($"## 🎮 Round {_currentRound} [Placar: CT {ctScore} x {trScore} TR]");
+        sb.AppendLine($"## 🎮 Round {_currentOfficialRoundNumber} [Placar: CT {ctScore} x {trScore} TR]");
 
         sb.AppendLine($"- **BuyState CT:** `{ctBuy}` | **BuyState TR:** `{trBuy}`");
 
@@ -199,7 +330,7 @@ public class MatchTelemetryLogger
 
         sb.AppendLine("### ⏱️ Linha do Tempo de Eventos");
 
-        AppendToFile(sb.ToString());
+        WriteAdministrative(sb.ToString());
     }
 
     /// <summary>Cabeçalho forense V4: lifecycle, economia pré/pós por time, planos CT e TR separados.</summary>
@@ -216,7 +347,8 @@ public class MatchTelemetryLogger
             else return;
         }
 
-        _currentRound = rec.OfficialRoundNumber;
+        _currentOfficialRoundNumber = rec.OfficialRoundNumber;
+        _currentInternalRoundId = rec.InternalRoundId;
         _roundStartTime = Server.CurrentTime;
         _lowSpeedStartTimes.Clear();
         _lastVelocities.Clear();
@@ -272,39 +404,54 @@ public class MatchTelemetryLogger
         }
 
         sb.AppendLine("### ⏱️ Linha do Tempo de Eventos");
-        AppendToFile(sb.ToString());
+        WriteAdministrative(sb.ToString());
     }
 
     public void LogEvent(string category, string description)
     {
-
         if (!_isEnabled) return;
-
-        string clock = GetRoundClockFormatted();
-
-        AppendToFile($"- **`[{clock}]`** `[{category}]` {description}\n");
+        var res = Admit(category, null, null, category, out var env);
+        if (res == TelemetryAdmissionResult.ACCEPT_NORMAL)
+        {
+            WriteNormal($"- **`[{env.RoundTimeFormatted}]`** `[{category}]` {description}\n");
+        }
+        else if (res == TelemetryAdmissionResult.ACCEPT_LATE_AUDIT)
+        {
+            LogLateEvent(env, category, description);
+        }
     }
 
     public void LogUtilityThrow(CCSPlayerController thrower, string utilityName, Vector origin, float pitch, float yaw, Vector? target)
     {
-
         if (!_isEnabled) return;
-
-        string clock = GetRoundClockFormatted();
-
+        var res = Admit("UTILITÁRIA", null, null, "BotLocomotionDriver", out var env);
         string targetStr = target != null ? $"-> Destino: `({target.X:F0}, {target.Y:F0}, {target.Z:F0})`" : "";
+        string desc = $"**{thrower.PlayerName}** lançou **{utilityName}** de `({origin.X:F0}, {origin.Y:F0}, {origin.Z:F0})` [Mira: Pitch {pitch:F1}°, Yaw {yaw:F1}°] {targetStr}";
 
-        AppendToFile($"- **`[{clock}]`** `[UTILITÁRIA]` **{thrower.PlayerName}** lançou **{utilityName}** de `({origin.X:F0}, {origin.Y:F0}, {origin.Z:F0})` [Mira: Pitch {pitch:F1}°, Yaw {yaw:F1}°] {targetStr}\n");
+        if (res == TelemetryAdmissionResult.ACCEPT_NORMAL)
+        {
+            WriteNormal($"- **`[{env.RoundTimeFormatted}]`** `[UTILITÁRIA]` {desc}\n");
+        }
+        else if (res == TelemetryAdmissionResult.ACCEPT_LATE_AUDIT)
+        {
+            LogLateEvent(env, "UTILITÁRIA", desc);
+        }
     }
 
     public void LogCombat(CCSPlayerController attacker, CCSPlayerController victim, string weapon, int damage, int remainingHp, float distanceUnits)
     {
-
         if (!_isEnabled) return;
+        var res = Admit("COMBATE", null, null, "CombatLegacy", out var env);
+        string desc = $"{attacker.PlayerName} -> {victim.PlayerName} ({weapon}) raw={damage} hp={remainingHp} dist={distanceUnits:F0}u";
 
-        string clock = GetRoundClockFormatted();
-
-        AppendToFile($"- **`[{clock}]`** `[COMBATE-LEGACY]` {attacker.PlayerName} -> {victim.PlayerName} ({weapon}) raw={damage} hp={remainingHp} dist={distanceUnits:F0}u\n");
+        if (res == TelemetryAdmissionResult.ACCEPT_NORMAL)
+        {
+            WriteNormal($"- **`[{env.RoundTimeFormatted}]`** `[COMBATE-LEGACY]` {desc}\n");
+        }
+        else if (res == TelemetryAdmissionResult.ACCEPT_LATE_AUDIT)
+        {
+            LogLateEvent(env, "COMBATE-LEGACY", desc);
+        }
     }
 
     // ==============================================================================
@@ -352,19 +499,28 @@ public class MatchTelemetryLogger
 
     public void LogCombatV4(CCSPlayerController attacker, CCSPlayerController victim, string weapon, int rawDamage, int reportedHealth, float distanceUnits, int armorDamage = 0)
     {
-        int tick = Server.TickCount;
+        int tick = SafeTickCount;
         if (tick != _hurtDedupTick) { _hurtDedup.Clear(); _hurtDedupTick = tick; }
         var d = ComputeDamage(_lastKnownPlayerHealth, _hurtDedup, tick, attacker.Slot, victim.Slot, weapon, rawDamage, reportedHealth, armorDamage);
         if (!_isEnabled || d.IsDuplicate) return;
 
-        string clock = GetRoundClockFormatted();
+        var res = Admit("COMBATE", null, tick, "CombatAdapter", out var env);
         string sector = MirageSectorClassifier.ClassifyPlayer(victim).SectorName;
         if (d.AppliedDamage == 0)
         {
-            AppendToFile($"- **`[{clock}]`** `[IMPACTO SEM DANO]` **{attacker.PlayerName}** atingiu **{victim.PlayerName}** com **{weapon}** a **{distanceUnits:F0}u** (raw={d.RawDamage}, armor={armorDamage}, motivo=`{d.ZeroDamageReason}`, setor: {sector})\n");
+            string line = $"**{attacker.PlayerName}** atingiu **{victim.PlayerName}** com **{weapon}** a **{distanceUnits:F0}u** (raw={d.RawDamage}, armor={armorDamage}, motivo=`{d.ZeroDamageReason}`, setor: {sector})";
+            if (res == TelemetryAdmissionResult.ACCEPT_NORMAL)
+                WriteNormal($"- **`[{env.RoundTimeFormatted}]`** `[IMPACTO SEM DANO]` {line}\n");
+            else if (res == TelemetryAdmissionResult.ACCEPT_LATE_AUDIT)
+                LogLateEvent(env, "IMPACTO SEM DANO", line);
             return;
         }
-        AppendToFile($"- **`[{clock}]`** `[COMBATE]` **{attacker.PlayerName}** causou **{d.AppliedDamage} HP** em **{victim.PlayerName}** com **{weapon}** a **{distanceUnits:F0}u** (HP {d.HpBefore}→{d.HpAfter}, raw={d.RawDamage}, overkill={d.OverkillDamage}, setor: {sector})\n");
+
+        string hitLine = $"**{attacker.PlayerName}** causou **{d.AppliedDamage} HP** em **{victim.PlayerName}** com **{weapon}** a **{distanceUnits:F0}u** (HP {d.HpBefore}→{d.HpAfter}, raw={d.RawDamage}, overkill={d.OverkillDamage}, setor: {sector})";
+        if (res == TelemetryAdmissionResult.ACCEPT_NORMAL)
+            WriteNormal($"- **`[{env.RoundTimeFormatted}]`** `[COMBATE]` {hitLine}\n");
+        else if (res == TelemetryAdmissionResult.ACCEPT_LATE_AUDIT)
+            LogLateEvent(env, "COMBATE", hitLine);
     }
 
     public static (float Vel2D, float VelZ, float Vel3D) ComputeVelocity(float vx, float vy, float vz)
@@ -412,13 +568,14 @@ public class MatchTelemetryLogger
         sb.AppendLine("| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |");
         foreach (var r in rows) sb.AppendLine(r);
         sb.AppendLine();
-        AppendToFile(sb.ToString());
+        WriteLateAudit(sb.ToString());
     }
 
     public void LogRoundSealed(RoundStateRecord rec)
     {
         if (!_isEnabled) return;
-        AppendToFile($"- **`[{GetRoundClockFormatted()}]`** `[FIM_ROUND]` internal_round_id={rec.InternalRoundId} | round_oficial={rec.OfficialRoundNumber} | Vencedor: {rec.Winner} | Motivo: `{rec.EndReasonEnum}` ({rec.EndReasonCode}) — {rec.EndReasonDescription} | Placar: CT {rec.OfficialScoreAfterCt} x {rec.OfficialScoreAfterTr} TR | tick={rec.EndedAtTick}\n");
+        if (!_sealedInternalRoundIds.Add(rec.InternalRoundId)) return;
+        WriteAdministrative($"- **`[{GetRoundClockFormatted()}]`** `[FIM_ROUND]` internal_round_id={rec.InternalRoundId} | round_oficial={rec.OfficialRoundNumber} | Vencedor: {rec.Winner} | Motivo: `{rec.EndReasonEnum}` ({rec.EndReasonCode}) — {rec.EndReasonDescription} | Placar: CT {rec.OfficialScoreAfterCt} x {rec.OfficialScoreAfterTr} TR | tick={rec.EndedAtTick}\n");
         FlushLateEventsAudit();
     }
 
@@ -436,21 +593,141 @@ public class MatchTelemetryLogger
         sb.AppendLine($"- **capture_end_reason:** `{reason}`");
         sb.AppendLine($"- **captured_rounds:** {hist.Count} | **complete_rounds:** {complete} | **partial_round_id:** {(partial?.InternalRoundId.ToString() ?? "none")}");
         sb.AppendLine($"- **late_events_total:** {lifecycle.LateEventCount}");
-        sb.AppendLine($"- **end_tick:** {Server.TickCount} | **end_timestamp:** {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-        AppendToFile(sb.ToString());
+        sb.AppendLine($"- **end_tick:** {SafeTickCount} | **end_timestamp:** {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+        sb.AppendLine();
+        sb.AppendLine($"> [!NOTE]\n> capture_end_reason={reason}\n> captured_rounds={hist.Count}\n> complete_rounds={complete}\n> partial_round_id={(partial?.InternalRoundId.ToString() ?? "none")}");
+        sb.AppendLine();
+
+        // V4.2 Parte 8: Resumo Agregado do Tracker
+        var allSamples = _locomotionDriver.ExecutionTracker.GetAllCompletedSamples();
+        sb.AppendLine(TrackerMetricsAggregator.GenerateAggregatedReport(allSamples, _locomotionDriver));
+
+        WriteFooter(sb.ToString());
         _isEnabled = false;
+    }
+
+    public static string ResolveFileSha256(string[] candidatePaths, out string resolvedPath)
+    {
+        var searched = new List<string>();
+        foreach (var p in candidatePaths)
+        {
+            if (string.IsNullOrWhiteSpace(p)) continue;
+            searched.Add(p);
+            if (File.Exists(p))
+            {
+                try
+                {
+                    using var sha = System.Security.Cryptography.SHA256.Create();
+                    using var stream = File.OpenRead(p);
+                    byte[] hash = sha.ComputeHash(stream);
+                    resolvedPath = p;
+                    return Convert.ToHexStringLower(hash);
+                }
+                catch (Exception ex)
+                {
+                    resolvedPath = p;
+                    return $"ERROR_{ex.GetType().Name}";
+                }
+            }
+        }
+        resolvedPath = string.Empty;
+        return $"NOT_FOUND(Searched: {string.Join(" | ", searched)})";
+    }
+
+    public static string ComputeFileSha256(string? path)
+    {
+        if (string.IsNullOrEmpty(path) || !File.Exists(path)) return "NOT_FOUND";
+        try
+        {
+            using var sha = System.Security.Cryptography.SHA256.Create();
+            using var stream = File.OpenRead(path);
+            byte[] hash = sha.ComputeHash(stream);
+            return Convert.ToHexStringLower(hash);
+        }
+        catch (Exception ex)
+        {
+            return $"ERROR_{ex.GetType().Name}";
+        }
+    }
+
+    public static string BuildHeaderMetadata(
+        string pluginVersion,
+        string assemblyVersion,
+        string gitCommit,
+        string dllSha256,
+        string modelSha256)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine("### 🛡️ Identificadores de Versão e Integridade");
+        sb.AppendLine($"- **PluginVersion:** `{pluginVersion}`");
+        sb.AppendLine($"- **AssemblyVersion:** `{assemblyVersion}`");
+        sb.AppendLine($"- **GitCommit:** `{gitCommit}`");
+        sb.AppendLine($"- **DllSha256:** `{dllSha256}`");
+        sb.AppendLine($"- **ModelSha256:** `{modelSha256}`");
+        return sb.ToString();
+    }
+
+    public static bool ValidateCaptureFooter(string content, out string statusReason, int? expectedCompleteRounds = null)
+    {
+        if (string.IsNullOrEmpty(content))
+        {
+            statusReason = "INCOMPLETE_CAPTURE: empty content";
+            return false;
+        }
+
+        bool hasReason = content.Contains("capture_end_reason=MATCH_COMPLETED") ||
+                         content.Contains("capture_end_reason:** `MATCH_COMPLETED`") ||
+                         content.Contains("capture_end_reason: MATCH_COMPLETED");
+
+        bool hasCapturedRounds = false;
+        bool hasCompleteRounds = false;
+
+        if (expectedCompleteRounds.HasValue)
+        {
+            int exp = expectedCompleteRounds.Value;
+            hasCapturedRounds = content.Contains($"captured_rounds={exp}") ||
+                                content.Contains($"captured_rounds:** {exp}") ||
+                                content.Contains($"captured_rounds: {exp}");
+
+            hasCompleteRounds = content.Contains($"complete_rounds={exp}") ||
+                                content.Contains($"complete_rounds:** {exp}") ||
+                                content.Contains($"complete_rounds: {exp}");
+        }
+        else
+        {
+            hasCapturedRounds = System.Text.RegularExpressions.Regex.IsMatch(content, @"captured_rounds(\*\*|\s)*[=:]\s*(`)?\d+");
+            hasCompleteRounds = System.Text.RegularExpressions.Regex.IsMatch(content, @"complete_rounds(\*\*|\s)*[=:]\s*(`)?\d+");
+        }
+
+        bool hasNoPartial = content.Contains("partial_round_id=none") ||
+                            content.Contains("partial_round_id:** none") ||
+                            content.Contains("partial_round_id: none");
+
+        if (hasReason && hasCapturedRounds && hasCompleteRounds && hasNoPartial)
+        {
+            statusReason = "VALID_CAPTURE";
+            return true;
+        }
+
+        statusReason = "INCOMPLETE_CAPTURE: missing required completion markers";
+        return false;
     }
 
     public void LogDeath(CCSPlayerController killer, CCSPlayerController victim, string weapon, bool isHeadshot, string sector)
     {
-
         if (!_isEnabled) return;
-
-        string clock = GetRoundClockFormatted();
-
+        var res = Admit("MORTE", null, null, "GameEvent", out var env);
         string hsStr = isHeadshot ? " (HEADSHOT 💥)" : "";
+        string desc = $"**{killer.PlayerName}** eliminou **{victim.PlayerName}** com **{weapon}**{hsStr} no setor **{sector}**";
 
-        AppendToFile($"- **`[{clock}]`** `[MORTE]` **{killer.PlayerName}** eliminou **{victim.PlayerName}** com **{weapon}**{hsStr} no setor **{sector}**\n");
+        if (res == TelemetryAdmissionResult.ACCEPT_NORMAL)
+        {
+            WriteNormal($"- **`[{env.RoundTimeFormatted}]`** `[MORTE]` {desc}\n");
+        }
+        else if (res == TelemetryAdmissionResult.ACCEPT_LATE_AUDIT)
+        {
+            LogLateEvent(env, "MORTE", desc);
+        }
     }
 
     // ==============================================================================
@@ -461,193 +738,181 @@ public class MatchTelemetryLogger
 
     public void RecordPeriodicSnapshot(List<CCSPlayerController> players, TacticalPlan? plan)
     {
-
         if (!_isEnabled) return;
+        if (Lifecycle != null && !Lifecycle.AllowsRuntimeGameplay()) return;
+        if (_sealedInternalRoundIds.Contains(_currentInternalRoundId)) return;
 
-        string clock = GetRoundClockFormatted();
+        var res = Admit("SNAPSHOT", null, null, "Telemetry", out var env);
+        if (res != TelemetryAdmissionResult.ACCEPT_NORMAL) return;
 
-        float now = Server.CurrentTime;
+        string clock = env.RoundTimeFormatted;
+        float now = SafeCurrentTime;
 
         var alivePlayers = players.Where(p => p != null && p.IsValid && p.PawnIsAlive).ToList();
-
         if (alivePlayers.Count == 0) return;
 
         var sb = new StringBuilder();
-
         sb.AppendLine();
-
         sb.AppendLine($"<details><summary><b>📊 Snapshot Tático das [{clock}] ({alivePlayers.Count} vivos)</b></summary>");
-
         sb.AppendLine();
-
-        sb.AppendLine("| Slot | Jogador (Role) | Time | HP | Arma | Setor | Coord (X,Y,Z) | Mira (P,Y) | Vel 2D (u/s) | Stance | Status Locomotion |");
-
-        sb.AppendLine("| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |");
+        sb.AppendLine("| Slot | Jogador (Role) | Time | HP | Arma | Setor | Coord (X,Y,Z) | Mira (P,Y) | Vel 2D (u/s) | Stance | Ação Prevista (ONNX) | CurrentWinningIntent | CurrentIntentOutcome | LastCompletedOutcome |");
+        sb.AppendLine("| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |");
 
         foreach (var p in alivePlayers)
         {
-
             var pawn = p.PlayerPawn.Value;
-
             if (pawn == null || pawn.AbsOrigin == null) continue;
 
             string role = _roleManager.GetBotRole(p)?.ToString() ?? (p.IsBot ? "Bot" : "Humano");
-
             string team = p.Team == CsTeam.CounterTerrorist ? "CT" : "TR";
-
             int hp = pawn.Health;
-
             var activeWeapon = pawn.WeaponServices?.ActiveWeapon.Value?.DesignerName?.Replace("weapon_", "") ?? "none";
-
             var pos = pawn.AbsOrigin;
-
             string sector = MirageSectorClassifier.ClassifyPlayer(p).SectorName;
-
             float pitch = pawn.EyeAngles?.X ?? 0.0f;
-
             float yaw = pawn.EyeAngles?.Y ?? 0.0f;
 
             var absVel = pawn.AbsVelocity;
             float speed = absVel != null ? ComputeVelocity(absVel.X, absVel.Y, absVel.Z).Vel2D : 0.0f;
             string speedStr = FormatVelocity(absVel);
-
             string stance = "PASSIVE";
 
             if (p.IsBot && plan != null)
             {
-
                 var r = _roleManager.GetBotRole(p);
-
                 if (r != null && plan.BotOrders.TryGetValue(RoleManager.GetOrderKey(r.Value), out var order))
                 {
-
                     stance = order.Stance.ToString();
                 }
-
             }
 
-            string locoStatus = speed > 15.0f ? "Movendo" : "Parado";
+            var microTraj = _locomotionDriver?.MicroMoveEngine?.GetTrajectory(p.Slot);
+            string predAction = (microTraj != null && microTraj.IsOverrideActive)
+                ? $"{microTraj.ActiveBehaviorTag} | {microTraj.Step0_Now.ToReadableString(yaw)}"
+                : "Nenhuma";
 
-            var microTraj = _locomotionDriver.MicroMoveEngine?.GetTrajectory(p.Slot);
+            var lastDecision = _locomotionDriver?.Arbitrator?.GetLastDecision(p.Slot);
+            string winningIntent = lastDecision != null
+                ? $"{lastDecision.WinningIntent.Source}:{lastDecision.WinningIntent.Kind}({lastDecision.WinningIntent.Reason})"
+                : "Nenhuma";
 
-            if (microTraj != null && microTraj.IsOverrideActive)
+            long currentTick = SafeTickCount;
+
+            var activeSample = _locomotionDriver?.ExecutionTracker?.GetActiveSample(p.Slot);
+            string currentIntentOutcome = "Pending";
+            if (activeSample != null && !activeSample.IsCompleted)
             {
-
-                locoStatus += $" [{microTraj.ActiveBehaviorTag} | {microTraj.Step0_Now.ToReadableString(yaw)}]";
+                long sampleAge = currentTick > activeSample.IssuedTick ? (currentTick - activeSample.IssuedTick) : 0;
+                currentIntentOutcome = $"Pending ({sampleAge}t/32t)";
             }
 
-            sb.AppendLine($"| {p.Slot} | {p.PlayerName} ({role}) | {team} | {hp} | {activeWeapon} | {sector} | `{pos.X:F0},{pos.Y:F0},{pos.Z:F0}` | `{pitch:F0}°,{yaw:F0}°` | {speedStr} | {stance} | {locoStatus} |");
+            var latestMeta = _locomotionDriver?.ExecutionTracker?.GetLatestDetailedMetadata(p.Slot);
+            var latestExec = _locomotionDriver?.ExecutionTracker?.GetLatestOutcome(p.Slot);
+
+            string lastCompletedOutcome;
+            if (latestMeta != null)
+            {
+                long ageTicks = currentTick > latestMeta.Value.CompletedTick ? (currentTick - latestMeta.Value.CompletedTick) : 0;
+                string actId = latestMeta.Value.LogicalActionId != Guid.Empty ? latestMeta.Value.LogicalActionId.ToString()[..8] : "none";
+                string reasonStr = !string.IsNullOrEmpty(latestMeta.Value.PhysicalReason) ? $" [{latestMeta.Value.PhysicalReason}]" : "";
+                lastCompletedOutcome = $"{latestMeta.Value.Physical} ({latestMeta.Value.Disp2D:F0}u/500ms, Age={ageTicks}t, Action={actId}, Kind={latestMeta.Value.Kind}){reasonStr}";
+            }
+            else
+            {
+                lastCompletedOutcome = latestExec != null
+                    ? $"{latestExec.Value.Outcome} ({latestExec.Value.Disp2D:F0}u/500ms)"
+                    : (speed > 15.0f ? "Movendo" : "None");
+            }
+
+            sb.AppendLine($"| {p.Slot} | {p.PlayerName} ({role}) | {team} | {hp} | {activeWeapon} | {sector} | `{pos.X:F0},{pos.Y:F0},{pos.Z:F0}` | `{pitch:F0}°,{yaw:F0}°` | {speedStr} | {stance} | {predAction} | {winningIntent} | {currentIntentOutcome} | {lastCompletedOutcome} |");
 
             // ======================================================================
-
-            // DETECTOR AUTOMÁTICO DE ANOMALIAS ([⚠️ AUTO-ANOMALY])
-
+            // DETECTOR AUTOMÁTICO DE ANOMALIAS ([⚠️ AUTO-ANOMALY] - Ajuste 9)
             // ======================================================================
-
             if (p.IsBot)
             {
+                var navState = _locomotionDriver?.GetNavState(p.Slot);
+                bool isAuthorizedHold = stance.Contains("PASSIVE") ||
+                    (navState?.IsHoldingSpot == true && navState?.HoldDurationRemaining > 0f) ||
+                    latestExec?.Outcome == MovementExecutionOutcome.AuthorizedHoldApplied ||
+                    latestExec?.Outcome == MovementExecutionOutcome.FullStopApplied;
 
-                // Anomalia 1: Bot deveria estar se movendo com velocidade < 5u/s por mais de 4s
-
-                if (speed < 5.0f && stance.Contains("POKE"))
+                if (speed < 5.0f && !isAuthorizedHold)
                 {
-
                     if (!_lowSpeedStartTimes.TryGetValue(p.Slot, out float lowStart))
                     {
-
                         _lowSpeedStartTimes[p.Slot] = now;
                     }
-
-                    else if (now - lowStart >= 4.0f)
+                    else if (now - lowStart >= BotSystemConfig.Default.StuckTimeWindowSeconds)
                     {
+                        string classification = latestExec?.Outcome == MovementExecutionOutcome.PossibleExternalControllerOverride
+                            ? "POSSIBLE_EXTERNAL_CONTROLLER_OVERRIDE"
+                            : ((latestExec?.Outcome == MovementExecutionOutcome.BlockedByGeometryOrNavigation || latestExec?.Outcome == MovementExecutionOutcome.BlockedByUnexpectedStopState)
+                                ? "BLOCKED_BY_GEOMETRY_OR_NAV"
+                                : "STANDSTILL_LIMIT_EXCEEDED");
 
-                        LogAnomaly($"Bot **{p.PlayerName}** ficou com velocidade baixa ({speed:F1}u/s) por {now - lowStart:F1}s em postura {stance} no setor {sector}!");
-
+                        LogAnomaly($"Bot **{p.PlayerName}** (`slot={p.Slot}`) sem progresso físico ({speed:F1}u/s por {now - lowStart:F1}s) em postura `{stance}` no setor `{sector}`! Classificação: `{classification}`");
                         _lowSpeedStartTimes[p.Slot] = now + 10.0f; // Cooldown do alerta
                     }
-
                 }
-
                 else
                 {
-
                     _lowSpeedStartTimes.Remove(p.Slot);
                 }
-
             }
         }
 
         sb.AppendLine();
-
         sb.AppendLine("</details>");
-
         sb.AppendLine();
-
-        AppendToFile(sb.ToString());
+        WriteNormal(sb.ToString());
     }
 
     public void LogAnomaly(string message)
     {
-
         if (!_isEnabled) return;
-
-        string clock = GetRoundClockFormatted();
-
-        AppendToFile($"> [!WARNING]\n> **[⚠️ AUTO-ANOMALY - {clock}]:** {message}\n\n");
+        var res = Admit("ANOMALY", null, null, "AnomalyDetector", out var env);
+        if (res == TelemetryAdmissionResult.ACCEPT_NORMAL)
+        {
+            WriteNormal($"> [!WARNING]\n> **[⚠️ AUTO-ANOMALY - {env.RoundTimeFormatted}]:** {message}\n\n");
+        }
+        else if (res == TelemetryAdmissionResult.ACCEPT_LATE_AUDIT)
+        {
+            LogLateEvent(env, "AUTO-ANOMALY", message);
+        }
     }
 
     // ==============================================================================
-
     // Marcador do Jogador (!nota <texto>)
-
     // ==============================================================================
-
     public void RecordPlayerNote(CCSPlayerController player, string noteText, List<CCSPlayerController> allPlayers, TacticalPlan? plan)
     {
-
         if (!_isEnabled)
         {
-
             // Ativa automaticamente se o jogador usar !nota
-
             ToggleLogging(true);
         }
 
         string clock = GetRoundClockFormatted();
-
         var sb = new StringBuilder();
-
         sb.AppendLine();
-
         sb.AppendLine($"### 🚩 [MARCADOR DO JOGADOR - Relógio: {clock}]");
-
         sb.AppendLine($"> **Autor:** {player.PlayerName} ({player.Team})");
-
         sb.AppendLine($"> **Observação:** *\"{noteText}\"*");
-
         sb.AppendLine();
-
         sb.AppendLine("#### 📸 Estado Instantâneo de Todos os Jogadores no Milissegundo:");
-
         sb.AppendLine("| Slot | Jogador | Time | HP | Arma | Setor | Coord (X,Y,Z) | Mira (Pitch,Yaw) | Vel 2D (u/s) |");
-
         sb.AppendLine("| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |");
 
         foreach (var p in allPlayers.Where(p => p != null && p.IsValid && p.PawnIsAlive))
         {
-
             var pawn = p.PlayerPawn.Value;
-
             if (pawn == null || pawn.AbsOrigin == null) continue;
 
             string team = p.Team == CsTeam.CounterTerrorist ? "CT" : "TR";
-
             var pos = pawn.AbsOrigin;
-
             string sector = MirageSectorClassifier.ClassifyPlayer(p).SectorName;
-
             var activeWeapon = pawn.WeaponServices?.ActiveWeapon.Value?.DesignerName?.Replace("weapon_", "") ?? "none";
-
             var absVel = pawn.AbsVelocity;
             float speed = absVel != null ? ComputeVelocity(absVel.X, absVel.Y, absVel.Z).Vel2D : 0.0f;
             string speedStr = FormatVelocity(absVel);
@@ -656,50 +921,30 @@ public class MatchTelemetryLogger
         }
 
         sb.AppendLine();
-
-        AppendToFile(sb.ToString());
+        WriteAdministrative(sb.ToString());
 
         player.PrintToChat($" {ChatColors.Green}[CsBot Debug]{ChatColors.Default} 🚩 Nota registrada no log: {ChatColors.Gold}\"{noteText}\"{ChatColors.Default}");
     }
 
     private void AppendToFile(string text)
     {
-
         if (string.IsNullOrEmpty(_currentFilePath)) return;
-
         lock (_fileLock)
         {
-
             try
             {
-
                 File.AppendAllText(_currentFilePath, text, Encoding.UTF8);
             }
-
             catch (Exception ex)
             {
-
-                Server.PrintToConsole($"[MatchTelemetryLogger] Erro ao gravar log: {ex.Message}");
+                SafePrintToConsole($"[MatchTelemetryLogger] Erro ao gravar log: {ex.Message}");
             }
-
         }
     }
 
-    private float _lastKnownServerTime = 0.0f;
-
     public string GetRoundClockFormatted()
     {
-        float currentTime;
-        try
-        {
-            currentTime = Server.CurrentTime;
-            _lastKnownServerTime = currentTime;
-        }
-        catch
-        {
-            currentTime = _lastKnownServerTime;
-        }
-
+        float currentTime = SafeCurrentTime;
         float elapsed = currentTime - _roundStartTime;
         float remaining = Math.Max(0.0f, 115.0f - elapsed);
         int mins = (int)(remaining / 60.0f);
@@ -713,6 +958,7 @@ public class MatchTelemetryLogger
         string secondary = "Pistola Base";
         var nadesList = new List<string>();
         string armor = "Sem Colete";
+        bool hasC4 = false;
 
         var pawn = player.PlayerPawn.Value;
         if (pawn == null) return (primary, secondary, "Nenhuma", armor);
@@ -740,7 +986,11 @@ public class MatchTelemetryLogger
 
                 if (wname.Contains("KNIFE") || wname.Contains("BAYONET")) continue;
 
-                if (BotLocomotionDriver.IsGrenadeWeapon(rawName) || wname.Contains("DECOY"))
+                if (wname.Contains("C4"))
+                {
+                    hasC4 = true;
+                }
+                else if (BotLocomotionDriver.IsGrenadeWeapon(rawName) || wname.Contains("DECOY"))
                 {
                     nadesList.Add(wname);
                 }
@@ -752,11 +1002,12 @@ public class MatchTelemetryLogger
                 {
                     secondary = wname;
                 }
-                else if (wname.Contains("C4"))
-                {
-                    primary = "C4";
-                }
             }
+        }
+
+        if (hasC4)
+        {
+            armor += " + 💣 C4 (Bomba)";
         }
 
         string nades = nadesList.Count > 0 ? string.Join(", ", nadesList) : "Nenhuma";

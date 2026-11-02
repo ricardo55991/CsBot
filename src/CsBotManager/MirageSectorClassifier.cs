@@ -88,13 +88,15 @@ public static class MirageSectorClassifier
     /// </summary>
     public static readonly IReadOnlyList<MirageSectorVolume> Volumes = new List<MirageSectorVolume>
     {
-        // 1. Zonas de Plant Reais (Prioridade Máxima = 1)
+        // 1. Zonas de Plant Reais (Prioridade Máxima = 1 - Calibradas com coordenadas Source 2 de de_mirage)
         new() { SectorName = "Bomb A", AssociatedBomb = "A", IsPlantZone = true, Priority = 1,
-                MinX = -1360f, MaxX = -280f, MinY = -2350f, MaxY = -1880f, MinZ = -260f, MaxZ = -80f },
+                MinX = -1330f, MaxX = -850f, MinY = -680f, MaxY = -180f, MinZ = -240f, MaxZ = -50f },
+        new() { SectorName = "Bomb A", AssociatedBomb = "A", IsPlantZone = false, Priority = 2,
+                MinX = -1330f, MaxX = -280f, MinY = -2350f, MaxY = -1880f, MinZ = -260f, MaxZ = -80f },
         new() { SectorName = "Bomb B", AssociatedBomb = "B", IsPlantZone = true, Priority = 1,
+                MinX = -1650f, MaxX = -1150f, MinY = -350f, MaxY = 120f, MinZ = -240f, MaxZ = -50f },
+        new() { SectorName = "Bomb B", AssociatedBomb = "B", IsPlantZone = false, Priority = 2,
                 MinX = -2150f, MaxX = -1420f, MinY = 250f, MaxY = 760f, MinZ = -240f, MaxZ = -40f },
-        new() { SectorName = "Bomb B", AssociatedBomb = "B", IsPlantZone = true, Priority = 2,
-                MinX = -1650f, MaxX = -1180f, MinY = -300f, MaxY = 120f, MinZ = -220f, MaxZ = -40f },
 
         // 2. Underpass / Rato (Camada Subterrânea: Z <= -185 tem prioridade 2 sobre Catwalk/Meio)
         new() { SectorName = "Underpass", AssociatedBomb = "Mid", IsPlantZone = false, Priority = 2,
@@ -272,30 +274,92 @@ public static class MirageSectorClassifier
 
     /// <summary>
     /// Verifica se uma coordenada 3D está estritamente dentro do perímetro real de plant de um Bombsite ("A" ou "B"),
-    /// evitando que um bot em `Ticket / CT`, `Palácio A` ou `Mercado / Kitchen` declare `"Bomb limpo!"` (Bug 6).
+    /// evitando que um bot em `Ticket / CT`, `Palácio A` ou `Mercado / Kitchen` declare `"Bomb limpo!"` (Bug 6 / V4.2.1).
+    /// Suporta validação combinada de flag da engine, nav place nativo, volume 3D e tolerância geométrica configurada.
     /// </summary>
-    public static bool IsInsideBombsitePlantPerimeter(float x, float y, float z, string targetBombSite, bool inBombZoneFlag = false)
+    public static bool IsInsideBombsitePlantPerimeter(
+        float x,
+        float y,
+        float z,
+        string targetBombSite,
+        bool inBombZoneFlag,
+        string? nativeLastPlaceName,
+        out string testedVolumeName,
+        out float distanceToPerimeter)
     {
+        testedVolumeName = targetBombSite.Equals("B", StringComparison.OrdinalIgnoreCase) ? "PlantZone_BombB" : "PlantZone_BombA";
+        distanceToPerimeter = 0f;
+
+        // 1. Flag nativa da Source 2 da zona de plant
         if (inBombZoneFlag)
         {
-            var cls = Classify(x, y, z, inBombZoneFlag: true);
+            var cls = Classify(x, y, z, nativeLastPlaceName, inBombZoneFlag: true);
             if (cls.AssociatedBomb.Equals(targetBombSite, StringComparison.OrdinalIgnoreCase))
             {
+                testedVolumeName = "SOURCE2_BOMB_ZONE_FLAG";
+                return true;
+            }
+        }
+
+        // 2. Nome nativo da Source 2 (nav place)
+        if (!string.IsNullOrWhiteSpace(nativeLastPlaceName))
+        {
+            if (targetBombSite.Equals("A", StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(nativeLastPlaceName.Trim(), "BombsiteA", StringComparison.OrdinalIgnoreCase))
+            {
+                testedVolumeName = "NATIVE_NAV_PLACE_BombsiteA";
+                return true;
+            }
+            if (targetBombSite.Equals("B", StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(nativeLastPlaceName.Trim(), "BombsiteB", StringComparison.OrdinalIgnoreCase))
+            {
+                testedVolumeName = "NATIVE_NAV_PLACE_BombsiteB";
                 return true;
             }
         }
 
         string expectedSector = targetBombSite.Equals("B", StringComparison.OrdinalIgnoreCase) ? "Bomb B" : "Bomb A";
+        float minVolDist = float.MaxValue;
+        MirageSectorVolume? closestVol = null;
+
         foreach (var vol in Volumes)
         {
-            if (vol.IsPlantZone &&
-                vol.SectorName.Equals(expectedSector, StringComparison.OrdinalIgnoreCase) &&
-                vol.Contains3D(x, y, z))
+            if (vol.IsPlantZone && vol.SectorName.Equals(expectedSector, StringComparison.OrdinalIgnoreCase))
             {
-                return true;
+                if (vol.Contains3D(x, y, z))
+                {
+                    testedVolumeName = $"{vol.SectorName}_Prio{vol.Priority}";
+                    distanceToPerimeter = 0f;
+                    return true;
+                }
+
+                float dist = vol.DistanceToVolume3D(x, y, z);
+                if (dist < minVolDist)
+                {
+                    minVolDist = dist;
+                    closestVol = vol;
+                }
             }
         }
 
+        // 3. Tolerância geométrica ao redor do centroide do plant (até 180u de margem física)
+        if (closestVol != null && minVolDist <= 180.0f)
+        {
+            testedVolumeName = $"{closestVol.SectorName}_MarginTolerance_{minVolDist:F1}u";
+            distanceToPerimeter = minVolDist;
+            return true;
+        }
+
+        distanceToPerimeter = minVolDist < float.MaxValue ? minVolDist : 999f;
+        if (closestVol != null)
+        {
+            testedVolumeName = $"{closestVol.SectorName}_Prio{closestVol.Priority}";
+        }
         return false;
+    }
+
+    public static bool IsInsideBombsitePlantPerimeter(float x, float y, float z, string targetBombSite, bool inBombZoneFlag = false)
+    {
+        return IsInsideBombsitePlantPerimeter(x, y, z, targetBombSite, inBombZoneFlag, null, out _, out _);
     }
 }

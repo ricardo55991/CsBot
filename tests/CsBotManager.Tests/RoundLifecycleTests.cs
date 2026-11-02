@@ -133,4 +133,60 @@ public class RoundLifecycleTests
         Assert.Empty(errors);
         Assert.Contains("BotSystemConfig V4", cfg.FormatMarkdownSummary());
     }
+
+    [Fact]
+    public void AllowsRuntimeGameplay_BlocksInWarmupFreezeTimeAndPostRound_AllowsOnlyInActiveLiveRound()
+    {
+        var mgr = new RoundLifecycleManager();
+        int ct = 0, tr = 0, ctLoss = 1, trLoss = 1;
+
+        // No round iniciado
+        Assert.False(mgr.AllowsRuntimeGameplay());
+
+        // Warmup iniciado
+        mgr.TryBeginRound(isWarmup: true, gameTick: 10, currentCtScore: 0, currentTrScore: 0, out _, out _);
+        Assert.False(mgr.AllowsRuntimeGameplay(), "Warmup padrão não permite gameplay de runtime");
+
+        mgr.AllowWarmupGameplay = true;
+        Assert.True(mgr.AllowsRuntimeGameplay(), "Permite gameplay quando explicitamente autorizado");
+        mgr.AllowWarmupGameplay = false;
+
+        // Início de round oficial (Live - FREEZE_TIME)
+        mgr.TryBeginRound(isWarmup: false, gameTick: 100, currentCtScore: 0, currentTrScore: 0, out _, out _);
+        Assert.False(mgr.AllowsRuntimeGameplay(), "FreezeTime não permite movimentação de gameplay");
+
+        // Transição para ROUND_ACTIVE
+        Assert.True(mgr.TryTransitionToActivePhase(200));
+        Assert.True(mgr.AllowsRuntimeGameplay(), "Round ativo LIVE permite gameplay");
+
+        // Fim de round / Selamento
+        mgr.TrySealRound(8, CsTeam.CounterTerrorist, 500, ref ct, ref tr, ref ctLoss, ref trLoss, out _);
+        Assert.False(mgr.AllowsRuntimeGameplay(), "Após selamento (POST_ROUND) gameplay é estritamente bloqueado");
+    }
+
+    [Fact]
+    public void RoundExecutionContext_CancelledOnSeal_AndReplacedOnNewRound()
+    {
+        var mgr = new RoundLifecycleManager();
+        int ct = 0, tr = 0, ctLoss = 1, trLoss = 1;
+
+        mgr.TryBeginRound(isWarmup: false, gameTick: 100, currentCtScore: 0, currentTrScore: 0, out var r1, out _);
+        var ctx1 = mgr.CurrentExecutionContext;
+        Assert.NotNull(ctx1);
+        Assert.False(ctx1!.IsCancelled);
+        Assert.Equal(r1.InternalRoundId, ctx1.InternalRoundId);
+
+        // Ao selar o round, o CTS deve ser cancelado imediatamente
+        mgr.TrySealRound(8, CsTeam.CounterTerrorist, 300, ref ct, ref tr, ref ctLoss, ref trLoss, out _);
+        Assert.True(ctx1.IsCancelled);
+        Assert.True(ctx1.CancellationToken.IsCancellationRequested);
+
+        // Ao iniciar round 2, novo contexto não-cancelado deve ser criado
+        mgr.TryBeginRound(isWarmup: false, gameTick: 600, currentCtScore: 1, currentTrScore: 0, out var r2, out _);
+        var ctx2 = mgr.CurrentExecutionContext;
+        Assert.NotNull(ctx2);
+        Assert.NotSame(ctx1, ctx2);
+        Assert.False(ctx2!.IsCancelled);
+        Assert.Equal(r2.InternalRoundId, ctx2.InternalRoundId);
+    }
 }

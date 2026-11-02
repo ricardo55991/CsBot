@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Utils;
 using BotControllerApi;
 
 namespace CsBotManager;
@@ -29,28 +30,83 @@ public enum MovementCommandKind
     ReleaseHoldAndRepath
 }
 
+public enum ArbitrationWindowPhase
+{
+    NotStarted,
+    Collecting,
+    Resolved,
+    Applied,
+    Closed
+}
+
+public enum MovementScope
+{
+    MacroNavigation,
+    LocalMicroMove,
+    FullStop,
+    Recovery
+}
+
+public enum MovementIntentDisposition
+{
+    PublishedDuringCollection,
+    QueuedForNextTick,
+    RejectedWrongRound,
+    RejectedExpired,
+    RejectedAfterResolution,
+    RejectedInvalidBot,
+    RejectedRoundSealed,
+    RejectedQueueFull
+}
+
+public enum IntentPublishChannel
+{
+    ExpectedBetweenTicks,
+    UnexpectedAfterResolution
+}
+
 public sealed class MovementIntent
 {
+    public long InternalRoundId { get; set; }
     public int BotSlot { get; init; }
     public string BotName { get; init; } = string.Empty;
     public int GameTick { get; init; }
     public float CurrentTime { get; init; }
+    public long CreatedAtTick { get; init; }
+    public long EarliestApplicableTick { get; init; }
+    public long ExpiresAtTick { get; init; }
+    public float ExpiresAtTime { get; init; }
+    public Guid IntentId { get; init; } = Guid.NewGuid();
+    public Guid TrajectoryId { get; init; } = Guid.Empty;
+    public int StepIndex { get; init; } = 0;
+    public int CommandGeneration { get; init; } = 0;
+    public Guid LogicalActionId { get; init; } = Guid.Empty;
+    public MovementIntentDisposition Disposition { get; set; } = MovementIntentDisposition.PublishedDuringCollection;
+
     public MovementIntentSource Source { get; init; }
     public MovementCommandKind Kind { get; init; }
+    public MovementScope Scope { get; init; } = MovementScope.MacroNavigation;
     public string Reason { get; init; } = string.Empty;
-    public float ExpiresAtTime { get; init; }
 
     // Parâmetros de NavMesh / Objetivo
     public float? GoalX { get; init; }
     public float? GoalY { get; init; }
     public float? GoalZ { get; init; }
+    public SuggestedGoalCoordinateSpace GoalCoordinateSpace { get; init; } = SuggestedGoalCoordinateSpace.WorldAbsolute;
     public bool ForceRepath { get; init; }
     public bool Hurry { get; init; }
     public bool Sneak { get; init; }
 
+    // V4.2.6: Rastreamento autoritativo de objetivo da C4 e Bombsite
+    public string TargetSpotId { get; init; } = string.Empty;
+    public BombsiteTarget TargetSpotAssociatedBombsite { get; init; } = BombsiteTarget.None;
+    public Guid ObjectiveRevision { get; init; } = Guid.Empty;
+
     // Parâmetros de Parada / Hold
     public bool IsStopping { get; init; }
     public float WaitDurationSeconds { get; init; }
+    public bool IsHoldAuthorized { get; init; } = false;
+    public bool ExpectedMovement { get; init; } = true;
 
     // Parâmetros de Usercmd / BotControllerApi
     public bool UseUsercmdVelocity { get; init; }
@@ -87,23 +143,114 @@ public sealed class MovementArbitrator
 {
     public BotSystemConfig Config { get; set; } = BotSystemConfig.Default;
     public MatchTelemetryLogger? TelemetryLogger { get; set; }
+    public Func<BombObjectiveState?>? GetActiveBombObjectiveState { get; set; }
 
-    private readonly ConcurrentDictionary<int, List<MovementIntent>> _pendingIntentsBySlot = new();
+    public const int MaxQueuedIntentsPerSlot = 8;
+
+    private readonly ConcurrentDictionary<int, List<MovementIntent>> _collectingIntentsBySlot = new();
+    private readonly ConcurrentDictionary<int, List<MovementIntent>> _queuedIntentsForNextTickBySlot = new();
     private readonly ConcurrentDictionary<int, ArbitratedMovementDecision> _lastDecisionsBySlot = new();
     private readonly ConcurrentDictionary<int, long> _activeUsercmdHandleBySlot = new();
     private readonly ConcurrentDictionary<int, int> _lastAppliedTickBySlot = new();
     private readonly ConcurrentDictionary<int, float> _lastConflictLogTimeBySlot = new();
+    private readonly ConcurrentDictionary<int, float> _lastQueueFullWarnTimeBySlot = new();
 
     private long _totalResolvedIntents = 0;
     private long _totalConflictsSuppressed = 0;
     private long _totalApplications = 0;
+    private long _totalDiscardedQueueIntents = 0;
 
     public long TotalResolvedIntents => Interlocked.Read(ref _totalResolvedIntents);
     public long TotalConflictsSuppressed => Interlocked.Read(ref _totalConflictsSuppressed);
     public long TotalApplications => Interlocked.Read(ref _totalApplications);
+    public long TotalDiscardedQueueIntents => Interlocked.Read(ref _totalDiscardedQueueIntents);
+
+    public long GetActiveUsercmdHandle(int slot) => _activeUsercmdHandleBySlot.TryGetValue(slot, out long h) ? h : 0L;
+
+    public ArbitrationWindowPhase CurrentPhase { get; private set; } = ArbitrationWindowPhase.NotStarted;
+    public int CurrentGameTick { get; private set; } = 0;
+    public float CurrentTickTime { get; private set; } = 0f;
+    public long CurrentInternalRoundId { get; private set; } = 0;
+    private long _totalIntentsRejectedAfterResolution = 0;
+    public long TotalIntentsRejectedAfterResolution => Interlocked.Read(ref _totalIntentsRejectedAfterResolution);
+
+    public int GetQueuedCount(int slot) => _queuedIntentsForNextTickBySlot.TryGetValue(slot, out var l) ? l.Count : 0;
+    public int GetCollectingCount(int slot) => _collectingIntentsBySlot.TryGetValue(slot, out var l) ? l.Count : 0;
+
+    public void BeginTick(long gameTick, float currentTime, long internalRoundId)
+    {
+        CurrentGameTick = (int)gameTick;
+        CurrentTickTime = currentTime;
+        CurrentInternalRoundId = internalRoundId;
+        CurrentPhase = ArbitrationWindowPhase.Collecting;
+
+        _collectingIntentsBySlot.Clear();
+
+        // Importa intenções enfileiradas previamente para o tick atual
+        foreach (var kvp in _queuedIntentsForNextTickBySlot)
+        {
+            int slot = kvp.Key;
+            var queuedList = kvp.Value;
+            lock (queuedList)
+            {
+                for (int i = queuedList.Count - 1; i >= 0; i--)
+                {
+                    var queued = queuedList[i];
+
+                    if (internalRoundId > 0 && queued.InternalRoundId > 0 && queued.InternalRoundId != internalRoundId)
+                    {
+                        queued.Disposition = MovementIntentDisposition.RejectedWrongRound;
+                        queuedList.RemoveAt(i);
+                        Interlocked.Increment(ref _totalDiscardedQueueIntents);
+                        continue;
+                    }
+
+                    if (queued.ExpiresAtTick > 0 && queued.ExpiresAtTick < gameTick)
+                    {
+                        queued.Disposition = MovementIntentDisposition.RejectedExpired;
+                        queuedList.RemoveAt(i);
+                        Interlocked.Increment(ref _totalDiscardedQueueIntents);
+                        continue;
+                    }
+
+                    if (queued.ExpiresAtTime > 0f && queued.ExpiresAtTime < currentTime)
+                    {
+                        queued.Disposition = MovementIntentDisposition.RejectedExpired;
+                        queuedList.RemoveAt(i);
+                        Interlocked.Increment(ref _totalDiscardedQueueIntents);
+                        continue;
+                    }
+
+                    if (queued.EarliestApplicableTick > gameTick)
+                    {
+                        // Intenção para tick futuro, mantém na fila
+                        continue;
+                    }
+
+                    queued.Disposition = MovementIntentDisposition.PublishedDuringCollection;
+                    var collecting = _collectingIntentsBySlot.GetOrAdd(slot, _ => new List<MovementIntent>(4));
+                    lock (collecting)
+                    {
+                        collecting.Add(queued);
+                    }
+                    queuedList.RemoveAt(i);
+                }
+            }
+        }
+    }
+
+    public void BeginTick(int gameTick, float currentTime)
+    {
+        BeginTick(gameTick, currentTime, CurrentInternalRoundId > 0 ? CurrentInternalRoundId : 1L);
+    }
 
     public void ResetRound(IBotControllerApi? api)
     {
+        CurrentPhase = ArbitrationWindowPhase.NotStarted;
+        CurrentGameTick = 0;
+        CurrentTickTime = 0f;
+        CurrentInternalRoundId = 0;
+
         if (api != null)
         {
             foreach (var kvp in _activeUsercmdHandleBySlot)
@@ -116,31 +263,234 @@ public sealed class MovementArbitrator
         }
 
         _activeUsercmdHandleBySlot.Clear();
-        _pendingIntentsBySlot.Clear();
+        _collectingIntentsBySlot.Clear();
+        _queuedIntentsForNextTickBySlot.Clear();
         _lastDecisionsBySlot.Clear();
         _lastAppliedTickBySlot.Clear();
         _lastConflictLogTimeBySlot.Clear();
+        _lastQueueFullWarnTimeBySlot.Clear();
     }
 
     public void ClearBotState(int slot, IBotControllerApi? api)
     {
-        _pendingIntentsBySlot.TryRemove(slot, out _);
+        _collectingIntentsBySlot.TryRemove(slot, out _);
+        _queuedIntentsForNextTickBySlot.TryRemove(slot, out _);
         _lastDecisionsBySlot.TryRemove(slot, out _);
         _lastAppliedTickBySlot.TryRemove(slot, out _);
+        _lastQueueFullWarnTimeBySlot.TryRemove(slot, out _);
         if (_activeUsercmdHandleBySlot.TryRemove(slot, out long handle) && handle != 0 && api != null)
         {
             try { api.CancelUsercmdMovement(slot, handle); } catch { }
         }
     }
 
-    public void PublishIntent(MovementIntent intent)
+    public bool PublishDuringCollection(MovementIntent intent, long currentTick, long internalRoundId)
     {
-        if (intent == null) return;
-        var list = _pendingIntentsBySlot.GetOrAdd(intent.BotSlot, _ => new List<MovementIntent>(4));
+        if (intent == null) return false;
+
+        if (CurrentPhase != ArbitrationWindowPhase.Collecting)
+        {
+            Interlocked.Increment(ref _totalIntentsRejectedAfterResolution);
+            intent.Disposition = MovementIntentDisposition.RejectedAfterResolution;
+            TelemetryLogger?.LogEvent(
+                "ARBITRAGEM - REJEICAO",
+                $"**[INTENT_REJECTED_AFTER_RESOLUTION]** Bot **{intent.BotName}** (`slot={intent.BotSlot}`) tentou PublishDuringCollection fora da fase Collecting (Fase `{CurrentPhase}`, tick `{currentTick}`)!");
+            return false;
+        }
+
+        if (intent.InternalRoundId <= 0 && internalRoundId > 0)
+        {
+            intent.Disposition = MovementIntentDisposition.RejectedWrongRound;
+            TelemetryLogger?.LogEvent(
+                "ARBITRAGEM - REJEICAO_SEM_ROUND",
+                $"**[INTENT_REJECTED_ZERO_ROUND]** Bot **{intent.BotName}** (`slot={intent.BotSlot}`) intenção criada sem InternalRoundId!");
+            return false;
+        }
+
+        if (intent.InternalRoundId > 0 && internalRoundId > 0 && intent.InternalRoundId != internalRoundId)
+        {
+            intent.Disposition = MovementIntentDisposition.RejectedWrongRound;
+            TelemetryLogger?.LogEvent(
+                "ARBITRAGEM - REJEICAO",
+                $"**[INTENT_REJECTED_WRONG_ROUND]** Bot **{intent.BotName}** (`slot={intent.BotSlot}`) intenção com round incorreto ({intent.InternalRoundId} != {internalRoundId})!");
+            return false;
+        }
+
+        if (intent.ExpiresAtTick > 0 && intent.ExpiresAtTick < currentTick)
+        {
+            intent.Disposition = MovementIntentDisposition.RejectedExpired;
+            return false;
+        }
+
+        if (intent.ExpiresAtTime > 0f && intent.ExpiresAtTime < CurrentTickTime)
+        {
+            intent.Disposition = MovementIntentDisposition.RejectedExpired;
+            return false;
+        }
+
+        // V4.2.6: Rejeição de STALE_BOMB_OBJECTIVE se a revisão do objetivo foi incrementada
+        if (intent.Source == MovementIntentSource.BombObjective && intent.ObjectiveRevision != Guid.Empty)
+        {
+            var activeBombState = GetActiveBombObjectiveState?.Invoke();
+            if (activeBombState != null && activeBombState.ObjectiveRevision != Guid.Empty && intent.ObjectiveRevision != activeBombState.ObjectiveRevision)
+            {
+                intent.Disposition = MovementIntentDisposition.RejectedExpired;
+                TelemetryLogger?.LogEvent(
+                    "STALE_BOMB_OBJECTIVE",
+                    $"intentRevision={intent.ObjectiveRevision} activeRevision={activeBombState.ObjectiveRevision} bot={intent.BotSlot} reason=StaleObjectiveRevisionRejected");
+                return false;
+            }
+        }
+
+        intent.Disposition = MovementIntentDisposition.PublishedDuringCollection;
+        var list = _collectingIntentsBySlot.GetOrAdd(intent.BotSlot, _ => new List<MovementIntent>(4));
         lock (list)
         {
             list.Add(intent);
         }
+        return true;
+    }
+
+    public bool QueueForNextTick(
+        MovementIntent intent,
+        long currentTick,
+        long internalRoundId,
+        IntentPublishChannel channel = IntentPublishChannel.ExpectedBetweenTicks)
+    {
+        if (intent == null) return false;
+
+        // Produtores síncronos que deveriam executar durante Collecting NÃO podem usar a fila futura para esconder erro de ordenação (Adendo 5)
+        if (channel == IntentPublishChannel.UnexpectedAfterResolution)
+        {
+            Interlocked.Increment(ref _totalIntentsRejectedAfterResolution);
+            intent.Disposition = MovementIntentDisposition.RejectedAfterResolution;
+            TelemetryLogger?.LogEvent(
+                "ARBITRAGEM - REJEICAO_ORDENACAO",
+                $"**[UNEXPECTED_AFTER_RESOLUTION]** Produtor síncrono do Bot **{intent.BotName}** (`slot={intent.BotSlot}`) tentou enfileirar após resolução no tick `{currentTick}`!");
+            return false;
+        }
+
+        if (intent.InternalRoundId <= 0 && internalRoundId > 0)
+        {
+            intent.Disposition = MovementIntentDisposition.RejectedWrongRound;
+            return false;
+        }
+
+        if (intent.InternalRoundId > 0 && internalRoundId > 0 && intent.InternalRoundId != internalRoundId)
+        {
+            intent.Disposition = MovementIntentDisposition.RejectedWrongRound;
+            return false;
+        }
+
+        if (intent.ExpiresAtTick > 0 && intent.ExpiresAtTick <= currentTick)
+        {
+            intent.Disposition = MovementIntentDisposition.RejectedExpired;
+            return false;
+        }
+
+        var list = _queuedIntentsForNextTickBySlot.GetOrAdd(intent.BotSlot, _ => new List<MovementIntent>(MaxQueuedIntentsPerSlot));
+        lock (list)
+        {
+            // Deduplicação: se já existe intenção equivalente (mesma Source, Kind e Scope), substitui pela mais recente ou mais prioritária
+            int existingIndex = list.FindIndex(i => i.Source == intent.Source && i.Kind == intent.Kind && i.Scope == intent.Scope);
+            if (existingIndex >= 0)
+            {
+                list[existingIndex] = intent;
+                intent.Disposition = MovementIntentDisposition.QueuedForNextTick;
+                return true;
+            }
+
+            if (list.Count >= MaxQueuedIntentsPerSlot)
+            {
+                Interlocked.Increment(ref _totalDiscardedQueueIntents);
+                intent.Disposition = MovementIntentDisposition.RejectedQueueFull;
+                float now = CurrentTickTime;
+                if (!_lastQueueFullWarnTimeBySlot.TryGetValue(intent.BotSlot, out float lastWarn) || (now - lastWarn) >= 3.0f)
+                {
+                    _lastQueueFullWarnTimeBySlot[intent.BotSlot] = now;
+                    TelemetryLogger?.LogEvent(
+                        "ARBITRAGEM - FILA_CHEIA",
+                        $"**[QUEUE_LIMIT_EXCEEDED]** Fila do bot {intent.BotName} ({intent.BotSlot}) excedeu {MaxQueuedIntentsPerSlot} intenções. Intenção descartada.");
+                }
+                return false;
+            }
+
+            intent.Disposition = MovementIntentDisposition.QueuedForNextTick;
+            list.Add(intent);
+        }
+        return true;
+    }
+
+    public bool PublishIntent(MovementIntent intent)
+    {
+        if (intent == null) return false;
+
+        // Se InternalRoundId não foi preenchido explicitamente e o Arbitrator possui round ativo, vincula-o
+        if (intent.InternalRoundId <= 0 && CurrentInternalRoundId > 0)
+        {
+            intent.InternalRoundId = CurrentInternalRoundId;
+        }
+
+        long effectiveRoundId = intent.InternalRoundId > 0 ? intent.InternalRoundId : CurrentInternalRoundId;
+
+        if (CurrentPhase == ArbitrationWindowPhase.Collecting)
+        {
+            return PublishDuringCollection(intent, CurrentGameTick, effectiveRoundId);
+        }
+
+        if (CurrentPhase == ArbitrationWindowPhase.NotStarted)
+        {
+            return QueueForNextTick(intent, CurrentGameTick, effectiveRoundId, IntentPublishChannel.ExpectedBetweenTicks);
+        }
+
+        // Se a fase já é Resolved, Applied ou Closed, chamada genérica para PublishIntent após a resolução é rejeitada (Adendo 5)
+        return QueueForNextTick(intent, CurrentGameTick, effectiveRoundId, IntentPublishChannel.UnexpectedAfterResolution);
+    }
+
+    public void CloseCollectionWindow()
+    {
+        if (CurrentPhase == ArbitrationWindowPhase.Collecting)
+        {
+            CurrentPhase = ArbitrationWindowPhase.Resolved;
+        }
+    }
+
+    public Dictionary<int, ArbitratedMovementDecision> ResolveAllIntents(int gameTick, float currentTime)
+    {
+        CurrentPhase = ArbitrationWindowPhase.Resolved;
+        var decisions = new Dictionary<int, ArbitratedMovementDecision>();
+
+        var allSlots = new HashSet<int>(_collectingIntentsBySlot.Keys);
+        foreach (var s in _lastDecisionsBySlot.Keys) allSlots.Add(s);
+
+        foreach (int slot in allSlots)
+        {
+            var decision = CollectAndResolveIntents(slot, gameTick, currentTime);
+            if (decision != null)
+            {
+                decisions[slot] = decision;
+            }
+        }
+
+        return decisions;
+    }
+
+    public void ApplyAllDecisions(
+        Dictionary<int, ArbitratedMovementDecision> decisions,
+        Func<int, CCSPlayerController?> getPlayer,
+        IBotControllerApi? api)
+    {
+        CurrentPhase = ArbitrationWindowPhase.Applied;
+        foreach (var kvp in decisions)
+        {
+            var controller = getPlayer(kvp.Key);
+            ApplyWinningIntent(kvp.Value, controller, api);
+        }
+    }
+
+    public void EndTick()
+    {
+        CurrentPhase = ArbitrationWindowPhase.Closed;
     }
 
     /// <summary>
@@ -150,12 +500,21 @@ public sealed class MovementArbitrator
     public ArbitratedMovementDecision? CollectAndResolveIntents(int botSlot, int gameTick, float currentTime)
     {
         List<MovementIntent>? candidates = null;
-        if (_pendingIntentsBySlot.TryRemove(botSlot, out var rawList))
+        if (_collectingIntentsBySlot.TryRemove(botSlot, out var rawList))
         {
             lock (rawList)
             {
-                candidates = rawList.Where(i => i.ExpiresAtTime <= 0f || currentTime <= i.ExpiresAtTime).ToList();
+                candidates = rawList.Where(i => (i.ExpiresAtTime <= 0f || currentTime <= i.ExpiresAtTime) &&
+                                                (i.ExpiresAtTick <= 0 || gameTick <= i.ExpiresAtTick)).ToList();
             }
+        }
+
+        var activeBombState = GetActiveBombObjectiveState?.Invoke();
+        if (activeBombState != null && activeBombState.ObjectiveRevision != Guid.Empty && candidates != null)
+        {
+            candidates = candidates.Where(i => i.Source != MovementIntentSource.BombObjective ||
+                                               i.ObjectiveRevision == Guid.Empty ||
+                                               i.ObjectiveRevision == activeBombState.ObjectiveRevision).ToList();
         }
 
         if (candidates == null || candidates.Count == 0)
@@ -332,17 +691,36 @@ public sealed class MovementArbitrator
             bot.WaitTimer.Timestamp = 0f;
         }
 
-        // 4. Aplica GoalPosition e Repath no NavMesh
-        if (intent.GoalX.HasValue && intent.GoalY.HasValue && intent.GoalZ.HasValue)
+        // 4. Aplica GoalPosition e Repath no NavMesh apenas se Scope não for LocalMicroMove (Ajuste 2)
+        if (intent.Scope != MovementScope.LocalMicroMove)
         {
-            bot.GoalPosition[0] = intent.GoalX.Value;
-            bot.GoalPosition[1] = intent.GoalY.Value;
-            bot.GoalPosition[2] = intent.GoalZ.Value;
-        }
+            if (intent.GoalX.HasValue && intent.GoalY.HasValue && intent.GoalZ.HasValue)
+            {
+                var rawGoal = new Vector(intent.GoalX.Value, intent.GoalY.Value, intent.GoalZ.Value);
+                Vector? currentOrigin = pawn.AbsOrigin;
+                Vector worldGoal = rawGoal;
 
-        if (intent.ForceRepath || intent.Kind == MovementCommandKind.ReleaseHoldAndRepath)
-        {
-            bot.RepathTimer.Timestamp = 0f;
+                if (intent.GoalCoordinateSpace != SuggestedGoalCoordinateSpace.WorldAbsolute &&
+                    intent.GoalCoordinateSpace != SuggestedGoalCoordinateSpace.None &&
+                    currentOrigin != null)
+                {
+                    float botYaw = pawn.EyeAngles?.Y ?? 0.0f;
+                    worldGoal = MapPlayableBounds.TransformSuggestedGoalToWorld(rawGoal, intent.GoalCoordinateSpace, currentOrigin, botYaw);
+                }
+
+                var valResult = MapPlayableBounds.ValidateGoal(worldGoal, currentOrigin, null, $"{intent.Source}:{intent.Kind}");
+                if (valResult.IsValid)
+                {
+                    bot.GoalPosition[0] = valResult.SanitizedGoal.X;
+                    bot.GoalPosition[1] = valResult.SanitizedGoal.Y;
+                    bot.GoalPosition[2] = valResult.SanitizedGoal.Z;
+                }
+            }
+
+            if (intent.ForceRepath || intent.Kind == MovementCommandKind.ReleaseHoldAndRepath)
+            {
+                bot.RepathTimer.Timestamp = 0f;
+            }
         }
 
         if (intent.Hurry)

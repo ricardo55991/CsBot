@@ -76,6 +76,9 @@ public class CsBotManagerPlugin : BasePlugin
     public PacingAndFallbackController? PacingController => _pacingController;
 
     public TacticalPlan CurrentPlan => _currentPlan;
+    public TacticalPlan? CurrentTrPlan => _currentTrPlan ?? _currentPlan;
+    public TacticalPlan? CurrentCtPlan => _currentCtPlan ?? _currentPlan;
+    public SiteClearAndPlantController? SiteClearController => _clearAndPlantController;
     private int _currentRound = 0;
     private int _ctScore = 0;
     private int _trScore = 0;
@@ -409,7 +412,7 @@ public class CsBotManagerPlugin : BasePlugin
                 string mapName = Server.MapName;
                 CsTeam capturedHumanTeam = humanTeam;
                 int capturedRound = _currentRound;
-                int capturedInternalId = capturedRoundRecord.InternalRoundId;
+                int capturedInternalId = (int)capturedRoundRecord.InternalRoundId;
                 int capturedHumanSlot = human?.Slot ?? -1;
 
                 // V4 (Bug 3/7): snapshots econômicos independentes por time

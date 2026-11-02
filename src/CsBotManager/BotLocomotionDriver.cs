@@ -65,6 +65,30 @@ public class BotLocomotionDriver
 
     public BotSystemConfig Config { get; set; } = BotSystemConfig.Default;
     public MovementArbitrator Arbitrator { get; } = new();
+    public MovementExecutionTracker ExecutionTracker { get; } = new();
+    private float _currentTickDeltaTime = 0.015625f;
+    public float CurrentTickDeltaTime => _currentTickDeltaTime;
+    private readonly System.Collections.Concurrent.ConcurrentDictionary<int, Guid> _lastAppliedLogicalIntentBySlot = new();
+    public System.Collections.Concurrent.ConcurrentDictionary<int, Guid> LastAppliedLogicalIntentBySlot => _lastAppliedLogicalIntentBySlot;
+
+    public void BeginMovementTick(float currentTime, int gameTick)
+    {
+        float fallbackDelta = 0.015625f;
+        _currentTickDeltaTime = _lastTickTime > 0f
+            ? Math.Clamp(currentTime - _lastTickTime, 0.001f, 0.1f)
+            : fallbackDelta;
+        _lastTickTime = currentTime;
+    }
+
+    public void CollectLocomotionIntents(float currentTime, int gameTick)
+    {
+        // Snapshot intent tracking
+    }
+    public C4MismatchEpisodeTracker C4MismatchTracker { get; } = new();
+    private readonly System.Collections.Concurrent.ConcurrentDictionary<int, RecoveryAttempt> _activeRecoveryBySlot = new();
+    public System.Collections.Concurrent.ConcurrentDictionary<int, RecoveryAttempt> ActiveRecoveryBySlot => _activeRecoveryBySlot;
+    private readonly System.Collections.Concurrent.ConcurrentBag<RecoveryAttempt> _allRecoveryAttempts = new();
+    public System.Collections.Generic.IEnumerable<RecoveryAttempt> AllRecoveryAttempts => _allRecoveryAttempts;
     public MatchTelemetryLogger? TelemetryLogger
     {
         get => Arbitrator.TelemetryLogger;

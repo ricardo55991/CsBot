@@ -5,6 +5,32 @@ using CounterStrikeSharp.API.Modules.Utils;
 
 namespace CsBotManager;
 
+public class IglCallTelemetry
+{
+    public string DecisionId { get; set; } = string.Empty;
+    public string Side { get; set; } = string.Empty;
+    public string Endpoint { get; set; } = string.Empty;
+    public string Model { get; set; } = string.Empty;
+    public DateTime RequestStartUtc { get; set; }
+    public float ConnectMs { get; set; }
+    public float FirstByteMs { get; set; }
+    public float TotalMs { get; set; }
+    public int HttpStatus { get; set; }
+    public long ResponseBytes { get; set; }
+    public bool Cancelled { get; set; }
+    public string CancellationSource { get; set; } = "NONE";
+    public string TimeoutSource { get; set; } = "NONE";
+    public string ExceptionType { get; set; } = "NONE";
+    public string ExceptionMessage { get; set; } = "NONE";
+    public string ParseResult { get; set; } = "NONE";
+    public string FallbackReason { get; set; } = "NONE";
+
+    public string ToLogString()
+    {
+        return $"[IGL_CALL_TELEMETRY] decisionId={DecisionId} side={Side} endpoint={Endpoint} model={Model} requestStartUtc={RequestStartUtc:o} connectMs={ConnectMs:F1} firstByteMs={FirstByteMs:F1} totalMs={TotalMs:F1} httpStatus={HttpStatus} responseBytes={ResponseBytes} cancelled={Cancelled} cancellationSource={CancellationSource} timeoutSource={TimeoutSource} exceptionType={ExceptionType} exceptionMessage={ExceptionMessage} parseResult={ParseResult} fallbackReason={FallbackReason}";
+    }
+}
+
 public class CandidateTacticScore
 {
     public string TacticName { get; set; } = string.Empty;
@@ -193,6 +219,26 @@ public class OllamaIglService
                 BaseContextualScore = 86.0f,
                 Rationale = "Cerca o Bomb B por dois ângulos (Short/L-B e Tapete)"
             });
+
+            candidates.Add(new CandidateTacticScore
+            {
+                TacticName = "Fake A & Execução B (Barulho Rampa/Palácio + Rush Tapete B)",
+                Summary = "Finta no Bomb A com utilitárias na Rampa/Palácio e invasão veloz pelo Tapete B",
+                RecommendedTempo = RoundTempo.POKE_AND_ROTATE,
+                RecommendedStagingSeconds = 10.0f,
+                BaseContextualScore = (string.Equals(lastBombSite, "A", StringComparison.OrdinalIgnoreCase) || lossStreak >= 1) ? 90.0f : 81.0f,
+                Rationale = "Atrai a rotação CT para o Bomb A e invade o Bomb B desguarnecido"
+            });
+
+            candidates.Add(new CandidateTacticScore
+            {
+                TacticName = "Fake B & Execução A (Pressão Tapete B + Split Conector/Rampa A)",
+                Summary = "Finta no Bomb B pelo Tapete/Underpass chamando rotação CT e invasão pelo Palácio/Rampa A",
+                RecommendedTempo = RoundTempo.POKE_AND_ROTATE,
+                RecommendedStagingSeconds = 12.0f,
+                BaseContextualScore = (string.Equals(lastBombSite, "B", StringComparison.OrdinalIgnoreCase) || lossStreak >= 1) ? 90.0f : 80.0f,
+                Rationale = "Provoca rotação CT para a Van/B e golpeia o Bomb A com defesa enfraquecida"
+            });
         }
 
         // Bônus determinístico rotativo por round para garantir diversidade quando os scores base empatam
@@ -248,6 +294,24 @@ public class OllamaIglService
         return false;
     }
 
+    public async Task<bool> WarmUpModelAsync(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var pingPayload = new
+            {
+                model = "qwen2.5:3b",
+                prompt = "ok",
+                stream = false,
+                keep_alive = -1,
+                options = new { num_predict = 1 }
+            };
+            var resp = await _httpClient.PostAsJsonAsync(OllamaEndpoint, pingPayload, cancellationToken);
+            return resp.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
     public async Task<(TacticalPlan CtPlan, TacticalPlan TrPlan)> GetConcurrentRoundDecisionsAsync(
         string map,
         int internalRoundId,
@@ -260,13 +324,12 @@ public class OllamaIglService
     {
         int startTick = tickProvider?.Invoke() ?? 0;
 
+        // V4.2.1: Executa sequencialmente com timeout individual e desacoplado por time
+        // Como o Ollama serializa requisições se num_parallel=1, a execução ordenada garante que a espera na fila de TR não consuma o timeout de 8500ms
         using var ctCts = CancellationTokenSource.CreateLinkedTokenSource(outerToken);
         ctCts.CancelAfter(Config.OllamaDecisionTimeoutMs);
 
-        using var trCts = CancellationTokenSource.CreateLinkedTokenSource(outerToken);
-        trCts.CancelAfter(Config.OllamaDecisionTimeoutMs);
-
-        var ctTask = GetTacticalDecisionAsync(
+        var ctPlan = await GetTacticalDecisionAsync(
             map,
             CsTeam.CounterTerrorist,
             ctEcon.FinalBuyState != BuyState.UNKNOWN_INCOMPLETE_BUY ? ctEcon.FinalBuyState : ctEcon.PurchaseIntent,
@@ -280,7 +343,10 @@ public class OllamaIglService
             requestedAtTick: startTick,
             tickProvider: tickProvider);
 
-        var trTask = GetTacticalDecisionAsync(
+        using var trCts = CancellationTokenSource.CreateLinkedTokenSource(outerToken);
+        trCts.CancelAfter(Config.OllamaDecisionTimeoutMs);
+
+        var trPlan = await GetTacticalDecisionAsync(
             map,
             CsTeam.Terrorist,
             trEcon.FinalBuyState != BuyState.UNKNOWN_INCOMPLETE_BUY ? trEcon.FinalBuyState : trEcon.PurchaseIntent,
@@ -294,8 +360,7 @@ public class OllamaIglService
             requestedAtTick: startTick,
             tickProvider: tickProvider);
 
-        await Task.WhenAll(ctTask, trTask);
-        return (await ctTask, await trTask);
+        return (ctPlan, trPlan);
     }
 
     public async Task<TacticalPlan> GetTacticalDecisionAsync(
@@ -316,6 +381,15 @@ public class OllamaIglService
         bool isCt = team == CsTeam.CounterTerrorist;
         string teamTag = isCt ? "CT" : "TR";
         string decisionId = $"DEC-R{(internalRoundId > 0 ? internalRoundId : roundNumber):D2}-{teamTag}-{Guid.NewGuid().ToString("N")[..6].ToUpperInvariant()}";
+
+        var callTelemetry = new IglCallTelemetry
+        {
+            DecisionId = decisionId,
+            Side = teamTag,
+            Endpoint = OllamaEndpoint,
+            Model = "qwen2.5:3b",
+            RequestStartUtc = DateTime.UtcNow
+        };
 
         List<RoundHistoryItem> historySnapshot;
         List<string> recentTeamTactics;
@@ -369,26 +443,23 @@ public class OllamaIglService
                 ? "REGRA DE CADÊNCIA OBRIGATÓRIA: O último round foi FAST_CONTACT. Escolha SLOW_DEFAULT ou TIMED_EXECUTE."
                 : "Ritmos permitidos: SLOW_DEFAULT, POKE_AND_ROTATE, TIMED_EXECUTE, FAST_CONTACT.";
 
-            string validSpotsPrompt = "";
-            if (mapProfileManager != null)
-            {
-                var teamSpots = mapProfileManager.GetSpotsForTeam(teamTag);
-                if (teamSpots.Count > 0)
-                {
-                    validSpotsPrompt = $"- SPOTS VÁLIDOS PERMITIDOS PARA ESTE TIME ({teamTag}):\n" +
-                        string.Join(", ", teamSpots.Select(s => $"{s.Id} ({s.Sector})"));
-                }
-            }
-
-            // Exemplo JSON neutro (sem viés fixo para "Defesa Posicional 2-1-2") usando o candidato #1 calculado
+            // V4.2.1: Prompt conciso com bot_orders enxuto (garante resposta completa em <195 tokens em ~3.1s)
             var templatePlan = BuildPlanFromCandidate(topCandidate, team, mapProfileManager);
+            var simplifiedOrders = templatePlan.BotOrders.ToDictionary(
+                kvp => kvp.Key,
+                kvp => new
+                {
+                    target_area = kvp.Value.TargetArea,
+                    stance = kvp.Value.Stance.ToString()
+                });
+
             string dynamicJsonTemplate = JsonSerializer.Serialize(new
             {
                 tactic_name = templatePlan.TacticName,
                 tactic_summary = templatePlan.TacticSummary,
                 round_tempo = templatePlan.RoundTempo.ToString(),
                 staging_duration_seconds = templatePlan.StagingDurationSeconds,
-                bot_orders = templatePlan.BotOrders
+                bot_orders = simplifiedOrders
             }, new JsonSerializerOptions { WriteIndented = true });
 
             string prompt = $@"
@@ -401,7 +472,6 @@ Contexto do Round:
 {candidateMenu}
 - Diretriz de Diversidade: {recentProhibition}
 - {pacingRule}
-{validSpotsPrompt}
 - Instrução do Humano: {(string.IsNullOrEmpty(customPlayerCall) ? (isRejection ? "Tática anterior rejeitada, proponha outra completamente diferente." : $"Estruture o plano detalhado para '{topCandidate.TacticName}' ou '{secondCandidate.TacticName}'.") : customPlayerCall)}
 
 Responda APENAS um JSON válido seguindo esta estrutura:
@@ -416,24 +486,49 @@ Responda APENAS um JSON válido seguindo esta estrutura:
                 keep_alive = -1,
                 options = new
                 {
-                    temperature = 0.35,
-                    num_predict = 480
+                    temperature = 0.25,
+                    num_predict = 260
                 }
             };
 
-            var response = await _httpClient.PostAsJsonAsync(OllamaEndpoint, requestBody, cancellationToken);
+            var connectSw = Stopwatch.StartNew();
+            using var reqMsg = new HttpRequestMessage(HttpMethod.Post, OllamaEndpoint)
+            {
+                Content = JsonContent.Create(requestBody)
+            };
+
+            var response = await _httpClient.SendAsync(reqMsg, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+            connectSw.Stop();
+            callTelemetry.ConnectMs = (float)connectSw.Elapsed.TotalMilliseconds;
+            callTelemetry.HttpStatus = (int)response.StatusCode;
+
+            var firstByteSw = Stopwatch.StartNew();
+            using var respStream = await response.Content.ReadAsStreamAsync(cancellationToken);
+            firstByteSw.Stop();
+            callTelemetry.FirstByteMs = callTelemetry.ConnectMs + (float)firstByteSw.Elapsed.TotalMilliseconds;
+
+            using var memStream = new MemoryStream();
+            await respStream.CopyToAsync(memStream, cancellationToken);
             sw.Stop();
+            callTelemetry.TotalMs = (float)sw.Elapsed.TotalMilliseconds;
+            callTelemetry.ResponseBytes = memStream.Length;
+
             int completedTick = tickProvider?.Invoke() ?? requestedAtTick;
 
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadFromJsonAsync<JsonElement>(cancellationToken: cancellationToken);
+                memStream.Position = 0;
+                var content = await JsonSerializer.DeserializeAsync<JsonElement>(memStream, cancellationToken: cancellationToken);
                 if (content.TryGetProperty("response", out var rawJson))
                 {
                     string jsonString = CleanMarkdownJson(rawJson.GetString() ?? string.Empty);
                     var parsed = JsonSerializer.Deserialize<TacticalPlan>(jsonString, JsonOptions);
                     if (parsed != null && !string.IsNullOrEmpty(parsed.TacticName))
                     {
+                        callTelemetry.ParseResult = "OK";
+                        callTelemetry.FallbackReason = "NONE";
+                        TelemetryLogger?.LogEvent("IGL_CALL_TELEMETRY", callTelemetry.ToLogString());
+
                         // Se o LLM ainda assim devolveu uma tática repetida penalizada quando não é call humana, promove o topCandidate!
                         string lastUsed = recentTeamTactics.LastOrDefault() ?? string.Empty;
                         bool repeatedLast = !string.IsNullOrEmpty(lastUsed) && IsSimilarTacticName(parsed.TacticName, lastUsed);
@@ -454,6 +549,7 @@ Responda APENAS um JSON válido seguindo esta estrutura:
                         }
 
                         EnsureValidBotOrders(parsed, team, mapProfileManager);
+                        TacticalOrderMaterializer.ValidateAndRepairOrders(parsed, team, mapProfileManager, TelemetryLogger, decisionId);
                         PopulateAuditMetadata(
                             parsed,
                             decisionId,
@@ -483,14 +579,30 @@ Responda APENAS um JSON válido seguindo esta estrutura:
 
                         return parsed;
                     }
+                    else
+                    {
+                        callTelemetry.ParseResult = "DESERIALIZE_RETURNED_NULL";
+                        callTelemetry.FallbackReason = "INVALID_TACTICAL_PLAN_JSON";
+                    }
+                }
+                else
+                {
+                    callTelemetry.ParseResult = "MISSING_RESPONSE_PROPERTY";
+                    callTelemetry.FallbackReason = "MISSING_RESPONSE_JSON_FIELD";
                 }
             }
+            else
+            {
+                callTelemetry.ParseResult = $"HTTP_STATUS_{(int)response.StatusCode}";
+                callTelemetry.FallbackReason = $"OLLAMA_HTTP_ERROR_{(int)response.StatusCode}";
+            }
 
+            TelemetryLogger?.LogEvent("IGL_CALL_TELEMETRY", callTelemetry.ToLogString());
             return GenerateDeterministicFallbackPlan(
                 team,
                 buyState,
                 mapProfileManager,
-                $"HTTP_{(int)response.StatusCode}_OR_INVALID_JSON",
+                callTelemetry.FallbackReason,
                 roundNumber,
                 internalRoundId,
                 requestedAtTick,
@@ -499,9 +611,20 @@ Responda APENAS um JSON válido seguindo esta estrutura:
                 scoredCandidates,
                 decisionId);
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException ex)
         {
             sw.Stop();
+            callTelemetry.TotalMs = (float)sw.Elapsed.TotalMilliseconds;
+            callTelemetry.Cancelled = true;
+            callTelemetry.CancellationSource = cancellationToken.IsCancellationRequested ? "TOKEN_CANCELLED" : "EXTERNAL_CANCEL";
+            callTelemetry.TimeoutSource = cancellationToken.IsCancellationRequested ? $"TIMEOUT_{Config.OllamaDecisionTimeoutMs}MS" : "NONE";
+            callTelemetry.ExceptionType = ex.GetType().Name;
+            callTelemetry.ExceptionMessage = SanitizeExceptionMessage(ex.Message);
+            callTelemetry.FallbackReason = $"TIMEOUT_{sw.Elapsed.TotalMilliseconds:F0}MS";
+            callTelemetry.ParseResult = "CANCELLED";
+
+            TelemetryLogger?.LogEvent("IGL_CALL_TELEMETRY", callTelemetry.ToLogString());
+
             int completedTick = tickProvider?.Invoke() ?? requestedAtTick;
             TelemetryLogger?.LogEvent("IGL_TIMEOUT",
                 $"[{teamTag}] Timeout/Cancelamento após {sw.Elapsed.TotalMilliseconds:F0}ms (DecisionId={decisionId}). Acionando DeterministicPolicy.");
@@ -521,6 +644,14 @@ Responda APENAS um JSON válido seguindo esta estrutura:
         catch (Exception ex)
         {
             sw.Stop();
+            callTelemetry.TotalMs = (float)sw.Elapsed.TotalMilliseconds;
+            callTelemetry.ExceptionType = ex.GetType().Name;
+            callTelemetry.ExceptionMessage = SanitizeExceptionMessage(ex.Message);
+            callTelemetry.FallbackReason = $"{ex.GetType().Name}: {callTelemetry.ExceptionMessage}";
+            callTelemetry.ParseResult = "EXCEPTION";
+
+            TelemetryLogger?.LogEvent("IGL_CALL_TELEMETRY", callTelemetry.ToLogString());
+
             int completedTick = tickProvider?.Invoke() ?? requestedAtTick;
             Console.WriteLine($"[OllamaIglService] Fallback acionado ({team}): {ex.GetType().Name} - {ex.Message}");
             TelemetryLogger?.LogEvent("IGL_FALLBACK", $"Fallback acionado para {team}: {ex.GetType().Name} - {ex.Message}");
@@ -537,6 +668,12 @@ Responda APENAS um JSON válido seguindo esta estrutura:
                 scoredCandidates,
                 decisionId);
         }
+    }
+
+    private static string SanitizeExceptionMessage(string? msg)
+    {
+        if (string.IsNullOrWhiteSpace(msg)) return "NONE";
+        return msg.Replace("\r", " ").Replace("\n", " ").Replace("|", "/").Trim();
     }
 
     private static string CleanMarkdownJson(string input)
@@ -571,6 +708,7 @@ Responda APENAS um JSON válido seguindo esta estrutura:
     {
         plan.DecisionId = decisionId;
         plan.RoundId = internalRoundId;
+        plan.Team = team;
         plan.TeamSide = team;
         plan.RequestedAtTick = requestedTick;
         plan.CompletedAtTick = completedTick;
@@ -591,12 +729,14 @@ Responda APENAS um JSON válido seguindo esta estrutura:
         plan.RepetitionPenaltyApplied = candidates.Any(c => c.RepetitionPenalty > 0.0f);
     }
 
-    private TacticalPlan BuildPlanFromCandidate(CandidateTacticScore candidate, CsTeam team, MapProfileManager? mapProfileManager)
+    public TacticalPlan BuildPlanFromCandidate(CandidateTacticScore candidate, CsTeam team, MapProfileManager? mapProfileManager)
     {
         bool isCt = team == CsTeam.CounterTerrorist;
         var plan = new TacticalPlan
         {
             TacticName = candidate.TacticName,
+            CurrentTactic = candidate.TacticName,
+            InitialTactic = candidate.TacticName,
             TacticSummary = candidate.Summary,
             RoundTempo = candidate.RecommendedTempo,
             StagingDurationSeconds = candidate.RecommendedStagingSeconds
@@ -749,7 +889,77 @@ Responda APENAS um JSON válido seguindo esta estrutura:
         }
         else // TR
         {
-            if (nameLower.Contains("execução b"))
+            if (nameLower.Contains("fake a"))
+            {
+                plan.BotOrders[RoleManager.GetOrderKey(BotRole.AWPer)] = new BotTacticalOrder
+                {
+                    TargetArea = "Ramp A",
+                    RoleAction = "Fake pressure on A Ramp with sniper line",
+                    StagingSpotId = "tr_staging_a_ramp",
+                    ExecuteSpotId = "tr_exec_a_triple_clear",
+                    Stance = EngagementStance.AGGRESSIVE_POKE
+                };
+                plan.BotOrders[RoleManager.GetOrderKey(BotRole.Anchor)] = new BotTacticalOrder
+                {
+                    TargetArea = "Palace",
+                    RoleAction = "Fake Palace presence with sounds/flashes",
+                    StagingSpotId = "tr_staging_palace_room",
+                    ExecuteSpotId = "tr_exec_a_site_default",
+                    Stance = EngagementStance.AGGRESSIVE_POKE
+                };
+                plan.BotOrders[RoleManager.GetOrderKey(BotRole.EntryFragger)] = new BotTacticalOrder
+                {
+                    TargetArea = "Bombsite B",
+                    RoleAction = "Fast push Apartments B into site during A fake",
+                    StagingSpotId = "tr_staging_b_apartments_kitchen",
+                    ExecuteSpotId = "tr_exec_b_site_plant",
+                    Stance = EngagementStance.AGGRESSIVE_POKE
+                };
+                plan.BotOrders[RoleManager.GetOrderKey(BotRole.Rotator)] = new BotTacticalOrder
+                {
+                    TargetArea = "Bombsite B",
+                    RoleAction = "Advance Apartments B with C4 and plant at B Site",
+                    StagingSpotId = "tr_staging_b_apartments_kitchen",
+                    ExecuteSpotId = "tr_exec_b_site_plant",
+                    Stance = EngagementStance.JIGGLE_INFO
+                };
+            }
+            else if (nameLower.Contains("fake b"))
+            {
+                plan.BotOrders[RoleManager.GetOrderKey(BotRole.AWPer)] = new BotTacticalOrder
+                {
+                    TargetArea = "Apartments B",
+                    RoleAction = "Fake pressure on Apartments B",
+                    StagingSpotId = "tr_staging_b_apartments_house",
+                    ExecuteSpotId = "tr_exec_b_van_clear",
+                    Stance = EngagementStance.AGGRESSIVE_POKE
+                };
+                plan.BotOrders[RoleManager.GetOrderKey(BotRole.Anchor)] = new BotTacticalOrder
+                {
+                    TargetArea = "Underpass",
+                    RoleAction = "Fake Underpass noise and push towards Catwalk",
+                    StagingSpotId = "tr_staging_underpass_top",
+                    ExecuteSpotId = "tr_exec_b_market_push",
+                    Stance = EngagementStance.AGGRESSIVE_POKE
+                };
+                plan.BotOrders[RoleManager.GetOrderKey(BotRole.EntryFragger)] = new BotTacticalOrder
+                {
+                    TargetArea = "Palace",
+                    RoleAction = "Infiltrate Palace into A Site during B fake",
+                    StagingSpotId = "tr_staging_palace_room",
+                    ExecuteSpotId = "tr_exec_a_site_default",
+                    Stance = EngagementStance.AGGRESSIVE_POKE
+                };
+                plan.BotOrders[RoleManager.GetOrderKey(BotRole.Rotator)] = new BotTacticalOrder
+                {
+                    TargetArea = "Ramp A",
+                    RoleAction = "Advance Ramp A with C4 and plant at A Default",
+                    StagingSpotId = "tr_staging_a_ramp",
+                    ExecuteSpotId = "tr_exec_a_site_default",
+                    Stance = EngagementStance.JIGGLE_INFO
+                };
+            }
+            else if (nameLower.Contains("execução b"))
             {
                 plan.BotOrders[RoleManager.GetOrderKey(BotRole.AWPer)] = new BotTacticalOrder
                 {
@@ -898,6 +1108,14 @@ Responda APENAS um JSON válido seguindo esta estrutura:
     private void EnsureValidBotOrders(TacticalPlan plan, CsTeam team, MapProfileManager? mapProfileManager)
     {
         string expectedSide = team == CsTeam.CounterTerrorist ? "CT" : "TR";
+        bool isFakeA = plan.CurrentTactic.Contains("Fake A", StringComparison.OrdinalIgnoreCase);
+        bool isFakeB = plan.CurrentTactic.Contains("Fake B", StringComparison.OrdinalIgnoreCase);
+        string tacticBombsite;
+        if (isFakeA) tacticBombsite = "B";
+        else if (isFakeB) tacticBombsite = "A";
+        else tacticBombsite = plan.CurrentTactic.Contains(" B", StringComparison.OrdinalIgnoreCase) ? "B"
+            : (plan.CurrentTactic.Contains(" A", StringComparison.OrdinalIgnoreCase) ? "A" : "Mid");
+        bool isFake = isFakeA || isFakeB || plan.CurrentTactic.Contains("FAKE", StringComparison.OrdinalIgnoreCase);
 
         var roles = new[] { BotRole.AWPer, BotRole.EntryFragger, BotRole.Rotator, BotRole.Anchor };
         foreach (var role in roles)
@@ -913,33 +1131,63 @@ Responda APENAS um JSON válido seguindo esta estrutura:
                 plan.BotOrders[key] = order;
             }
 
-            var stagingSpot = mapProfileManager?.GetSpotById(order.StagingSpotId);
-            if (stagingSpot == null || (!stagingSpot.Side.Equals(expectedSide, StringComparison.OrdinalIgnoreCase) && !stagingSpot.Side.Equals("ANY", StringComparison.OrdinalIgnoreCase)))
-            {
-                var fallbackSpot = mapProfileManager?.GetMatchingSpotForOrder(role, order.TargetArea, team, true);
-                if (fallbackSpot != null)
-                {
-                    order.StagingSpotId = fallbackSpot.Id;
-                    order.Stance = fallbackSpot.RecommendedStance;
-                    order.FallbackSpotId = fallbackSpot.FallbackSpotId ?? order.FallbackSpotId;
-                }
-            }
-
-            var execSpot = mapProfileManager?.GetSpotById(order.ExecuteSpotId);
-            if (execSpot == null)
-            {
-                var fallbackExec = mapProfileManager?.GetMatchingSpotForOrder(role, order.TargetArea, team, false);
-                if (fallbackExec != null)
-                {
-                    order.ExecuteSpotId = fallbackExec.Id;
-                }
-            }
+            bool isC4 = (team == CsTeam.Terrorist && role == BotRole.Rotator);
+            PresetSpatialValidator.ValidateAndApplyFallback(
+                order,
+                role,
+                plan.CurrentTactic,
+                tacticBombsite,
+                team,
+                isC4,
+                allowCrossSiteLurk: role == BotRole.Anchor,
+                isFakeTactic: isFake,
+                mapProfileManager);
 
             if (string.IsNullOrEmpty(order.FallbackSpotId))
             {
                 order.FallbackSpotId = expectedSide == "CT" ? "ct_spawn_safe" : "tr_spawn_safe";
             }
         }
+    }
+
+    public static (int ValidCount, int InvalidCount, List<string> MissingSpots) ValidateTacticalPlanPresets(
+        TacticalPlan plan,
+        MapProfileManager? mapProfileManager)
+    {
+        int valid = 0;
+        int invalid = 0;
+        var missing = new List<string>();
+
+        foreach (var kvp in plan.BotOrders)
+        {
+            var order = kvp.Value;
+            var stSpot = mapProfileManager?.GetSpotById(order.StagingSpotId);
+            var exSpot = mapProfileManager?.GetSpotById(order.ExecuteSpotId);
+
+            if (mapProfileManager != null)
+            {
+                if (stSpot == null) missing.Add(order.StagingSpotId);
+                if (exSpot == null) missing.Add(order.ExecuteSpotId);
+            }
+
+            bool targetIsB = order.TargetArea.Contains("B", StringComparison.OrdinalIgnoreCase);
+            bool spotIsA = stSpot != null
+                ? (stSpot.Sector.Contains("A", StringComparison.OrdinalIgnoreCase) || stSpot.Id.Contains("_a_"))
+                : order.StagingSpotId.Contains("_a_");
+
+            bool isConsistent = !(targetIsB && spotIsA && !order.StagingSpotId.Contains("mid") && !order.StagingSpotId.Contains("underpass"));
+            if (isConsistent)
+            {
+                valid++;
+            }
+            else
+            {
+                invalid++;
+                if (!missing.Contains(order.StagingSpotId)) missing.Add(order.StagingSpotId);
+            }
+        }
+
+        return (valid, invalid, missing);
     }
 
     public TacticalPlan GenerateDeterministicFallbackPlan(

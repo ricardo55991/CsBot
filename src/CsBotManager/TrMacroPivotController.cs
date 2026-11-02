@@ -119,14 +119,15 @@ public class TrMacroPivotController
     {
         var cfg = config ?? BotSystemConfig.Default;
         var sectorInfo = MirageSectorClassifier.Classify(botX, botY, botZ, nativeLastPlaceName, inBombZoneFlag);
-        bool insidePlantPerimeter = MirageSectorClassifier.IsInsideBombsitePlantPerimeter(botX, botY, botZ, claimedBombSite, inBombZoneFlag);
+        bool insidePlantPerimeter = MirageSectorClassifier.IsInsideBombsitePlantPerimeter(
+            botX, botY, botZ, claimedBombSite, inBombZoneFlag, nativeLastPlaceName, out var testedVol, out var testedDist);
 
         if (!insidePlantPerimeter)
         {
             return new BombsiteClearanceEvaluation
             {
                 IsCleared = false,
-                RejectionReason = $"OUTSIDE_PLANT_PERIMETER(current_sector={sectorInfo.SectorName},claimed={claimedBombSite})",
+                RejectionReason = $"OUTSIDE_PLANT_PERIMETER(pos=({botX:F0},{botY:F0},{botZ:F0}),claimed={claimedBombSite},testedVolume={testedVol},dist={testedDist:F1}u,current_sector={sectorInfo.SectorName})",
                 ClaimantSector = sectorInfo.SectorName,
                 TargetBombSite = claimedBombSite,
                 InsidePlantPerimeter = false,

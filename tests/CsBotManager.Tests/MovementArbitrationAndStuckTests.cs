@@ -12,11 +12,14 @@ public class MovementArbitrationAndStuckTests
         int tick = 2000;
         float now = 31.25f;
 
+        arbitrator.BeginTick(tick, now, 1L);
+
         // Publica 3 intenções concorrentes no mesmo tick: TacticalNavigation, MicroMove e Unstuck
         arbitrator.PublishIntent(new MovementIntent
         {
             BotSlot = slot,
             BotName = "Steel",
+            InternalRoundId = 1L,
             GameTick = tick,
             CurrentTime = now,
             Source = MovementIntentSource.TacticalNavigation,
@@ -32,6 +35,7 @@ public class MovementArbitrationAndStuckTests
         {
             BotSlot = slot,
             BotName = "Steel",
+            InternalRoundId = 1L,
             GameTick = tick,
             CurrentTime = now,
             Source = MovementIntentSource.MicroMove,
@@ -45,6 +49,7 @@ public class MovementArbitrationAndStuckTests
         {
             BotSlot = slot,
             BotName = "Steel",
+            InternalRoundId = 1L,
             GameTick = tick,
             CurrentTime = now,
             Source = MovementIntentSource.Unstuck,
@@ -222,5 +227,141 @@ public class MovementArbitrationAndStuckTests
             weaponReady: true, ammoAvailable: 27, isReloading: false, attackIntent: true, targetDistance2D: 640f);
         Assert.False(onCooldown.Triggered);
         Assert.Equal("COOLDOWN_ACTIVE", onCooldown.SuppressionReason);
+    }
+
+    [Fact]
+    public void ArbitrationWindow_RejectsIntents_AfterResolution_Or_Close()
+    {
+        var arbitrator = new MovementArbitrator();
+        int slot = 2;
+        int tick = 500;
+        float now = 7.8125f;
+
+        arbitrator.BeginTick(tick, now, 1L);
+        Assert.Equal(ArbitrationWindowPhase.Collecting, arbitrator.CurrentPhase);
+
+        // Intenção dentro da janela é aceita
+        bool ok = arbitrator.PublishIntent(new MovementIntent
+        {
+            BotSlot = slot,
+            BotName = "Coldzera",
+            InternalRoundId = 1L,
+            GameTick = tick,
+            CurrentTime = now,
+            Source = MovementIntentSource.TacticalNavigation,
+            Kind = MovementCommandKind.NavigateNavMesh,
+            Reason = "NavToA"
+        });
+        Assert.True(ok);
+
+        // Fecha a janela de coleta
+        arbitrator.CloseCollectionWindow();
+        Assert.Equal(ArbitrationWindowPhase.Resolved, arbitrator.CurrentPhase);
+
+        // Intenção tardia após resolução deve ser rejeitada imediatamente (Ajuste 3)
+        bool lateOk = arbitrator.PublishIntent(new MovementIntent
+        {
+            BotSlot = slot,
+            BotName = "Coldzera",
+            InternalRoundId = 1L,
+            GameTick = tick,
+            CurrentTime = now,
+            Source = MovementIntentSource.TradeSpacing,
+            Kind = MovementCommandKind.HoldStop,
+            Reason = "LateCombatIntent"
+        });
+        Assert.False(lateOk);
+        Assert.Equal(1, arbitrator.TotalIntentsRejectedAfterResolution);
+
+        var decisions = arbitrator.ResolveAllIntents(tick, now);
+        Assert.True(decisions.ContainsKey(slot));
+        Assert.Equal(MovementIntentSource.TacticalNavigation, decisions[slot].WinningIntent.Source);
+
+        arbitrator.EndTick();
+        Assert.Equal(ArbitrationWindowPhase.Closed, arbitrator.CurrentPhase);
+    }
+
+    [Fact]
+    public void MovementExecutionTracker_Detects_PossibleExternalOverride()
+    {
+        var tracker = new MovementExecutionTracker();
+        int slot = 3;
+        int roundId = 1;
+        int tick = 200;
+
+        var postApplyFp = new BotStateFingerprint(
+            BotSlot: slot,
+            InternalRoundId: roundId,
+            GameTick: tick,
+            IsStopping: false,
+            GoalX: -1160f,
+            GoalY: -2450f,
+            GoalZ: -168f,
+            WaitTimestamp: 0f,
+            WaitDuration: 0f,
+            SneakTimestamp: 0f,
+            RepathTimestamp: 0f,
+            Buttons: 0UL,
+            UsercmdHandle: 1001L,
+            DesiredForwardMove: 250f,
+            DesiredSideMove: 0f,
+            Entity: new EntityIdentity(slot, slot, 0, 1));
+
+        tracker.StorePostApplyFingerprint(slot, postApplyFp);
+
+        // V4.2.4: Requer >= 16 ticks de alteração persistente para promover a PossibleExternalControllerOverride
+        bool overrideDetected = false;
+        for (int i = 1; i <= 16; i++)
+        {
+            var nextPreApplyFp = postApplyFp with
+            {
+                GameTick = tick + i,
+                IsStopping = true,
+                WaitTimestamp = 12.5f
+            };
+            overrideDetected = tracker.CheckAndAuditPreTickOverride(slot, nextPreApplyFp, null, 3.14f + i * 0.015f);
+        }
+
+        Assert.True(overrideDetected);
+        Assert.Equal(1, tracker.TotalOverrideOutcomes);
+    }
+
+    [Fact]
+    public void Stuck2D_ActiveWhenHoldExpired_OrAggressiveStance()
+    {
+        // 1. Defusando C4 -> NUNCA monitora como stuck (hold autorizado)
+        Assert.False(BotLocomotionDriver.ShouldMonitorForStuck(
+            isHoldingSpot: true, holdDurationRemaining: 5f, stance: EngagementStance.PASSIVE_HOLD,
+            dist2DToTarget: 200f, isBombPlanted: true, isDefusing: true, isPlanting: false, hasReachedDestination: true));
+
+        // 2. Plantando C4 -> NUNCA monitora como stuck (hold autorizado)
+        Assert.False(BotLocomotionDriver.ShouldMonitorForStuck(
+            isHoldingSpot: true, holdDurationRemaining: 5f, stance: EngagementStance.PASSIVE_HOLD,
+            dist2DToTarget: 200f, isBombPlanted: false, isDefusing: false, isPlanting: true, hasReachedDestination: true));
+
+        // 3. Já chegou no destino e está a <= 85u -> NUNCA monitora como stuck
+        Assert.False(BotLocomotionDriver.ShouldMonitorForStuck(
+            isHoldingSpot: false, holdDurationRemaining: 0f, stance: EngagementStance.PASSIVE_HOLD,
+            dist2DToTarget: 30f, isBombPlanted: false, isDefusing: false, isPlanting: false, hasReachedDestination: true));
+
+        // 4. Hold tático autorizado passivo com tempo restante -> NÃO monitora como stuck
+        Assert.False(BotLocomotionDriver.ShouldMonitorForStuck(
+            isHoldingSpot: true, holdDurationRemaining: 2.5f, stance: EngagementStance.PASSIVE_HOLD,
+            dist2DToTarget: 300f, isBombPlanted: false, isDefusing: false, isPlanting: false, hasReachedDestination: false));
+
+        // 5. Hold expirado (HoldDurationRemaining <= 0) e quer se mover (> 85u) -> DEVE monitorar como stuck
+        Assert.True(BotLocomotionDriver.ShouldMonitorForStuck(
+            isHoldingSpot: true, holdDurationRemaining: 0f, stance: EngagementStance.PASSIVE_HOLD,
+            dist2DToTarget: 250f, isBombPlanted: false, isDefusing: false, isPlanting: false, hasReachedDestination: false));
+
+        // 6. Postura agressiva (AGGRESSIVE_POKE) mesmo com timer restante -> DEVE monitorar como stuck
+        Assert.True(BotLocomotionDriver.ShouldMonitorForStuck(
+            isHoldingSpot: true, holdDurationRemaining: 3.0f, stance: EngagementStance.AGGRESSIVE_POKE,
+            dist2DToTarget: 250f, isBombPlanted: false, isDefusing: false, isPlanting: false, hasReachedDestination: false));
+
+        // 7. Navegação normal em trânsito (> 85u) sem hold -> DEVE monitorar como stuck
+        Assert.True(BotLocomotionDriver.ShouldMonitorForStuck(
+            isHoldingSpot: false, holdDurationRemaining: 0f, stance: EngagementStance.PASSIVE_HOLD,
+            dist2DToTarget: 500f, isBombPlanted: false, isDefusing: false, isPlanting: false, hasReachedDestination: false));
     }
 }

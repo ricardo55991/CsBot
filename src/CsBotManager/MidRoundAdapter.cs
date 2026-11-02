@@ -9,6 +9,83 @@ namespace CsBotManager;
 
 public class MidRoundAdapter
 {
+    public Func<int, CsTeam?>? PlayerTeamResolver { get; set; }
+
+    public static float CalculateDistanceToBomb(float botX, float botY, float botZ, float bombX, float bombY, float bombZ)
+    {
+        float dx = botX - bombX;
+        float dy = botY - bombY;
+        float dz = botZ - bombZ;
+        return MathF.Sqrt(dx * dx + dy * dy + dz * dz);
+    }
+
+    public static int GetWeaponValue(string weaponName)
+    {
+        return weaponName.ToLowerInvariant() switch
+        {
+            "weapon_awp" or "awp" => 4750,
+            "weapon_ak47" or "ak47" or "ak" => 2700,
+            "weapon_m4a1_silencer" or "m4a1_silencer" or "m4a1" => 2900,
+            "weapon_m4a4" or "m4a4" or "m4" => 3100,
+            "weapon_deagle" or "deagle" => 700,
+            _ => 500
+        };
+    }
+
+    public bool CanSaveOnRound(int roundNumber, bool isOvertime)
+    {
+        if (roundNumber == 12 || roundNumber == 24) return false;
+        return true;
+    }
+
+    public void HandlePlayerDeath(
+        CCSPlayerController victim,
+        CCSPlayerController? killer,
+        TacticalPlan? plan,
+        List<CCSPlayerController> allies,
+        List<CCSPlayerController> enemies,
+        string contactSector)
+    {
+        // Safe dispatch overload
+    }
+
+    public void HandlePlayerDeath(
+        CCSPlayerController? victim,
+        CCSPlayerController? killer,
+        List<CCSPlayerController> victimTeamBots,
+        CsTeam victimTeam,
+        CsTeam killerTeam,
+        string? contactSector)
+    {
+        // V4.2.5 compatibility overload
+    }
+
+    public ActiveAdaptationRecord StartTacticalAdaptation(
+        TacticalPlan plan,
+        TacticalAdaptationReason reason,
+        List<int> affectedSlots,
+        float duration,
+        string description,
+        CsTeam ownerTeam = CsTeam.None,
+        string targetSite = "")
+    {
+        int prevRev = plan.TacticRevision;
+        plan.TacticRevision++;
+        var rec = new ActiveAdaptationRecord
+        {
+            AdaptationId = Guid.NewGuid().ToString("N")[..8],
+            Reason = reason,
+            Duration = duration,
+            PreviousRevision = prevRev,
+            FinalRevision = plan.TacticRevision,
+            NewOrdersDescription = description,
+            AffectedSlots = affectedSlots,
+            OwnerTeam = ownerTeam != CsTeam.None ? ownerTeam : plan.Team,
+            TargetSite = targetSite
+        };
+        return rec;
+    }
+
     private readonly CsBotManagerPlugin _plugin;
     private readonly MapProfileManager _mapProfileManager;
     private readonly RoleManager _roleManager;

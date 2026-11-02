@@ -11,7 +11,9 @@ public enum MatchLifecyclePhase
     RESTART_PENDING,
     MATCH_ENDED,
     MAP_CHANGE,
-    PLUGIN_SHUTDOWN
+    PLUGIN_SHUTDOWN,
+    Regulation_Half1 = LIVE,
+    Regulation_Half2 = LIVE
 }
 
 public enum RoundLifecyclePhase
@@ -46,9 +48,19 @@ public enum CaptureEndReason
     UNKNOWN
 }
 
+public sealed record RoundExecutionContext(
+    long InternalRoundId,
+    int OfficialRoundNumber,
+    long StartedAtTick,
+    string MapName,
+    CancellationToken CancellationToken)
+{
+    public bool IsCancelled => CancellationToken.IsCancellationRequested;
+}
+
 public sealed class RoundStateRecord
 {
-    public int InternalRoundId { get; init; }
+    public long InternalRoundId { get; init; }
     public int OfficialRoundNumber { get; set; }
     public int RoundNumberInHalf { get; set; }
     public MatchLifecyclePhase MatchPhase { get; set; }
@@ -69,9 +81,9 @@ public sealed class RoundStateRecord
 
 public sealed class EventAdmissionEnvelope
 {
-    public int RoundId { get; init; }
+    public long RoundId { get; init; }
     public int OfficialRoundNumber { get; init; }
-    public int CurrentActiveRoundId { get; init; }
+    public long CurrentActiveRoundId { get; init; }
     public int GameTick { get; init; }
     public int? OriginalGameTick { get; init; }
     public long MonotonicTimestampMs { get; init; }
@@ -89,16 +101,21 @@ public sealed class RoundLifecycleManager
     private readonly object _lock = new();
     private readonly Stopwatch _monotonicClock = Stopwatch.StartNew();
     private long _eventSequence = 0;
-    private int _internalRoundCounter = 0;
+    private long _internalRoundCounter = 0;
     private int _officialRoundCounter = 0;
     private int _lastRoundStartTick = -1;
     private int _lastRoundEndTick = -1;
     private int _lateEventCount = 0;
     private int _pendingEventCount = 0;
+    private CancellationTokenSource? _currentRoundCts;
+
+    public string CurrentMapName { get; set; } = string.Empty;
 
     public MatchLifecyclePhase CurrentMatchPhase { get; private set; } = MatchLifecyclePhase.WARMUP;
     public RoundStateRecord? CurrentRound { get; private set; }
+    public RoundExecutionContext? CurrentExecutionContext { get; private set; }
     public List<RoundStateRecord> RoundHistory { get; } = new();
+    public bool AllowWarmupGameplay { get; set; } = false;
 
     public int LateEventCount => Interlocked.CompareExchange(ref _lateEventCount, 0, 0);
     public int PendingEventCount => Interlocked.CompareExchange(ref _pendingEventCount, 0, 0);
@@ -127,8 +144,85 @@ public sealed class RoundLifecycleManager
                 return CurrentRound != null
                     && !CurrentRound.Sealed
                     && CurrentRound.RoundPhase == RoundLifecyclePhase.ROUND_ACTIVE
-                    && (CurrentMatchPhase == MatchLifecyclePhase.LIVE || CurrentMatchPhase == MatchLifecyclePhase.WARMUP);
+                    && (CurrentMatchPhase == MatchLifecyclePhase.LIVE || (CurrentMatchPhase == MatchLifecyclePhase.WARMUP && AllowWarmupGameplay));
             }
+        }
+    }
+
+    public bool IsCurrentRoundSealed
+    {
+        get
+        {
+            lock (_lock)
+            {
+                return CurrentRound == null || CurrentRound.Sealed;
+            }
+        }
+    }
+
+    public bool IsCurrentContext(long internalRoundId)
+    {
+        lock (_lock)
+        {
+            return CurrentRound != null && !CurrentRound.Sealed && CurrentRound.InternalRoundId == internalRoundId;
+        }
+    }
+
+    /// <summary>
+    /// Permite preparação de round (Ollama, economia, roles, fallback macro, compras) durante FreezeTime e RoundActive.
+    /// Não permite movimentação física nem usercmds.
+    /// </summary>
+    public bool AllowsRoundPreparation()
+    {
+        lock (_lock)
+        {
+            if (CurrentRound == null || CurrentRound.Sealed) return false;
+            if (CurrentRound.RoundPhase != RoundLifecyclePhase.FREEZE_TIME && CurrentRound.RoundPhase != RoundLifecyclePhase.ROUND_ACTIVE) return false;
+            if (CurrentMatchPhase == MatchLifecyclePhase.WARMUP && !AllowWarmupGameplay) return false;
+            if (CurrentMatchPhase != MatchLifecyclePhase.LIVE && CurrentMatchPhase != MatchLifecyclePhase.WARMUP) return false;
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Guarda central obrigatório de execução física e gameplay no OnTick.
+    /// Retorna false em fases onde controladores não podem mover bots ou gerar telemetria normal:
+    /// WARMUP (se desabilitado), ROUND_ENDED, POST_ROUND, RESTART_PENDING, MATCH_ENDED, MAP_CHANGE, PLUGIN_SHUTDOWN.
+    /// </summary>
+    public bool AllowsRuntimeGameplay()
+    {
+        lock (_lock)
+        {
+            if (CurrentRound == null || CurrentRound.Sealed) return false;
+            if (CurrentRound.RoundPhase != RoundLifecyclePhase.ROUND_ACTIVE) return false;
+            if (CurrentMatchPhase == MatchLifecyclePhase.WARMUP && !AllowWarmupGameplay) return false;
+            if (CurrentMatchPhase != MatchLifecyclePhase.LIVE && CurrentMatchPhase != MatchLifecyclePhase.WARMUP) return false;
+            return true;
+        }
+    }
+
+    public long CurrentInternalRoundId
+    {
+        get
+        {
+            lock (_lock)
+            {
+                return CurrentRound?.InternalRoundId ?? 0L;
+            }
+        }
+    }
+
+    public void CancelCurrentContext()
+    {
+        try
+        {
+            _currentRoundCts?.Cancel();
+            _currentRoundCts?.Dispose();
+        }
+        catch { }
+        finally
+        {
+            _currentRoundCts = null;
         }
     }
 
@@ -138,6 +232,7 @@ public sealed class RoundLifecycleManager
         {
             if (CurrentRound != null && !CurrentRound.Sealed)
             {
+                CancelCurrentContext();
                 CurrentRound.Sealed = true;
                 CurrentRound.EndedAtTick = gameTick;
                 CurrentRound.RoundPhase = RoundLifecyclePhase.POST_ROUND;
@@ -157,6 +252,7 @@ public sealed class RoundLifecycleManager
         {
             if (CurrentRound != null && !CurrentRound.Sealed)
             {
+                CancelCurrentContext();
                 CurrentRound.Sealed = true;
                 CurrentRound.RoundEndReceived = true;
                 CurrentRound.EndedAtTick = gameTick;
@@ -176,6 +272,7 @@ public sealed class RoundLifecycleManager
         {
             if (CurrentRound != null && !CurrentRound.Sealed)
             {
+                CancelCurrentContext();
                 CurrentRound.Sealed = true;
                 CurrentRound.EndedAtTick = gameTick;
                 CurrentRound.RoundPhase = RoundLifecyclePhase.POST_ROUND;
@@ -216,6 +313,7 @@ public sealed class RoundLifecycleManager
             // Se havia um round anterior (ex: Warmup ou Restart) que não recebeu EventRoundEnd, sela-o antes de abrir o novo
             if (CurrentRound != null && !CurrentRound.Sealed)
             {
+                CancelCurrentContext();
                 CurrentRound.Sealed = true;
                 CurrentRound.RoundEndReceived = true;
                 CurrentRound.EndedAtTick = gameTick;
@@ -289,6 +387,16 @@ public sealed class RoundLifecycleManager
 
             CurrentRound = roundRecord;
             RoundHistory.Add(roundRecord);
+
+            CancelCurrentContext();
+            _currentRoundCts = new CancellationTokenSource();
+            CurrentExecutionContext = new RoundExecutionContext(
+                roundRecord.InternalRoundId,
+                roundRecord.OfficialRoundNumber,
+                gameTick,
+                CurrentMapName,
+                _currentRoundCts.Token);
+
             return true;
         }
     }
@@ -329,6 +437,7 @@ public sealed class RoundLifecycleManager
             {
                 if (CurrentRound != null && !CurrentRound.Sealed)
                 {
+                    CancelCurrentContext();
                     var (code, enumName, desc) = TranslateRoundEndReason(reasonCode);
                     CurrentRound.RoundEndReceived = true;
                     CurrentRound.Sealed = true;
@@ -360,6 +469,7 @@ public sealed class RoundLifecycleManager
                 return false;
             }
 
+            CancelCurrentContext();
             _lastRoundEndTick = gameTick;
             CurrentRound.OfficialScoreBeforeCt = ctScore;
             CurrentRound.OfficialScoreBeforeTr = trScore;
@@ -398,7 +508,7 @@ public sealed class RoundLifecycleManager
         int gameTick,
         string roundTimeFormatted,
         string sourceComponent,
-        int? originatingRoundId = null,
+        long? originatingRoundId = null,
         int? originatingGameTick = null,
         LateEventReason suggestedLateReason = LateEventReason.TICK_AFTER_SEAL)
     {

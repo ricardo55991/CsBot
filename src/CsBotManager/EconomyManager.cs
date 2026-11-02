@@ -35,6 +35,14 @@ public class TeamEconomySnapshot
 
     public BuyState FinalBuyState { get; set; } = BuyState.UNKNOWN_INCOMPLETE_BUY;
     public BuyCompletionState CompletionState { get; set; } = BuyCompletionState.PENDING;
+
+    // Aliases para compatibilidade de testes
+    public CsTeam Team { get => TeamSide; set => TeamSide = value; }
+    public int TotalTeamMoney { get => CashBeforeBuy; set => CashBeforeBuy = value; }
+    public int AverageMoney { get => AverageCashBeforeBuy; set => AverageCashBeforeBuy = value; }
+    public int MinMoney { get; set; } = 0;
+    public int MaxMoney { get; set; } = 0;
+    public int LivingPlayers { get; set; } = 5;
 }
 
 public class EconomyManager
@@ -1034,6 +1042,17 @@ public class EconomyManager
         {
             EquipBestWeapon(bot);
         }
+    }
+
+    public static bool IsValuableFirearm(string? weaponDesignerName)
+    {
+        return CombatAdapter.IsPrimaryWeapon(weaponDesignerName);
+    }
+
+    public BuyState DetermineBuyStateFromSnapshot(TeamEconomySnapshot snap, int roundNumber, int lossBonus, CsTeam team, MatchLifecyclePhase phase = MatchLifecyclePhase.Regulation_Half1)
+    {
+        int avg = snap.AverageCashBeforeBuy > 0 ? snap.AverageCashBeforeBuy : (snap.CashBeforeBuy > 0 ? snap.CashBeforeBuy / Math.Max(1, snap.LivingPlayers) : 0);
+        return DeterminePreBuyIntent(team, roundNumber, avg, lossBonus, snap.SavedWeaponCount, snap.EquipmentValueBeforeBuy);
     }
 
     public static bool HasValuablePrimaryWeapon(CCSPlayerController bot)

@@ -19,6 +19,8 @@ Este manual serve como o guia definitivo para jogadores que estão ingressando n
 8. [Adaptações Táticas de Mid-Round (Pivôs TR e Reações a Granadas)](#8-adaptações-táticas-de-mid-round-pivôs-tr-e-reações-a-granadas)
 9. [Interface Visual (Chip HUD) & Painel Web de Skins (Arsenal Web UI)](#9-interface-visual-chip-hud--painel-web-de-skins-arsenal-web-ui)
 10. [Ferramentas de Diagnóstico e Telemetria (!debug e !nota)](#10-ferramentas-de-diagnóstico-e-telemetria-debug-e-nota)
+11. [Comandos de Console do CS2 & Controle do Servidor (Aquecimento, Reinício e Partida)](#11-comandos-de-console-do-cs2--controle-do-servidor-aquecimento-reinício-e-partida)
+12. [Binds Recomendadas para Jogadores (Atalhos de Teclado)](#12-binds-recomendadas-para-jogadores-atalhos-de-teclado)
 
 ---
 
@@ -36,7 +38,7 @@ Todos os comandos abaixo podem ser digitados diretamente no chat de texto do jog
 | `!flash` | *(sem argumentos)* | Solicita um pop-flash em dupla. O bot parceiro mais próximo lança uma flashbang por cima com arco calculado para você abrir o pixel cego. |
 | `!miou` | *(sem argumentos)* | Dispara rotação silenciosa no Shift para o bomb alternativo (`ROTATE_SILENT`), abortando a entrada que sofreu contenção. |
 | `!respawn` | *(sem argumentos)* | Ordena que os bots joguem pela proximidade dos seus spawns (cada um corre para o chokepoint mais perto do seu nascimento). |
-| `!debug` | `!debug on`, `!debug off` | Liga ou desliga a telemetria forense da partida em tempo real, gerando relatórios Markdown estruturados no servidor. |
+| `!debug` | `!debug on`, `!debug off`, `!debug 5`, `!debug 10` | Controla a telemetria forense em tempo real. Com um número (ex: `!debug 5`), captura N rounds oficiais e encerra automaticamente gerando o relatório com métricas. |
 | `!nota` | `!nota Bot ficou preso na rampa` | Insere uma anotação do jogador no log forense com snapshot fotográfico instantâneo de posições, vidas e ordens. |
 | `!wp` | *(sem argumentos)* | Abre o menu do WeaponPaints para escolher facas, luvas e skins salvas localmente. |
 
@@ -248,14 +250,76 @@ Suas novas skins são aplicadas imediatamente nas suas mãos na rodada seguinte!
 Para desenvolvedores, analistas de partidas ou jogadores curiosos que desejam auditar as decisões dos bots:
 
 * **Ativar/Desativar Telemetria:**
-  - Digite `!debug on` para começar a gravar.
-  - Digite `!debug off` para desligar (zero consumo de CPU e disco quando desligado).
+  - Digite `!debug on` para começar a gravar continuamente.
+  - Digite `!debug off` para desligar imediatamente (zero consumo de CPU e disco quando desligado).
+  - Digite `!debug <N>` (ex: `!debug 5` ou `!debug 10`) para realizar uma captura automatizada de exatamente N rounds. O sistema inicia a gravação e a fecha com selamento forense e matriz de dados ao atingir a quantidade estipulada.
 * **Inserir Notas com Snapshot:**
   - Digite `!nota <texto>` no chat ou fale no microfone *"Anota aí: ..."*.
   - O sistema captura instantaneamente a posição `(X, Y, Z)`, ângulo de mira, vida, arma ativa, postura e anomalias de todos os jogadores naquele exato milissegundo.
 * **Onde os Relatórios Ficam Salvos:**
   - Os logs são gerados em formato Markdown em: `H:\CS2_AI_Server\debug_logs\match_telemetry_AAAAMMDD_HHMMSS.md`.
   - Contém linha do tempo `[MM:SS]`, inventário e saldo de ambos os times, rastreamento de utilitárias arremessadas (origem, ângulo e destino), matriz de dano e abates, e o detector automático de anomalias (`[⚠️ AUTO-ANOMALY]`).
+
+
+
+---
+
+## 11. Comandos de Console do CS2 & Controle do Servidor (Aquecimento, Reinício e Partida)
+
+Além dos comandos de chat com prefixo `!`, o jogador pode controlar diretamente as fases da partida e o comportamento do servidor através do console do desenvolvedor do CS2 (tecla `'` ou `~`).
+
+### ⏱️ Controle de Aquecimento (Warmup)
+O servidor está configurado por padrão com **3 minutos de aquecimento** (`mp_warmuptime 180`) e corte de tempo desativado (`mp_warmuptime_all_players_connected 0`), permitindo que você entre com calma na partida.
+
+| Comando de Console | Parâmetros / Exemplo | Efeito e Uso Recomendado |
+| :--- | :--- | :--- |
+| `mp_warmup_end` | *(sem argumentos)* | **Encerra o aquecimento imediatamente.** Use assim que entrar no servidor caso queira iniciar o Round 1 da partida competitiva sem esperar os 3 minutos terminarem. |
+| `mp_warmup_start` | *(sem argumentos)* | Inicia ou reinicia o período de aquecimento a qualquer momento. |
+| `mp_warmuptime` | `mp_warmuptime 180` | Define a duração padrão do aquecimento em segundos (ex: 180 = 3 minutos, 300 = 5 minutos). |
+| `mp_warmup_pausetimer` | `mp_warmup_pausetimer 1` / `0` | `1` congela/pausa o cronômetro de aquecimento por tempo indeterminado (ótimo para treinar granadas e smokes). `0` despausa e retoma a contagem normal. |
+
+### 🔄 Reinício e Pausas de Partida
+| Comando de Console | Parâmetros / Exemplo | Efeito e Uso Recomendado |
+| :--- | :--- | :--- |
+| `mp_restartgame` | `mp_restartgame 1` | Reinicia a partida imediatamente após 1 segundo, zerando os placares para 0x0 e recomeçando no Round 1. |
+| `mp_pause_match` | *(sem argumentos)* | Pausa a partida competitiva no freeze time da rodada atual. |
+| `mp_unpause_match` | *(sem argumentos)* | Retoma a partida competitiva pausada. |
+
+### 🤖 Gerenciamento de Bots & Conexão
+| Comando de Console | Parâmetros / Exemplo | Efeito e Uso Recomendado |
+| :--- | :--- | :--- |
+| `bot_kick` | *(sem argumentos)* | Remove todos os bots do servidor. |
+| `bot_add_ct` | *(sem argumentos)* | Adiciona um bot à equipe Contra-Terrorista. |
+| `bot_add_t` | *(sem argumentos)* | Adiciona um bot à equipe Terrorista. |
+| `bot_quota` | `bot_quota 10` | Ajusta a quantidade total de bots preenchendo o servidor (padrão competitivo: 10 para 5v5). |
+| `connect` | `connect 127.0.0.1:27016` | Conecta ao servidor CS2 local dedicado. |
+| `retry` | *(sem argumentos)* | Reconecta rapidamente ao servidor após alterações ou reinicialização. |
+
+---
+
+## 12. Binds Recomendadas para Jogadores (Atalhos de Teclado)
+
+Para agilizar o controle da equipe e do servidor durante a gameplay, você pode colar os seguintes atalhos no seu console do CS2 ou salvar no seu `autoexec.cfg`:
+
+```text
+// 🎙️ Voice IGL: Pressione e segure para falar com os bots no microfone (Whisper)
+bind "v" "+voicerecord"
+
+// ⏱️ Pular o aquecimento de 3 minutos assim que você entrar no servidor
+bind "f5" "mp_warmup_end"
+
+// ⚡ Comandar invasão imediata do bombsite (cancela espera na Staging Area)
+bind "f6" "say !executar"
+
+// 🔄 Mandar a equipe miar a entrada e rotacionar no shift para o outro bomb
+bind "f7" "say !miou"
+
+// 💥 Pedir pop-flash calculado ao bot parceiro mais próximo
+bind "f8" "say !flash"
+
+// 💰 Pedir drop de arma para o bot mais rico da equipe
+bind "k" "say !drop"
+```
 
 ---
 

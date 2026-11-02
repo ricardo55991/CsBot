@@ -54,6 +54,34 @@ public class UtilityAndClockCoordinator
         return true;
     }
 
+    public bool HasActiveUtilityAtOrNear(float x, float y, float z, float maxDist = 700.0f)
+    {
+        float now = Server.CurrentTime;
+        var cp = _mapProfileManager.FindChokepointAt(x, y, z);
+        if (cp != null && _activeBlocks.TryGetValue(cp.Id, out var state) && state.BlockedUntilTime > now)
+        {
+            return true;
+        }
+
+        foreach (var kvp in _activeBlocks)
+        {
+            if (kvp.Value.BlockedUntilTime > now)
+            {
+                var blockCp = _mapProfileManager.GetChokepoints().FirstOrDefault(c => c.Id.Equals(kvp.Key, StringComparison.OrdinalIgnoreCase));
+                if (blockCp != null)
+                {
+                    float dx = blockCp.X - x;
+                    float dy = blockCp.Y - y;
+                    if ((dx * dx + dy * dy) <= maxDist * maxDist)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void RegisterUtilityDetonation(float x, float y, float z, string utilityType, int throwerSlot = -1)
     {
         var cp = _mapProfileManager.FindChokepointAt(x, y, z);
@@ -231,22 +259,26 @@ public class UtilityAndClockCoordinator
             ? $" {ChatColors.Yellow}(Terrorista) {ChatColors.Green}{speakerName}{ChatColors.Default}: "
             : $" {ChatColors.LightBlue}(Contraterrorista) {ChatColors.Green}{speakerName}{ChatColors.Default}: ";
 
-        var players = Utilities.GetPlayers();
-        foreach (var p in players)
+        try
         {
-            if (p != null && p.IsValid && !p.IsHLTV && p.Team == team)
+            var players = Utilities.GetPlayers();
+            foreach (var p in players)
             {
-                p.PrintToChat(prefix + message);
+                if (p != null && p.IsValid && !p.IsHLTV && !p.IsBot && p.Team == team)
+                {
+                    try { p.PrintToChat(prefix + message); } catch { }
+                }
             }
         }
+        catch { }
     }
 
     public static void PrintTeamChatAndRadio(CCSPlayerController? speakerBot, CsTeam team, string speakerName, string message, string? radioCommand = null)
     {
         PrintTeamChat(team, speakerName, message);
-        if (speakerBot != null && speakerBot.IsValid && !string.IsNullOrEmpty(radioCommand))
+        if (speakerBot != null && speakerBot.IsValid && !speakerBot.IsBot && !string.IsNullOrEmpty(radioCommand))
         {
-            speakerBot.ExecuteClientCommand(radioCommand);
+            try { speakerBot.ExecuteClientCommand(radioCommand); } catch { }
         }
     }
 }

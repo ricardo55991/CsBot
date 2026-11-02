@@ -1,0 +1,1827 @@
+# PLANO FUTURO: MLMOVE V2 CONDICIONADO PELO CONTEXTO MACRO
+
+## Status do documento
+
+- **Tipo:** proposta arquitetural futura
+- **Prioridade atual:** baixa, após estabilização e validação da V4.1.3
+- **Requer implementação agora:** não
+- **Requer retreinamento futuro:** sim
+- **Substitui o planejamento tático atual:** não
+- **Substitui o Qwen:** não
+- **Substitui o fallback determinístico:** não
+- **Altera o objetivo do ONNX:** parcialmente
+- **Nome sugerido do modelo:** `MLMoveContextTransformer`
+- **Nome sugerido do arquivo:** `mlmove_context_de_mirage_v2.onnx`
+- **Versão das features:** `feature_version = 2`
+
+---
+
+# 1. Visão geral
+
+O sistema atual utiliza uma arquitetura híbrida e hierárquica:
+
+1. Qwen ou fallback determinístico escolhe a tática.
+2. O sistema de papéis distribui responsabilidades.
+3. O plano determina objetivos, staging, execute e fallback.
+4. O `BotLocomotionDriver` conduz cada bot ao objetivo macro.
+5. O `MicroMoveEngine` consulta o ONNX para gerar micromovimentos.
+6. O `MovementArbitrator` resolve conflitos entre intenções.
+7. O `MovementExecutionTracker` mede o resultado físico.
+
+Essa divisão deve ser preservada.
+
+A evolução proposta não transforma o ONNX em planejador estratégico. O ONNX continuará sendo responsável por micromovimentos locais, mas passará a receber informações explícitas sobre a tática, o papel do bot e a fase atual da execução.
+
+Arquitetura futura:
+
+    Qwen / fallback determinístico
+            ↓
+    TacticalPlan
+            ↓
+    Role e objetivo individual
+            ↓
+    MacroContextEncoder
+            ↓
+    MLMoveContextTransformer
+            ↓
+    MovementIntent local
+            ↓
+    MovementArbitrator
+            ↓
+    Aplicação física
+            ↓
+    MovementExecutionTracker
+
+---
+
+# 2. Problema que a evolução pretende resolver
+
+O ONNX atual aprende padrões locais extraídos das demos profissionais.
+
+O modelo provavelmente observou movimentos que ocorreram durante:
+
+- rushes;
+- execuções lentas;
+- defaults;
+- domínio de Meio;
+- entradas em bombsites;
+- retakes;
+- saves;
+- pós-plants;
+- holds defensivos;
+- agressões iniciais.
+
+Entretanto, o modelo não necessariamente sabe explicitamente que determinado trecho pertence a:
+
+- `RUSH_B`;
+- `EXECUTE_A_SLOW`;
+- `MID_CONTROL`;
+- `FAKE_A`;
+- `RETAKE_B`;
+- `SAVE`;
+- `POST_PLANT_A`.
+
+Duas situações táticas diferentes podem produzir estados locais visualmente semelhantes.
+
+Exemplo:
+
+    Bot parado em Apartamentos B.
+
+Essa observação pode representar:
+
+1. AWPer cobrindo uma entrada;
+2. lurker segurando rotação;
+3. Entry esperando uma flash;
+4. portador da C4 aguardando abertura;
+5. início de um Rush B;
+6. execução lenta;
+7. fake B;
+8. bot preso em geometria.
+
+Sem contexto macro, o ONNX precisa inferir tudo apenas pelo estado local.
+
+A V2 adicionará contexto explícito para distinguir essas situações.
+
+---
+
+# 3. Objetivo principal
+
+Permitir que o ONNX escolha micromovimentos diferentes dependendo de:
+
+- tática atual;
+- ritmo do round;
+- papel do jogador;
+- fase do plano;
+- bombsite alvo;
+- urgência;
+- estado da C4;
+- autorização de hold;
+- distância ao objetivo macro;
+- posição relativa dentro da formação.
+
+Exemplo:
+
+## Entry durante Rush B
+
+    macro_tactic = RUSH_B
+    round_pace = FAST
+    bot_role = ENTRY
+    plan_stage = EXECUTING
+    target_site = B
+    objective_urgency = HIGH
+    authorized_hold = FALSE
+
+Comportamento local esperado:
+
+- avanço consistente;
+- diagonais de abertura;
+- strafe de entrada;
+- Counter-Strafe quando houver tiro iminente;
+- poucas paradas sem justificativa;
+- recuperação rápida de obstáculos;
+- menor tendência de recuo prolongado.
+
+## AWPer durante o mesmo Rush B
+
+    macro_tactic = RUSH_B
+    round_pace = FAST
+    bot_role = AWPER
+    plan_stage = COVERING
+    target_site = B
+    objective_urgency = MEDIUM
+    authorized_hold = TRUE
+
+Comportamento local esperado:
+
+- permanecer mais atrás;
+- segurar ângulo;
+- jiggle curto;
+- Counter-Strafe antes do disparo;
+- menor exposição;
+- não acompanhar o Entry até o mesmo ponto;
+- avançar apenas após gatilho tático.
+
+## Lurker durante o mesmo Rush B
+
+    macro_tactic = RUSH_B
+    bot_role = LURKER
+    plan_stage = WAITING
+    objective_urgency = LOW
+    authorized_hold = TRUE
+
+Comportamento local esperado:
+
+- controlar rotação;
+- preservar posição;
+- micropeek;
+- recuar após obter informação;
+- não convergir imediatamente ao bombsite;
+- avançar somente após trigger definido.
+
+---
+
+# 4. O que o ONNX V2 não deverá fazer
+
+O modelo não deverá decidir:
+
+- qual bombsite atacar;
+- qual tática usar;
+- quando utilizar Rush A ou Rush B;
+- qual jogador será Entry;
+- qual jogador será AWPer;
+- quem transportará a C4;
+- quando o time fará save;
+- qual será o plano econômico;
+- quando mudar definitivamente de bombsite;
+- qual será o objetivo macro;
+- a revisão tática global.
+
+Essas decisões permanecem em:
+
+- Qwen;
+- fallback determinístico;
+- `TacticalPlan`;
+- `RoleManager`;
+- `TrMacroPivotController`;
+- controladores de objetivo;
+- sistemas de economia.
+
+O ONNX V2 recebe o contexto, mas não possui autoridade para alterá-lo.
+
+---
+
+# 5. Princípio de autoridade
+
+A hierarquia continuará sendo:
+
+    RoundLifecycle
+        >
+    BombObjective crítico
+        >
+    Unstuck / Recovery
+        >
+    CounterStrafe válido
+        >
+    EmergencyFallback
+        >
+    TradeSpacing
+        >
+    MicroMove ONNX
+        >
+    TacticalNavigation local
+
+Essa ordem poderá sofrer calibração, mas o ONNX não poderá:
+
+- modificar `CurrentTactic`;
+- modificar `CurrentTargetSite`;
+- incrementar `TacticRevision`;
+- alterar o papel do bot;
+- alterar a estratégia econômica;
+- substituir permanentemente o objetivo macro;
+- executar pivô tático por conta própria.
+
+---
+
+# 6. Novas features macro
+
+## 6.1 Identificação da versão
+
+Adicionar sempre:
+
+    feature_version = 2
+
+Esse campo permite:
+
+- diferenciar modelos;
+- validar contratos;
+- impedir que um ONNX V1 receba tensores V2;
+- impedir que um ONNX V2 receba tensores V1;
+- realizar rollback seguro.
+
+---
+
+## 6.2 Time
+
+Valores sugeridos:
+
+    TEAM_UNKNOWN = 0
+    TEAM_CT = 1
+    TEAM_TR = 2
+
+Feature:
+
+    team_side
+
+---
+
+## 6.3 Papel do bot
+
+Valores sugeridos:
+
+    ROLE_UNKNOWN = 0
+    ROLE_ENTRY = 1
+    ROLE_SECOND_ENTRY = 2
+    ROLE_AWPER = 3
+    ROLE_LURKER = 4
+    ROLE_ROTATOR = 5
+    ROLE_ANCHOR = 6
+    ROLE_SUPPORT = 7
+    ROLE_BOMB_CARRIER = 8
+
+Features:
+
+    profile_role
+    round_role
+    assigned_weapon_role
+
+O modelo deverá utilizar principalmente `round_role`.
+
+`profile_role` serve como contexto persistente.
+
+`assigned_weapon_role` ajuda a representar overrides econômicos.
+
+---
+
+## 6.4 Tática macro
+
+Taxonomia inicial sugerida:
+
+    TACTIC_UNKNOWN = 0
+    TACTIC_DEFAULT = 1
+    TACTIC_EXECUTE_A = 2
+    TACTIC_EXECUTE_B = 3
+    TACTIC_RUSH_A = 4
+    TACTIC_RUSH_B = 5
+    TACTIC_SPLIT_A = 6
+    TACTIC_SPLIT_B = 7
+    TACTIC_MID_CONTROL = 8
+    TACTIC_FAKE_A = 9
+    TACTIC_FAKE_B = 10
+    TACTIC_CONTACT_A = 11
+    TACTIC_CONTACT_B = 12
+    TACTIC_RETAKE_A = 13
+    TACTIC_RETAKE_B = 14
+    TACTIC_POST_PLANT_A = 15
+    TACTIC_POST_PLANT_B = 16
+    TACTIC_SAVE = 17
+    TACTIC_DEFENSIVE_DEFAULT = 18
+    TACTIC_AGGRESSIVE_DEFENSE = 19
+    TACTIC_STACK_A = 20
+    TACTIC_STACK_B = 21
+
+Feature:
+
+    macro_tactic
+
+Não começar com centenas de categorias.
+
+A taxonomia deve ser:
+
+- pequena;
+- consistente;
+- auditável;
+- com número suficiente de exemplos por classe;
+- expansível no futuro.
+
+---
+
+## 6.5 Ritmo
+
+Valores sugeridos:
+
+    PACE_UNKNOWN = 0
+    PACE_VERY_SLOW = 1
+    PACE_SLOW = 2
+    PACE_DEFAULT = 3
+    PACE_FAST = 4
+    PACE_RUSH = 5
+
+Feature:
+
+    round_pace
+
+O ritmo não deve ser inferido apenas por velocidade instantânea. Deve representar a intenção coletiva do plano.
+
+---
+
+## 6.6 Fase da tática
+
+Valores sugeridos:
+
+    STAGE_UNKNOWN = 0
+    STAGE_SETUP = 1
+    STAGE_STAGING = 2
+    STAGE_WAITING = 3
+    STAGE_MAP_CONTROL = 4
+    STAGE_EXECUTING = 5
+    STAGE_ENTRY = 6
+    STAGE_PLANTING = 7
+    STAGE_POST_PLANT = 8
+    STAGE_ROTATING = 9
+    STAGE_RETAKE = 10
+    STAGE_FALLBACK = 11
+    STAGE_SAVE = 12
+    STAGE_ROUND_END = 13
+
+Feature:
+
+    plan_stage
+
+Essa feature será uma das mais importantes.
+
+Um mesmo Rush B pode possuir:
+
+    STAGING
+    WAITING
+    EXECUTING
+    ENTRY
+    PLANTING
+    POST_PLANT
+
+O comportamento local deve mudar em cada fase.
+
+---
+
+## 6.7 Bombsite alvo
+
+Valores sugeridos:
+
+    SITE_NONE = 0
+    SITE_A = 1
+    SITE_B = 2
+    SITE_MID = 3
+    SITE_DYNAMIC = 4
+
+Features:
+
+    initial_target_site
+    current_target_site
+
+Manter os dois campos permite ao modelo perceber um pivô.
+
+---
+
+## 6.8 Revisão tática
+
+Features:
+
+    tactic_revision_normalized
+    tactic_changed_recently
+    seconds_since_tactic_change
+
+Esses campos ajudam o modelo a responder a pivôs sem misturar o plano antigo com o atual.
+
+---
+
+## 6.9 Urgência
+
+Valores sugeridos:
+
+    URGENCY_LOW = 0
+    URGENCY_MEDIUM = 1
+    URGENCY_HIGH = 2
+    URGENCY_CRITICAL = 3
+
+Feature:
+
+    objective_urgency
+
+Exemplos:
+
+### Low
+
+- staging;
+- lurker esperando;
+- defesa sem contato.
+
+### Medium
+
+- execução em preparação;
+- controle de mapa;
+- rotação normal.
+
+### High
+
+- execução em andamento;
+- retake;
+- portador aproximando-se do bombsite;
+- trade imediato.
+
+### Critical
+
+- pouco tempo para plantar;
+- pouco tempo para desarmar;
+- C4 caída;
+- recovery bloqueando objetivo;
+- retake em janela final.
+
+---
+
+## 6.10 Hold autorizado
+
+Features:
+
+    authorized_hold
+    authorized_hold_remaining_normalized
+    hold_reason
+    hold_max_duration_normalized
+
+Valores sugeridos para `hold_reason`:
+
+    HOLD_NONE = 0
+    HOLD_STAGING = 1
+    HOLD_COVER_ANGLE = 2
+    HOLD_LURKER = 3
+    HOLD_ANCHOR = 4
+    HOLD_WAIT_UTILITY = 5
+    HOLD_WAIT_TEAMMATE = 6
+    HOLD_POST_PLANT = 7
+    HOLD_SAVE = 8
+    HOLD_AWP_ANGLE = 9
+
+Essa informação evita que um hold tático válido seja interpretado como stuck.
+
+---
+
+## 6.11 Estado da C4
+
+Features:
+
+    bomb_state
+    is_bomb_carrier
+    team_has_bomb
+    bomb_dropped
+    bomb_planted
+    bomb_site
+    normalized_distance_to_bomb
+    normalized_distance_to_plant_zone
+
+Valores sugeridos para `bomb_state`:
+
+    BOMB_NOT_APPLICABLE = 0
+    BOMB_CARRIED = 1
+    BOMB_DROPPED = 2
+    BOMB_BEING_PLANTED = 3
+    BOMB_PLANTED_A = 4
+    BOMB_PLANTED_B = 5
+    BOMB_BEING_DEFUSED = 6
+    BOMB_DEFUSED = 7
+    BOMB_EXPLODED = 8
+
+---
+
+## 6.12 Distância aos objetivos
+
+Features contínuas normalizadas:
+
+    distance_to_macro_goal
+    distance_to_staging_goal
+    distance_to_execute_goal
+    distance_to_fallback_goal
+    distance_to_team_centroid
+    distance_to_front_teammate
+    distance_to_rear_teammate
+    distance_to_bomb_carrier
+
+Normalização sugerida:
+
+    normalized_distance =
+        clamp(distance_units / MAX_RELEVANT_DISTANCE, 0, 1)
+
+O valor de `MAX_RELEVANT_DISTANCE` deve ser centralizado na configuração.
+
+---
+
+## 6.13 Estado de formação
+
+Features sugeridas:
+
+    formation_position
+    team_order_index
+    teammates_ahead_count
+    teammates_behind_count
+    nearest_teammate_distance
+    team_spread
+    entry_distance
+    trade_partner_distance
+    is_front_player
+    is_rear_guard
+
+Valores possíveis de `formation_position`:
+
+    FORMATION_UNKNOWN = 0
+    FORMATION_FRONT = 1
+    FORMATION_SECOND = 2
+    FORMATION_MIDDLE = 3
+    FORMATION_REAR = 4
+    FORMATION_ISOLATED = 5
+
+Isso ajuda a diferenciar:
+
+- Entry;
+- segundo homem;
+- portador;
+- AWPer de cobertura;
+- lurker;
+- jogador segurando costas.
+
+---
+
+# 7. Contrato de features V2
+
+## 7.1 Preservar features locais atuais
+
+As features atuais de micromovimento não devem ser removidas sem estudo.
+
+Preservar, conforme existentes:
+
+- posição;
+- velocidade;
+- direção;
+- estado grounded;
+- HP;
+- armadura;
+- arma;
+- inimigo visível;
+- distância do inimigo;
+- áudio;
+- hotzone;
+- postura;
+- ações anteriores;
+- informações temporais;
+- máscara de jogador válido.
+
+## 7.2 Adicionar vetor macro separado
+
+Não concatenar inicialmente todos os campos de forma desorganizada.
+
+Estrutura sugerida:
+
+    local_features
+    macro_features
+    role_features
+    objective_features
+    formation_features
+    player_mask
+
+Possível representação:
+
+    local_features:       [players, local_dim]
+    macro_features:       [macro_dim]
+    role_features:        [players, role_dim]
+    objective_features:   [players, objective_dim]
+    formation_features:   [players, formation_dim]
+    player_mask:          [players]
+
+## 7.3 Contrato versionado
+
+Criar arquivo:
+
+    mlmove_feature_contract_v2.json
+
+Exemplo:
+
+    {
+      "feature_version": 2,
+      "map": "de_mirage",
+      "sample_hz": 16,
+      "max_players": 10,
+      "horizons_ms": [0, 125, 250],
+      "local_feature_count": 18,
+      "macro_feature_count": 12,
+      "role_feature_count": 8,
+      "objective_feature_count": 10,
+      "formation_feature_count": 8,
+      "action_class_count": 97
+    }
+
+Os valores exatos deverão ser derivados da implementação real.
+
+---
+
+# 8. Rotulagem macro das demos
+
+## 8.1 Desafio principal
+
+As demos não informam diretamente:
+
+    "este round foi um Rush B"
+
+A tática precisa ser inferida através de:
+
+- trajetórias dos cinco jogadores;
+- posição da C4;
+- distribuição inicial;
+- velocidade coletiva;
+- tempo até o primeiro contato;
+- tempo até entrada no bombsite;
+- utilitárias;
+- setores ocupados;
+- bombsite plantado;
+- mortes;
+- rotações;
+- distância e agrupamento dos jogadores.
+
+---
+
+## 8.2 Unidade de rotulagem
+
+Não rotular cada frame isoladamente.
+
+Estrutura recomendada:
+
+    Demo
+      └── Match
+          └── Round
+              └── TacticalSegment
+                  └── Frames a 16 Hz
+
+Cada round pode possuir vários segmentos:
+
+    SETUP
+    STAGING
+    EXECUTING
+    POST_PLANT
+
+ou:
+
+    DEFAULT
+    FIRST_CONTACT
+    ROTATION
+    EXECUTE_B
+    POST_PLANT_B
+
+Cada frame herda o contexto do segmento tático correspondente.
+
+---
+
+## 8.3 Manifest do round
+
+Criar um manifesto por round:
+
+    {
+      "demo_id": "...",
+      "match_id": "...",
+      "round_id": 12,
+      "team": "TR",
+      "initial_tactic": "DEFAULT",
+      "initial_target_site": "A",
+      "segments": [
+        {
+          "start_tick": 1000,
+          "end_tick": 1800,
+          "plan_stage": "MAP_CONTROL",
+          "macro_tactic": "DEFAULT",
+          "target_site": "NONE",
+          "confidence": 0.82
+        },
+        {
+          "start_tick": 1801,
+          "end_tick": 2300,
+          "plan_stage": "ROTATING",
+          "macro_tactic": "EXECUTE_B",
+          "target_site": "B",
+          "confidence": 0.78
+        },
+        {
+          "start_tick": 2301,
+          "end_tick": 2600,
+          "plan_stage": "EXECUTING",
+          "macro_tactic": "EXECUTE_B",
+          "target_site": "B",
+          "confidence": 0.91
+        }
+      ]
+    }
+
+---
+
+# 9. Heurísticas iniciais para táticas
+
+## 9.1 Rush A ou Rush B
+
+Possíveis sinais:
+
+- quatro ou mais TRs convergindo rapidamente;
+- C4 acompanha o grupo;
+- primeiros segundos do round;
+- pouca dispersão;
+- velocidade média alta;
+- baixa permanência em staging;
+- contato inicial precoce;
+- entrada no bombsite em pouco tempo;
+- poucas rotações anteriores.
+
+Exemplo de heurística conceitual:
+
+    if players_toward_site >= 4
+       and bomb_moves_with_group
+       and time_to_site_entry <= rush_threshold
+       and average_team_speed >= fast_threshold
+       and initial_map_spread <= compact_threshold
+    then
+       tactic = RUSH_SITE
+
+---
+
+## 9.2 Execução lenta
+
+Sinais:
+
+- agrupamento próximo ao staging;
+- velocidade baixa ou shift;
+- uso coordenado de utilitárias;
+- entrada no bombsite após espera;
+- C4 permanece atrás do Entry;
+- múltiplos jogadores entram após gatilho comum.
+
+---
+
+## 9.3 Default
+
+Sinais:
+
+- jogadores distribuídos por várias áreas;
+- controle de Meio;
+- lurker isolado;
+- ausência de convergência imediata;
+- bombsite alvo indefinido inicialmente;
+- execução decidida após informação.
+
+---
+
+## 9.4 Split
+
+Sinais:
+
+- dois grupos convergem ao mesmo bombsite por rotas diferentes;
+- tempo de entrada semelhante;
+- bombsite comum;
+- presença em Meio/Conector/Short e entrada principal;
+- convergence window pequena.
+
+---
+
+## 9.5 Fake
+
+Sinais:
+
+- utilitárias e presença inicial em um site;
+- C4 permanece distante;
+- parte do time gira;
+- ataque final em outro site;
+- pressão inicial sem compromisso coletivo.
+
+Essa é uma classe difícil e deve exigir confiança alta.
+
+---
+
+## 9.6 Retake
+
+Sinais:
+
+- C4 plantada;
+- jogadores CT fora do site;
+- convergência após plant;
+- entradas coordenadas;
+- objetivo de defuse;
+- utilitárias pós-plant.
+
+---
+
+## 9.7 Save
+
+Sinais:
+
+- C4 plantada;
+- baixa viabilidade de retake;
+- jogadores se afastam;
+- ausência de convergência;
+- preservação de armas;
+- distância crescente da bomba;
+- sobrevivência até o fim do round.
+
+---
+
+# 10. Rotulagem de papéis
+
+## 10.1 Entry
+
+Heurísticas:
+
+- primeiro jogador a cruzar chokepoint;
+- primeiro contato frequente;
+- menor distância ao ponto de entrada;
+- maior exposição inicial;
+- primeiro a entrar no bombsite.
+
+## 10.2 Segundo Entry
+
+Heurísticas:
+
+- acompanha o Entry;
+- distância de trade curta;
+- entra poucos milissegundos depois;
+- frequentemente troca a primeira morte.
+
+## 10.3 AWPer
+
+Heurísticas:
+
+- arma AWP;
+- posicionamento de longa distância;
+- menor proximidade do front;
+- ângulos de cobertura;
+- menor frequência de entrada inicial.
+
+## 10.4 Lurker
+
+Heurísticas:
+
+- isolado do núcleo;
+- controla rotação;
+- permanece em setor diferente;
+- baixa distância de avanço coletivo;
+- entra tardiamente ou não entra.
+
+## 10.5 Support
+
+Heurísticas:
+
+- lança flashes e smokes para entrada;
+- permanece atrás do Entry;
+- acompanha C4;
+- menor frequência de primeiro contato.
+
+## 10.6 Bomb Carrier
+
+Derivado diretamente da posse da C4.
+
+O papel de portador pode coexistir com outro papel, mas deve ser representado explicitamente.
+
+---
+
+# 11. Confiança dos rótulos
+
+Nem todo label automático será confiável.
+
+Cada rótulo deverá possuir:
+
+    label_confidence
+
+Faixas sugeridas:
+
+    0.90–1.00 = alta confiança
+    0.75–0.89 = confiança aceitável
+    0.50–0.74 = baixa confiança
+    abaixo de 0.50 = não utilizar no treinamento supervisionado
+
+Também registrar:
+
+    label_source
+
+Valores:
+
+    RULE_BASED
+    CLUSTER_ASSISTED
+    HUMAN_REVIEWED
+    TACTICAL_MODEL
+    UNKNOWN
+
+Possível uso no treinamento:
+
+    weighted_loss =
+        sample_loss * label_confidence
+
+Não utilizar rótulos fracos como verdade absoluta.
+
+---
+
+# 12. Validação manual dos labels
+
+Antes de treinar:
+
+1. selecionar amostras aleatórias;
+2. selecionar amostras de todas as classes;
+3. selecionar casos de baixa confiança;
+4. visualizar trajetórias no mapa;
+5. revisar C4, jogadores e setores;
+6. confirmar a tática;
+7. medir precisão por classe.
+
+Meta inicial:
+
+- pelo menos 90% de precisão em Rush A/B;
+- pelo menos 85% em Execute A/B;
+- pelo menos 80% em Default;
+- pelo menos 80% em Split;
+- Fake pode exigir meta separada;
+- papéis principais acima de 90%.
+
+Se a precisão dos labels for baixa, não iniciar o treino V2.
+
+---
+
+# 13. Divisão de treino, validação e teste
+
+## Regra obrigatória
+
+Nunca dividir frames aleatoriamente entre treino e validação.
+
+A divisão deve ocorrer antes da extração dos frames ou respeitar rigorosamente o agrupamento.
+
+Hierarquia de separação recomendada:
+
+1. demo;
+2. partida;
+3. torneio/evento;
+4. opcionalmente jogador/time.
+
+Exemplo:
+
+    train:
+      70% das partidas
+
+    validation:
+      15% das partidas
+
+    test:
+      15% das partidas
+
+Nenhuma demo pode aparecer em mais de uma divisão.
+
+Idealmente, criar teste adicional:
+
+    test_unseen_events
+    test_unseen_teams
+    test_unseen_players
+
+---
+
+# 14. Balanceamento das classes
+
+Ações comuns podem dominar o dataset:
+
+- avanço;
+- parada;
+- movimento contínuo;
+- ações repetidas em frames consecutivos.
+
+Contextos comuns também podem dominar:
+
+- default;
+- staging;
+- movimentos sem contato.
+
+Aplicar:
+
+- pesos por classe;
+- amostragem estratificada;
+- limite de amostras extremamente repetitivas;
+- preservação de sequências raras;
+- oversampling moderado;
+- confidence weighting;
+- análise por contexto.
+
+Não balancear destruindo a continuidade temporal.
+
+---
+
+# 15. Arquitetura neural sugerida
+
+## Opção recomendada: embeddings condicionais
+
+Arquitetura conceitual:
+
+    Local Player Features
+            ↓
+    Local Feature Encoder
+
+    Macro Categorical Features
+            ↓
+    Embeddings
+            ↓
+    Macro Context Encoder
+
+    Role / Formation Features
+            ↓
+    Role Encoder
+
+    Encoders concatenados
+            ↓
+    Temporal Transformer
+            ↓
+    Heads 0ms / 125ms / 250ms
+
+Embeddings possíveis:
+
+- `macro_tactic_embedding`;
+- `role_embedding`;
+- `plan_stage_embedding`;
+- `pace_embedding`;
+- `target_site_embedding`;
+- `hold_reason_embedding`.
+
+Features contínuas passam por projeção linear:
+
+- urgência;
+- distâncias;
+- tempo restante;
+- team spread;
+- hold remaining;
+- distância da C4.
+
+---
+
+# 16. Saídas do modelo
+
+Manter os três horizontes:
+
+    action_0ms
+    action_125ms
+    action_250ms
+
+Opcionalmente acrescentar:
+
+    action_confidence_0ms
+    action_confidence_125ms
+    action_confidence_250ms
+
+E uma saída auxiliar:
+
+    expected_progress_500ms
+
+Essa saída pode prever quanto deslocamento horizontal a ação deverá produzir.
+
+Outra saída auxiliar possível:
+
+    action_validity
+
+Valores:
+
+    VALID
+    HOLD
+    LOW_CONFIDENCE
+    REQUEST_NAVIGATION
+    REQUEST_RECOVERY
+
+Essas saídas auxiliares devem ser estudadas, não adicionadas automaticamente.
+
+---
+
+# 17. Loss do modelo V2
+
+Loss conceitual:
+
+    TotalLoss =
+        w0 * ActionLoss0ms
+      + w1 * ActionLoss125ms
+      + w2 * ActionLoss250ms
+      + wRole * RoleConsistencyLoss
+      + wMacro * MacroConsistencyLoss
+      + wProgress * ProgressPredictionLoss
+
+Regras:
+
+- `L0` deve continuar com peso relevante;
+- horizontes futuros podem possuir pesos menores;
+- context consistency não deve obrigar o modelo a sempre avançar durante rush;
+- comportamento defensivo local ainda deve vencer quando houver risco real;
+- não ensinar obediência cega à tática.
+
+Exemplo:
+
+Durante Rush B, o modelo ainda pode:
+
+- parar antes de atirar;
+- recuar de molotov;
+- evitar granada;
+- abrir lateralmente;
+- aguardar bloqueio momentâneo.
+
+O objetivo é comportamento contextual, não movimento rígido.
+
+---
+
+# 18. Baselines obrigatórios
+
+Antes de substituir o modelo atual, comparar:
+
+## Baseline A
+
+Modelo V1 atual, sem contexto macro.
+
+## Baseline B
+
+Modelo V1 + heurísticas macro apenas no arbitrador.
+
+## Candidato C
+
+Modelo V2 condicionado por macro.
+
+## Ablations
+
+Treinar versões sem:
+
+- papel;
+- ritmo;
+- stage;
+- formação;
+- hold autorizado.
+
+Isso mostrará quais features realmente ajudam.
+
+---
+
+# 19. Métricas offline
+
+Não utilizar apenas Top-1 e Top-3 agregados.
+
+Medir:
+
+- Top-1 geral;
+- Top-3 geral;
+- loss por horizonte;
+- matriz de confusão;
+- precisão por ação;
+- recall por ação;
+- F1 por classe;
+- métricas por tática;
+- métricas por papel;
+- métricas por stage;
+- métricas por bombsite;
+- métricas por setor;
+- métricas por trigger;
+- calibração de confiança;
+- comportamento em classes raras.
+
+Exemplos:
+
+    accuracy_RUSH_B_ENTRY
+    accuracy_RUSH_B_AWPER
+    accuracy_EXECUTE_A_STAGING
+    accuracy_RETAKE_B
+    accuracy_SAVE
+    standstill_rate_by_context
+    jump_rate_by_context
+    retreat_rate_by_context
+
+---
+
+# 20. Métricas no runtime
+
+Com o V2, a telemetria deverá registrar:
+
+    MacroTactic
+    RoundPace
+    PlanStage
+    BotRole
+    TargetSite
+    AuthorizedHold
+    PredictedAction
+    WinningIntent
+    IssuedAction
+    ExecutionOutcome
+    Displacement125
+    Displacement250
+    Displacement500
+    TacticPreserved
+    MacroGoalPreserved
+
+Resumo por contexto:
+
+    RUSH_B / ENTRY:
+      inferências:
+      standstill:
+      avanço:
+      recuo:
+      ações bloqueadas:
+      progresso médio:
+      stuck:
+      recovery:
+
+    RUSH_B / AWPER:
+      inferências:
+      holds autorizados:
+      jiggles:
+      counter-strafes:
+      progresso:
+      exposição:
+
+---
+
+# 21. Critérios de sucesso do modelo V2
+
+O V2 somente poderá substituir o V1 se:
+
+1. não regredir nas métricas gerais;
+2. melhorar contextos macro relevantes;
+3. reduzir StandStill indevido durante Rush;
+4. preservar holds autorizados;
+5. melhorar diferenciação entre Entry e AWPer;
+6. preservar macro goal;
+7. não aumentar stuck;
+8. não aumentar saltos inadequados;
+9. não aumentar latência de forma problemática;
+10. não causar conflitos com o arbitrador;
+11. manter estabilidade do servidor;
+12. demonstrar melhoria em partidas completas.
+
+---
+
+# 22. Latência
+
+O modelo atual possui inferência rápida.
+
+O V2 adicionará embeddings e features, mas deve preservar orçamento de latência.
+
+Meta inicial sugerida:
+
+    mediana abaixo de 2 ms
+    P99 abaixo de 5 ms
+
+O limite real deve considerar:
+
+- frequência de 16 Hz;
+- quantidade de bots;
+- CPU do servidor;
+- demais plugins;
+- tickrate.
+
+Não aceitar um modelo mais contextual se a execução comprometer o servidor.
+
+---
+
+# 23. Compatibilidade e rollout
+
+## 23.1 Dois modelos simultâneos
+
+Durante testes:
+
+    mlmove_de_mirage_v1.onnx
+    mlmove_context_de_mirage_v2.onnx
+
+Configuração:
+
+    MlMoveModelVersion = "v1" | "v2"
+
+## 23.2 Feature flags
+
+Adicionar:
+
+    EnableMacroConditionedModel
+    EnableContextTelemetry
+    EnableV2ShadowInference
+    EnableV2LiveControl
+
+## 23.3 Shadow mode
+
+Antes de permitir que o V2 controle bots:
+
+1. V1 continua controlando;
+2. V2 recebe as mesmas observações;
+3. V2 produz previsões;
+4. previsões do V2 são apenas registradas;
+5. comparar V1 e V2;
+6. medir latência;
+7. avaliar divergências.
+
+Telemetria:
+
+    V1PredictedAction
+    V2PredictedAction
+    Disagreement
+    MacroContext
+    ExpectedBehavior
+
+## 23.4 Canary
+
+Depois do shadow mode:
+
+- V2 controla um bot;
+- depois um time;
+- depois todos os bots;
+- rollback imediato disponível.
+
+---
+
+# 24. Integração C#
+
+## Novos componentes sugeridos
+
+    MacroContextEncoder.cs
+    MacroContextSnapshot.cs
+    MlMoveFeatureContract.cs
+    MlMoveV2InputBuilder.cs
+    MlMoveModelVersionManager.cs
+    MlMoveShadowEvaluator.cs
+
+## Responsabilidades
+
+### `MacroContextSnapshot`
+
+Estrutura imutável por bot e tick:
+
+    InternalRoundId
+    TacticRevision
+    MacroTactic
+    Pace
+    PlanStage
+    Role
+    TargetSite
+    Urgency
+    AuthorizedHold
+    BombState
+    FormationPosition
+    Distances
+
+### `MacroContextEncoder`
+
+- converte enums em IDs;
+- normaliza features;
+- valida ranges;
+- gera vetor;
+- registra versão.
+
+### `MlMoveV2InputBuilder`
+
+- combina features locais e macro;
+- mantém ordem exata;
+- aplica máscara;
+- valida shape;
+- rejeita NaN e Infinity;
+- preserva `float32`.
+
+### `MlMoveModelVersionManager`
+
+- carrega V1 ou V2;
+- valida contrato;
+- verifica shapes;
+- controla rollback;
+- impede modelo incompatível.
+
+---
+
+# 25. Contrato Python e C#
+
+Criar uma única fonte de verdade para:
+
+- nomes;
+- ordem;
+- tipos;
+- normalização;
+- shapes;
+- enums;
+- versão.
+
+Arquivos sugeridos:
+
+    contracts/mlmove_v2_features.json
+    contracts/mlmove_v2_actions.json
+    contracts/mlmove_v2_context_enums.json
+
+O Python e o C# devem consumir ou validar esses contratos.
+
+Teste obrigatório:
+
+    mesmo sample bruto
+    → tensor Python
+    → tensor C#
+    → igualdade dentro da tolerância
+
+---
+
+# 26. Exportação ONNX
+
+Durante exportação:
+
+1. carregar best checkpoint;
+2. colocar modelo em eval;
+3. usar inputs representativos;
+4. exportar com nomes claros;
+5. validar shapes;
+6. executar inferência PyTorch;
+7. executar inferência ONNX;
+8. comparar logits;
+9. validar classes;
+10. medir latência;
+11. gerar hash;
+12. fazer deploy atômico.
+
+Inputs sugeridos:
+
+    local_features
+    macro_context
+    role_context
+    objective_context
+    formation_context
+    player_mask
+
+Outputs:
+
+    logits_0ms
+    logits_125ms
+    logits_250ms
+
+---
+
+# 27. Validação PyTorch versus ONNX
+
+Para um conjunto de amostras:
+
+    max_absolute_error
+    mean_absolute_error
+    top1_agreement
+    top3_overlap
+
+Critérios iniciais:
+
+- alta concordância Top-1;
+- erro numérico pequeno;
+- nenhuma troca sistemática de classes;
+- nenhuma divergência causada pela ordem das features.
+
+---
+
+# 28. Versionamento dos dados
+
+Estrutura sugerida:
+
+    datasets/
+      de_mirage/
+        v1_local_only/
+        v2_macro_conditioned/
+
+Manifests:
+
+    dataset_manifest_v2.json
+    train_split_v2.json
+    validation_split_v2.json
+    test_split_v2.json
+    class_distribution_v2.json
+    tactic_distribution_v2.json
+    role_distribution_v2.json
+    label_quality_report_v2.json
+
+Nunca sobrescrever os dados V1.
+
+---
+
+# 29. Pipeline futuro
+
+Etapas:
+
+## Fase 1: telemetria e análise do modelo atual
+
+- finalizar V4.1.3;
+- rodar smoke test;
+- rodar teste de 15 rounds;
+- rodar partidas completas;
+- medir V1 por contexto macro;
+- identificar falhas reais.
+
+## Fase 2: extrator macro
+
+- reconstruir rounds das demos;
+- calcular trajetórias coletivas;
+- detectar bombsite;
+- detectar ritmo;
+- detectar segmentos;
+- inferir papéis;
+- calcular confiança;
+- gerar manifests.
+
+## Fase 3: auditoria dos labels
+
+- visualizar rounds;
+- revisar amostras;
+- medir precisão;
+- corrigir heurísticas;
+- excluir baixa confiança.
+
+## Fase 4: dataset V2
+
+- separar por demo;
+- extrair features;
+- balancear;
+- validar contratos;
+- gerar shards;
+- gerar métricas de distribuição.
+
+## Fase 5: modelo V2
+
+- adicionar encoders;
+- treinar;
+- validar;
+- comparar baselines;
+- executar ablations;
+- selecionar checkpoint.
+
+## Fase 6: exportação
+
+- exportar ONNX;
+- comparar com PyTorch;
+- medir latência;
+- validar contrato.
+
+## Fase 7: shadow mode
+
+- executar V1 e V2;
+- não permitir controle do V2;
+- comparar decisões;
+- analisar divergências.
+
+## Fase 8: canary
+
+- um bot;
+- um time;
+- todos os bots;
+- rollback disponível.
+
+## Fase 9: homologação
+
+- smoke test;
+- 15 rounds;
+- partida completa;
+- múltiplas partidas;
+- aprovação por métricas.
+
+---
+
+# 30. Riscos
+
+## Risco 1: labels macro incorretos
+
+Mitigação:
+
+- confiança;
+- revisão manual;
+- exclusão de baixa confiança;
+- métricas por classe.
+
+## Risco 2: vazamento entre treino e validação
+
+Mitigação:
+
+- split por demo e partida;
+- manifests imutáveis;
+- verificação de hashes.
+
+## Risco 3: contexto macro dominar estado local
+
+Mitigação:
+
+- ablations;
+- dropout de contexto;
+- pesos moderados;
+- testes de segurança local.
+
+O modelo não deve avançar cegamente em um molotov apenas porque a tática é Rush B.
+
+## Risco 4: muitas categorias
+
+Mitigação:
+
+- começar com taxonomia pequena;
+- expandir apenas com dados suficientes;
+- agrupar classes raras.
+
+## Risco 5: alta latência
+
+Mitigação:
+
+- embeddings pequenos;
+- benchmark;
+- quantização apenas após validação;
+- shadow mode.
+
+## Risco 6: conflito com arbitrador
+
+Mitigação:
+
+- ONNX continua publicando `LocalMicroMove`;
+- macro permanece externo;
+- prioridade explícita;
+- tracker físico.
+
+## Risco 7: overfitting por time ou jogador
+
+Mitigação:
+
+- test sets não vistos;
+- split por evento;
+- regularização;
+- análise por jogador/time.
+
+---
+
+# 31. Estratégia intermediária sem retreinamento
+
+Antes do V2, é possível usar contexto macro apenas no arbitrador.
+
+Exemplos:
+
+## Rush + Executing
+
+- limitar StandStill prolongado;
+- aumentar prioridade de navegação;
+- reduzir holds não autorizados;
+- preservar Counter-Strafe;
+- preservar recuo de segurança;
+- preservar recovery.
+
+## Slow + Staging
+
+- permitir shift;
+- permitir jiggle;
+- permitir hold autorizado;
+- reduzir avanço excessivo;
+- proteger utilitárias.
+
+## AWPer + Covering
+
+- permitir hold mais longo;
+- exigir linha de visão para Counter-Strafe;
+- evitar convergência no mesmo waypoint do Entry;
+- preservar distância de cobertura.
+
+## Lurker + Waiting
+
+- impedir convergência prematura;
+- permitir micropeek;
+- manter setor;
+- avançar apenas após trigger.
+
+Essa fase poderá indicar quais features serão mais úteis no V2.
+
+---
+
+# 32. Checklist antes de iniciar o projeto V2
+
+Não iniciar antes de:
+
+- [ ] V4.1.3 estável;
+- [ ] zero vazamento pós-round;
+- [ ] tracker físico confiável;
+- [ ] arbitrador estável;
+- [ ] ações previstas e executadas separadas;
+- [ ] logs de 5 rounds aprovados;
+- [ ] logs de 15 rounds aprovados;
+- [ ] pelo menos uma partida completa analisada;
+- [ ] ONNX V1 avaliado por contexto;
+- [ ] lacunas contextuais comprovadas;
+- [ ] contratos atuais documentados;
+- [ ] splits por demo auditados;
+- [ ] distribuição de classes conhecida.
+
+---
+
+# 33. Critério para decidir se o V2 é realmente necessário
+
+Criar V2 apenas se os logs comprovarem padrões como:
+
+- ONNX produz StandStill excessivo em Rush;
+- ONNX avança excessivamente durante hold autorizado;
+- Entry e AWPer recebem ações locais inadequadamente semelhantes;
+- staging e executing não são diferenciados;
+- save e retake recebem padrões semelhantes;
+- lurker abandona posição por micromovimento;
+- macro goal é preservado, mas comportamento local continua inadequado;
+- falha ocorre após a ação ter sido corretamente emitida e executada.
+
+Se o problema for:
+
+- ação sobrescrita;
+- usercmd bloqueado;
+- GoalPosition errado;
+- stuck;
+- conflito de prioridade;
+- telemetria incorreta;
+
+a correção continua sendo no C#, não no treinamento.
+
+---
+
+# 34. Critério de conclusão futura
+
+O projeto V2 será considerado concluído quando:
+
+1. contexto macro estiver corretamente rotulado;
+2. splits não tiverem vazamento;
+3. contrato Python/C# for idêntico;
+4. modelo superar V1 nas métricas contextuais;
+5. modelo não regredir no geral;
+6. ONNX for equivalente ao PyTorch;
+7. shadow mode for aprovado;
+8. canary não revelar regressões;
+9. partidas completas preservarem diversidade tática;
+10. rollback estiver validado.
+
+---
+
+# 35. Resumo executivo
+
+A evolução futura não consiste em ensinar o ONNX a escolher a tática completa.
+
+A solução recomendada é:
+
+    planejador macro continua escolhendo:
+    - estratégia;
+    - ritmo;
+    - bombsite;
+    - papéis;
+    - objetivos;
+
+    ONNX V2 passa a receber:
+    - estratégia;
+    - ritmo;
+    - papel;
+    - fase;
+    - urgência;
+    - formação;
+    - estado da C4;
+
+    ONNX V2 continua escolhendo:
+    - micromovimento local;
+    - strafe;
+    - recuo;
+    - avanço;
+    - duck;
+    - jump;
+    - standstill;
+    - shift;
+
+    arbitrador continua decidindo:
+    - qual intenção vence;
+    - quando a segurança supera a tática;
+    - quando recovery é necessário;
+    - quando preservar objetivo macro.
+
+Essa arquitetura mantém o sistema:
+
+- explicável;
+- depurável;
+- modular;
+- seguro;
+- compatível com o planejamento atual;
+- capaz de reproduzir comportamentos diferentes para Entry, AWPer, Lurker, Rotator, Anchor, Support e portador da C4 dentro da mesma tática.

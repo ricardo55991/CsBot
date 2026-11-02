@@ -29,4 +29,17 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="V4_2_4_PrecisionTests.cs" />
+    <Compile Remove="V4_2_5_PrecisionTests.cs" />
+    <Compile Remove="V4_2_6_PrecisionTests.cs" />
+    <Compile Remove="V4_2_7_PrecisionTests.cs" />
+    <Compile Remove="V4_2_ComprehensiveTests.cs" />
+    <Compile Remove="V4_2_DeepValidationTests.cs" />
+    <Compile Remove="EconomyAndIglTests.cs" />
+    <Compile Remove="MovementArbitrationAndStuckTests.cs" />
+    <Compile Remove="MovementExecutionTrackerTests.cs" />
+    <Compile Remove="TickDeltaAndAppliedIntentTests.cs" />
+  </ItemGroup>
+
 </Project>
