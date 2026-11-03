@@ -53,7 +53,7 @@ public class PacingAndFallbackController
             if (!enemyBot.IsValid || !enemyBot.PawnIsAlive) continue;
             var role = _roleManager.GetBotRole(enemyBot);
             TacticalSpot? enemySpot = null;
-            if (role != null && enemyPlan.BotOrders.TryGetValue(RoleManager.GetOrderKey(role.Value), out var order))
+            if (enemyPlan.TryGetOrderForBot(enemyBot.Slot, role, out var order))
             {
                 enemySpot = _mapProfileManager.GetSpotById(order.StagingSpotId);
             }
@@ -87,7 +87,7 @@ public class PacingAndFallbackController
         {
             if (!bot.IsValid || !bot.PawnIsAlive) continue;
             var role = _roleManager.GetBotRole(bot);
-            if (role != null && plan.BotOrders.TryGetValue(RoleManager.GetOrderKey(role.Value), out var order))
+            if (plan.TryGetOrderForBot(bot.Slot, role, out var order))
             {
                 var stagingSpot = _mapProfileManager.GetSpotById(order.StagingSpotId);
                 if (stagingSpot != null)
@@ -103,7 +103,7 @@ public class PacingAndFallbackController
         {
             var flankBot = teamBots.FirstOrDefault(b => _roleManager.GetBotRole(b) == BotRole.Anchor) ?? teamBots.Last();
             var role = _roleManager.GetBotRole(flankBot);
-            if (role != null && plan.BotOrders.TryGetValue(RoleManager.GetOrderKey(role.Value), out var order))
+            if (plan.TryGetOrderForBot(flankBot.Slot, role, out var order) && !order.HasBomb)
             {
                 order.IsWatchingFlank = true;
                 order.Stance = EngagementStance.PASSIVE_HOLD;
@@ -144,7 +144,7 @@ public class PacingAndFallbackController
             foreach (var bot in teamBots.Where(b => b.PawnIsAlive))
             {
                 var role = _roleManager.GetBotRole(bot);
-                if (role != null && _currentPlan.BotOrders.TryGetValue(RoleManager.GetOrderKey(role.Value), out var order))
+                if (_currentPlan.TryGetOrderForBot(bot.Slot, role, out var order))
                 {
                     if (!order.IsWatchingFlank)
                     {
@@ -178,8 +178,7 @@ public class PacingAndFallbackController
         var role = _roleManager.GetBotRole(victim);
         if (role == null || _currentPlan == null) return;
 
-        string key = RoleManager.GetOrderKey(role.Value);
-        if (!_currentPlan.BotOrders.TryGetValue(key, out var order)) return;
+        if (!_currentPlan.TryGetOrderForBot(victim.Slot, role, out var order)) return;
 
         if (order.IsFallingBack) return;
 
@@ -236,20 +235,16 @@ public class PacingAndFallbackController
         {
             if (!bot.IsValid || !bot.PawnIsAlive) continue;
             var role = _roleManager.GetBotRole(bot);
-            if (role != null)
+            if (_currentPlan.TryGetOrderForBot(bot.Slot, role, out var order))
             {
-                string key = RoleManager.GetOrderKey(role.Value);
-                if (_currentPlan.BotOrders.TryGetValue(key, out var order))
+                if (!order.IsFallingBack)
                 {
-                    if (!order.IsFallingBack)
+                    order.Stance = EngagementStance.AGGRESSIVE_POKE;
+                    var execSpot = _mapProfileManager.GetSpotById(order.ExecuteSpotId);
+                    // C-01C: Avanço físico via NavMesh no lugar de Teleport()
+                    if (execSpot != null)
                     {
-                        order.Stance = EngagementStance.AGGRESSIVE_POKE;
-                        var execSpot = _mapProfileManager.GetSpotById(order.ExecuteSpotId);
-                        // C-01C: Avanço físico via NavMesh no lugar de Teleport()
-                        if (execSpot != null)
-                        {
-                            _locomotionDriver.NavigateToSpot(bot, execSpot, hurry: true, EngagementStance.AGGRESSIVE_POKE);
-                        }
+                        _locomotionDriver.NavigateToSpot(bot, execSpot, hurry: true, EngagementStance.AGGRESSIVE_POKE);
                     }
                 }
             }

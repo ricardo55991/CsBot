@@ -47,6 +47,8 @@ public enum BuyCompletionState
 
 public enum TacticalDecisionSource
 {
+    UTILITY_AI_ENGINE,
+    FAST_LEXICAL_ROUTER,
     OLLAMA,
     FALLBACK_PRESET,
     CACHE,
@@ -203,6 +205,11 @@ public class RoundHistoryItem
     public string WinReason { get; set; } = string.Empty;
     public string? PlantedSite { get; set; }
     public string TacticUsed { get; set; } = string.Empty;
+    public string CtTacticId { get; set; } = string.Empty;
+    public string TrTacticId { get; set; } = string.Empty;
+    public string AttackedSite { get; set; } = "None"; // "A", "B", "Mid", "None"
+    public string FirstCtDeathSector { get; set; } = "None"; // "A", "B", "Mid", "None"
+    public int SurvivingWinnersCount { get; set; } = 0;
     public RoundTempo TempoUsed { get; set; } = RoundTempo.SLOW_DEFAULT;
 }
 
@@ -319,7 +326,28 @@ public class TacticalPlan
     public string FlankCoverSpotId { get; set; } = string.Empty;
 
     [JsonPropertyName("bot_orders")]
-    public Dictionary<string, BotTacticalOrder> BotOrders { get; set; } = new();
+    public Dictionary<string, BotTacticalOrder> BotOrders { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+
+    public bool TryGetOrderForBot(int slot, BotRole? role, out BotTacticalOrder order)
+    {
+        if (BotOrders.TryGetValue($"slot_{slot}", out order!))
+        {
+            return true;
+        }
+        if (role != null)
+        {
+            if (BotOrders.TryGetValue(RoleManager.GetOrderKey(role.Value), out order!))
+            {
+                return true;
+            }
+            if (BotOrders.TryGetValue(role.Value.ToString(), out order!))
+            {
+                return true;
+            }
+        }
+        order = null!;
+        return false;
+    }
 
     [JsonIgnore]
     public Dictionary<int, CtFormationAssignment> CtFormationAssignments { get; } = new();

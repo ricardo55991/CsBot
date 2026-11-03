@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json;
+using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Utils;
 
 namespace CsBotManager;
@@ -48,6 +49,7 @@ public class OllamaIglService
     private readonly HttpClient _httpClient;
     public MatchTelemetryLogger? TelemetryLogger { get; set; }
     public BotSystemConfig Config { get; set; } = BotSystemConfig.Default;
+    public TacticalUtilityIglEngine UtilityEngine { get; } = new(BotSystemConfig.Default);
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -74,7 +76,7 @@ public class OllamaIglService
         };
     }
 
-    public void RecordRoundResult(int roundNumber, CsTeam winner, string winReason, string? site, string tactic, RoundTempo tempo)
+    public void RecordRoundResult(int roundNumber, CsTeam winner, string winReason, string? site, string tactic, RoundTempo tempo, string ctTacticId = "", string trTacticId = "", string attackedSite = "None", string firstCtDeathSector = "None", int survivingWinnersCount = 0)
     {
         lock (_historyLock)
         {
@@ -85,13 +87,19 @@ public class OllamaIglService
                 WinReason = winReason,
                 PlantedSite = site,
                 TacticUsed = tactic,
-                TempoUsed = tempo
+                TempoUsed = tempo,
+                CtTacticId = ctTacticId,
+                TrTacticId = trTacticId,
+                AttackedSite = !string.IsNullOrEmpty(attackedSite) && attackedSite != "None" ? attackedSite : (site ?? "None"),
+                FirstCtDeathSector = firstCtDeathSector,
+                SurvivingWinnersCount = survivingWinnersCount
             });
 
             if (_history.Count > 8)
             {
                 _history.RemoveAt(0);
             }
+            UtilityEngine.RecordRoundOutcome(_history[^1]);
         }
     }
 
@@ -320,12 +328,32 @@ public class OllamaIglService
         TeamEconomySnapshot trEcon,
         MapProfileManager? mapProfileManager = null,
         Func<int>? tickProvider = null,
-        CancellationToken outerToken = default)
+        CancellationToken outerToken = default,
+        List<CCSPlayerController>? ctBots = null,
+        List<CCSPlayerController>? trBots = null)
     {
-        int startTick = tickProvider?.Invoke() ?? 0;
+        int startTick = tickProvider?.Invoke() ?? MatchTelemetryLogger.SafeTickCount;
 
-        // V4.2.1: Executa sequencialmente com timeout individual e desacoplado por time
-        // Como o Ollama serializa requisições se num_parallel=1, a execução ordenada garante que a espera na fila de TR não consuma o timeout de 8500ms
+        // V4.3: Decisão de início de round 100% síncrona e instantânea (< 0.05ms) via TacticalUtilityIglEngine!
+        // Sem chamadas HTTP automáticas ao Ollama no Freeze Time.
+        if (!Config.EnableAutoOllamaOnRoundStart)
+        {
+            var decisions = UtilityEngine.DecideRoundPlans(
+                internalRoundId,
+                roundNumber,
+                ctEcon,
+                trEcon,
+                ctBots,
+                trBots,
+                mapProfileManager,
+                startTick);
+
+            RecordTeamTacticUsed(CsTeam.CounterTerrorist, decisions.CtPlan.TacticName);
+            RecordTeamTacticUsed(CsTeam.Terrorist, decisions.TrPlan.TacticName);
+            return decisions;
+        }
+
+        // Caminho legado apenas se EnableAutoOllamaOnRoundStart for explicitamente ligado
         using var ctCts = CancellationTokenSource.CreateLinkedTokenSource(outerToken);
         ctCts.CancelAfter(Config.OllamaDecisionTimeoutMs);
 
@@ -361,6 +389,136 @@ public class OllamaIglService
             tickProvider: tickProvider);
 
         return (ctPlan, trPlan);
+    }
+
+    /// <summary>
+    /// Pipeline V4.3 de 3 Camadas para Comandos Humanos (Chat !tatica e Voz):
+    /// Camada 1: FastLexicalCommandRouter em C# (0.01ms, sem HTTP)
+    /// Camada 2: Classificador Ultrarrápido via Ollama (< 300ms, JSON de 15 tokens com num_predict=32, temp=0.1)
+    /// Camada 3: Fallback Determinístico via UtilityEngine
+    /// </summary>
+    public async Task<TacticalPlan> ProcessHumanCommandAsync(
+        CsTeam team,
+        string humanCommandText,
+        int internalRoundId,
+        int roundNumber,
+        TeamEconomySnapshot ownEcon,
+        TeamEconomySnapshot enemyEcon,
+        List<CCSPlayerController>? teamBots = null,
+        MapProfileManager? mapProfileManager = null,
+        int currentTick = 0,
+        CancellationToken cancellationToken = default)
+    {
+        var sw = Stopwatch.StartNew();
+
+        // CAMADA 1: Roteador Léxico Instantâneo em C# (0.01ms)
+        if (UtilityEngine.TryRouteHumanCommandLexically(team, humanCommandText, out string lexicalTacticId, out string lexicalReason))
+        {
+            sw.Stop();
+            var lexicalPlan = UtilityEngine.TryMaterializeById(
+                team,
+                lexicalTacticId,
+                internalRoundId,
+                roundNumber,
+                teamBots,
+                mapProfileManager,
+                currentTick,
+                TacticalDecisionSource.FAST_LEXICAL_ROUTER,
+                sw.Elapsed.TotalMilliseconds);
+
+            if (lexicalPlan != null)
+            {
+                lexicalPlan.SelectionReason = $"{lexicalReason} (input=\"{humanCommandText}\")";
+                RecordTeamTacticUsed(team, lexicalPlan.TacticName);
+                return lexicalPlan;
+            }
+        }
+
+        // CAMADA 2: Classificador Ultrarrápido via Ollama (< 300ms, num_predict=32, temp=0.1)
+        try
+        {
+            string mapName = mapProfileManager?.CurrentProfile?.MapName ?? "de_mirage";
+            var catalog = UtilityEngine.GetCatalogForMap(mapName);
+            string validIds = team == CsTeam.CounterTerrorist
+                ? string.Join(", ", catalog.CtTactics.Select(t => t.TacticId))
+                : string.Join(", ", catalog.TrTactics.Select(t => t.TacticId));
+
+            string prompt = $"Classifique a call de CS2 do jogador ({team}) no mapa {mapName}: \"{humanCommandText}\". " +
+                            $"Responda APENAS JSON: {{\"tactic_id\":\"ID\",\"target_site\":\"A|B|MID\"}} escolhendo 1 ID de: [{validIds}].";
+
+            foreach (string modelToTry in new[] { Config.HumanClassifierPreferredModel, Config.HumanClassifierFallbackModel }.Distinct())
+            {
+                var requestBody = new
+                {
+                    model = modelToTry,
+                    prompt = prompt,
+                    stream = false,
+                    format = "json",
+                    keep_alive = -1,
+                    options = new
+                    {
+                        temperature = 0.1,
+                        num_predict = 32,
+                        num_ctx = 512
+                    }
+                };
+
+                using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                cts.CancelAfter(TimeSpan.FromSeconds(Math.Max(0.5f, Config.HumanClassifierTimeoutSeconds)));
+
+                var response = await _httpClient.PostAsJsonAsync(OllamaEndpoint, requestBody, cts.Token);
+                if (!response.IsSuccessStatusCode)
+                    continue; // Se qwen2.5:1.5b não estiver baixado (404), tenta imediatamente qwen2.5:3b!
+
+                var content = await response.Content.ReadFromJsonAsync<JsonElement>(cancellationToken: cts.Token);
+                if (content.TryGetProperty("response", out var rawJsonProp))
+                {
+                    string jsonText = CleanMarkdownJson(rawJsonProp.GetString() ?? string.Empty);
+                    using var doc = JsonDocument.Parse(jsonText);
+                    if (doc.RootElement.TryGetProperty("tactic_id", out var tacticIdProp))
+                    {
+                        string classifiedId = tacticIdProp.GetString() ?? string.Empty;
+                        sw.Stop();
+                        var classifiedPlan = UtilityEngine.TryMaterializeById(
+                            team,
+                            classifiedId,
+                            internalRoundId,
+                            roundNumber,
+                            teamBots,
+                            mapProfileManager,
+                            currentTick,
+                            TacticalDecisionSource.OLLAMA,
+                            sw.Elapsed.TotalMilliseconds,
+                            mapName);
+
+                        if (classifiedPlan != null)
+                        {
+                            classifiedPlan.SelectionReason = $"OllamaFastClassifier({modelToTry}):{classifiedId} (input=\"{humanCommandText}\", {sw.Elapsed.TotalMilliseconds:F1}ms)";
+                            RecordTeamTacticUsed(team, classifiedPlan.TacticName);
+                            return classifiedPlan;
+                        }
+                    }
+                }
+            }
+        }
+        catch
+        {
+            // Se o Ollama estiver offline ou exceder o timeout curto, cai silenciosamente para a Camada 3
+        }
+
+        // CAMADA 3: Fallback instantâneo via UtilityEngine
+        var fallbackPlan = UtilityEngine.DecideTeamPlan(
+            team,
+            internalRoundId,
+            roundNumber,
+            ownEcon,
+            enemyEcon,
+            teamBots,
+            mapProfileManager,
+            currentTick);
+        fallbackPlan.IsCustomPlayerCall = true;
+        RecordTeamTacticUsed(team, fallbackPlan.TacticName);
+        return fallbackPlan;
     }
 
     public async Task<TacticalPlan> GetTacticalDecisionAsync(
@@ -965,7 +1123,7 @@ Responda APENAS um JSON válido seguindo esta estrutura:
                 {
                     TargetArea = "Apartments B",
                     RoleAction = "Cover B apps long angle",
-                    StagingSpotId = "tr_staging_b_apps_kitchen",
+                    StagingSpotId = "tr_staging_b_apartments_kitchen",
                     ExecuteSpotId = "tr_exec_b_site_plant",
                     Stance = EngagementStance.PASSIVE_HOLD
                 };
@@ -973,7 +1131,7 @@ Responda APENAS um JSON válido seguindo esta estrutura:
                 {
                     TargetArea = "Bombsite B",
                     RoleAction = "Entry B Van and Default",
-                    StagingSpotId = "tr_staging_b_apps_balcony",
+                    StagingSpotId = "tr_staging_b_apartments_house",
                     ExecuteSpotId = "tr_exec_b_site_plant",
                     Stance = EngagementStance.AGGRESSIVE_POKE
                 };
@@ -981,7 +1139,7 @@ Responda APENAS um JSON válido seguindo esta estrutura:
                 {
                     TargetArea = "Bombsite B",
                     RoleAction = "Trade entry and plant C4 on B",
-                    StagingSpotId = "tr_staging_b_apps_kitchen",
+                    StagingSpotId = "tr_staging_b_apartments_kitchen",
                     ExecuteSpotId = "tr_exec_b_site_plant",
                     Stance = EngagementStance.JIGGLE_INFO
                 };
@@ -1016,7 +1174,7 @@ Responda APENAS um JSON válido seguindo esta estrutura:
                 {
                     TargetArea = "Bombsite B",
                     RoleAction = "Advance Apartments B with C4",
-                    StagingSpotId = "tr_staging_b_apps_kitchen",
+                    StagingSpotId = "tr_staging_b_apartments_kitchen",
                     ExecuteSpotId = "tr_exec_b_site_plant",
                     Stance = EngagementStance.JIGGLE_INFO
                 };

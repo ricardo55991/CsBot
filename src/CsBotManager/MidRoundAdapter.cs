@@ -114,45 +114,77 @@ public class MidRoundAdapter
         _fakeTimer?.Kill();
         _fakeTimer = null;
 
+        // Rematerializa ordens individuais dos 5 bots TR vivos (incluindo o carrier real após spawn)
+        CCSPlayerController? bombCarrier = trBots.FirstOrDefault(b => HasC4(b));
+        int carrierSlot = bombCarrier?.Slot ?? -1;
+        TacticalOrderMaterializer.MaterializeTrOrders(plan, trBots, carrierSlot, _mapProfileManager, MatchTelemetryLogger.SafeTickCount);
+
         if (plan.TrTacticType == TrTacticType.SPLIT_FAKE)
         {
-            plan.FakeTargetSite = "A";
-            plan.RealTargetSite = "B";
-            Server.PrintToChatAll($" {ChatColors.Gold}[TR Tática]{ChatColors.Default} Plano definido: {ChatColors.Yellow}SPLIT FAKE (Simula A -> Executa B){ChatColors.Default}!");
+            if (string.IsNullOrEmpty(plan.FakeTargetSite)) plan.FakeTargetSite = "A";
+            if (string.IsNullOrEmpty(plan.RealTargetSite)) plan.RealTargetSite = "B";
+            Server.PrintToChatAll($" {ChatColors.Gold}[TR Tática]{ChatColors.Default} Plano definido: {ChatColors.Yellow}SPLIT FAKE (Simula {plan.FakeTargetSite} -> Executa {plan.RealTargetSite}){ChatColors.Default}!");
         }
     }
 
     public void OnRoundFreezeEnd(TacticalPlan plan, List<CCSPlayerController> trBots, List<CCSPlayerController> ctBots, CCSPlayerController? human)
     {
-        if (plan.TrTacticType != TrTacticType.SPLIT_FAKE || trBots.Count < 2) return;
-
-        // Identifica portador da C4
+        // Re-sincroniza o portador real da C4 após o término do Freeze Time
         CCSPlayerController? bombCarrier = trBots.FirstOrDefault(b => HasC4(b));
         if (bombCarrier == null && human != null && HasC4(human))
         {
             bombCarrier = human;
         }
+        int carrierSlot = bombCarrier?.Slot ?? -1;
+        TacticalOrderMaterializer.MaterializeTrOrders(plan, trBots, carrierSlot, _mapProfileManager, MatchTelemetryLogger.SafeTickCount);
 
-        // Separa Grupo Barulho (2 bots sem C4)
+        if (plan.TrTacticType != TrTacticType.SPLIT_FAKE || trBots.Count < 2) return;
+
+        string fakeSite = !string.IsNullOrEmpty(plan.FakeTargetSite) ? plan.FakeTargetSite : "A";
+        string realSite = !string.IsNullOrEmpty(plan.RealTargetSite) ? plan.RealTargetSite : "B";
+        string fakeArea = $"Bombsite {fakeSite}";
+        string realArea = $"Bombsite {realSite}";
+
+        // Separa Grupo Barulho (2 bots sem C4 — o portador da C4 NUNCA entra em noiseBots!)
         var noiseBots = trBots
             .Where(b => bombCarrier == null || b.Slot != bombCarrier.Slot)
-            .Take(2)
+            .Where(b => plan.TryGetOrderForBot(b.Slot, _roleManager.GetBotRole(b), out var ord) && ord.IsNoiseGroup)
             .ToList();
+
+        if (noiseBots.Count == 0)
+        {
+            noiseBots = trBots
+                .Where(b => bombCarrier == null || b.Slot != bombCarrier.Slot)
+                .Take(2)
+                .ToList();
+        }
 
         foreach (var bot in noiseBots)
         {
             var role = _roleManager.GetBotRole(bot);
-            if (role != null && plan.BotOrders.TryGetValue(RoleManager.GetOrderKey(role.Value), out var order))
+            if (plan.TryGetOrderForBot(bot.Slot, role, out var order))
             {
                 order.IsNoiseGroup = true;
-                order.TargetArea = "Bombsite A";
+                order.HasBomb = false;
+                order.TargetArea = fakeArea;
                 order.Stance = EngagementStance.AGGRESSIVE_POKE;
             }
         }
 
-        Server.PrintToChatAll($" {ChatColors.Yellow}[TR Fake Group]{ChatColors.Default} Grupo Barulho ({string.Join(", ", noiseBots.Select(b => b.PlayerName))}) avançando para simular entrada no Bomb A!");
+        if (bombCarrier != null && bombCarrier.IsBot)
+        {
+            var carrierRole = _roleManager.GetBotRole(bombCarrier);
+            if (plan.TryGetOrderForBot(bombCarrier.Slot, carrierRole, out var carrierOrd))
+            {
+                carrierOrd.IsNoiseGroup = false;
+                carrierOrd.HasBomb = true;
+                carrierOrd.TargetArea = realArea;
+            }
+        }
 
-        // 6.0s após saída do spawn: Grupo Barulho faz barulho em A e em seguida recua (F-006: AddRoundTimer)
+        Server.PrintToChatAll($" {ChatColors.Yellow}[TR Fake Group]{ChatColors.Default} Grupo Barulho ({string.Join(", ", noiseBots.Select(b => b.PlayerName))}) avançando para simular entrada no Bomb {fakeSite}!");
+
+        // 6.0s após saída do spawn: Grupo Barulho faz barulho no site falso e em seguida recua (F-006: AddRoundTimer)
         _fakeTimer = _plugin.AddRoundTimer(6.0f, () =>
         {
             foreach (var bot in noiseBots)
@@ -162,17 +194,17 @@ public class MidRoundAdapter
             }
 
             // C-02B: Correção do bug de friendly-fire lógico. Passa ctBots para o CtDefenseController!
-            _ctController.ReportBombPressure("Bombsite A", plan, ctBots);
-            Server.PrintToChatAll($" {ChatColors.Gold}[TR Fake]{ChatColors.Default} Utilitárias caíram no A! Barulho concluído. Grupo de barulho recuando com vida!");
+            _ctController.ReportBombPressure(fakeArea, plan, ctBots);
+            Server.PrintToChatAll($" {ChatColors.Gold}[TR Fake]{ChatColors.Default} Utilitárias caíram no {fakeSite}! Barulho concluído. Grupo de barulho recuando com vida!");
 
-            // 4.0s depois do fake: Grupo Silencioso com C4 explode no Bomb B (F-006: AddRoundTimer)
+            // 4.0s depois do fake: Grupo Silencioso com C4 explode no Bomb real (F-006: AddRoundTimer)
             _plugin.AddRoundTimer(4.0f, () =>
             {
-                Server.PrintToChatAll($" {ChatColors.Green}[TR Fake]{ChatColors.Default} ⚡ {ChatColors.Gold}HORA DO VERDADEIRO EXECUTE NO BOMB B!{ChatColors.Default} Entrada coordenada!");
+                Server.PrintToChatAll($" {ChatColors.Green}[TR Fake]{ChatColors.Default} ⚡ {ChatColors.Gold}HORA DO VERDADEIRO EXECUTE NO BOMB {realSite}!{ChatColors.Default} Entrada coordenada!");
 
                 foreach (var bot in trBots.Where(b => !noiseBots.Contains(b)))
                 {
-                    ApplyAction(bot, MidRoundAction.RUSH_TRADE, "Bombsite B");
+                    ApplyAction(bot, MidRoundAction.RUSH_TRADE, realArea);
                 }
             });
         });

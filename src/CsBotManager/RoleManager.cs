@@ -223,42 +223,146 @@ public class RoleManager
 
         _claimedPositions[player.Slot] = resolvedTarget;
 
+        bool humanClaimedMid = resolvedTarget.Contains("Mid", StringComparison.OrdinalIgnoreCase) ||
+                               resolvedTarget.Contains("Meio", StringComparison.OrdinalIgnoreCase) ||
+                               resolvedTarget.Contains("Janela", StringComparison.OrdinalIgnoreCase) ||
+                               resolvedTarget.Contains("Conector", StringComparison.OrdinalIgnoreCase) ||
+                               sectorName.Contains("meio", StringComparison.OrdinalIgnoreCase) ||
+                               sectorName.Contains("janela", StringComparison.OrdinalIgnoreCase);
+
+        bool humanClaimedB = !humanClaimedMid &&
+                             (resolvedTarget.Contains("B", StringComparison.OrdinalIgnoreCase) ||
+                              resolvedTarget.Contains("Tapete", StringComparison.OrdinalIgnoreCase) ||
+                              resolvedTarget.Contains("Mercado", StringComparison.OrdinalIgnoreCase) ||
+                              resolvedTarget.Contains("Van", StringComparison.OrdinalIgnoreCase) ||
+                              sectorName.Equals("b", StringComparison.OrdinalIgnoreCase));
+
+        bool humanClaimedA = !humanClaimedMid && !humanClaimedB;
+
         foreach (var bot in teamBots)
         {
-            if (_botRoles.TryGetValue(bot.Slot, out var role))
+            var role = GetBotRole(bot) ?? BotRole.Rotator;
+            if (!plan.TryGetOrderForBot(bot.Slot, role, out var order))
             {
-                string key = GetOrderKey(role);
-                if (plan.BotOrders.TryGetValue(key, out var order))
+                continue;
+            }
+
+            bool botIsInTarget = order.TargetArea.Equals(resolvedTarget, StringComparison.OrdinalIgnoreCase) ||
+                                 order.TargetArea.Contains(sectorName, StringComparison.OrdinalIgnoreCase) ||
+                                 resolvedTarget.Contains(order.TargetArea, StringComparison.OrdinalIgnoreCase) ||
+                                 (humanClaimedMid && (order.TargetArea.Contains("Mid", StringComparison.OrdinalIgnoreCase) || order.TargetArea.Contains("Janela", StringComparison.OrdinalIgnoreCase))) ||
+                                 (humanClaimedB && order.TargetArea.Contains("B", StringComparison.OrdinalIgnoreCase)) ||
+                                 (humanClaimedA && order.TargetArea.Contains("A", StringComparison.OrdinalIgnoreCase));
+
+            if (!botIsInTarget) continue;
+
+            string alternativeArea;
+            if (player.Team == CsTeam.CounterTerrorist)
+            {
+                // Conta quantos OUTROS bots vivos estão atualmente no A, no Meio e no B para manter 2A - 1 Meio - 2B!
+                int countA = 0, countMid = 0, countB = 0;
+                foreach (var other in teamBots)
                 {
-                    if (order.TargetArea.Equals(resolvedTarget, StringComparison.OrdinalIgnoreCase) ||
-                        order.TargetArea.Contains(sectorName, StringComparison.OrdinalIgnoreCase) ||
-                        resolvedTarget.Contains(order.TargetArea, StringComparison.OrdinalIgnoreCase))
+                    if (other.Slot == bot.Slot) continue;
+                    var otherRole = GetBotRole(other) ?? BotRole.Rotator;
+                    if (plan.TryGetOrderForBot(other.Slot, otherRole, out var otherOrd))
                     {
-                        string alternativeArea = (player.Team == CsTeam.CounterTerrorist)
-                            ? (resolvedTarget.Contains("Mid") || resolvedTarget.Contains("Janela") ? "Conector" : "Bombsite A")
-                            : (resolvedTarget.Contains("A") ? "Bombsite B" : "Top Mid");
-
-                        order.TargetArea = alternativeArea;
-                        order.RoleAction = $"Cedendo {resolvedTarget} para {player.PlayerName}; reforçando {alternativeArea}";
-
-                        var newStagingSpot = mapProfileManager.GetMatchingSpotForOrder(role, alternativeArea, player.Team, true);
-                        var newExecSpot = mapProfileManager.GetMatchingSpotForOrder(role, alternativeArea, player.Team, false);
-
-                        if (newStagingSpot != null)
-                        {
-                            order.StagingSpotId = newStagingSpot.Id;
-                            order.Stance = newStagingSpot.RecommendedStance;
-                            order.FallbackSpotId = newStagingSpot.FallbackSpotId ?? order.FallbackSpotId;
-                        }
-                        if (newExecSpot != null)
-                        {
-                            order.ExecuteSpotId = newExecSpot.Id;
-                        }
-
-                        return true;
+                        if (otherOrd.TargetArea.Contains("Mid", StringComparison.OrdinalIgnoreCase) || otherOrd.TargetArea.Contains("Janela", StringComparison.OrdinalIgnoreCase) || otherOrd.TargetArea.Contains("Conector", StringComparison.OrdinalIgnoreCase))
+                            countMid++;
+                        else if (otherOrd.TargetArea.Contains("B", StringComparison.OrdinalIgnoreCase) || otherOrd.TargetArea.Contains("Tapete", StringComparison.OrdinalIgnoreCase))
+                            countB++;
+                        else
+                            countA++;
                     }
                 }
+
+                if (humanClaimedMid)
+                {
+                    // Se o humano foi para o Meio, os 4 bots devem fechar 2 no A e 2 no B!
+                    alternativeArea = countB < 2 ? "Bombsite B" : "Bombsite A";
+                }
+                else if (humanClaimedA)
+                {
+                    // Se o humano foi para o A, garante que o Meio tenha 1 ou o B tenha 2
+                    alternativeArea = countMid < 1 ? "Mid Window" : (countB < 2 ? "Bombsite B" : "Bombsite A");
+                }
+                else
+                {
+                    // Se o humano foi para o B, garante que o Meio tenha 1 ou o A tenha 2
+                    alternativeArea = countMid < 1 ? "Mid Window" : (countA < 2 ? "Bombsite A" : "Bombsite B");
+                }
             }
+            else
+            {
+                alternativeArea = resolvedTarget.Contains("A", StringComparison.OrdinalIgnoreCase) ? "Bombsite B" : "Top Mid";
+            }
+
+            // Escolhe um SpotId que ainda não esteja em uso por outro bot do time
+            var usedSpots = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var other in teamBots)
+            {
+                if (other.Slot == bot.Slot) continue;
+                var otherRole = GetBotRole(other) ?? BotRole.Rotator;
+                if (plan.TryGetOrderForBot(other.Slot, otherRole, out var otherOrd) && !string.IsNullOrEmpty(otherOrd.StagingSpotId))
+                {
+                    usedSpots.Add(otherOrd.StagingSpotId);
+                }
+            }
+
+            string teamSideStr = player.Team == CsTeam.CounterTerrorist ? "CT" : "TR";
+            var sectorSpots = mapProfileManager.GetSpotsForSector(alternativeArea, teamSideStr);
+            var newStagingSpot = sectorSpots.FirstOrDefault(s => !usedSpots.Contains(s.Id))
+                              ?? mapProfileManager.GetMatchingSpotForOrder(role, alternativeArea, player.Team, true);
+            var newExecSpot = mapProfileManager.GetMatchingSpotForOrder(role, alternativeArea, player.Team, false) ?? newStagingSpot;
+
+            string actionDesc = $"Cedendo {resolvedTarget} para {player.PlayerName}; recompondo formação em {alternativeArea}";
+
+            // Atualiza tanto a ordem de slot (V4.3) quanto a ordem de role e CtFormationAssignments
+            void ApplyUpdatedOrder(BotTacticalOrder targetOrd)
+            {
+                targetOrd.TargetArea = alternativeArea;
+                targetOrd.RoleAction = actionDesc;
+                if (newStagingSpot != null)
+                {
+                    targetOrd.StagingSpotId = newStagingSpot.Id;
+                    targetOrd.Stance = newStagingSpot.RecommendedStance;
+                    targetOrd.FallbackSpotId = newStagingSpot.FallbackSpotId ?? targetOrd.FallbackSpotId;
+                }
+                if (newExecSpot != null)
+                {
+                    targetOrd.ExecuteSpotId = newExecSpot.Id;
+                }
+            }
+
+            ApplyUpdatedOrder(order);
+            if (plan.BotOrders.TryGetValue($"slot_{bot.Slot}", out var slotOrder) && !ReferenceEquals(slotOrder, order))
+            {
+                ApplyUpdatedOrder(slotOrder);
+            }
+            if (plan.BotOrders.TryGetValue(GetOrderKey(role), out var roleOrder) && !ReferenceEquals(roleOrder, order))
+            {
+                ApplyUpdatedOrder(roleOrder);
+            }
+
+            if (player.Team == CsTeam.CounterTerrorist && newStagingSpot != null)
+            {
+                plan.CtFormationAssignments[bot.Slot] = new CtFormationAssignment
+                {
+                    Slot = bot.Slot,
+                    FormationRole = alternativeArea.Contains("B", StringComparison.OrdinalIgnoreCase)
+                        ? CtFormationRole.B2_Support
+                        : (alternativeArea.Contains("Mid", StringComparison.OrdinalIgnoreCase) ? CtFormationRole.Mid_Controller : CtFormationRole.A2_Support),
+                    AssignedSite = alternativeArea.Contains("B", StringComparison.OrdinalIgnoreCase)
+                        ? "B"
+                        : (alternativeArea.Contains("Mid", StringComparison.OrdinalIgnoreCase) ? "Mid" : "A"),
+                    InitialSpot = newStagingSpot.Id,
+                    ExecuteSpot = newExecSpot?.Id ?? newStagingSpot.Id,
+                    RotationPolicy = "HoldUntilTrigger",
+                    HoldMinimumDuration = 22.0f
+                };
+            }
+
+            return true;
         }
 
         return false;

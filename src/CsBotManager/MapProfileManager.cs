@@ -72,13 +72,13 @@ public class MapProfileManager
                         _spotsById = newSpots;
                     }
 
-                    Server.PrintToConsole($"[MapProfileManager] Perfil universal '{profile.FriendlyName}' carregado ({newSpots.Count} spots, {profile.Chokepoints.Count} chokepoints).");
+                    MatchTelemetryLogger.SafePrintToConsole($"[MapProfileManager] Perfil universal '{profile.FriendlyName}' carregado ({newSpots.Count} spots, {profile.Chokepoints.Count} chokepoints).");
                     return;
                 }
             }
             catch (Exception ex)
             {
-                Server.PrintToConsole($"[MapProfileManager] Erro ao ler perfil '{fileName}': {ex.Message}. Carregando perfil de contingência.");
+                MatchTelemetryLogger.SafePrintToConsole($"[MapProfileManager] Erro ao ler perfil '{fileName}': {ex.Message}. Carregando perfil de contingência.");
             }
         }
 
@@ -96,7 +96,7 @@ public class MapProfileManager
             _spotsById = fallbackSpots;
         }
 
-        Server.PrintToConsole($"[MapProfileManager] Perfil genérico universal ativado para '{cleanMap}' ({fallbackSpots.Count} spots).");
+        MatchTelemetryLogger.SafePrintToConsole($"[MapProfileManager] Perfil genérico universal ativado para '{cleanMap}' ({fallbackSpots.Count} spots).");
     }
 
     public TacticalSpot? GetSpotById(string? id)

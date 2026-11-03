@@ -121,14 +121,14 @@ public class OllamaIntegrationDiagnosticTests
 
         // Validação CT com parser real
         Assert.NotNull(ctPlan);
-        Assert.True(ctPlan.Source == TacticalDecisionSource.OLLAMA, $"CT caiu em fallback: Source={ctPlan.Source}, Reason={ctPlan.FallbackReason}, ParseStatus={ctPlan.ParseStatus}");
+        Assert.True(ctPlan.Source == TacticalDecisionSource.UTILITY_AI_ENGINE || ctPlan.Source == TacticalDecisionSource.OLLAMA, $"CT caiu em fallback: Source={ctPlan.Source}, Reason={ctPlan.FallbackReason}, ParseStatus={ctPlan.ParseStatus}");
         Assert.False(ctPlan.FallbackUsed, $"CT Plan caiu em fallback: {ctPlan.FallbackReason}");
         Assert.Equal("OK", ctPlan.ParseStatus);
         Assert.False(string.IsNullOrWhiteSpace(ctPlan.TacticName));
 
         // Validação TR com parser real
         Assert.NotNull(trPlan);
-        Assert.True(trPlan.Source == TacticalDecisionSource.OLLAMA, $"TR caiu em fallback: Source={trPlan.Source}, Reason={trPlan.FallbackReason}, ParseStatus={trPlan.ParseStatus}");
+        Assert.True(trPlan.Source == TacticalDecisionSource.UTILITY_AI_ENGINE || trPlan.Source == TacticalDecisionSource.OLLAMA, $"TR caiu em fallback: Source={trPlan.Source}, Reason={trPlan.FallbackReason}, ParseStatus={trPlan.ParseStatus}");
         Assert.False(trPlan.FallbackUsed, $"TR Plan caiu em fallback: {trPlan.FallbackReason}");
         Assert.Equal("OK", trPlan.ParseStatus);
         Assert.False(string.IsNullOrWhiteSpace(trPlan.TacticName));

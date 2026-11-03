@@ -68,10 +68,17 @@ public sealed class BotSystemConfig
     public int MaxStandardAwpPerTeam { get; set; } = 1;
     public int MaxDoubleAwpPerTeamCt { get; set; } = 2;
 
-    // 7. IGL / Ollama
+    // 7. IGL / Utility AI V4.3 & Ollama Human Classifier
+    public bool EnableAutoOllamaOnRoundStart { get; set; } = false; // V4.3: Desativado no Freeze Time!
+    public string HumanClassifierPreferredModel { get; set; } = "qwen2.5:1.5b";
+    public string HumanClassifierFallbackModel { get; set; } = "qwen2.5:3b";
+    public float UtilitySoftmaxTemperature { get; set; } = 0.65f;
+    public float RepetitionPenaltyImmediate { get; set; } = 35.0f; // round - 1
+    public float RepetitionPenaltyTwoRoundsAgo { get; set; } = 15.0f; // round - 2
+    public float HumanClassifierTimeoutSeconds { get; set; } = 1.5f;
     public float OllamaTimeoutSeconds { get; set; } = 8.5f;
     public int OllamaDecisionTimeoutMs => (int)(OllamaTimeoutSeconds * 1000.0f);
-    public float TacticRepetitionPenaltyScore { get; set; } = 32.0f;
+    public float TacticRepetitionPenaltyScore { get; set; } = 35.0f;
 
     public bool Validate(out List<string> errors)
     {

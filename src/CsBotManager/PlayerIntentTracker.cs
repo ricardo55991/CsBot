@@ -72,6 +72,29 @@ public class PlayerIntentTracker
                         _trackingTimer?.Kill();
                         _trackingTimer = null;
 
+                        foreach (var bot in teamBots)
+                        {
+                            if (!bot.IsValid || !bot.PawnIsAlive) continue;
+                            var role = _roleManager.GetBotRole(bot);
+                            if (plan.TryGetOrderForBot(bot.Slot, role, out var order))
+                            {
+                                var spot = _mapProfileManager.GetSpotById(order.StagingSpotId);
+                                if (spot != null)
+                                {
+                                    _plugin.LocomotionDriver?.NavigateToSpot(bot, spot, hurry: false, order.Stance);
+                                }
+                            }
+                        }
+
+                        HumanCommunicationLogger.RecordCommunication(
+                            "AUTO_INTENT",
+                            human.Team,
+                            Math.Max(1, plan.RoundId),
+                            $"Movimento detectado para {chokepoint.Name}",
+                            "PLAYER_INTENT_TRACKER",
+                            $"ClaimPosition({chokepoint.Name}, swapped=true)",
+                            0.01);
+
                         Server.PrintToChatAll($" {ChatColors.Green}🔄 [Swap Automático]{ChatColors.Default} Movimento detectado! Você assumiu {ChatColors.Gold}{chokepoint.Name.ToUpper()}{ChatColors.Default}. Bots reorganizados!");
                         human.PrintToCenterHtml($"<font color='#00FFCC' size='4'><b>🔄 [Swap Automático] Assumiu: {chokepoint.Name.ToUpper()}!</b></font>");
                         break;

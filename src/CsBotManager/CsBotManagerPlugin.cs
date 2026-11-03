@@ -74,6 +74,7 @@ public class CsBotManagerPlugin : BasePlugin
 
     public TrMacroPivotController? TrPivotController => _trPivotController;
     public PacingAndFallbackController? PacingController => _pacingController;
+    public BotLocomotionDriver LocomotionDriver => _locomotionDriver;
 
     public TacticalPlan CurrentPlan => _currentPlan;
     public TacticalPlan? CurrentTrPlan => _currentTrPlan ?? _currentPlan;
@@ -92,6 +93,7 @@ public class CsBotManagerPlugin : BasePlugin
     // Rastreamento de Loss Streaks reais (I-04E)
     private int _ctLossStreak = 1;
     private int _trLossStreak = 1;
+    private string _firstCtDeathSectorInRound = "None";
 
     // Sequenciamento de requisições Ollama e timers seguros por round (F-001, F-002, F-003, F-006)
     private int _iglRequestSequence = 0;
@@ -299,6 +301,7 @@ public class CsBotManagerPlugin : BasePlugin
         var capturedRoundRecord = roundRecord;
         _isFreezeTime = true;
         _isBombPlanted = false;
+        _firstCtDeathSectorInRound = "None";
 
         // Correcao 3: Bloqueia compra autonoma nativa no frame 0
         Server.ExecuteCommand("bot_eco_limit 16000; bot_autobuy 0;");
@@ -408,72 +411,45 @@ public class CsBotManagerPlugin : BasePlugin
             }
             else
             {
-                // C-04A: Captura os valores na Game Thread antes de despachar para o Task.Run
-                string mapName = Server.MapName;
-                CsTeam capturedHumanTeam = humanTeam;
-                int capturedRound = _currentRound;
+                // V4.3: Decisão de início de round 100% síncrona e instantânea (< 0.05ms) na Game Thread via TacticalUtilityIglEngine!
                 int capturedInternalId = (int)capturedRoundRecord.InternalRoundId;
-                int capturedHumanSlot = human?.Slot ?? -1;
 
-                // V4 (Bug 3/7): snapshots econômicos independentes por time
                 var ctMembers = players.Where(p => p.Team == CsTeam.CounterTerrorist).ToList();
                 var trMembers = players.Where(p => p.Team == CsTeam.Terrorist).ToList();
                 var ctEcon = _economyManager.CapturePreBuySnapshot(ctMembers, Math.Max(1, _currentRound), GetLossBonus(_ctLossStreak), CsTeam.CounterTerrorist);
                 var trEcon = _economyManager.CapturePreBuySnapshot(trMembers, Math.Max(1, _currentRound), GetLossBonus(_trLossStreak), CsTeam.Terrorist);
 
-                int requestSeq = Interlocked.Increment(ref _iglRequestSequence);
-                var token = _roundCts?.Token ?? CancellationToken.None;
+                var (ctPlan, trPlan) = _iglService.UtilityEngine.DecideRoundPlans(
+                    capturedInternalId,
+                    Math.Max(1, _currentRound),
+                    ctEcon,
+                    trEcon,
+                    ctBots,
+                    trBots,
+                    _mapProfileManager,
+                    Server.TickCount);
 
-                Task.Run(async () =>
+                _iglService.RecordTeamTacticUsed(CsTeam.CounterTerrorist, ctPlan.TacticName);
+                _iglService.RecordTeamTacticUsed(CsTeam.Terrorist, trPlan.TacticName);
+
+                _currentCtPlan = ctPlan;
+                _currentTrPlan = trPlan;
+                _currentPlan = (humanTeam == CsTeam.CounterTerrorist) ? ctPlan : trPlan;
+                _currentPlan.PlayTier = tacticalDecision.Tier;
+                _currentPlan.CurrentPhase = RoundPhase.FreezeTime;
+                _currentTrPlan.CurrentPhase = RoundPhase.FreezeTime;
+                _currentCtPlan.CurrentPhase = RoundPhase.FreezeTime;
+
+                if (_roleManager.IsHumanPositionLocked && human != null && !string.IsNullOrEmpty(_roleManager.LockedSectorName))
                 {
-                    TacticalPlan ctPlan;
-                    TacticalPlan trPlan;
-                    try
-                    {
-                        (ctPlan, trPlan) = await _iglService.GetConcurrentRoundDecisionsAsync(
-                            mapName, capturedInternalId, Math.Max(1, capturedRound), ctEcon, trEcon, _mapProfileManager, null, token);
-                    }
-                    catch (OperationCanceledException) when (token.IsCancellationRequested) { return; }
-                    catch (Exception ex)
-                    {
-                        ctPlan = _iglService.GenerateDeterministicFallbackPlan(CsTeam.CounterTerrorist, ctEcon.PurchaseIntent, _mapProfileManager, ex.Message);
-                        trPlan = _iglService.GenerateDeterministicFallbackPlan(CsTeam.Terrorist, trEcon.PurchaseIntent, _mapProfileManager, ex.Message);
-                    }
+                    _roleManager.ClaimPositionForPlayer(human, _roleManager.LockedSectorName, teamBots, _currentPlan, _mapProfileManager);
+                }
 
-                    // C-04B: Retorna para a Game Thread e revalida os ponteiros
-                    Server.NextFrame(() =>
-                    {
-                        if (capturedRound != _currentRound || requestSeq != _iglRequestSequence)
-                        {
-                            return;
-                        }
+                _ctController?.OnRoundStart(ctPlan, ctBots);
+                _midRoundAdapter?.OnRoundStart(trPlan, trBots, human);
 
-                        var freshPlayers = GetActivePlayers();
-                        var freshHuman = freshPlayers.FirstOrDefault(p => p.Slot == capturedHumanSlot && !p.IsBot);
-                        var freshCtBots = freshPlayers.Where(p => p.Team == CsTeam.CounterTerrorist && p.IsBot).ToList();
-                        var freshTrBots = freshPlayers.Where(p => p.Team == CsTeam.Terrorist && p.IsBot).ToList();
-                        var freshTeamBots = freshPlayers.Where(p => p.Team == capturedHumanTeam && p.IsBot).ToList();
-
-                        _currentPlan = (capturedHumanTeam == CsTeam.CounterTerrorist) ? ctPlan : trPlan;
-                        _currentTrPlan = trPlan;
-                        _currentCtPlan = ctPlan;
-                        _currentPlan.PlayTier = tacticalDecision.Tier;
-                        _currentPlan.PlayId = tacticalDecision.PlayId;
-                        _currentPlan.CurrentPhase = RoundPhase.FreezeTime;
-                        _currentTrPlan.CurrentPhase = RoundPhase.FreezeTime;
-
-                        // C-03: Re-aplica automaticamente posição travada do humano se existir
-                        if (_roleManager.IsHumanPositionLocked && freshHuman != null && !string.IsNullOrEmpty(_roleManager.LockedSectorName))
-                        {
-                            _roleManager.ClaimPositionForPlayer(freshHuman, _roleManager.LockedSectorName, freshTeamBots, _currentPlan, _mapProfileManager);
-                        }
-
-                        _ctController?.OnRoundStart(ctPlan, freshCtBots);
-                        _midRoundAdapter?.OnRoundStart(trPlan, freshTrBots, freshHuman);
-
-                        UtilityAndClockCoordinator.PrintTeamChat(capturedHumanTeam, iglName, $"⚡ Tática: {_currentPlan.TacticName} | {_currentPlan.TacticSummary}");
-                    });
-                });
+                Server.PrintToConsole($"[UTILITY_IGL_DECISION] R{Math.Max(1, _currentRound)} | CT={ctPlan.SelectedTactic} ({ctPlan.LatencyMs:F3}ms) | TR={trPlan.SelectedTactic} ({trPlan.LatencyMs:F3}ms)");
+                UtilityAndClockCoordinator.PrintTeamChat(humanTeam, iglName, $"⚡ Tática: {_currentPlan.TacticName} ({_currentPlan.LatencyMs:F2}ms) | {_currentPlan.TacticSummary}");
             }
 
             // O-01: Atualiza o cache HTML da HUD a 1Hz (I-03: permanece ativo durante todo o round)
@@ -673,7 +649,28 @@ public class CsBotManagerPlugin : BasePlugin
         }
 
         _telemetryLogger?.LogRoundSealed(sealedRec);
-        _iglService.RecordRoundResult(_currentRound, winner, sealedRec.EndReasonEnum, null, _currentPlan.TacticName, _currentPlan.RoundTempo);
+
+        int survivingWinners = activePlayers.Count(p => p.PawnIsAlive && p.Team == winner);
+        string? plantedSiteStr = _currentTrPlan.BombObjectiveState.PlantedSite != BombsiteTarget.None
+            ? _currentTrPlan.BombObjectiveState.PlantedSite.ToString()
+            : null;
+        string attackedSiteStr = plantedSiteStr
+            ?? (_currentTrPlan.BombObjectiveState.CommittedSite != BombsiteTarget.None
+                ? _currentTrPlan.BombObjectiveState.CommittedSite.ToString()
+                : (_currentTrPlan.RealTargetSite ?? "None"));
+
+        _iglService.RecordRoundResult(
+            _currentRound,
+            winner,
+            sealedRec.EndReasonEnum,
+            plantedSiteStr,
+            _currentPlan.TacticName,
+            _currentPlan.RoundTempo,
+            _currentCtPlan.SelectedTactic,
+            _currentTrPlan.SelectedTactic,
+            attackedSiteStr,
+            _firstCtDeathSectorInRound,
+            survivingWinners);
 
         if (sealedRec.MatchPhase == MatchLifecyclePhase.LIVE && _debugTargetRounds > 0 && _telemetryLogger != null && _telemetryLogger.IsEnabled)
         {
@@ -764,6 +761,24 @@ public class CsBotManagerPlugin : BasePlugin
         if (victim != null && killer != null && victim.IsValid && killer.IsValid && AdmitEvent("EventPlayerDeath", $"{killer.PlayerName} -> {victim.PlayerName}"))
         {
             string sector = MirageSectorClassifier.ClassifyPlayer(victim).SectorName;
+            if (victim.Team == CsTeam.CounterTerrorist)
+            {
+                if (_firstCtDeathSectorInRound == "None")
+                {
+                    if (sector.Contains("Meio", StringComparison.OrdinalIgnoreCase) || sector.Contains("Janela", StringComparison.OrdinalIgnoreCase) || sector.Contains("Conector", StringComparison.OrdinalIgnoreCase))
+                        _firstCtDeathSectorInRound = "Mid";
+                    else if (sector.Contains("B", StringComparison.OrdinalIgnoreCase) || sector.Contains("Tapete", StringComparison.OrdinalIgnoreCase) || sector.Contains("Mercado", StringComparison.OrdinalIgnoreCase))
+                        _firstCtDeathSectorInRound = "B";
+                    else
+                        _firstCtDeathSectorInRound = "A";
+                }
+
+                if (!_isBombPlanted)
+                {
+                    var aliveCtBots = players.Where(p => p != null && p.IsValid && p.IsBot && p.PawnIsAlive && p.Team == CsTeam.CounterTerrorist && p.Slot != victim.Slot).ToList();
+                    _ctController?.HandleCtDefenderDeath(victim, sector, _currentCtPlan, aliveCtBots);
+                }
+            }
             _telemetryLogger?.LogDeath(killer, victim, @event.Weapon ?? "arma", @event.Headshot, sector);
         }
 
@@ -956,15 +971,48 @@ public class CsBotManagerPlugin : BasePlugin
             call += " " + info.GetArg(i);
         }
 
-        player.PrintToChat($" {ChatColors.LightBlue}[CsBot IGL]{ChatColors.Default} Processando call com IA: \"{call}\"...");
-
-        // C-04A: Captura dados da engine na Game Thread
-        string mapName = Server.MapName;
+        // V4.3: Roteador de 3 Camadas (Camada 1 Léxica em 0.01ms na Game Thread; Camada 2 Classificador Ollama < 300ms)
         CsTeam pTeam = player.Team;
         int pSlot = player.Slot;
-        int capturedRound = _currentRound;
-        int capturedMoney = _economyManager.TeamAverageMoney;
-        var buyState = _economyManager.CurrentBuyState;
+        int capturedRound = Math.Max(1, _currentRound);
+        int capturedInternalId = (int)_lifecycle.CurrentInternalRoundId;
+        int currentTick = Server.TickCount;
+        var activePlayers = GetActivePlayers();
+        var teamBots = activePlayers.Where(p => p.IsBot && p.Team == pTeam).ToList();
+
+        if (_iglService.UtilityEngine.TryRouteHumanCommandLexically(pTeam, call, out string lexicalTacticId, out string lexicalReason))
+        {
+            var lexicalPlan = _iglService.UtilityEngine.TryMaterializeById(
+                pTeam,
+                lexicalTacticId,
+                capturedInternalId,
+                capturedRound,
+                teamBots,
+                _mapProfileManager,
+                currentTick,
+                TacticalDecisionSource.FAST_LEXICAL_ROUTER,
+                0.01);
+
+            if (lexicalPlan != null)
+            {
+                lexicalPlan.SelectionReason = $"{lexicalReason} (input=\"{call}\")";
+                HumanCommunicationLogger.RecordCommunication(
+                    "CHAT_TATICA",
+                    pTeam,
+                    capturedRound,
+                    call,
+                    "FAST_LEXICAL_ROUTER",
+                    $"{lexicalPlan.SelectedTactic} ({lexicalReason})",
+                    lexicalPlan.LatencyMs);
+                ApplyHumanSelectedPlan(player, pTeam, lexicalPlan, teamBots);
+                return;
+            }
+        }
+
+        player.PrintToChat($" {ChatColors.LightBlue}[CsBot IGL]{ChatColors.Default} Classificando call complexa via IA: \"{call}\"...");
+
+        var ownEcon = _economyManager.GetTeamSnapshot(pTeam);
+        var enemyEcon = _economyManager.GetTeamSnapshot(pTeam == CsTeam.CounterTerrorist ? CsTeam.Terrorist : CsTeam.CounterTerrorist);
         int requestSeq = Interlocked.Increment(ref _iglRequestSequence);
         var token = _roundCts?.Token ?? CancellationToken.None;
 
@@ -973,15 +1021,16 @@ public class CsBotManagerPlugin : BasePlugin
             TacticalPlan newPlan;
             try
             {
-                newPlan = await _iglService.GetTacticalDecisionAsync(
-                    mapName,
+                newPlan = await _iglService.ProcessHumanCommandAsync(
                     pTeam,
-                    buyState,
-                    capturedRound,
-                    capturedMoney,
                     call,
-                    false,
+                    capturedInternalId,
+                    capturedRound,
+                    ownEcon,
+                    enemyEcon,
+                    null,
                     _mapProfileManager,
+                    currentTick,
                     token);
             }
             catch (OperationCanceledException)
@@ -989,24 +1038,48 @@ public class CsBotManagerPlugin : BasePlugin
                 return;
             }
 
-            // C-04B: Revalida na Game Thread
+            HumanCommunicationLogger.RecordCommunication(
+                "CHAT_TATICA",
+                pTeam,
+                capturedRound,
+                call,
+                newPlan.Source.ToString(),
+                $"{newPlan.SelectedTactic} ({newPlan.SelectionReason})",
+                newPlan.LatencyMs);
+
             Server.NextFrame(() =>
             {
-                if (capturedRound != _currentRound || requestSeq != _iglRequestSequence)
+                if (capturedRound != Math.Max(1, _currentRound) || requestSeq != _iglRequestSequence)
                 {
                     return;
                 }
 
                 var targetPlayer = Utilities.GetPlayerFromSlot(pSlot);
-                _currentPlan = newPlan;
-                _currentPlan.CurrentPhase = _isFreezeTime ? RoundPhase.FreezeTime : RoundPhase.Staging;
-
-                if (targetPlayer != null && targetPlayer.IsValid)
-                {
-                    targetPlayer.PrintToChat($" {ChatColors.Green}[CsBot IGL]{ChatColors.Default} Call adaptada: {ChatColors.Gold}{_currentPlan.TacticName}{ChatColors.Default} | Ritmo: {ChatColors.LightBlue}{_currentPlan.RoundTempo}{ChatColors.Default}!");
-                }
+                var freshBots = GetActivePlayers().Where(p => p.IsBot && p.Team == pTeam).ToList();
+                ApplyHumanSelectedPlan(targetPlayer, pTeam, newPlan, freshBots);
             });
         });
+    }
+
+    private void ApplyHumanSelectedPlan(CCSPlayerController? humanPlayer, CsTeam team, TacticalPlan newPlan, List<CCSPlayerController> teamBots)
+    {
+        newPlan.CurrentPhase = _isFreezeTime ? RoundPhase.FreezeTime : RoundPhase.Staging;
+        _currentPlan = newPlan;
+        if (team == CsTeam.CounterTerrorist)
+        {
+            _currentCtPlan = newPlan;
+            _ctController?.OnRoundStart(newPlan, teamBots);
+        }
+        else
+        {
+            _currentTrPlan = newPlan;
+            _midRoundAdapter?.OnRoundStart(newPlan, teamBots, humanPlayer);
+        }
+
+        if (humanPlayer != null && humanPlayer.IsValid)
+        {
+            humanPlayer.PrintToChat($" {ChatColors.Green}[CsBot IGL]{ChatColors.Default} Call aplicada ({newPlan.Source}, {newPlan.LatencyMs:F2}ms): {ChatColors.Gold}{newPlan.TacticName}{ChatColors.Default} | Ritmo: {ChatColors.LightBlue}{newPlan.RoundTempo}{ChatColors.Default}!");
+        }
     }
 
     [ConsoleCommand("css_rejeitar", "Pede uma tatica alternativa para a IA")]
@@ -1014,57 +1087,25 @@ public class CsBotManagerPlugin : BasePlugin
     {
         if (player == null || !player.IsValid) return;
 
-        player.PrintToChat($" {ChatColors.Yellow}[CsBot IGL]{ChatColors.Default} Tática rejeitada. Gerando plano alternativo com IA...");
-
-        // C-04A: Captura dados da engine na Game Thread
-        string mapName = Server.MapName;
         CsTeam pTeam = player.Team;
-        int pSlot = player.Slot;
-        int capturedRound = _currentRound;
-        int capturedMoney = _economyManager.TeamAverageMoney;
-        var buyState = _economyManager.CurrentBuyState;
-        int requestSeq = Interlocked.Increment(ref _iglRequestSequence);
-        var token = _roundCts?.Token ?? CancellationToken.None;
+        var teamBots = GetActivePlayers().Where(p => p.IsBot && p.Team == pTeam).ToList();
+        var ownEcon = _economyManager.GetTeamSnapshot(pTeam);
+        var enemyEcon = _economyManager.GetTeamSnapshot(pTeam == CsTeam.CounterTerrorist ? CsTeam.Terrorist : CsTeam.CounterTerrorist);
+        string currentTacticId = (pTeam == CsTeam.CounterTerrorist ? _currentCtPlan : _currentTrPlan).SelectedTactic;
 
-        Task.Run(async () =>
-        {
-            TacticalPlan newPlan;
-            try
-            {
-                newPlan = await _iglService.GetTacticalDecisionAsync(
-                    mapName,
-                    pTeam,
-                    buyState,
-                    capturedRound,
-                    capturedMoney,
-                    null,
-                    true,
-                    _mapProfileManager,
-                    token);
-            }
-            catch (OperationCanceledException)
-            {
-                return;
-            }
+        var altPlan = _iglService.UtilityEngine.DecideTeamPlan(
+            pTeam,
+            _lifecycle.CurrentInternalRoundId,
+            Math.Max(1, _currentRound),
+            ownEcon,
+            enemyEcon,
+            teamBots,
+            _mapProfileManager,
+            Server.TickCount,
+            excludeTacticId: currentTacticId);
 
-            // C-04B: Revalida na Game Thread
-            Server.NextFrame(() =>
-            {
-                if (capturedRound != _currentRound || requestSeq != _iglRequestSequence)
-                {
-                    return;
-                }
-
-                var targetPlayer = Utilities.GetPlayerFromSlot(pSlot);
-                _currentPlan = newPlan;
-                _currentPlan.CurrentPhase = _isFreezeTime ? RoundPhase.FreezeTime : RoundPhase.Staging;
-
-                if (targetPlayer != null && targetPlayer.IsValid)
-                {
-                    targetPlayer.PrintToChat($" {ChatColors.Green}[CsBot IGL]{ChatColors.Default} Nova tática: {ChatColors.Gold}{_currentPlan.TacticName}{ChatColors.Default} | Ritmo: {ChatColors.LightBlue}{_currentPlan.RoundTempo}{ChatColors.Default}!");
-                }
-            });
-        });
+        altPlan.IsCustomPlayerCall = true;
+        ApplyHumanSelectedPlan(player, pTeam, altPlan, teamBots);
     }
 
     [ConsoleCommand("css_drop", "Pede arma para o bot mais rico")]
@@ -1102,14 +1143,23 @@ public class CsBotManagerPlugin : BasePlugin
         string sector = info.GetArg(1);
         var teamBots = GetActivePlayers().Where(p => p.Team == player.Team && p.IsBot).ToList();
         bool claimed = _roleManager.ClaimPositionForPlayer(player, sector, teamBots, _currentPlan, _mapProfileManager);
+        HumanCommunicationLogger.RecordCommunication(
+            "CHAT_POS",
+            player.Team,
+            Math.Max(1, _currentRound),
+            $"!pos {sector}",
+            "CHAT_POSITION_SWAP",
+            $"ClaimPosition({sector}, claimed={claimed})",
+            0.01);
+
         if (claimed)
         {
-            // Move os bots afetados
+            // Move os bots afetados usando a ordem individual do slot (V4.3)
             foreach (var bot in teamBots)
             {
                 if (!bot.IsValid || !bot.PawnIsAlive) continue;
                 var role = _roleManager.GetBotRole(bot);
-                if (role != null && _currentPlan.BotOrders.TryGetValue(RoleManager.GetOrderKey(role.Value), out var order))
+                if (_currentPlan.TryGetOrderForBot(bot.Slot, role, out var order))
                 {
                     var spot = _mapProfileManager.GetSpotById(order.StagingSpotId);
                     if (spot != null)

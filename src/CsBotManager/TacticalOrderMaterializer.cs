@@ -540,6 +540,198 @@ public static class TacticalOrderMaterializer
 		return false;
 	}
 
+	public static bool MaterializeCt212Orders(TacticalPlan plan, IReadOnlyList<CCSPlayerController>? ctBots, MapProfileManager? mapProfile, MatchTelemetryLogger? logger = null)
+	{
+		if (plan == null) return false;
+
+		string tacticId = !string.IsNullOrEmpty(plan.SelectedTactic)
+			? plan.SelectedTactic
+			: (!string.IsNullOrEmpty(plan.PlayId) ? plan.PlayId : plan.TacticName);
+
+		bool isStrict212Family =
+			tacticId.Equals("CT_STANDARD_2_1_2_BALANCED", StringComparison.OrdinalIgnoreCase) ||
+			tacticId.Equals("CT_2_1_2_HEAVY_ANCHOR_B", StringComparison.OrdinalIgnoreCase) ||
+			tacticId.Equals("CT_2_1_2_HEAVY_PALACE_RAMP_A", StringComparison.OrdinalIgnoreCase) ||
+			tacticId.Equals("CT_RETAKE_PASSIVE_SETUP", StringComparison.OrdinalIgnoreCase);
+
+		if (plan.CtFormationAssignments.Count < 5)
+		{
+			return MaterializeCtStandard212Formation(plan, ctBots, mapProfile, logger, plan.DecisionId);
+		}
+
+		// Reatribui para os slots reais se ctBots foi fornecido
+		if (ctBots != null && ctBots.Count > 0)
+		{
+			var realSlots = ctBots.Where(b => b != null && b.IsValid).Select(b => b.Slot).OrderBy(s => s).ToList();
+			var existingAssignments = plan.CtFormationAssignments.Values.ToList();
+			plan.CtFormationAssignments.Clear();
+
+			for (int i = 0; i < existingAssignments.Count; i++)
+			{
+				int targetSlot = i < realSlots.Count ? realSlots[i] : (10 + i);
+				existingAssignments[i].Slot = targetSlot;
+				plan.CtFormationAssignments[targetSlot] = existingAssignments[i];
+
+				string targetArea = existingAssignments[i].AssignedSite switch
+				{
+					"A" => "Bombsite A",
+					"B" => "Bombsite B",
+					_ => "Middle"
+				};
+
+				plan.BotOrders[$"slot_{targetSlot}"] = new BotTacticalOrder
+				{
+					TargetArea = targetArea,
+					RoleAction = $"Hold {existingAssignments[i].AssignedSite} ({existingAssignments[i].FormationRole}) at {existingAssignments[i].InitialSpot}",
+					StagingSpotId = existingAssignments[i].InitialSpot,
+					ExecuteSpotId = existingAssignments[i].ExecuteSpot,
+					FallbackSpotId = existingAssignments[i].AssignedSite == "B" ? "ct_b_market_door" : "ct_jungle_safe",
+					Stance = existingAssignments[i].FormationRole == CtFormationRole.Mid_Controller
+						? EngagementStance.JIGGLE_INFO
+						: EngagementStance.PASSIVE_HOLD,
+					HoldSiteLocked = true,
+					RequiredUtilities = new List<string> { "smoke", "flashbang", "incgrenade" }
+				};
+			}
+		}
+
+		var assignments = plan.CtFormationAssignments.Values.ToList();
+		int aCount = assignments.Count(a => a.AssignedSite == "A");
+		int midCount = assignments.Count(a => a.AssignedSite == "Mid");
+		int bCount = assignments.Count(a => a.AssignedSite == "B");
+		int distinctSpots = assignments.Select(a => a.InitialSpot).Distinct(StringComparer.OrdinalIgnoreCase).Count();
+
+		bool isValid;
+		if (isStrict212Family)
+		{
+			int distinctASpots = assignments.Where(a => a.AssignedSite == "A").Select(a => a.InitialSpot).Distinct(StringComparer.OrdinalIgnoreCase).Count();
+			int distinctBSpots = assignments.Where(a => a.AssignedSite == "B").Select(a => a.InitialSpot).Distinct(StringComparer.OrdinalIgnoreCase).Count();
+			isValid = aCount == 2 && midCount == 1 && bCount == 2 && distinctASpots == 2 && distinctBSpots == 2;
+		}
+		else
+		{
+			// Formações especiais (CT_MID_AGGRESSIVE_DOMINANCE 1-3-1, CT_ECO_STACK_GAMBLE_A/B 3-1-1):
+			// exige 5 atribuições com 5 spots distintos sem impor 2-1-2
+			isValid = assignments.Count == 5 && distinctSpots == 5 && aCount >= 1 && bCount >= 1;
+		}
+
+		if (isValid)
+		{
+			TrackerMetricsAggregator.RecordCtFormation(isValid: true);
+			foreach (var item in assignments)
+			{
+				logger?.LogEvent("CT_FORMATION_MATERIALIZED", $"tacticId=\"{tacticId}\" slot={item.Slot} formationRole={item.FormationRole} assignedSite={item.AssignedSite} spotId={item.InitialSpot} executeSpotId={item.ExecuteSpot} rotationPolicy={item.RotationPolicy}");
+			}
+			return true;
+		}
+
+		// Se falhar validação estrita na família 2-1-2, aplica fallback 2-1-2 padrão
+		return MaterializeCtStandard212Formation(plan, ctBots, mapProfile, logger, plan.DecisionId);
+	}
+
+	public static void MaterializeTrOrders(TacticalPlan plan, IReadOnlyList<CCSPlayerController>? trBots, int carrierSlot, MapProfileManager? mapProfile, long currentTick)
+	{
+		if (plan == null) return;
+
+		string[] canonicalKeys = { "AWPer", "EntryFragger", "Rotator", "Anchor_1", "Anchor_2" };
+		var distinctOrders = new List<(string Key, BotTacticalOrder Order)>();
+
+		foreach (var key in canonicalKeys)
+		{
+			if (plan.BotOrders.TryGetValue(key, out var ord))
+			{
+				distinctOrders.Add((key, ord));
+			}
+		}
+
+		// Garante chaves legadas de RoleManager ("bot_awper", "bot_entry", "bot_rotator", "bot_anchor")
+		if (plan.BotOrders.TryGetValue("AWPer", out var awpOrd))
+			plan.BotOrders[RoleManager.GetOrderKey(BotRole.AWPer)] = awpOrd;
+		if (plan.BotOrders.TryGetValue("EntryFragger", out var entryOrd))
+			plan.BotOrders[RoleManager.GetOrderKey(BotRole.EntryFragger)] = entryOrd;
+		if (plan.BotOrders.TryGetValue("Rotator", out var rotOrd))
+		{
+			rotOrd.HasBomb = true;
+			rotOrd.IsNoiseGroup = false; // Regra inviolável: portador da C4 nunca entra em grupo de ruído!
+			plan.BotOrders[RoleManager.GetOrderKey(BotRole.Rotator)] = rotOrd;
+		}
+		if (plan.BotOrders.TryGetValue("Anchor_1", out var anc1Ord))
+			plan.BotOrders[RoleManager.GetOrderKey(BotRole.Anchor)] = anc1Ord;
+
+		// Atribui as 5 ordens distintas individualmente aos 5 bots TR vivos por slot ("slot_{bot.Slot}"),
+		// mesmo que 2 bots tenham BotRole.Rotator!
+		var slots = trBots != null && trBots.Count > 0
+			? trBots.Where(b => b != null && b.IsValid).Select(b => b.Slot).OrderBy(s => s).ToList()
+			: new List<int> { 0, 1, 2, 3, 4 };
+
+		while (slots.Count < 5)
+		{
+			int nextSlot = slots.Count == 0 ? 0 : slots.Max() + 1;
+			slots.Add(nextSlot);
+		}
+
+		int effectiveCarrierSlot = carrierSlot >= 0 && slots.Contains(carrierSlot) ? carrierSlot : slots[0];
+		var nonCarrierSlots = slots.Where(s => s != effectiveCarrierSlot).ToList();
+
+		if (plan.FakeContext != null)
+		{
+			plan.FakeContext.BombCarrierSlot = effectiveCarrierSlot;
+			plan.FakeContext.RealGroupSlots.Clear();
+			plan.FakeContext.FakeGroupSlots.Clear();
+		}
+
+		// 1) Portador da C4 recebe SEMPRE a ordem "Rotator" (com HasBomb=true e IsNoiseGroup=false)
+		var carrierOrder = distinctOrders.FirstOrDefault(o => o.Key == "Rotator").Order
+			?? distinctOrders.FirstOrDefault(o => !o.Order.IsNoiseGroup).Order;
+
+		if (carrierOrder != null)
+		{
+			var clonedCarrierOrder = CloneOrder(carrierOrder);
+			clonedCarrierOrder.HasBomb = true;
+			clonedCarrierOrder.IsNoiseGroup = false;
+			plan.BotOrders[$"slot_{effectiveCarrierSlot}"] = clonedCarrierOrder;
+			plan.FakeContext?.RealGroupSlots.Add(effectiveCarrierSlot);
+		}
+
+		// 2) Os outros 4 bots TR recebem individualmente as 4 ordens restantes ("AWPer", "EntryFragger", "Anchor_1", "Anchor_2")
+		var remainingOrders = distinctOrders.Where(o => o.Key != "Rotator").Select(o => o.Order).ToList();
+		for (int i = 0; i < nonCarrierSlots.Count && i < remainingOrders.Count; i++)
+		{
+			int botSlot = nonCarrierSlots[i];
+			var clonedOrder = CloneOrder(remainingOrders[i]);
+			clonedOrder.HasBomb = false;
+			plan.BotOrders[$"slot_{botSlot}"] = clonedOrder;
+
+			if (plan.FakeContext != null)
+			{
+				if (clonedOrder.IsNoiseGroup)
+					plan.FakeContext.FakeGroupSlots.Add(botSlot);
+				else
+					plan.FakeContext.RealGroupSlots.Add(botSlot);
+			}
+		}
+	}
+
+	private static BotTacticalOrder CloneOrder(BotTacticalOrder src)
+	{
+		return new BotTacticalOrder
+		{
+			TargetArea = src.TargetArea,
+			RoleAction = src.RoleAction,
+			StagingSpotId = src.StagingSpotId,
+			ExecuteSpotId = src.ExecuteSpotId,
+			FallbackSpotId = src.FallbackSpotId,
+			Stance = src.Stance,
+			AggressionLevel = src.AggressionLevel,
+			MidRoundAction = src.MidRoundAction,
+			HoldSiteLocked = src.HoldSiteLocked,
+			IsNoiseGroup = src.IsNoiseGroup,
+			HasBomb = src.HasBomb,
+			IsWatchingFlank = src.IsWatchingFlank,
+			RequiredUtilities = new List<string>(src.RequiredUtilities)
+		};
+	}
+
 	public static bool ValidateAndRepairOrders(TacticalPlan plan, CsTeam team, MapProfileManager? mapProfile, MatchTelemetryLogger? logger, string decisionId)
 	{
 		//IL_0014: Unknown result type (might be due to invalid IL or missing references)

@@ -968,8 +968,8 @@ public class BotLocomotionDriver
                 }
             }
 
-            // Expiração rigorosa de IsHoldingSpot
-            if (state.IsHoldingSpot)
+            // Expiração rigorosa de IsHoldingSpot APENAS para Terroristas (CTs mantêm o ângulo no spot até rotação/retake!)
+            if (state.IsHoldingSpot && controller.Team == CsTeam.Terrorist && !_isBombPlanted)
             {
                 float holdDuration = currentTime - state.HoldingSinceTime;
                 float maxHoldTime = (!bot.IsEnemyVisible || state.Stance == EngagementStance.AGGRESSIVE_POKE)
