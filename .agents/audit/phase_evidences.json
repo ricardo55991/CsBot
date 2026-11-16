@@ -1,0 +1,167 @@
+{
+  "phase_id": "GOVERNANCE-PATCH-1-1",
+  "generated_at_utc": "2026-11-07T21:50:00Z",
+  "data_nature": "REAL",
+  "evidences": [
+    {
+      "evidence_id": "EV-001-DIFF-PATCH-1-1",
+      "artifact_path": "governance_patch_1_1_diff.md",
+      "sha256": "d23ee9d457bdb69504790e776bc051984d48e33d047f79878ced3737258dafc9",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 governance_patch_1_1_diff.md",
+      "aggregation_formula": "exact_byte_hash == computed_hash (1/1)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-002-TEST-REPORT-PATCH-1-1",
+      "artifact_path": "governance_patch_1_1_test_report.md",
+      "sha256": "c642e0ad65e854783359286ae1ec49462c9858b04b9b312948082789a628c2df",
+      "reproducible_command": "pytest -v tests/test_governance_patch_1_1.py",
+      "aggregation_formula": "passed_tests / total_tests = 27/27 (100.0%)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-003-REDTEAM-REPORT-PATCH-1-1",
+      "artifact_path": "governance_patch_1_1_redteam_report.md",
+      "sha256": "53a384b26b23f816b423e2020cfdfbf6ad678d1e3166e1019915c6b04a8eb2e4",
+      "reproducible_command": "python .agents/audit/run_governance_redteam.py",
+      "aggregation_formula": "passed_scenarios / total_scenarios = 12/12 (100.0%)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-004-FALSE-POSITIVE-REPORT",
+      "artifact_path": "governance_patch_1_1_false_positive_report.md",
+      "sha256": "326af713ec7f6d61d41e97e47e79c8d0cbbb3b983fce60c99f2511e6259666ca",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 governance_patch_1_1_false_positive_report.md",
+      "aggregation_formula": "resolved_fps / total_fps = 3/3 (100.0%)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-005-MISSED-VIOLATIONS-CATALOG",
+      "artifact_path": "missed_violations.json",
+      "sha256": "e04de643edb274696708c0ce9a9d93406fc2ca9b9c49b3f4f6e48ebe98d92237",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 missed_violations.json",
+      "aggregation_formula": "critical_missed_open = 0/3 (0.0%)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-006-FALSE-POSITIVES-CATALOG",
+      "artifact_path": "false_positives.json",
+      "sha256": "0ccba00c01ef829c2c6eed5071ce3a800544c73239ac91a88148369dfa13927b",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 false_positives.json",
+      "aggregation_formula": "critical_fps_open = 0/3 (0.0%)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-007-TEMPORAL-HISTORY-GRAPH",
+      "artifact_path": ".agents/audit/pre3a3_temporal_history_graph.md",
+      "sha256": "f726a91b53c780b92b7c38ebed3275deaa1df41f075d9b5c65d9c6657fd8a6c3",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 .agents/audit/pre3a3_temporal_history_graph.md",
+      "aggregation_formula": "mapped_pipeline_nodes / total_required_nodes = 6/6 (100.0%)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-008-TEMPORAL-HISTORY-BLAST-RADIUS",
+      "artifact_path": ".agents/audit/pre3a3_temporal_history_blast_radius.json",
+      "sha256": "7de3a63af87a85fb4d43b41c146bf11706abdecc50f1d2b3708508e89de88d9f",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 .agents/audit/pre3a3_temporal_history_blast_radius.json",
+      "aggregation_formula": "exact_byte_hash == computed_hash (1/1)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-009-HISTORY-PROVENANCE-JSON",
+      "artifact_path": "training_runs/positioning_v1/pre3a3_history_provenance.json",
+      "sha256": "e483666c6d62040b912bf08c45afae7e8d17513388a387e5d767d5cf4e945bba",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 training_runs/positioning_v1/pre3a3_history_provenance.json",
+      "aggregation_formula": "audited_seeds / total_target_seeds = 3/3 (100.0%)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-010-HISTORY-PROVENANCE-MD",
+      "artifact_path": "training_runs/positioning_v1/pre3a3_history_provenance.md",
+      "sha256": "b38c1578e29fd9b0eaf1793d9955c0313149367f1eb0ae34c67649a2059d161f",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 training_runs/positioning_v1/pre3a3_history_provenance.md",
+      "aggregation_formula": "exact_byte_hash == computed_hash (1/1)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-011-NPZ-BATCH-COMPARISON-JSON",
+      "artifact_path": "pre3a3_npz_batch_comparison.json",
+      "sha256": "5193ec06c8e93c8b0f59afa59132cb259d4153255793268d823cc3020c7fd0b1",
+      "reproducible_command": "python .agents/teamwork/data_provenance_auditor_1/run_batch_comparison.py",
+      "aggregation_formula": "exact_match_rate = 0/200 (0.0%), synthetic_window_rate = 200/200 (100.0%)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-012-NPZ-BATCH-COMPARISON-MD",
+      "artifact_path": "pre3a3_npz_batch_comparison.md",
+      "sha256": "751fb780dd89e2ce0a0f82051f7af6db8fdf8e4eb5d2dab68f66c6acc9f95523",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 pre3a3_npz_batch_comparison.md",
+      "aggregation_formula": "exact_byte_hash == computed_hash (1/1)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-013-CHECKPOINT-DECISION-MD",
+      "artifact_path": "pre3a3_checkpoint_decision.md",
+      "sha256": "0d02d3d1efb3c5655b3a0134ccc57ee6034a5c86c069eae36c91b26046845772",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 pre3a3_checkpoint_decision.md",
+      "aggregation_formula": "canonical_option_selected = Option B (1/1)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-014-MATH-LOGIC-SKILL-MD",
+      "artifact_path": ".agents/skills/csbot-math-logic-auditor/SKILL.md",
+      "sha256": "9ca0d163b82ce97e2884e55cf65981d6d249ada823d2bebd3794ac1c3d45e0fb",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 .agents/skills/csbot-math-logic-auditor/SKILL.md",
+      "aggregation_formula": "exact_byte_hash == computed_hash (1/1)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-015-MATH-LOGIC-CONTRACT",
+      "artifact_path": ".agents/skills/csbot-math-logic-auditor/references/math_logic_audit_contract.md",
+      "sha256": "18c9864464bdfc2dcf6416df2409f991e18de9e54fa94de3930f81b4ebcf734b",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 .agents/skills/csbot-math-logic-auditor/references/math_logic_audit_contract.md",
+      "aggregation_formula": "exact_byte_hash == computed_hash (1/1)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-016-MATH-LOGIC-CONFUSION-SCRIPT",
+      "artifact_path": ".agents/skills/csbot-math-logic-auditor/scripts/audit_confusion_and_calibration.py",
+      "sha256": "f31aeba322c2d649923027884efaf4d6fb37458531e739942eaf168bad7125f9",
+      "reproducible_command": "python -m py_compile .agents/skills/csbot-math-logic-auditor/scripts/audit_confusion_and_calibration.py",
+      "aggregation_formula": "syntax_errors == 0 (1/1)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-017-MATH-LOGIC-TEMPORAL-SCRIPT",
+      "artifact_path": ".agents/skills/csbot-math-logic-auditor/scripts/audit_temporal_transitions.py",
+      "sha256": "9d85b1a17223ef8eb5b128aadf619ae1167867f0525f83447f6247271ce5d7d9",
+      "reproducible_command": "python -m py_compile .agents/skills/csbot-math-logic-auditor/scripts/audit_temporal_transitions.py",
+      "aggregation_formula": "syntax_errors == 0 (1/1)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-018-MATH-LOGIC-MAIN-SCRIPT",
+      "artifact_path": ".agents/skills/csbot-math-logic-auditor/scripts/audit_math_logic.py",
+      "sha256": "23d1c13fed89111405ed031646219270f84ee032e2918e91017b96e9ed09df4d",
+      "reproducible_command": "python .agents/skills/csbot-math-logic-auditor/scripts/audit_math_logic.py --dry-run",
+      "aggregation_formula": "dry_run_exit_code == 0 (1/1)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-019-DELIVERABLE-EVIDENCE-JSON-ROOT",
+      "artifact_path": "deliverable_evidence.json",
+      "sha256": "e615ada4dfe08e1db73c607be33c67407effcff2e62153354feb99a33ba59717",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 deliverable_evidence.json",
+      "aggregation_formula": "claims_verified / total_claims = 5/5 (100.0%)",
+      "data_nature": "REAL"
+    },
+    {
+      "evidence_id": "EV-020-DELIVERABLE-EVIDENCE-JSON-AUDIT",
+      "artifact_path": ".agents/audit/deliverable_evidence.json",
+      "sha256": "e615ada4dfe08e1db73c607be33c67407effcff2e62153354feb99a33ba59717",
+      "reproducible_command": "Get-FileHash -Algorithm SHA256 .agents/audit/deliverable_evidence.json",
+      "aggregation_formula": "claims_verified / total_claims = 5/5 (100.0%)",
+      "data_nature": "REAL"
+    }
+  ]
+}

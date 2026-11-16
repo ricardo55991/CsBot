@@ -1,0 +1,195 @@
+﻿┬º4 campos obrigat├│rios (linhas 1139-1157) recontados: 17
+   - domain_id
+   - platform
+   - rank_system
+   - skill_level
+   - elo_or_rating
+   - rank_at_collection_time
+   - rank_at_match_time_if_available
+   - map_specific_rank
+   - map_name
+   - match_date
+   - region
+   - source
+   - source_license
+   - acquisition_method
+   - consent_type
+   - metadata_confidence
+   - exclusion_reason
+┬º7 aceita├º├úo (linhas 1288-1302) recontados: 14
+┬º7 exclus├úo (linhas 1304-1317) recontados: 12
+
+contrato: mandatory_fields_count = 17 | len(lista) = 17
+campos do ┬º4 ausentes no contrato: []
+ratio campos: (17/17)
+
+=== rank_conversion_policy ===
+{
+ "automatic_conversion_prohibited": true,
+ "conversions_allowed": [],
+ "prohibited_conversions": [
+  "FACEIT level -> Valve Competitive map rank",
+  "FACEIT level -> Valve Premier rating",
+  "FACEIT Elo -> Valve Competitive map rank",
+  "FACEIT Elo -> Valve Premier rating",
+  "Valve Competitive map rank -> FACEIT level ou FACEIT Elo",
+  "Valve Premier rating -> Valve Competitive map rank",
+  "Valve Premier rating -> FACEIT level ou FACEIT Elo",
+  "qualquer bucketiza├º├úo por semelhan├ºa visual, reputa├º├úo, nome de time ou estimativa do pesquisador"
+ ],
+ "rule": "Cada demo preserva seu sistema original de classifica├º├úo em rank_system, skill_level e elo_or_rating. Nenhum artefato pode derivar um sistema a partir de outro, interpolar tabelas de equival├¬ncia ou preencher rank ausente por estimativa.",
+ "missing_rank_rule": "Rank ausente ├® registrado como null com exclusion_reason expl├¡cito e domain_id = UNKNOWN. Nunca preenchido por aproxima├º├úo.",
+ "rationale": "Os quatro sistemas (Competitive map rank, Premier rating, FACEIT level, FACEIT Elo) medem popula├º├Áes e escalas diferentes, com din├ómicas de temporada distintas. Convers├úo autom├ítica introduziria erro de r├│tulo n├úo mensur├ível e contaminaria a hip├│tese de padroniza├º├úo de posicionamento que esta fase precisa testar.",
+ "conversion_test_requirement": {
+  "required_tests": [
+   {
+    "test_id": 3,
+    "name": "RankSystemIsExplicit",
+    "assertion": "toda demo aceita possui rank_system n├úo nulo e pertencente ao conjunto de sistemas declarados neste contrato"
+   },
+   {
+    "test_id": 4,
+    "name": "FaceitLevelIsNotConvertedToValveRank",
+    "assertion": "nenhuma demo com rank_system FACEIT_LEVEL possui campo derivado de rank Valve (Competitive ou Premier) preenchido, e o validador rejeita a tentativa"
+   },
+   {
+    "test_id": 5,
+    "name": "PremierRatingIsNotConvertedToCompetitiveRank",
+    "assertion": "nenhuma demo com rank_system VALVE_PREMIER_RATING possui rank Competitive derivado preenchido, e o validador rejeita a tentativa"
+   }
+  ],
+  "enforcement_point": "tools/intermediate_demo_acquisition/validate_skill_bucket.py (modo padr├úo e --self-test). A su├¡te formal correspondente pertence a outro papel (M8)."
+ }
+}
+
+=== faceit_buckets ===
+{
+ "FACEIT_LEVEL_5_6": {
+  "levels": [
+   5,
+   6
+  ],
+  "skill_band": "intermediate",
+  "inclusion_policy": "INCLUDED_PILOT",
+  "pilot_target_demos": {
+   "min": 10,
+   "max": 25
+  }
+ },
+ "FACEIT_LEVEL_7_8": {
+  "levels": [
+   7,
+   8
+  ],
+  "skill_band": "upper-intermediate",
+  "inclusion_policy": "INCLUDED_PILOT",
+  "pilot_target_demos": {
+   "min": 10,
+   "max": 25
+  }
+ },
+ "FACEIT_LEVEL_1_4": {
+  "levels": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "skill_band": "below-intermediate",
+  "inclusion_policy": "EXCLUDED_PILOT"
+ },
+ "FACEIT_LEVEL_9_10": {
+  "levels": [
+   9,
+   10
+  ],
+  "skill_band": "upper",
+  "inclusion_policy": "EXCLUDED_PILOT"
+ },
+ "bucket_selection_rule": "O bucket de uma demo ├® o bucket em que TODOS os dez jogadores se enquadram. Partidas mistas entre buckets INCLUDED_PILOT s├úo registradas como mixed_skill_match = true e exigem decis├úo expl├¡cita de aceita├º├úo no invent├írio; partidas que misturam bucket inclu├¡do com bucket exclu├¡do s├úo rejeitadas.",
+ "elo_usage_rule": "FACEIT Elo ├® registrado em elo_or_rating como evid├¬ncia complementar, nunca usado para substituir o level nem para inferir level."
+}
+
+=== valve_premier_policy ===
+{
+ "inclusion_policy": "NOT_DEFINED_PENDING_DISTRIBUTION_AUDIT",
+ "bucket_definition": null,
+ "blocking_conditions": [
+  "distribui├º├úo real de Premier Rating n├úo auditada",
+  "temporada de refer├¬ncia n├úo declarada",
+  "rela├º├úo do Premier Rating com o rank Competitive n├úo documentada por evid├¬ncia"
+ ],
+ "note": "Nenhum bucket Premier pode ser definido antes de auditar a distribui├º├úo e a temporada. Enquanto pendente, demos apenas Premier s├úo classificadas como UNKNOWN para efeito de corpus principal e listadas em unresolved_references/invent├írio com a pend├¬ncia expl├¡cita.",
+ "resolution_owner": "Data Acquisition Researcher + Data Provenance and Compliance Auditor"
+}
+
+=== excluded_from_primary_corpus ===
+[
+ {
+  "bucket_id": "PROFESSIONAL_TEAMS",
+  "reason": "dom├¡nio distinto; j├í materializado em datasets/mirage_v2/"
+ },
+ {
+  "bucket_id": "ACADEMY_TEAMS_STRUCTURED",
+  "reason": "equipes academy formalmente estruturadas s├úo dom├¡nio profissional"
+ },
+ {
+  "bucket_id": "UNKNOWN_SKILL",
+  "reason": "n├¡vel n├úo comprov├ível (teste 6: UnknownRankIsNotPromoted)"
+ },
+ {
+  "bucket_id": "FACEIT_LEVEL_1_4",
+  "reason": "abaixo do dom├¡nio intermedi├írio definido"
+ },
+ {
+  "bucket_id": "FACEIT_LEVEL_9_10",
+  "reason": "acima do dom├¡nio intermedi├írio definido"
+ }
+]
+
+=== demo_acceptance_criteria ( 13 ) ===
+    {"criterion_id": "AC01", "requirement": "map = de_mirage", "machine_checkable": true}
+    {"criterion_id": "AC02", "requirement": "formato Source 2 leg├¡vel pelo parser (demoparser2)", "machine_checkable": true}
+    {"criterion_id": "AC03", "requirement": "data recente (patch compat├¡vel com o corpus vigente)", "machine_checkable": true}
+    {"criterion_id": "AC04", "requirement": "patch compat├¡vel declarado e registrado", "machine_checkable": true}
+    {"criterion_id": "AC05", "requirement": "lifecycle completo (todas as rondas com in├¡cio e fim)", "machine_checkable": true}
+    {"criterion_id": "AC06", "requirement": "m├¡nimo de 16 rounds, salvo overtime ou partida v├ílida curta justificada", "machine_checkable": true, "params": {"minimum_rounds": 16, "overtime_exempt": true, 
+    {"criterion_id": "AC07", "requirement": "dez jogadores, ou substitui├º├Áes explicitamente explicadas", "machine_checkable": true, "params": {"expected_player_slots": 10}}
+    {"criterion_id": "AC08", "requirement": "posi├º├Áes finitas (sem NaN/Inf)", "machine_checkable": true}
+    {"criterion_id": "AC09", "requirement": "rounds identific├íveis (tick monot├┤nico, sem cruzamento de round)", "machine_checkable": true}
+    {"criterion_id": "AC10", "requirement": "lados CT/TR v├ílidos", "machine_checkable": true}
+    {"criterion_id": "AC11", "requirement": "eventos de C4 e eventos de jogo suficientes", "machine_checkable": true}
+    {"criterion_id": "AC12", "requirement": "rank ou skill metadata rastre├ível", "machine_checkable": true}
+    {"criterion_id": "AC13", "requirement": "fonte e licen├ºa registradas", "machine_checkable": false, "manual_evidence_required": true}
+
+=== demo_exclusion_criteria ( 13 ) ===
+    {"criterion_id": "EX01", "condition": "abandono precoce", "disposition": "EXCLUDE"}
+    {"criterion_id": "EX02", "condition": "surrender precoce", "disposition": "EXCLUDE"}
+    {"criterion_id": "EX03", "condition": "demo corrompida", "disposition": "QUARANTINE"}
+    {"criterion_id": "EX04", "condition": "warmup sem partida", "disposition": "EXCLUDE"}
+    {"criterion_id": "EX05", "condition": "jogadores ausentes", "disposition": "FLAG"}
+    {"criterion_id": "EX06", "condition": "rank desconhecido", "disposition": "EXCLUDE_FROM_PRIMARY_CORPUS"}
+    {"criterion_id": "EX07", "condition": "suspeita forte de smurf", "disposition": "FLAG"}
+    {"criterion_id": "EX08", "condition": "suspeita forte de cheat", "disposition": "FLAG"}
+    {"criterion_id": "EX09", "condition": "m├║ltiplas demos duplicadas", "disposition": "EXCLUDE_DUPLICATE"}
+    {"criterion_id": "EX10", "condition": "partidas dos mesmos jogadores em excesso", "disposition": "FLAG"}
+    {"criterion_id": "EX11", "condition": "patch incompat├¡vel", "disposition": "EXCLUDE"}
+    {"criterion_id": "EX12", "condition": "Mirage antiga com geometria divergente", "disposition": "EXCLUDE"}
+    {"criterion_id": "EX13", "condition": "round Perdido, baixa pontua├º├úo individual ou estilo incomum de jogo", "disposition": "NOT_A_REJECTION_CRITERION", "note": "proibido excluir por derrota, baixa po
+
+=== UNKNOWN domain ===
+{
+ "domain_id": "UNKNOWN",
+ "short_label": "UNK",
+ "operational_definition": "Partidas ou demos em que o n├¡vel de habilidade de um ou mais jogadores N├âO ├® comprov├ível no momento da partida, ou em que a origem do metadado n├úo permite reconstruir o sistema de classifica├º├úo. Inclui aus├¬ncia de rank declarado, rank declarado sem verifica├º├úo, rating inferido por qualidade visual, e qualquer demo cujo sistema de rank seja amb├¡guo.",
+ "evidence_required": [
+  "motivo expl├¡cito da classifica├º├úo UNKNOWN em exclusion_reason"
+ ],
+ "allowed_rank_systems": [
+  "NONE"
+ ],
+ "default_inclusion_policy": "EXCLUDED_PILOT",
+ "default_inclusion_policy_note": "Proibido promover UNKNOWN a INTERMEDIATE_COMPETITIVE. Promo├º├úo exige nova evid├¬ncia de rank rastre├ível e novo registro no invent├írio (teste 6: UnknownRankIsNotPromoted).",
+ "promotion_prohibited_from": [],
+ "demotion_prohibited_to": []
+}

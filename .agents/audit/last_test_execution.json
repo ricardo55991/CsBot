@@ -1,0 +1,19 @@
+{
+  "timestamp_utc": "2026-11-16T21:08:09.572741+00:00",
+  "command": "cd <USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot; dotnet test tests/CsBotManager.Tests/CsBotManager.Tests.csproj --filter PipelineFix2B912Tests --no-restore; dotnet build src/CsBotManager/CsBotManager.csproj -c Release --no-restore",
+  "working_directory": "<USER_HOME>/OneDrive/Documentos/Dev/CsBot",
+  "discovered": 24,
+  "passed": 24,
+  "failed": 0,
+  "skipped": 0,
+  "duration": "72 ms",
+  "exit_code": 0,
+  "error": null,
+  "test_assemblies": [
+    "\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\bin\\Debug\\net10.0\\CsBotManager.Tests.dll",
+    "CsBotManager.Tests.dll"
+  ],
+  "canonical_summary": "24/24",
+  "status": "PASSED",
+  "block_pass_verdict": false
+}

@@ -1,0 +1,116 @@
+{
+  "inventory_metadata": {
+    "generated_at_utc": "2026-11-07T16:13:00Z",
+    "host_os": "windows",
+    "antigravity_version": "2.29.0",
+    "agy_cli_version": "1.0.13",
+    "active_edition": "Antigravity 2.0 (Desktop App)"
+  },
+  "runtime_paths": {
+    "app_executable": "C:\\Users\\ricar\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+    "language_server_executable": "C:\\Users\\ricar\\AppData\\Local\\Programs\\Antigravity\\resources\\bin\\language_server.exe",
+    "cli_executable": "C:\\Users\\ricar\\AppData\\Local\\agy\\bin\\agy.exe",
+    "app_data_directory": "C:\\Users\\ricar\\.gemini\\antigravity",
+    "conversation_id": "d65e2bde-5cae-4311-b714-4707e256a192",
+    "artifact_directory": "C:\\Users\\ricar\\.gemini\\antigravity\\brain\\d65e2bde-5cae-4311-b714-4707e256a192"
+  },
+  "global_customization_roots": {
+    "config_root": "C:\\Users\\ricar\\.gemini\\config",
+    "global_rules": [
+      "C:\\Users\\ricar\\.gemini\\config\\GEMINI.md",
+      "C:\\Users\\ricar\\.gemini\\GEMINI.md"
+    ],
+    "global_config_json": "C:\\Users\\ricar\\.gemini\\config\\config.json",
+    "global_mcp_config": "C:\\Users\\ricar\\.gemini\\config\\mcp_config.json",
+    "global_skills_dir": "C:\\Users\\ricar\\.gemini\\config\\skills",
+    "global_plugins_dir": "C:\\Users\\ricar\\.gemini\\config\\plugins",
+    "global_hooks_json": "C:\\Users\\ricar\\.gemini\\config\\hooks.json",
+    "builtin_skills_dir": "C:\\Users\\ricar\\.gemini\\antigravity\\builtin\\skills"
+  },
+  "workspace_customization_roots": {
+    "workspace_root": "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+    "is_git_repository": true,
+    "canonical_agent_dir": "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents",
+    "supported_alternate_agent_dirs": [
+      "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agent",
+      "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\_agents",
+      "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\_agent"
+    ],
+    "status": {
+      "agent_dir_exists": false,
+      "root_gemini_md_exists": false,
+      "root_agents_md_exists": false,
+      "workspace_hooks_json_exists": false,
+      "workspace_skills_json_exists": false,
+      "workspace_plugins_json_exists": false,
+      "workspace_mcp_config_exists": false
+    }
+  },
+  "installed_skills": {
+    "builtin": [
+      {
+        "name": "agy-customizations",
+        "path": "C:\\Users\\ricar\\.gemini\\antigravity\\builtin\\skills\\agy-customizations\\SKILL.md",
+        "scope": "builtin"
+      },
+      {
+        "name": "antigravity-guide",
+        "path": "C:\\Users\\ricar\\.gemini\\antigravity\\builtin\\skills\\antigravity_guide\\SKILL.md",
+        "scope": "builtin"
+      },
+      {
+        "name": "automation",
+        "path": "C:\\Users\\ricar\\.gemini\\antigravity\\builtin\\skills\\automation\\SKILL.md",
+        "scope": "builtin"
+      },
+      {
+        "name": "generative_ui",
+        "path": "C:\\Users\\ricar\\.gemini\\antigravity\\builtin\\skills\\generative_ui\\SKILL.md",
+        "scope": "builtin"
+      },
+      {
+        "name": "migrate-workflows",
+        "path": "C:\\Users\\ricar\\.gemini\\antigravity\\builtin\\skills\\migrate-workflows\\SKILL.md",
+        "scope": "builtin"
+      },
+      {
+        "name": "plugin",
+        "path": "C:\\Users\\ricar\\.gemini\\antigravity\\builtin\\skills\\plugin\\SKILL.md",
+        "scope": "builtin"
+      },
+      {
+        "name": "ui-plugin-navigation",
+        "path": "C:\\Users\\ricar\\.gemini\\antigravity\\builtin\\skills\\ui-plugin-navigation\\SKILL.md",
+        "scope": "builtin"
+      }
+    ],
+    "global_user": [
+      {
+        "name": "graphify",
+        "path": "C:\\Users\\ricar\\.gemini\\config\\skills\\graphify\\SKILL.md",
+        "scope": "global"
+      }
+    ],
+    "workspace": []
+  },
+  "installed_plugins": {
+    "global": [
+      {
+        "name": "chrome-devtools-plugin",
+        "directory": "C:\\Users\\ricar\\.gemini\\config\\plugins\\chrome-devtools-plugin",
+        "enabled": true
+      },
+      {
+        "name": "google-antigravity-sdk",
+        "directory": "C:\\Users\\ricar\\.gemini\\config\\plugins\\google-antigravity-sdk",
+        "enabled": true
+      },
+      {
+        "name": "modern-web-guidance-plugin",
+        "directory": "C:\\Users\\ricar\\.gemini\\config\\plugins\\modern-web-guidance-plugin",
+        "enabled": true
+      }
+    ],
+    "workspace": []
+  }
+}

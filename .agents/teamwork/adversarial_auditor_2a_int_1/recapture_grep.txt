@@ -1,0 +1,10 @@
+﻿==========================================================================================
+training_runs/intermediate_domain_study/source_feasibility_report.md -> 0 ocorrencias
+==========================================================================================
+training_runs/intermediate_domain_study/domain_training_strategy.md -> 0 ocorrencias
+==========================================================================================
+training_runs/intermediate_domain_study/scale_up_recommendation.md -> 0 ocorrencias
+==========================================================================================
+training_runs/intermediate_domain_study/legal_and_access_constraints.md -> 0 ocorrencias
+==========================================================================================
+training_runs/intermediate_domain_study/valve_opt_in_feasibility.md -> 0 ocorrencias

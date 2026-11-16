@@ -142,7 +142,54 @@ public enum SpotUsage
     Lurk = 128,
     Cover = 256,
     Defuse = 512,
-    FlankWatch = 1024
+    FlankWatch = 1024,
+    Save = 2048
+}
+
+public enum SpotSide
+{
+    None,
+    CounterTerrorist,
+    Terrorist,
+    Any
+}
+
+public enum SpotBombsite
+{
+    None,
+    A,
+    B,
+    Mid,
+    Dynamic
+}
+
+public enum SpotConfidence
+{
+    LOW,
+    MEDIUM,
+    HIGH
+}
+
+public enum SpotValidationStatus
+{
+    PROFESSIONAL_CLUSTER_VALIDATED,
+    PIPELINE_GEOMETRY_VALIDATED,
+    RUNTIME_LOCAL_VALIDATED,
+    RUNTIME_OBSERVED,
+    RUNTIME_NOT_OBSERVED,
+    INSUFFICIENT_EVIDENCE,
+    PENDING_HUMAN_REVIEW,
+    APPROVED_BY_USER,
+    REJECTED_BY_USER
+}
+
+public class AllowedRoleCollection : List<string>
+{
+    public AllowedRoleCollection() : base() { }
+    public AllowedRoleCollection(IEnumerable<string> collection) : base(collection) { }
+
+    public void Add(BotRole role) => base.Add(role.ToString());
+    public bool Contains(BotRole role) => base.Contains(role.ToString());
 }
 
 public class TacticalSpot
@@ -157,7 +204,7 @@ public class TacticalSpot
     public string Sector { get; set; } = string.Empty;
 
     [JsonPropertyName("side")]
-    public string Side { get; set; } = "CT"; // "CT", "TR", "ANY"
+    public string Side { get; set; } = "CT"; // "CT", "TR", "CounterTerrorist", "Terrorist", "ANY"
 
     [JsonPropertyName("x")]
     public float X { get; set; }
@@ -195,7 +242,13 @@ public class TacticalSpot
     public SpotUsage Usage { get; set; } = SpotUsage.Hold;
 
     [JsonPropertyName("allowed_roles")]
-    public List<BotRole> AllowedRoles { get; set; } = new();
+    public AllowedRoleCollection AllowedRoles { get; set; } = new();
+
+    [JsonPropertyName("confidence")]
+    public string Confidence { get; set; } = "MEDIUM";
+
+    [JsonPropertyName("validation_status")]
+    public string ValidationStatus { get; set; } = "RUNTIME_NOT_OBSERVED";
 }
 
 public class RoundHistoryItem
@@ -874,12 +927,17 @@ public class ActiveAdaptationRecord
     public bool IsClosed { get; set; } = false;
     public CsTeam OwnerTeam { get; set; } = CsTeam.None;
     public string TargetSite { get; set; } = string.Empty;
+    public int InternalRoundId { get; set; } = 0;
+    public int SourceEntrySlot { get; set; } = -1;
+    public string UtilityEvidence { get; set; } = string.Empty;
 }
 
 public class PhysicalStopState
 {
     public int ConsecutiveUnknownStandstillCycles { get; set; } = 0;
     public float DistanceToMacroGoalAtFirstUnknown { get; set; } = 0f;
+    public bool RecoveryRequested { get; set; } = false;
+    public float RecoveryCooldownUntil { get; set; } = 0f;
 }
 
 public class MapPlantZone
@@ -1043,6 +1101,9 @@ public class MapProfile
 
     [JsonPropertyName("friendly_name")]
     public string FriendlyName { get; set; } = string.Empty;
+
+    [JsonPropertyName("map_profile_version")]
+    public int MapProfileVersion { get; set; } = 1;
 
     [JsonPropertyName("spots")]
     public List<TacticalSpot> Spots { get; set; } = new();

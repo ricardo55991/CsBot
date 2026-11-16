@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CsBot - Radar Tático 2D & Central de Comando</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="stylesheet" href="/static/radar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="radar-app">
+        <!-- Coluna Esquerda: 55% Radar 2D Interativo (Enquadramento 1:1) -->
+        <main class="radar-viewport">
+            <header class="radar-header">
+                <div class="map-badge">
+                    <span class="pulse-dot"></span>
+                    <span id="mapNameText">DE_MIRAGE</span>
+                    <span class="sub-badge" id="tickrateText">64Hz LIVE</span>
+                </div>
+
+                <div class="radar-controls">
+                    <label class="toggle-control">
+                        <input type="checkbox" id="toggleCallouts" checked>
+                        <span>Exibir Spots / Callouts</span>
+                    </label>
+                    <label class="toggle-control">
+                        <input type="checkbox" id="toggleFov" checked>
+                        <span>Cones de Visão</span>
+                    </label>
+                    <button id="btnFullscreen" class="btn-icon" title="Modo Tela Cheia (F11)">⛶ Tela Cheia</button>
+                </div>
+            </header>
+
+            <div class="canvas-wrapper" id="canvasWrapper">
+                <canvas id="radarCanvas" width="1024" height="1024"></canvas>
+            </div>
+
+            <!-- Alerta Flutuante de Bomba / C4 -->
+            <div id="c4Banner" class="c4-banner hidden">
+                <div class="c4-icon">💣</div>
+                <div class="c4-info">
+                    <div class="c4-title" id="c4Title">C4 PLANTADA NO BOMBSITE A</div>
+                    <div class="c4-timer" id="c4Timer">DETONAÇÃO EM 38.5s</div>
+                    <div class="c4-defuse-bar hidden" id="c4DefuseBar">
+                        <div class="defuse-progress" id="defuseProgress"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Coluna Direita: 45% Central de Operações Táticas (TOC - Broadcast Pro) -->
+        <aside class="toc-sidebar">
+            <!-- 1. Header de Partida & Placar -->
+            <div class="toc-section match-header">
+                <div class="score-board">
+                    <div class="team-score ct">
+                        <span class="team-name">CT</span>
+                        <span class="score-val" id="ctScore">0</span>
+                    </div>
+                    <div class="score-vs">
+                        <span class="round-badge" id="roundBadge">ROUND 1</span>
+                        <span class="phase-badge" id="phaseBadge">FREEZETIME</span>
+                    </div>
+                    <div class="team-score tr">
+                        <span class="score-val" id="trScore">0</span>
+                        <span class="team-name">TR</span>
+                    </div>
+                </div>
+
+                <div class="economy-strip">
+                    <div class="econ-pill" id="buyStatePill">FULL BUY</div>
+                    <div class="econ-cash" id="teamCashText">Caixa da Equipe: $18,400</div>
+                </div>
+            </div>
+
+            <!-- 2. Card da Tática Ativa -->
+            <div class="toc-section tactic-card">
+                <div class="card-label">⚡ TÁTICA MACRO ATIVA</div>
+                <div class="tactic-title" id="tacticName">Carregando plano tático...</div>
+                <div class="tactic-summary" id="tacticSummary">Aguardando sincronização com o servidor de IA.</div>
+                
+                <div class="tactic-meta">
+                    <span class="meta-pill" id="tempoPill">RITMO: PADRÃO</span>
+                    <span class="meta-pill" id="tierPill">TIER 1: STANDARD</span>
+                    <span class="meta-pill timer" id="stagingTimerPill">STAGING: 0s</span>
+                </div>
+
+                <div class="alerts-container" id="alertsContainer">
+                    <!-- Badges contextuais injetados dinamicamente -->
+                </div>
+            </div>
+
+            <!-- 3. Feed de Voz IGL (Faster-Whisper) -->
+            <div class="toc-section voice-card">
+                <div class="card-label">🎙️ FEED DE COMANDOS DE VOZ (IGL)</div>
+                <div class="voice-cmd" id="voiceCmdText">
+                    <i>Segure 'V' no jogo para comandar por voz...</i>
+                </div>
+                <div class="voice-action" id="voiceActionText">
+                    Status: Reconhecimento ativo via Faster-Whisper
+                </div>
+            </div>
+
+            <!-- 4. Posicionamento da Equipe (Cards Individuais por Bot) -->
+            <div class="toc-section roster-section">
+                <div class="section-title-row">
+                    <div class="card-label">👥 POSICIONAMENTO DA EQUIPE</div>
+                    <span class="roster-count" id="rosterCount">5 VIVOS</span>
+                </div>
+
+                <div class="roster-list" id="rosterList">
+                    <!-- Cards de bots injetados via JS -->
+                </div>
+            </div>
+
+            <!-- 5. Barra de Ações Rápidas -->
+            <div class="toc-section action-bar">
+                <button class="btn-action execute" id="btnExecute">🚀 Executar</button>
+                <button class="btn-action rotate" id="btnRotate">🔄 Miou / Girar</button>
+                <button class="btn-action flash" id="btnFlash">💥 Pop-Flash</button>
+                <button class="btn-action pause" id="btnPause">⏸️ Pausar Jogo</button>
+            </div>
+        </aside>
+    </div>
+
+    <script src="/static/radar.js"></script>
+</body>
+</html>

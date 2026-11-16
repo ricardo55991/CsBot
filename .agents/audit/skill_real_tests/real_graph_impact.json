@@ -1,0 +1,2300 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T16:47:42.764076+00:00",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "graph_path": "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+  "graph_exists": true,
+  "dry_run": false,
+  "data_nature": "INFERRED",
+  "workspace_files_nature": "REAL",
+  "verdict": "PASS",
+  "required_attributes": [
+    "entry_points",
+    "writers",
+    "readers",
+    "authoritative_state",
+    "fallbacks",
+    "caches",
+    "side_effects",
+    "telemetry",
+    "tests",
+    "blast_radius"
+  ],
+  "total_flows_analyzed": 5,
+  "flows": {
+    "Positioning Transformer -> GoalPosition": {
+      "flow_name": "Positioning Transformer -> GoalPosition",
+      "data_nature": "INFERRED",
+      "entry_points": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/MapProfileManager.cs",
+        "src/CsBotManager/MidRoundAdapter.cs",
+        "src/CsBotManager/CtDefenseController.cs"
+      ],
+      "entry_points_verified": [
+        {
+          "path": "src/CsBotManager/CsBotManagerPlugin.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+          "exists": true,
+          "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/MapProfileManager.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapProfileManager.cs",
+          "exists": true,
+          "sha256": "8bcf19cfe74d3071dbdbecd040714f86dfcc22f984779407e0a68e5b5bd08734",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/MidRoundAdapter.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+          "exists": true,
+          "sha256": "9596905385e719a7c8c95e66893a06f43770bc98478f78df95f02d96084fb80c",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/CtDefenseController.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtDefenseController.cs",
+          "exists": true,
+          "sha256": "88becc5d15f25c15c5fda2ebc22f6e650dd718198ca878aade6ab3442444af09",
+          "data_nature": "REAL"
+        }
+      ],
+      "writers": [
+        "src/CsBotManager/CsBotManagerPlugin.cs (atualização de GoalPosition por inferência/perfil)",
+        "src/CsBotManager/MidRoundAdapter.cs (adaptação tática de destino no mid-round)",
+        "src/CsBotManager/CtDefenseController.cs (atribuição de âncoras e rotações CT)"
+      ],
+      "readers": [
+        "src/CsBotManager/MovementArbitrator.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/MicroMoveEngine.cs",
+        "src/CsBotManager/GameplaySpotTelemetryTracker.cs"
+      ],
+      "authoritative_state": [
+        "src/CsBotManager/Models.cs (estado tático e GoalPosition do bot)",
+        "src/CsBotManager/MapProfileManager.cs (spots carregados de de_mirage.json)"
+      ],
+      "fallbacks": [
+        "src/CsBotManager/MapProfileManager.cs (fallback determinístico para spots/âncoras de src/CsBotManager/MapProfiles/de_mirage.json)",
+        "src/CsBotManager/MapPlayableBounds.cs (clamping dentro dos limites jogáveis do mapa)"
+      ],
+      "caches": [
+        "src/CsBotManager/MapProfileManager.cs (cache em memória do perfil tático de_mirage.json)"
+      ],
+      "side_effects": [
+        "Atualização do objetivo espacial consumido por src/CsBotManager/MovementArbitrator.cs e src/CsBotManager/BotLocomotionDriver.cs"
+      ],
+      "telemetry": [
+        "src/CsBotManager/GameplaySpotTelemetryTracker.cs",
+        "src/CsBotManager/LiveRadarTelemetryService.cs"
+      ],
+      "tests": [
+        "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+        "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+        "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+        "tests/CsBotManager.Tests/OllamaIntegrationDiagnosticTests.cs",
+        "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs"
+      ],
+      "tests_verified": [],
+      "blast_radius": [
+        "src/CsBotManager/MovementArbitrator.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/GameplaySpotTelemetryTracker.cs"
+      ],
+      "workspace_verification": {
+        "data_nature": "REAL",
+        "matched_source_files_count": 34,
+        "matched_source_files": [
+          {
+            "file": "src/CsBotManager/BotLocomotionDriver.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CombatAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CombatAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/ContextualSmokeAndAudioBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\ContextualSmokeAndAudioBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CsBotManagerPlugin.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtDefenseController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtDefenseController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtRetakeAndDefuseBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtRetakeAndDefuseBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/GameplaySpotTelemetryTracker.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\GameplaySpotTelemetryTracker.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/LiveRadarTelemetryService.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\LiveRadarTelemetryService.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MapPlayableBounds.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapPlayableBounds.cs",
+            "exists": true,
+            "matched_keywords": [
+              "GoalPosition"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MapProfileManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapProfileManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MatchTelemetryLogger.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MatchTelemetryLogger.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MicroMoveEngine.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MidRoundAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MobilityController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MobilityController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/Models.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\Models.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MovementArbitrator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MovementArbitrator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "GoalPosition",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MovementExecutionTracker.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MovementExecutionTracker.cs",
+            "exists": true,
+            "matched_keywords": [
+              "GoalPosition"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/OllamaIglService.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\OllamaIglService.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/PacingAndFallbackController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\PacingAndFallbackController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/PlayerIntentTracker.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\PlayerIntentTracker.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "matched_test_files_count": 20,
+        "matched_test_files": [
+          {
+            "file": "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\EconomyAndIglTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementArbitrationAndStuckTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementExecutionTrackerTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "GoalPosition",
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/OllamaIntegrationDiagnosticTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\OllamaIntegrationDiagnosticTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\OrganicRushesAndFakesTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase17SemanticAndJumpTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase17SemanticAndJumpTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2DatasetInvariantsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2DatasetInvariantsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2ForensicAuditTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Positioning",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2TrainingInputsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2TrainingInputsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Positioning",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/TickDeltaAndAppliedIntentTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\TickDeltaAndAppliedIntentTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_2_FinalAdjustmentsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_2_FinalAdjustmentsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_4_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_4_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_5_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_5_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_6_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_6_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_7_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_7_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_8_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_9_MirageV2ProfileTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_9_MirageV2ProfileTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_ComprehensiveTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "GoalPosition",
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_DeepValidationTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_DeepValidationTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_3_UtilityAiIglTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_3_UtilityAiIglTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "graphify": {
+          "graph_json_present": true,
+          "graph_path": "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+          "graph_sha256": "c2cc6301548fedd406df6d9e83ee5650f5ae44f1d7d45b7b92393a2363508013",
+          "total_graph_nodes": 870,
+          "matched_nodes_count": 69,
+          "sample_matched_nodes": [
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_navigatetospot",
+            "src_csbotmanager_mapprofilemanager",
+            "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager",
+            "src_csbotmanager_mapprofilemanager_cs_dictionary",
+            "src_csbotmanager_mapprofilemanager_cs_object",
+            "src_csbotmanager_mapprofilemanager_cs_random",
+            "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager_loadprofile",
+            "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager_getspotbyid",
+            "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager_getspotsforsector",
+            "src_csbotmanager_mapprofilemanager_cs_list",
+            "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager_getspotsforteam",
+            "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager_pickrandomspotforsector",
+            "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager_getfallbackspot",
+            "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager_findchokepointat",
+            "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager_getnearestchokepoint"
+          ]
+        }
+      },
+      "all_10_attributes_present": true,
+      "missing_attributes": []
+    },
+    "BombObjectiveState -> C4 movement": {
+      "flow_name": "BombObjectiveState -> C4 movement",
+      "data_nature": "INFERRED",
+      "entry_points": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/Models.cs",
+        "src/CsBotManager/MidRoundAdapter.cs",
+        "src/CsBotManager/CtDefenseController.cs"
+      ],
+      "entry_points_verified": [
+        {
+          "path": "src/CsBotManager/CsBotManagerPlugin.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+          "exists": true,
+          "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/Models.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\Models.cs",
+          "exists": true,
+          "sha256": "6e18489868b6706d5b93fbcfcf0adb4a3f005bb322d6931a61a41af56f1c2bc9",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/MidRoundAdapter.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+          "exists": true,
+          "sha256": "9596905385e719a7c8c95e66893a06f43770bc98478f78df95f02d96084fb80c",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/CtDefenseController.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtDefenseController.cs",
+          "exists": true,
+          "sha256": "88becc5d15f25c15c5fda2ebc22f6e650dd718198ca878aade6ab3442444af09",
+          "data_nature": "REAL"
+        }
+      ],
+      "writers": [
+        "src/CsBotManager/CsBotManagerPlugin.cs (rastreamento de eventos de C4 dropped/carried/planted/defuse)",
+        "src/CsBotManager/MidRoundAdapter.cs (transição de objetivo de round com base no estado da C4)"
+      ],
+      "readers": [
+        "src/CsBotManager/MovementArbitrator.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/CtDefenseController.cs"
+      ],
+      "authoritative_state": [
+        "src/CsBotManager/Models.cs (BombObjectiveState e metadados da C4 no round)"
+      ],
+      "fallbacks": [
+        "src/CsBotManager/MapProfileManager.cs (coordenadas canônicas dos bombsites A/B em de_mirage.json)"
+      ],
+      "caches": [
+        "src/CsBotManager/Models.cs (última posição conhecida da C4 e portador ativo)"
+      ],
+      "side_effects": [
+        "Priorização de navegação para pickup, plant, retake ou defuse em src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "telemetry": [
+        "src/CsBotManager/LiveRadarTelemetryService.cs",
+        "src/CsBotManager/GameplaySpotTelemetryTracker.cs"
+      ],
+      "tests": [
+        "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+        "tests/CsBotManager.Tests/GeographyAndPivotTests.cs",
+        "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+        "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+        "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs"
+      ],
+      "tests_verified": [],
+      "blast_radius": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/MovementArbitrator.cs",
+        "src/CsBotManager/CtDefenseController.cs"
+      ],
+      "workspace_verification": {
+        "data_nature": "REAL",
+        "matched_source_files_count": 39,
+        "matched_source_files": [
+          {
+            "file": "src/CsBotManager/BotLocomotionDriver.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted",
+              "Carrier",
+              "Defuse",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/BotSystemConfig.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotSystemConfig.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/C4MismatchEpisode.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\C4MismatchEpisode.cs",
+            "exists": true,
+            "matched_keywords": [
+              "C4",
+              "Carrier",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/C4MismatchEpisodeTracker.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\C4MismatchEpisodeTracker.cs",
+            "exists": true,
+            "matched_keywords": [
+              "C4",
+              "Carrier",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CombatAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CombatAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/ContextualSmokeAndAudioBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\ContextualSmokeAndAudioBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CsBotManagerPlugin.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted",
+              "Defuse",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtDefenseController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtDefenseController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtRetakeAndDefuseBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtRetakeAndDefuseBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Carrier",
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/EconomyManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\EconomyManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "C4",
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/GameplaySpotTelemetryTracker.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\GameplaySpotTelemetryTracker.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/JumpExecutionGate.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\JumpExecutionGate.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/LiveRadarTelemetryService.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\LiveRadarTelemetryService.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted",
+              "Carrier",
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MapProfileManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapProfileManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MatchTelemetryLogger.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MatchTelemetryLogger.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MicroMoveEngine.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted",
+              "Defuse",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MidRoundAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted",
+              "Carrier",
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MirageSectorClassifier.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MirageSectorClassifier.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MobilityController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MobilityController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "C4",
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/Models.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\Models.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted",
+              "Carrier",
+              "Defuse",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "matched_test_files_count": 18,
+        "matched_test_files": [
+          {
+            "file": "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\EconomyAndIglTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/GeographyAndPivotTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\GeographyAndPivotTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Carrier"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementArbitrationAndStuckTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementExecutionTrackerTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\OrganicRushesAndFakesTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase17SemanticAndJumpTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase17SemanticAndJumpTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2DatasetInvariantsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2DatasetInvariantsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2ForensicAuditTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_2_FinalAdjustmentsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_2_FinalAdjustmentsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_4_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_4_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted",
+              "Carrier",
+              "Defuse"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_5_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_5_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted",
+              "Carrier",
+              "Defuse",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_6_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_6_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted",
+              "Carrier",
+              "Defuse",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_7_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_7_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Carrier",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_8_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Carrier",
+              "Objective"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_9_MirageV2ProfileTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_9_MirageV2ProfileTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_ComprehensiveTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Carrier"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_DeepValidationTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_DeepValidationTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "Planted"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_3_UtilityAiIglTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_3_UtilityAiIglTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Bomb",
+              "C4",
+              "Planted",
+              "Carrier"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "graphify": {
+          "graph_json_present": true,
+          "graph_path": "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+          "graph_sha256": "c2cc6301548fedd406df6d9e83ee5650f5ae44f1d7d45b7b92393a2363508013",
+          "total_graph_nodes": 870,
+          "matched_nodes_count": 39,
+          "sample_matched_nodes": [
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_notifybombstate",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_hasc4",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_getbombtimeremaining",
+            "src_csbotmanager_csbotmanagerplugin_csbotmanager_csbotmanagerplugin_onbombplanted",
+            "src_csbotmanager_csbotmanagerplugin_cs_eventbombplanted",
+            "src_csbotmanager_csbotmanagerplugin_csbotmanager_csbotmanagerplugin_onbombbegindefuse",
+            "src_csbotmanager_csbotmanagerplugin_cs_eventbombbegindefuse",
+            "src_csbotmanager_ctdefensecontroller_csbotmanager_ctdefensecontroller_reportbombpressure",
+            "src_csbotmanager_ctdefensecontroller_csbotmanager_ctdefensecontroller_reportbombconfirmed",
+            "src_csbotmanager_ctretakeanddefusebrain",
+            "src_csbotmanager_ctretakeanddefusebrain_csbotmanager_defuseaction",
+            "src_csbotmanager_ctretakeanddefusebrain_csbotmanager_ctretakeanddefusebrain",
+            "src_csbotmanager_ctretakeanddefusebrain_cs_random",
+            "src_csbotmanager_ctretakeanddefusebrain_cs_bool",
+            "src_csbotmanager_ctretakeanddefusebrain_cs_float"
+          ]
+        }
+      },
+      "all_10_attributes_present": true,
+      "missing_attributes": []
+    },
+    "ONNX Jump request -> JumpExecutionGate -> usercmd": {
+      "flow_name": "ONNX Jump request -> JumpExecutionGate -> usercmd",
+      "data_nature": "INFERRED",
+      "entry_points": [
+        "src/CsBotManager/JumpExecutionGate.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/MicroMoveEngine.cs",
+        "src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "entry_points_verified": [
+        {
+          "path": "src/CsBotManager/JumpExecutionGate.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\JumpExecutionGate.cs",
+          "exists": true,
+          "sha256": "55e2ff88b2e13aad3739219ba6b7b2697f9da7b8e84ccc1e199ff4102637259d",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/BotLocomotionDriver.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+          "exists": true,
+          "sha256": "7a5b9115cfa1239adcf8576093639e06f27f525f435e3fdac2d74da777b92d0b",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/MicroMoveEngine.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+          "exists": true,
+          "sha256": "e1f56099938355fdf2a90018c42e1c2b2575caf55dec16987dcab105428f1954",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/CsBotManagerPlugin.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+          "exists": true,
+          "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb",
+          "data_nature": "REAL"
+        }
+      ],
+      "writers": [
+        "src/CsBotManager/MicroMoveEngine.cs (decisão de micro-movimento e requisição de pulo)",
+        "src/CsBotManager/JumpExecutionGate.cs (avaliação e filtragem de permissão de pulo)"
+      ],
+      "readers": [
+        "src/CsBotManager/BotLocomotionDriver.cs (aplicação de botões/usercmd de locomoção)",
+        "src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "authoritative_state": [
+        "src/CsBotManager/JumpExecutionGate.cs (cooldown, validação contextual e gate de execução de pulo)"
+      ],
+      "fallbacks": [
+        "src/CsBotManager/JumpExecutionGate.cs (bloqueio determinístico de pulo quando fora das condições seguras)"
+      ],
+      "caches": [
+        "src/CsBotManager/JumpExecutionGate.cs (estado temporal do último pulo por bot)"
+      ],
+      "side_effects": [
+        "Emissão ou supressão do comando físico de pulo em src/CsBotManager/BotLocomotionDriver.cs"
+      ],
+      "telemetry": [
+        "src/CsBotManager/CsBotManagerPlugin.cs (telemetria de decisões e bloqueios do JumpExecutionGate)"
+      ],
+      "tests": [
+        "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+        "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+        "tests/CsBotManager.Tests/Phase17SemanticAndJumpTests.cs",
+        "tests/CsBotManager.Tests/Phase2DatasetInvariantsTests.cs",
+        "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs"
+      ],
+      "tests_verified": [],
+      "blast_radius": [
+        "src/CsBotManager/JumpExecutionGate.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/MovementArbitrator.cs"
+      ],
+      "workspace_verification": {
+        "data_nature": "REAL",
+        "matched_source_files_count": 21,
+        "matched_source_files": [
+          {
+            "file": "src/CsBotManager/BotLocomotionDriver.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CombatAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CombatAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/ContextualSmokeAndAudioBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\ContextualSmokeAndAudioBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CsBotManagerPlugin.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtDefenseController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtDefenseController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtRetakeAndDefuseBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtRetakeAndDefuseBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/EconomyManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\EconomyManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/JumpExecutionGate.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\JumpExecutionGate.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "JumpExecutionGate"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MatchTelemetryLogger.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MatchTelemetryLogger.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MicroMoveEngine.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MidRoundAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MobilityController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MobilityController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MovementArbitrator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MovementArbitrator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/PacingAndFallbackController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\PacingAndFallbackController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/SiteClearAndPlantController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\SiteClearAndPlantController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/SpotTestRunner.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\SpotTestRunner.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TacticalCatalogs/MirageTacticalCatalog.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TacticalCatalogs\\MirageTacticalCatalog.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TrackerMetricsAggregator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TrackerMetricsAggregator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TrMacroPivotController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TrMacroPivotController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/UtilityAndClockCoordinator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\UtilityAndClockCoordinator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "matched_test_files_count": 12,
+        "matched_test_files": [
+          {
+            "file": "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementArbitrationAndStuckTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementExecutionTrackerTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase17SemanticAndJumpTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase17SemanticAndJumpTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "JumpExecutionGate"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2DatasetInvariantsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2DatasetInvariantsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2ForensicAuditTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2TrainingInputsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2TrainingInputsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/RoundLifecycleTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\RoundLifecycleTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/TickDeltaAndAppliedIntentTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\TickDeltaAndAppliedIntentTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_4_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_4_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_6_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_6_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_8_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "JumpExecutionGate"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_ComprehensiveTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "graphify": {
+          "graph_json_present": true,
+          "graph_path": "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+          "graph_sha256": "c2cc6301548fedd406df6d9e83ee5650f5ae44f1d7d45b7b92393a2363508013",
+          "total_graph_nodes": 870,
+          "matched_nodes_count": 72,
+          "sample_matched_nodes": [
+            "src_csbotmanager_botlocomotiondriver",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botorderpriority",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_trackedbotnavstate",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_setplugin",
+            "src_csbotmanager_botlocomotiondriver_cs_concurrentdictionary",
+            "src_csbotmanager_botlocomotiondriver_cs_ibotcontrollerapi",
+            "src_csbotmanager_botlocomotiondriver_cs_bool",
+            "src_csbotmanager_botlocomotiondriver_cs_vector",
+            "src_csbotmanager_botlocomotiondriver_cs_float",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_notifybombstate",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_notifysavestate",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_resetround",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_clearnavigation",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_getnavstate"
+          ]
+        }
+      },
+      "all_10_attributes_present": true,
+      "missing_attributes": []
+    },
+    "Recovery request -> MovementArbitrator -> physical movement": {
+      "flow_name": "Recovery request -> MovementArbitrator -> physical movement",
+      "data_nature": "INFERRED",
+      "entry_points": [
+        "src/CsBotManager/MovementArbitrator.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/MicroMoveEngine.cs",
+        "src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "entry_points_verified": [
+        {
+          "path": "src/CsBotManager/MovementArbitrator.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MovementArbitrator.cs",
+          "exists": true,
+          "sha256": "9326c8c62a50560dd3fd3d07bf4901aa9fbe97097f5d4208bd098c2d364dcb35",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/BotLocomotionDriver.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+          "exists": true,
+          "sha256": "7a5b9115cfa1239adcf8576093639e06f27f525f435e3fdac2d74da777b92d0b",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/MicroMoveEngine.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+          "exists": true,
+          "sha256": "e1f56099938355fdf2a90018c42e1c2b2575caf55dec16987dcab105428f1954",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/CsBotManagerPlugin.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+          "exists": true,
+          "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb",
+          "data_nature": "REAL"
+        }
+      ],
+      "writers": [
+        "src/CsBotManager/MovementArbitrator.cs (arbitragem entre navegação normal, combate e recovery)",
+        "src/CsBotManager/BotLocomotionDriver.cs (execução física de vetores de destravamento)"
+      ],
+      "readers": [
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "authoritative_state": [
+        "src/CsBotManager/MovementArbitrator.cs (fonte autoritativa do comando de movimento vencedor no tick)"
+      ],
+      "fallbacks": [
+        "src/CsBotManager/BotLocomotionDriver.cs (manobra física de recovery quando progresso espacial falha)",
+        "src/CsBotManager/MapPlayableBounds.cs (validação de limites jogáveis)"
+      ],
+      "caches": [
+        "src/CsBotManager/MovementArbitrator.cs (histórico recente de posições/velocidade e estado de arbitragem)"
+      ],
+      "side_effects": [
+        "Sobrescrita temporária do vetor de locomoção em src/CsBotManager/BotLocomotionDriver.cs"
+      ],
+      "telemetry": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/LiveRadarTelemetryService.cs"
+      ],
+      "tests": [
+        "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+        "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+        "tests/CsBotManager.Tests/RoundLifecycleTests.cs",
+        "tests/CsBotManager.Tests/TickDeltaAndAppliedIntentTests.cs",
+        "tests/CsBotManager.Tests/V4_2_2_FinalAdjustmentsTests.cs"
+      ],
+      "tests_verified": [],
+      "blast_radius": [
+        "src/CsBotManager/MovementArbitrator.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/JumpExecutionGate.cs"
+      ],
+      "workspace_verification": {
+        "data_nature": "REAL",
+        "matched_source_files_count": 27,
+        "matched_source_files": [
+          {
+            "file": "src/CsBotManager/BotLocomotionDriver.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MovementArbitrator",
+              "Recovery",
+              "Stuck",
+              "BotLocomotionDriver",
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/BotSystemConfig.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotSystemConfig.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery",
+              "Stuck"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CombatAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CombatAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/ContextualSmokeAndAudioBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\ContextualSmokeAndAudioBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CsBotManagerPlugin.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver",
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtDefenseController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtDefenseController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtRetakeAndDefuseBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtRetakeAndDefuseBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/EconomyManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\EconomyManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/GameplaySpotTelemetryTracker.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\GameplaySpotTelemetryTracker.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/JumpExecutionGate.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\JumpExecutionGate.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery",
+              "Stuck"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MapPlayableBounds.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapPlayableBounds.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MatchTelemetryLogger.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MatchTelemetryLogger.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Stuck",
+              "BotLocomotionDriver",
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MicroMoveEngine.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MovementArbitrator",
+              "BotLocomotionDriver",
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MidRoundAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MobilityController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MobilityController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/Models.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\Models.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MovementArbitrator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MovementArbitrator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MovementArbitrator",
+              "Recovery",
+              "Stuck"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MovementExecutionTracker.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MovementExecutionTracker.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/PacingAndFallbackController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\PacingAndFallbackController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/RecoveryAttempt.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\RecoveryAttempt.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "matched_test_files_count": 11,
+        "matched_test_files": [
+          {
+            "file": "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementArbitrationAndStuckTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MovementArbitrator",
+              "Stuck",
+              "BotLocomotionDriver",
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementExecutionTrackerTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery",
+              "Stuck",
+              "BotLocomotionDriver",
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/RoundLifecycleTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\RoundLifecycleTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/TickDeltaAndAppliedIntentTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\TickDeltaAndAppliedIntentTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery",
+              "Stuck",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_2_FinalAdjustmentsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_2_FinalAdjustmentsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery",
+              "Stuck"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_4_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_4_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_5_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_5_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_6_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_6_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MovementArbitrator",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_8_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery",
+              "Stuck"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_ComprehensiveTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery",
+              "Stuck",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_DeepValidationTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_DeepValidationTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Recovery"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "graphify": {
+          "graph_json_present": true,
+          "graph_path": "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+          "graph_sha256": "c2cc6301548fedd406df6d9e83ee5650f5ae44f1d7d45b7b92393a2363508013",
+          "total_graph_nodes": 870,
+          "matched_nodes_count": 72,
+          "sample_matched_nodes": [
+            "src_csbotmanager_botlocomotiondriver",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botorderpriority",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_trackedbotnavstate",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_setplugin",
+            "src_csbotmanager_botlocomotiondriver_cs_concurrentdictionary",
+            "src_csbotmanager_botlocomotiondriver_cs_ibotcontrollerapi",
+            "src_csbotmanager_botlocomotiondriver_cs_bool",
+            "src_csbotmanager_botlocomotiondriver_cs_vector",
+            "src_csbotmanager_botlocomotiondriver_cs_float",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_notifybombstate",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_notifysavestate",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_resetround",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_clearnavigation",
+            "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver_getnavstate"
+          ]
+        }
+      },
+      "all_10_attributes_present": true,
+      "missing_attributes": []
+    },
+    "Economy decision -> buy command -> inventory confirmation": {
+      "flow_name": "Economy decision -> buy command -> inventory confirmation",
+      "data_nature": "INFERRED",
+      "entry_points": [
+        "src/CsBotManager/EconomyManager.cs",
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/Models.cs"
+      ],
+      "entry_points_verified": [
+        {
+          "path": "src/CsBotManager/EconomyManager.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\EconomyManager.cs",
+          "exists": true,
+          "sha256": "032f34410ea4d2f15bef8b40934956805fac378c7326c625421d81c5371cdf5c",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/CsBotManagerPlugin.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+          "exists": true,
+          "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/Models.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\Models.cs",
+          "exists": true,
+          "sha256": "6e18489868b6706d5b93fbcfcf0adb4a3f005bb322d6931a61a41af56f1c2bc9",
+          "data_nature": "REAL"
+        }
+      ],
+      "writers": [
+        "src/CsBotManager/EconomyManager.cs (decisão de compra por round e emissão de ordens de compra)",
+        "src/CsBotManager/CsBotManagerPlugin.cs (integração com eventos de freeze time e inventário do servidor CS2)"
+      ],
+      "readers": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/MidRoundAdapter.cs"
+      ],
+      "authoritative_state": [
+        "src/CsBotManager/EconomyManager.cs (plano econômico e confirmação de equipamento adquirido)",
+        "src/CsBotManager/Models.cs"
+      ],
+      "fallbacks": [
+        "src/CsBotManager/EconomyManager.cs (fallback de compra econômica/eco quando saldo é insuficiente)"
+      ],
+      "caches": [
+        "src/CsBotManager/EconomyManager.cs (estado de compra do round atual)"
+      ],
+      "side_effects": [
+        "Execução de comandos de compra e atualização do inventário do bot em src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "telemetry": [
+        "src/CsBotManager/CsBotManagerPlugin.cs (logs de decisão econômica e confirmação de inventário)"
+      ],
+      "tests": [
+        "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+        "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+        "tests/CsBotManager.Tests/OllamaIntegrationDiagnosticTests.cs",
+        "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs",
+        "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs"
+      ],
+      "tests_verified": [],
+      "blast_radius": [
+        "src/CsBotManager/EconomyManager.cs",
+        "src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "workspace_verification": {
+        "data_nature": "REAL",
+        "matched_source_files_count": 24,
+        "matched_source_files": [
+          {
+            "file": "src/CsBotManager/BotLocomotionDriver.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/BotSystemConfig.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotSystemConfig.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Buy"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CombatAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CombatAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/ContextualSmokeAndAudioBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\ContextualSmokeAndAudioBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CsBotManagerPlugin.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtRetakeAndDefuseBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtRetakeAndDefuseBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/EconomyManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\EconomyManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy",
+              "Money",
+              "Inventory",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/LiveRadarTelemetryService.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\LiveRadarTelemetryService.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy",
+              "Money",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MatchTelemetryLogger.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MatchTelemetryLogger.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "Buy",
+              "Money",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MicroMoveEngine.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MidRoundAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MobilityController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MobilityController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/Models.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\Models.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Buy",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/OllamaIglService.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\OllamaIglService.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "Buy",
+              "Money"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/PresetSpatialValidator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\PresetSpatialValidator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Buy"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/RoleManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\RoleManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/SpotRecordingController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\SpotRecordingController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TacticalCalloutSystem.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TacticalCalloutSystem.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TacticalHudRenderer.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TacticalHudRenderer.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Buy"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TacticalOrderMaterializer.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TacticalOrderMaterializer.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "matched_test_files_count": 9,
+        "matched_test_files": [
+          {
+            "file": "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\EconomyAndIglTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy",
+              "Money",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementArbitrationAndStuckTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/OllamaIntegrationDiagnosticTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\OllamaIntegrationDiagnosticTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "Buy",
+              "Money"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\OrganicRushesAndFakesTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Buy",
+              "Money"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2ForensicAuditTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Inventory"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_4_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_4_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_8_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy",
+              "Money",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_ComprehensiveTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_3_UtilityAiIglTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_3_UtilityAiIglTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "Buy"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "graphify": {
+          "graph_json_present": true,
+          "graph_path": "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+          "graph_sha256": "c2cc6301548fedd406df6d9e83ee5650f5ae44f1d7d45b7b92393a2363508013",
+          "total_graph_nodes": 870,
+          "matched_nodes_count": 39,
+          "sample_matched_nodes": [
+            "scripts_archive_botbuy",
+            "scripts_inspect_botbuy",
+            "src_csbotmanager_combatadapter_csbotmanager_combatadapter_isprimaryweapon",
+            "src_csbotmanager_csbotmanagerplugin_csbotmanager_csbotmanagerplugin_onweaponfire",
+            "src_csbotmanager_csbotmanagerplugin_cs_eventweaponfire",
+            "src_csbotmanager_economymanager",
+            "src_csbotmanager_economymanager_csbotmanager_economymanager",
+            "src_csbotmanager_economymanager_cs_random",
+            "src_csbotmanager_economymanager_csbotmanager_economymanager_onroundstart",
+            "src_csbotmanager_economymanager_csbotmanager_economymanager_analyzeteameconomy",
+            "src_csbotmanager_economymanager_cs_list",
+            "src_csbotmanager_economymanager_cs_ccsplayercontroller",
+            "src_csbotmanager_economymanager_cs_csteam",
+            "src_csbotmanager_economymanager_csbotmanager_economymanager_dropweaponforplayer",
+            "src_csbotmanager_economymanager_csbotmanager_economymanager_trycoordinateteamawpdrop"
+          ]
+        }
+      },
+      "all_10_attributes_present": true,
+      "missing_attributes": []
+    }
+  }
+}

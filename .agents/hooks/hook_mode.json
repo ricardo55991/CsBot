@@ -1,0 +1,29 @@
+{
+  "governance_version": "1.2.0-lean",
+  "updated_at": "2026-11-09T02:38:00Z",
+  "description": "Configuracao granular de modos dos hooks CsBot 1.2 Lean: blocking permanente para integridade de segredos e modelos; audit-only para relatorios e estilo, evitando loops de reescrita.",
+  "global_mode": "hybrid-lean",
+  "hook_modes": {
+    "protect-sensitive-files": "blocking",
+    "pre-training-gate": "blocking",
+    "secret-leakage-gate": "blocking",
+    "stop-condition-evidence-gate": "blocking",
+    "validate-generated-report": "audit-only",
+    "post-test-audit": "audit-only"
+  },
+  "critical_blocking_violations": [
+    "TEST_SET_CONTAMINATION_IN_TUNING",
+    "FINAL_HOLDOUT_SELECTION_USAGE",
+    "ZERO_SUPPORT_REPORTED_AS_NUMERIC",
+    "SECRET_OR_CREDENTIAL_EXPOSURE",
+    "UNLABELED_SYNTHETIC_DATA_AS_REAL",
+    "PASS_WITHOUT_RAW_EVIDENCE_ARTIFACT",
+    "DECLARED_ARTIFACT_NON_EXISTENT",
+    "AUTOMATED_INSPECTION_CLAIMED_AS_HUMAN"
+  ],
+  "hook_warning_budget": {
+    "maximum_rewrite_attempts": 1,
+    "maximum_same_warning_occurrences": 1,
+    "warning_does_not_block": true
+  }
+}

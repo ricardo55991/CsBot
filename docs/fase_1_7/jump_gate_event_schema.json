@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "JumpGateEventSchema",
+  "description": "Schema de validação para eventos estruturados emitidos pelo JumpExecutionGate (Fase 1.7)",
+  "type": "object",
+  "properties": {
+    "EventType": {
+      "type": "string",
+      "enum": [
+        "JUMP_REQUESTED",
+        "JUMP_EXECUTED",
+        "JUMP_SUPPRESSED_AIRBORNE",
+        "JUMP_SUPPRESSED_COOLDOWN",
+        "JUMP_SUPPRESSED_CONTEXT",
+        "JUMP_SUPPRESSED_NO_JUMP_ZONE",
+        "JUMP_LANDED",
+        "REPEATED_JUMP_SEQUENCE_DETECTED"
+      ]
+    },
+    "InternalRoundId": { "type": "string" },
+    "OfficialRoundNumber": { "type": "integer" },
+    "Tick": { "type": "integer" },
+    "Slot": { "type": "integer" },
+    "Team": { "type": "string" },
+    "Role": { "type": "string" },
+    "Source": { "type": "string" },
+    "JumpReason": { "type": "string" },
+    "Grounded": { "type": "boolean" },
+    "Airborne": { "type": "boolean" },
+    "Falling": { "type": "boolean" },
+    "LastJumpTick": { "type": "integer" },
+    "LastLandingTick": { "type": "integer" },
+    "CooldownRemaining": { "type": "number" },
+    "Allowed": { "type": "boolean" },
+    "SuppressionReason": { "type": "string" },
+    "Position": {
+      "type": "object",
+      "properties": {
+        "X": { "type": "number" },
+        "Y": { "type": "number" },
+        "Z": { "type": "number" }
+      },
+      "required": ["X", "Y", "Z"]
+    },
+    "Velocity2D": { "type": "number" },
+    "VelocityZ": { "type": "number" },
+    "TacticId": { "type": "string" },
+    "PlanStage": { "type": "string" }
+  },
+  "required": [
+    "EventType",
+    "InternalRoundId",
+    "OfficialRoundNumber",
+    "Tick",
+    "Slot",
+    "Team",
+    "Role",
+    "Source",
+    "JumpReason",
+    "Grounded",
+    "Airborne",
+    "Falling",
+    "LastJumpTick",
+    "LastLandingTick",
+    "CooldownRemaining",
+    "Allowed",
+    "SuppressionReason",
+    "Position",
+    "Velocity2D",
+    "VelocityZ",
+    "TacticId",
+    "PlanStage"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,666 @@
+{
+  "spots_to_update": [
+    {
+      "spot_number": 1,
+      "id": "b_short_pillar_hold_apps",
+      "reason": "Posição estava aberta; movido para trás do pilar branco (levemente à direita), mirando na 1ª janela, 2ª janela e cima da Van.",
+      "coords": [
+        -1530.0,
+        280.0,
+        -160.0
+      ],
+      "primary_aim": {
+        "name": "1ª Janela do Tapete",
+        "target": "1ª Janela do Tapete",
+        "pitch": 4.0,
+        "yaw": 125.0,
+        "desc": "1ª Janela do Tapete atrás do pilar branco."
+      },
+      "secondary_aims": [
+        {
+          "name": "2ª Janela / Saída do Tapete",
+          "target": "2ª Janela / Saída do Tapete",
+          "yaw": 140.0,
+          "pitch": 4.0,
+          "desc": "2ª Janela / Saída do Tapete."
+        },
+        {
+          "name": "Topo / Cima da Van",
+          "target": "Topo / Cima da Van",
+          "yaw": 158.0,
+          "pitch": 0.0,
+          "desc": "Topo / Cima da Van."
+        }
+      ]
+    },
+    {
+      "spot_number": 2,
+      "id": "b_short_pillar_bomb_control",
+      "reason": "Movido para trás do pilar branco protegido da visão do Tapete, mantendo as miras para dentro do Bomb.",
+      "coords": [
+        -1520.0,
+        260.0,
+        -160.0
+      ],
+      "primary_aim": {
+        "name": "Plant Default / Área da Van",
+        "target": "Plant Default / Área da Van",
+        "pitch": 0.0,
+        "yaw": 165.0,
+        "desc": "Plant Default / Área da Van protegido do tapete."
+      },
+      "secondary_aims": [
+        {
+          "name": "Fundo / Forest (Banco)",
+          "target": "Fundo / Forest (Banco)",
+          "yaw": -155.0,
+          "pitch": 0.0,
+          "desc": "Fundo / Forest (Banco)."
+        },
+        {
+          "name": "Porta do Mercado",
+          "target": "Porta do Mercado",
+          "yaw": -125.0,
+          "pitch": 0.0,
+          "desc": "Porta do Mercado."
+        }
+      ]
+    },
+    {
+      "spot_number": 3,
+      "id": "b_forest_bench_hold_apps",
+      "reason": "Recuado para ficar atrás do cover da mureta do Forest/Banco, mantendo as miras aprovadas.",
+      "coords": [
+        -2410.0,
+        175.0,
+        -160.0
+      ],
+      "primary_aim": {
+        "name": "Saída dos Apartamentos / Tapete",
+        "target": "Saída dos Apartamentos / Tapete",
+        "pitch": 4.0,
+        "yaw": 55.0,
+        "desc": "Saída dos Apartamentos / Tapete atrás da mureta."
+      },
+      "secondary_aims": [
+        {
+          "name": "Janela do Tapete",
+          "target": "Janela do Tapete",
+          "yaw": 72.0,
+          "pitch": 4.0,
+          "desc": "Janela do Tapete."
+        },
+        {
+          "name": "Apoio ao L (Catwalk)",
+          "target": "Apoio ao L (Catwalk)",
+          "yaw": -5.0,
+          "pitch": 0.0,
+          "desc": "Apoio ao L (Catwalk)."
+        }
+      ]
+    },
+    {
+      "spot_number": 4,
+      "id": "b_forest_bench_bomb_site",
+      "reason": "Recuado para trás do cover do Forest e ajustada a mira verde principal reto para o bomb pegando o L também.",
+      "coords": [
+        -2400.0,
+        165.0,
+        -160.0
+      ],
+      "primary_aim": {
+        "name": "Centro do Bomb B & Passagem do L",
+        "target": "Centro do Bomb B & Passagem do L",
+        "pitch": 0.0,
+        "yaw": 8.0,
+        "desc": "Centro do Bomb B & Passagem do L."
+      },
+      "secondary_aims": [
+        {
+          "name": "Caixa Default / Van",
+          "target": "Caixa Default / Van",
+          "yaw": 38.0,
+          "pitch": 0.0,
+          "desc": "Caixa Default / Van."
+        },
+        {
+          "name": "Porta do Mercado",
+          "target": "Porta do Mercado",
+          "yaw": -28.0,
+          "pitch": 0.0,
+          "desc": "Porta do Mercado."
+        }
+      ]
+    },
+    {
+      "spot_number": 6,
+      "id": "b_van_behind_apps_hold",
+      "reason": "Posicionado em pé sobre as caixas ao lado da Van (Z=-42) para ter visão limpa do Tapete.",
+      "coords": [
+        -2165.0,
+        685.0,
+        -42.0
+      ],
+      "posture": "Em pé sobre as caixas da Van",
+      "primary_aim": {
+        "name": "Saída de Apartamentos / Tapete",
+        "target": "Saída de Apartamentos / Tapete",
+        "pitch": 1.0,
+        "yaw": 5.0,
+        "desc": "Saída de Apartamentos / Tapete sobre as caixas da Van."
+      },
+      "secondary_aims": [
+        {
+          "name": "Janela do Tapete",
+          "target": "Janela do Tapete",
+          "yaw": 22.0,
+          "pitch": 6.0,
+          "desc": "Janela do Tapete."
+        }
+      ]
+    },
+    {
+      "spot_number": 8,
+      "id": "ct_retake_b_kitchen_entry",
+      "reason": "Movido para a entrada do Mercado (vindo da Base CT) olhando para a esquerda do interior da cozinha.",
+      "coords": [
+        -1620.0,
+        -780.0,
+        -168.0
+      ],
+      "primary_aim": {
+        "name": "Esquerda / Interior da Cozinha do Mercado",
+        "target": "Esquerda / Interior da Cozinha do Mercado",
+        "pitch": 0.0,
+        "yaw": 175.0,
+        "desc": "Esquerda / Interior da Cozinha do Mercado."
+      },
+      "secondary_aims": [
+        {
+          "name": "Balcão / Porta do Mercado",
+          "target": "Balcão / Porta do Mercado",
+          "yaw": 135.0,
+          "pitch": 0.0,
+          "desc": "Balcão / Porta do Mercado."
+        }
+      ]
+    },
+    {
+      "spot_number": 9,
+      "id": "ct_retake_b_market_window_site",
+      "reason": "Assume a posição exata da Janela do Mercado que estava no Spot 8 anterior.",
+      "coords": [
+        -1740.0,
+        -520.0,
+        -168.0
+      ],
+      "primary_aim": {
+        "name": "Plant Default / Van (via Janela do Mercado)",
+        "target": "Plant Default / Van (via Janela do Mercado)",
+        "pitch": 1.0,
+        "yaw": 125.0,
+        "desc": "Plant Default / Van (via Janela do Mercado)."
+      },
+      "secondary_aims": [
+        {
+          "name": "Canto da Floreira (Forest)",
+          "target": "Canto da Floreira (Forest)",
+          "yaw": 150.0,
+          "pitch": 0.0,
+          "desc": "Canto da Floreira (Forest)."
+        }
+      ]
+    },
+    {
+      "spot_number": 10,
+      "id": "ct_retake_b_market_window_tapete",
+      "reason": "Estava dentro do bomb; movido para dentro da Janela do Mercado mirando na Janela Alta do Tapete.",
+      "coords": [
+        -1750.0,
+        -500.0,
+        -168.0
+      ],
+      "primary_aim": {
+        "name": "Janela Alta do Tapete",
+        "target": "Janela Alta do Tapete",
+        "pitch": 4.0,
+        "yaw": 95.0,
+        "desc": "Janela Alta do Tapete."
+      },
+      "secondary_aims": [
+        {
+          "name": "Boca do Tapete",
+          "target": "Boca do Tapete",
+          "yaw": 82.0,
+          "pitch": 4.0,
+          "desc": "Boca do Tapete."
+        }
+      ]
+    },
+    {
+      "spot_number": 11,
+      "id": "ct_retake_b_door_exit_straight",
+      "reason": "Movido mais à esquerda, exatamente na saída do corredor da porta do Mercado.",
+      "coords": [
+        -2080.0,
+        -120.0,
+        -160.0
+      ],
+      "primary_aim": {
+        "name": "Default / Centro do Bomb / Van",
+        "target": "Default / Centro do Bomb / Van",
+        "pitch": 0.0,
+        "yaw": 75.0,
+        "desc": "Default / Centro do Bomb / Van."
+      },
+      "secondary_aims": [
+        {
+          "name": "Pulo da Van",
+          "target": "Pulo da Van",
+          "yaw": 95.0,
+          "pitch": 0.0,
+          "desc": "Pulo da Van."
+        }
+      ]
+    },
+    {
+      "spot_number": 14,
+      "id": "tr_b_tapete_window_market_awp",
+      "reason": "Estava mirando dentro do bomb; ajustado o Yaw para mirar diretamente na Janela do Mercado.",
+      "coords": [
+        -1820.0,
+        720.0,
+        -60.0
+      ],
+      "primary_aim": {
+        "name": "Passagem / Janela do Mercado",
+        "target": "Passagem / Janela do Mercado",
+        "pitch": -3.0,
+        "yaw": -80.0,
+        "desc": "Passagem / Janela do Mercado."
+      },
+      "secondary_aims": [
+        {
+          "name": "Porta do Mercado",
+          "target": "Porta do Mercado",
+          "yaw": -92.0,
+          "pitch": 0.0,
+          "desc": "Porta do Mercado."
+        }
+      ]
+    },
+    {
+      "spot_number": 15,
+      "id": "tr_b_tapete_window_bomb_curve",
+      "reason": "Ajustada a linha verde mais para a esquerda, apontando exatamente para o centro do Bomb (Default B).",
+      "coords": [
+        -1780.0,
+        700.0,
+        -60.0
+      ],
+      "primary_aim": {
+        "name": "Plant Default (Centro do Bomb B)",
+        "target": "Plant Default (Centro do Bomb B)",
+        "pitch": -10.0,
+        "yaw": -122.0,
+        "desc": "Plant Default (Centro do Bomb B)."
+      },
+      "secondary_aims": [
+        {
+          "name": "Avanço da Van",
+          "target": "Avanço da Van",
+          "yaw": -165.0,
+          "pitch": 0.0,
+          "desc": "Avanço da Van."
+        }
+      ]
+    },
+    {
+      "spot_number": 16,
+      "id": "tr_b_forest_hold_short",
+      "reason": "Recuado para trás do cover do Forest/Banco.",
+      "coords": [
+        -2400.0,
+        170.0,
+        -160.0
+      ],
+      "primary_aim": {
+        "name": "Saída do L / Catwalk",
+        "target": "Saída do L / Catwalk",
+        "pitch": 0.0,
+        "yaw": -5.0,
+        "desc": "Saída do L / Catwalk."
+      },
+      "secondary_aims": [
+        {
+          "name": "Arco Central",
+          "target": "Arco Central",
+          "yaw": 10.0,
+          "pitch": 0.0,
+          "desc": "Arco Central."
+        }
+      ]
+    },
+    {
+      "spot_number": 17,
+      "id": "tr_b_forest_hold_market",
+      "reason": "Recuado para trás do cover do Forest/Banco.",
+      "coords": [
+        -2390.0,
+        175.0,
+        -160.0
+      ],
+      "primary_aim": {
+        "name": "Saída da Porta do Mercado",
+        "target": "Saída da Porta do Mercado",
+        "pitch": 0.0,
+        "yaw": -42.0,
+        "desc": "Saída da Porta do Mercado."
+      },
+      "secondary_aims": [
+        {
+          "name": "Janela do Mercado",
+          "target": "Janela do Mercado",
+          "yaw": -58.0,
+          "pitch": 0.0,
+          "desc": "Janela do Mercado."
+        }
+      ]
+    },
+    {
+      "spot_number": 20,
+      "id": "ct_retake_a_mid_clear_under_window",
+      "reason": "Posicionado no mesmo ponto do Spot 19, mas mirando para a esquerda.",
+      "coords": [
+        -1260.0,
+        -620.0,
+        -168.0
+      ],
+      "primary_aim": {
+        "name": "Esquerda da Saída do Duto / Embaixo da Janela",
+        "target": "Esquerda da Saída do Duto / Embaixo da Janela",
+        "pitch": 0.0,
+        "yaw": 180.0,
+        "desc": "Esquerda da Saída do Duto / Embaixo da Janela."
+      },
+      "secondary_aims": [
+        {
+          "name": "Saída do Rato (Underpass)",
+          "target": "Saída do Rato (Underpass)",
+          "yaw": 145.0,
+          "pitch": 0.0,
+          "desc": "Saída do Rato (Underpass)."
+        }
+      ]
+    },
+    {
+      "spot_number": 23,
+      "id": "ct_retake_a_stairs_clear_site",
+      "reason": "Movido para cima dos degraus da Cabecinha (Stairs), mantendo a mira atual.",
+      "coords": [
+        -530.0,
+        -1460.0,
+        -80.0
+      ],
+      "primary_aim": {
+        "name": "Plant Default / Tetris",
+        "target": "Plant Default / Tetris",
+        "pitch": -3.0,
+        "yaw": -45.0,
+        "desc": "Plant Default / Tetris."
+      },
+      "secondary_aims": [
+        {
+          "name": "Palácio Balcão",
+          "target": "Palácio Balcão",
+          "yaw": -30.0,
+          "pitch": 0.0,
+          "desc": "Palácio Balcão."
+        },
+        {
+          "name": "Rampa A (Saída Caverna)",
+          "target": "Rampa A (Saída Caverna)",
+          "yaw": -10.0,
+          "pitch": 0.0,
+          "desc": "Rampa A (Saída Caverna)."
+        }
+      ]
+    },
+    {
+      "spot_number": 24,
+      "id": "ct_retake_a_ticket_hold_ramp",
+      "reason": "Avançado para ficar bem próximo das caixas do Ticket, mantendo a mira atual.",
+      "coords": [
+        -1060.0,
+        -2180.0,
+        -168.0
+      ],
+      "primary_aim": {
+        "name": "Caverna / Rampa A",
+        "target": "Caverna / Rampa A",
+        "pitch": 2.0,
+        "yaw": 42.0,
+        "desc": "Caverna / Rampa A."
+      },
+      "secondary_aims": [
+        {
+          "name": "Tetris",
+          "target": "Tetris",
+          "yaw": 50.0,
+          "pitch": 0.0,
+          "desc": "Tetris."
+        },
+        {
+          "name": "Palácio Balcão",
+          "target": "Palácio Balcão",
+          "yaw": 28.0,
+          "pitch": 0.0,
+          "desc": "Palácio Balcão."
+        }
+      ]
+    },
+    {
+      "spot_number": 26,
+      "id": "ct_retake_a_ramp_clear_sandwich",
+      "reason": "Adicionada mira secundária dedicada para cobrir fundo da Areia/Sanduíche além de Tetris e Cabecinha.",
+      "coords": [
+        60.0,
+        -1580.0,
+        -168.0
+      ],
+      "primary_aim": {
+        "name": "Canto de Sanduíche / Areia",
+        "target": "Canto de Sanduíche / Areia",
+        "pitch": 0.0,
+        "yaw": 145.0,
+        "desc": "Canto de Sanduíche / Areia."
+      },
+      "secondary_aims": [
+        {
+          "name": "Fundo da Areia / Pit",
+          "target": "Fundo da Areia / Pit",
+          "yaw": 132.0,
+          "pitch": 0.0,
+          "desc": "Fundo da Areia / Pit."
+        },
+        {
+          "name": "Cabecinha (Stairs)",
+          "target": "Cabecinha (Stairs)",
+          "yaw": 160.0,
+          "pitch": 0.0,
+          "desc": "Cabecinha (Stairs)."
+        }
+      ]
+    },
+    {
+      "spot_number": 29,
+      "id": "a_triple_box_hold",
+      "reason": "Estava dentro do bloco branco à esquerda; movido para trás da Caixa Tripla real no Bomb A.",
+      "coords": [
+        -720.0,
+        -2160.0,
+        -160.0
+      ],
+      "primary_aim": {
+        "name": "Saída da Rampa A",
+        "target": "Saída da Rampa A",
+        "pitch": 2.0,
+        "yaw": 28.0,
+        "desc": "Saída da Rampa A."
+      },
+      "secondary_aims": [
+        {
+          "name": "Palácio Balcão",
+          "target": "Palácio Balcão",
+          "yaw": 8.0,
+          "pitch": 0.0,
+          "desc": "Palácio Balcão."
+        },
+        {
+          "name": "Conector / Jungle",
+          "target": "Conector / Jungle",
+          "yaw": 85.0,
+          "pitch": 0.0,
+          "desc": "Conector / Jungle."
+        }
+      ]
+    },
+    {
+      "spot_number": 30,
+      "id": "a_palace_balcony_tr",
+      "reason": "Estava no meio do bomb; movido para o alto da varanda/balcão do Palácio.",
+      "coords": [
+        -120.0,
+        -2180.0,
+        -40.0
+      ],
+      "primary_aim": {
+        "name": "Jungle & Cabecinha",
+        "target": "Jungle & Cabecinha",
+        "pitch": -6.0,
+        "yaw": 135.0,
+        "desc": "Jungle & Cabecinha."
+      },
+      "secondary_aims": [
+        {
+          "name": "Sanduíche / Areia",
+          "target": "Sanduíche / Areia",
+          "yaw": 115.0,
+          "pitch": 0.0,
+          "desc": "Sanduíche / Areia."
+        },
+        {
+          "name": "CT Ticket",
+          "target": "CT Ticket",
+          "yaw": -165.0,
+          "pitch": 0.0,
+          "desc": "CT Ticket."
+        }
+      ]
+    },
+    {
+      "spot_number": 31,
+      "id": "a_palace_deep_room",
+      "reason": "Ajustado levemente para baixo/direita para a mira sair limpa pela porta do Palácio sem bater na parede.",
+      "coords": [
+        240.0,
+        -2200.0,
+        -40.0
+      ],
+      "primary_aim": {
+        "name": "Saída do Palácio em direção ao Balcão",
+        "target": "Saída do Palácio em direção ao Balcão",
+        "pitch": 0.0,
+        "yaw": 168.0,
+        "desc": "Saída do Palácio em direção ao Balcão."
+      },
+      "secondary_aims": [
+        {
+          "name": "Anti-Push Palácio",
+          "target": "Anti-Push Palácio",
+          "yaw": 158.0,
+          "pitch": 0.0,
+          "desc": "Anti-Push Palácio."
+        }
+      ]
+    },
+    {
+      "spot_number": 32,
+      "id": "a_shadow_under_palace",
+      "reason": "Movido para o canto escuro embaixo da varanda de madeira do Palácio (Shadow).",
+      "coords": [
+        -180.0,
+        -2220.0,
+        -168.0
+      ],
+      "primary_aim": {
+        "name": "Tetris & Saída da Rampa",
+        "target": "Tetris & Saída da Rampa",
+        "pitch": 0.0,
+        "yaw": 55.0,
+        "desc": "Tetris & Saída da Rampa."
+      },
+      "secondary_aims": [
+        {
+          "name": "Centro do Bomb A (Default)",
+          "target": "Centro do Bomb A (Default)",
+          "yaw": -145.0,
+          "pitch": 0.0,
+          "desc": "Centro do Bomb A (Default)."
+        }
+      ]
+    },
+    {
+      "spot_number": 40,
+      "id": "tr_b_apps_kitchen_control",
+      "reason": "Estava em cima do muro branco; descido para dentro do corredor da Cozinha do Tapete B.",
+      "coords": [
+        -1350.0,
+        470.0,
+        -80.0
+      ],
+      "primary_aim": {
+        "name": "Saída da Varanda / Pilar do B",
+        "target": "Saída da Varanda / Pilar do B",
+        "pitch": -2.0,
+        "yaw": -165.0,
+        "desc": "Saída da Varanda / Pilar do B."
+      },
+      "secondary_aims": [
+        {
+          "name": "Janela do Tapete / Van",
+          "target": "Janela do Tapete / Van",
+          "yaw": 175.0,
+          "pitch": 0.0,
+          "desc": "Janela do Tapete / Van."
+        }
+      ]
+    },
+    {
+      "spot_number": 41,
+      "id": "ct_b_edward_under_apps",
+      "reason": "Descido do muro branco para o chão do Bomb B colado na parede embaixo da varanda do Tapete.",
+      "coords": [
+        -1850.0,
+        470.0,
+        -160.0
+      ],
+      "primary_aim": {
+        "name": "Salto da Varanda do Tapete",
+        "target": "Salto da Varanda do Tapete",
+        "pitch": 12.0,
+        "yaw": 45.0,
+        "desc": "Salto da Varanda do Tapete."
+      },
+      "secondary_aims": [
+        {
+          "name": "Arco do L (Short B)",
+          "target": "Arco do L (Short B)",
+          "yaw": -35.0,
+          "pitch": 0.0,
+          "desc": "Arco do L (Short B)."
+        }
+      ]
+    }
+  ]
+}

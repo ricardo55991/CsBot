@@ -1,0 +1,98 @@
+﻿### ARQUIVOS DE tools/intermediate_demo_acquisition (excluindo __pycache__)
+   tools/intermediate_demo_acquisition/README.md  (15891 bytes)
+   tools/intermediate_demo_acquisition/build_manifest.py  (15455 bytes)
+   tools/intermediate_demo_acquisition/config.example.json  (4716 bytes)
+   tools/intermediate_demo_acquisition/deduplicate_demo.py  (13622 bytes)
+   tools/intermediate_demo_acquisition/discover_matches.py  (16623 bytes)
+   tools/intermediate_demo_acquisition/download_demo.py  (22377 bytes)
+   tools/intermediate_demo_acquisition/extract_demo.py  (20187 bytes)
+   tools/intermediate_demo_acquisition/fetch_match_metadata.py  (16736 bytes)
+   tools/intermediate_demo_acquisition/resume_download.py  (22370 bytes)
+   tools/intermediate_demo_acquisition/validate_skill_bucket.py  (20564 bytes)
+   tools/intermediate_demo_acquisition/verify_archive.py  (17977 bytes)
+
+[OK  ] 1_resumable_downloads  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/resume_download.py']
+        tools/intermediate_demo_acquisition/config.example.json:51  "partial_suffix": ".part",
+        tools/intermediate_demo_acquisition/download_demo.py:14  - **resume** por HTTP `Range: bytes=<offset>-`, estado persistido em `<arquivo>.state.json`
+        tools/intermediate_demo_acquisition/download_demo.py:15  e conte├║do parcial em `<arquivo>.part` (retomada idempotente ap├│s interrup├º├úo);
+        tools/intermediate_demo_acquisition/download_demo.py:14  - **resume** por HTTP `Range: bytes=<offset>-`, estado persistido em `<arquivo>.state.json`
+
+[OK  ] 2_exponential_backoff  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/discover_matches.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/resume_download.py']
+        tools/intermediate_demo_acquisition/config.example.json:41  "backoff_initial_seconds": 2.0,
+        tools/intermediate_demo_acquisition/discover_matches.py:204  time.sleep(wait)
+        tools/intermediate_demo_acquisition/download_demo.py:6  (resumable downloads, exponential backoff, rate limiting, checksum, allowlist,
+        tools/intermediate_demo_acquisition/download_demo.py:6  (resumable downloads, exponential backoff, rate limiting, checksum, allowlist,
+
+[OK  ] 3_rate_limiting  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/discover_matches.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/resume_download.py']
+        tools/intermediate_demo_acquisition/config.example.json:35  "rate_limit": {
+        tools/intermediate_demo_acquisition/config.example.json:37  "burst": 3
+        tools/intermediate_demo_acquisition/config.example.json:36  "requests_per_second": 1.0,
+        tools/intermediate_demo_acquisition/discover_matches.py:339  (config.get("rate_limit") or {}).get("requests_per_second", 1.0),
+
+[OK  ] 4_checksum  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/build_manifest.py', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/deduplicate_demo.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/fetch_match_metadata.py', 'tools/intermediate_demo_acquisition/resume_download.py', 'tools/intermediate_demo_acquisition/verify_archive.py']
+        tools/intermediate_demo_acquisition/build_manifest.py:18  - todo `demo_sha256` e `archive_sha256` ├® de 64 hex, calculado do disco;
+        tools/intermediate_demo_acquisition/build_manifest.py:37  import hashlib
+        tools/intermediate_demo_acquisition/config.example.json:50  "verify_sha256": true,
+        tools/intermediate_demo_acquisition/deduplicate_demo.py:6  ("m├║ltiplas demos duplicadas" ├® crit├®rio de exclus├úo), ┬º10 (`demo_sha256`).
+
+[OK  ] 5_archive_validation  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/extract_demo.py', 'tools/intermediate_demo_acquisition/verify_archive.py']
+        tools/intermediate_demo_acquisition/extract_demo.py:42  import zipfile
+        tools/intermediate_demo_acquisition/extract_demo.py:41  import tarfile
+        tools/intermediate_demo_acquisition/README.md:42  | 7 | `verify_archive.py` | magic bytes, checksum, entradas perigosas, bombas de descompress├úo | ÔØî nenhuma |
+        tools/intermediate_demo_acquisition/README.md:140  | **archive validation** | `verify_archive.py` | magic bytes (`PK\x03\x04`, `\x1f\x8b`, `BZh`, `ustar` em offset 257) co
+
+[OK  ] 6_secure_decompression_path_traversal  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/build_manifest.py', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/deduplicate_demo.py', 'tools/intermediate_demo_acquisition/discover_matches.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/extract_demo.py', 'tools/intermediate_demo_acquisition/fetch_match_metadata.py', 'tools/intermediate_demo_acquisition/resume_download.py', 'tools/intermediate_demo_acquisition/validate_skill_bucket.py', 'tools/intermediate_demo_acquisition/verify_archive.py']
+        tools/intermediate_demo_acquisition/build_manifest.py:45  TOOL_DIR = Path(__file__).resolve().parent
+        tools/intermediate_demo_acquisition/build_manifest.py:377  if not out_path.is_absolute():
+        tools/intermediate_demo_acquisition/config.example.json:60  "block_parent_traversal": true,
+        tools/intermediate_demo_acquisition/deduplicate_demo.py:43  TOOL_DIR = Path(__file__).resolve().parent
+
+[OK  ] 7_duplicate_detection_by_hash  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/deduplicate_demo.py']
+        tools/intermediate_demo_acquisition/deduplicate_demo.py:3  deduplicate_demo.py ÔÇö Detec├º├úo de demos duplicadas por conte├║do (SHA-256).
+        tools/intermediate_demo_acquisition/deduplicate_demo.py:3  deduplicate_demo.py ÔÇö Detec├º├úo de demos duplicadas por conte├║do (SHA-256).
+        tools/intermediate_demo_acquisition/deduplicate_demo.py:104  def classify(files: List[Path], known_hashes: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
+        tools/intermediate_demo_acquisition/README.md:44  | 9 | `deduplicate_demo.py` | duplicatas por SHA-256 no corpus intermedi├írio | ÔØî nenhuma |
+
+[OK  ] 8_dry_run_default  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/build_manifest.py', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/deduplicate_demo.py', 'tools/intermediate_demo_acquisition/discover_matches.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/extract_demo.py', 'tools/intermediate_demo_acquisition/fetch_match_metadata.py', 'tools/intermediate_demo_acquisition/resume_download.py', 'tools/intermediate_demo_acquisition/verify_archive.py']
+        tools/intermediate_demo_acquisition/build_manifest.py:25  Modo padr├úo: `--dry-run`. Em dry-run o invent├írio ├® apenas **impresso** no stdout. A grava├º├úo em disco
+        tools/intermediate_demo_acquisition/build_manifest.py:26  exige `--execute` **e** `--out`, porque o artefato pertence ├á etapa de manifestos (M4) e n├úo deve ser
+        tools/intermediate_demo_acquisition/build_manifest.py:371  manifest["mode"] = "EXECUTE" if args.execute else "DRY_RUN"
+        tools/intermediate_demo_acquisition/config.example.json:5  "dry_run_is_default": true,
+
+[OK  ] 9_domain_allowlist  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/discover_matches.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/resume_download.py']
+        tools/intermediate_demo_acquisition/config.example.json:22  "allowed_domains": [
+        tools/intermediate_demo_acquisition/discover_matches.py:168  allowed = [d.lower() for d in (network.get("allowed_domains") or [])]
+        tools/intermediate_demo_acquisition/discover_matches.py:15  valida a allowlist de dom├¡nio, monta o plano determin├¡stico e imprime o resultado.
+        tools/intermediate_demo_acquisition/download_demo.py:153  allowed = [d.lower() for d in (network.get("allowed_domains") or [])]
+
+[OK  ] 10_audit_log  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/build_manifest.py', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/deduplicate_demo.py', 'tools/intermediate_demo_acquisition/discover_matches.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/extract_demo.py', 'tools/intermediate_demo_acquisition/fetch_match_metadata.py', 'tools/intermediate_demo_acquisition/resume_download.py', 'tools/intermediate_demo_acquisition/validate_skill_bucket.py', 'tools/intermediate_demo_acquisition/verify_archive.py']
+        tools/intermediate_demo_acquisition/build_manifest.py:184  records.append(payload)
+        tools/intermediate_demo_acquisition/config.example.json:89  "audit_log": {
+        tools/intermediate_demo_acquisition/config.example.json:92  "append_only": true,
+        tools/intermediate_demo_acquisition/deduplicate_demo.py:100  files.append(entry)
+
+[OK  ] 11_credential_redaction  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/build_manifest.py', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/deduplicate_demo.py', 'tools/intermediate_demo_acquisition/discover_matches.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/extract_demo.py', 'tools/intermediate_demo_acquisition/fetch_match_metadata.py', 'tools/intermediate_demo_acquisition/resume_download.py', 'tools/intermediate_demo_acquisition/validate_skill_bucket.py', 'tools/intermediate_demo_acquisition/verify_archive.py']
+        tools/intermediate_demo_acquisition/build_manifest.py:120  def redact(text: str) -> str:
+        tools/intermediate_demo_acquisition/build_manifest.py:123  out = pattern.sub(lambda m: f"{m.group(1)}[REDACTED]", out)
+        tools/intermediate_demo_acquisition/config.example.json:93  "redact_credentials": true,
+        tools/intermediate_demo_acquisition/deduplicate_demo.py:66  def redact(text: str) -> str:
+
+[OK  ] 12_retry_limit  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/discover_matches.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/resume_download.py']
+        tools/intermediate_demo_acquisition/config.example.json:40  "retry_limit": 4,
+        tools/intermediate_demo_acquisition/config.example.json:39  "retry": {
+        tools/intermediate_demo_acquisition/discover_matches.py:345  "retry_limit": (config.get("retry") or {}).get("retry_limit", 4),
+        tools/intermediate_demo_acquisition/discover_matches.py:26  - pol├¡tica de limites respeitada: rate limit e retry limit v├¬m da config e s├úo proibitivos
+
+[OK  ] 13_quarantine  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/deduplicate_demo.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/extract_demo.py', 'tools/intermediate_demo_acquisition/resume_download.py', 'tools/intermediate_demo_acquisition/verify_archive.py']
+        tools/intermediate_demo_acquisition/config.example.json:70  "quarantine": "datasets/mirage_domains/intermediate_competitive/quarantine",
+        tools/intermediate_demo_acquisition/deduplicate_demo.py:18  5. em `--execute`, move as duplicatas excedentes para `quarantine/` (mantendo a primeira ocorr├¬ncia),
+        tools/intermediate_demo_acquisition/download_demo.py:7  audit log, credential redaction, retry limit, quarantine).
+        tools/intermediate_demo_acquisition/download_demo.py:456  emit_audit(config, "CHECKSUM_MISMATCH_QUARANTINED", {"demo_id": demo_id, "quarantined_to": moved}, secrets)
+
+[OK  ] 14_secrets_from_env_or_secret_store  files=['tools/intermediate_demo_acquisition/README.md', 'tools/intermediate_demo_acquisition/config.example.json', 'tools/intermediate_demo_acquisition/discover_matches.py', 'tools/intermediate_demo_acquisition/download_demo.py', 'tools/intermediate_demo_acquisition/extract_demo.py', 'tools/intermediate_demo_acquisition/fetch_match_metadata.py', 'tools/intermediate_demo_acquisition/resume_download.py']
+        tools/intermediate_demo_acquisition/config.example.json:19  "credentials_note": "Campos acima DEVEM permanecer vazios neste arquivo versionado. O c├│digo l├¬ os valores exclusivament
+        tools/intermediate_demo_acquisition/config.example.json:7  "secret_source": "ENV",
+        tools/intermediate_demo_acquisition/config.example.json:8  "secret_env_vars": {
+        tools/intermediate_demo_acquisition/config.example.json:7  "secret_source": "ENV",
+
+REQUISITOS ┬º9 ATENDIDOS: (14/14)

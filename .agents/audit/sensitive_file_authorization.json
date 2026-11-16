@@ -1,0 +1,43 @@
+{
+  "authorization_name": "phase2a_intermediate_m4_m7_manifest_creation",
+  "phase": "FASE_2A-INTERMEDIATE",
+  "step": "M4 (manifests) + M7 (splits proposal)",
+  "requested_by_role": "Dataset and Metadata Implementer",
+  "requested_by_agent": "implementer_data_2a_int_1",
+  "orchestrator_authorization_ref": "mensagem do Orchestrator a7196ff0-cf47-4d79-a99f-eaf19c722649 de 2026-11-09T01:07:52Z (TAREFA 1 / TAREFA 2)",
+  "generated_utc": "2026-11-09T01:13:00Z",
+  "approved_phase": "FASE_2A-INTERMEDIATE — etapa M4 (4 manifests) + M7 (proposta de splits), autorizada pelo dispatch de 2026-11-09T01:07:52Z",
+  "backup_path": ".agents/audit/backups/phase2a_intermediate_m4_previous_state.md",
+  "backup_verified": true,
+  "previous_sha256": "d2dc11b71374aee181de1c7762143f76090e76918777b66839b32a9c834bab26",
+  "previous_sha256_semantics": "SHA-256 completo (64 hex) do backup de estado anterior. Os quatro alvos estavam ABSENT antes desta execução (verificado com Test-Path), então o backup do estado anterior é o registro datado em backup_path; este hash é o daquele arquivo, calculado do disco.",
+  "previous_state_of_targets": "ABSENT",
+  "targets": [
+    {
+      "repo_relative_path": "datasets/mirage_domains/intermediate_competitive/intermediate_npz_manifest_v1.json",
+      "previous_state": "ABSENT",
+      "operation": "CREATE"
+    },
+    {
+      "repo_relative_path": "datasets/mirage_domains/intermediate_competitive/pilot_download_manifest.json",
+      "previous_state": "ABSENT",
+      "operation": "CREATE"
+    },
+    {
+      "repo_relative_path": "datasets/mirage_domains/intermediate_competitive/quarantine_manifest.json",
+      "previous_state": "ABSENT",
+      "operation": "CREATE"
+    },
+    {
+      "repo_relative_path": "training_runs/intermediate_domain_study/intermediate_splits_proposal.json",
+      "previous_state": "ABSENT",
+      "operation": "CREATE"
+    }
+  ],
+  "planned_diff": "Somente criação de 4 arquivos JSON novos, com 0 registros de dados reais e status de pendência explícito: (1) intermediate_npz_manifest_v1.json — schema de validação §11, records=[], npz_count=0, status=EMPTY_PENDING_ACQUISITION_ACCESS, dem_vs_npz_comparison.executed=false; (2) pilot_download_manifest.json — plano do piloto em dry-run, downloads_attempted=0, bytes_downloaded=0, source_authorization_status=PENDING_HUMAN_APPROVAL; (3) quarantine_manifest.json — records=[], total_quarantined=0, status=EMPTY_NO_CANDIDATES; (4) training_runs/intermediate_domain_study/intermediate_splits_proposal.json — proposal_status=DESIGN_ONLY_NOT_MATERIALIZED, current_counts=(0/0). Nenhuma linha de código, dataset, checkpoint, catálogo, shard, sidecar ou manifest canônico é alterada.",
+  "rollback_command": "Remove-Item -LiteralPath 'datasets/mirage_domains/intermediate_competitive/intermediate_npz_manifest_v1.json','datasets/mirage_domains/intermediate_competitive/pilot_download_manifest.json','datasets/mirage_domains/intermediate_competitive/quarantine_manifest.json','training_runs/intermediate_domain_study/intermediate_splits_proposal.json' -Force; # restaura o estado ABSENT documentado em backup_path",
+  "rollback_is_deterministic": true,
+  "sensitive_artifacts_touched": false,
+  "canonical_corpus_touched": false,
+  "justification": "A especificação da fase (§10, §11, §19, §21) exige a materialização destes artefatos; os nomes casam com os padrões protegidos (*manifest*.json, *split*.json) da Regra 06, e por isso esta autorização prévia é registrada com backup verificado, hash completo, diff planejado, rollback determinístico e fase aprovada."
+}

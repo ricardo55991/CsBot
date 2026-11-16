@@ -38,6 +38,8 @@ public class TeamEconomySnapshot
 
     // Aliases para compatibilidade de testes
     public CsTeam Team { get => TeamSide; set => TeamSide = value; }
+    public int RoundNumber { get => RoundNumberInHalf; set => RoundNumberInHalf = value; }
+    public MatchLifecyclePhase MatchPhase { get; set; } = MatchLifecyclePhase.Regulation_Half1;
     public int TotalTeamMoney { get => CashBeforeBuy; set => CashBeforeBuy = value; }
     public int AverageMoney { get => AverageCashBeforeBuy; set => AverageCashBeforeBuy = value; }
     public int MinMoney { get; set; } = 0;
@@ -149,6 +151,11 @@ public class EconomyManager
         int preBuyEquipmentValue,
         BotSystemConfig? config = null)
     {
+        if (roundNumber <= 0)
+        {
+            return BuyState.NOT_APPLICABLE;
+        }
+
         var cfg = config ?? BotSystemConfig.Default;
         int roundInHalf = ((Math.Max(1, roundNumber) - 1) % 12) + 1;
         bool isPistol = roundNumber == 1 || roundNumber == 13 || roundInHalf == 1;
@@ -204,6 +211,12 @@ public class EconomyManager
     public static BuyState ClassifyPostBuySnapshot(TeamEconomySnapshot snap, BotSystemConfig? config = null)
     {
         var cfg = config ?? BotSystemConfig.Default;
+
+        if (snap.MatchPhase == MatchLifecyclePhase.WARMUP || (snap.RoundNumberInHalf <= 0 && !snap.PistolRound))
+        {
+            snap.FinalBuyState = BuyState.NOT_APPLICABLE;
+            return snap.FinalBuyState;
+        }
 
         if (snap.PistolRound || snap.RoundNumberInHalf == 1)
         {
@@ -315,8 +328,31 @@ public class EconomyManager
         return snap.PurchaseIntent;
     }
 
-    public TeamEconomySnapshot CapturePreBuySnapshot(List<CCSPlayerController> teamMembers, int roundNumber, int lossBonus, CsTeam team)
+    public TeamEconomySnapshot CapturePreBuySnapshot(
+        List<CCSPlayerController> teamMembers,
+        int roundNumber,
+        int lossBonus,
+        CsTeam team,
+        MatchLifecyclePhase matchPhase = MatchLifecyclePhase.Regulation_Half1)
     {
+        if (matchPhase == MatchLifecyclePhase.WARMUP || roundNumber <= 0)
+        {
+            var warmupSnap = new TeamEconomySnapshot
+            {
+                TeamSide = team,
+                RoundNumberInHalf = 0,
+                MatchPhase = matchPhase,
+                PistolRound = false,
+                LossBonus = lossBonus,
+                PurchaseIntent = BuyState.NOT_APPLICABLE,
+                FinalBuyState = BuyState.NOT_APPLICABLE,
+                CompletionState = BuyCompletionState.PENDING
+            };
+            if (team == CsTeam.CounterTerrorist) _ctSnapshot = warmupSnap;
+            else if (team == CsTeam.Terrorist) _trSnapshot = warmupSnap;
+            return warmupSnap;
+        }
+
         int roundInHalf = ((Math.Max(1, roundNumber) - 1) % 12) + 1;
         bool isPistol = roundNumber == 1 || roundNumber == 13 || roundInHalf == 1;
 
@@ -324,6 +360,7 @@ public class EconomyManager
         {
             TeamSide = team,
             RoundNumberInHalf = roundInHalf,
+            MatchPhase = matchPhase,
             PistolRound = isPistol,
             LossBonus = lossBonus,
             CompletionState = BuyCompletionState.PENDING

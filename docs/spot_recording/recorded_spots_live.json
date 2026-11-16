@@ -1,0 +1,917 @@
+[
+  {
+    "timestamp": "2026-11-06T20:00:18Z",
+    "spot_number": 1,
+    "spot_id": "b_short_pillar_hold_apps",
+    "coords": [
+      -1443.5,
+      144,
+      -167
+    ],
+    "aim": {
+      "pitch": -9.7,
+      "yaw": 123.2
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:38:22Z",
+    "spot_number": 1,
+    "spot_id": "b_short_pillar_hold_apps",
+    "coords": [
+      -1463.8,
+      179.5,
+      -167
+    ],
+    "aim": {
+      "pitch": -10.4,
+      "yaw": 123.7
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:39:07Z",
+    "spot_number": 2,
+    "spot_id": "b_short_pillar_bomb_control",
+    "coords": [
+      -1393,
+      248.6,
+      -168
+    ],
+    "aim": {
+      "pitch": -0.2,
+      "yaw": 174.5
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:39:42Z",
+    "spot_number": 3,
+    "spot_id": "b_forest_bench_hold_apps",
+    "coords": [
+      -2531.3,
+      274.1,
+      -168
+    ],
+    "aim": {
+      "pitch": -7.6,
+      "yaw": 37
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:40:59Z",
+    "spot_number": 4,
+    "spot_id": "b_forest_bench_bomb_site",
+    "coords": [
+      -2501.4,
+      350,
+      -168
+    ],
+    "aim": {
+      "pitch": -0.2,
+      "yaw": -5
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:41:59Z",
+    "spot_number": 5,
+    "spot_id": "b_van_behind_bomb_hold",
+    "coords": [
+      -2239.6,
+      821.4,
+      -120.1
+    ],
+    "aim": {
+      "pitch": 1.4,
+      "yaw": -63
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T20:43:26Z",
+    "spot_number": 6,
+    "spot_id": "b_van_behind_apps_hold",
+    "coords": [
+      -1981.9,
+      704,
+      -48
+    ],
+    "aim": {
+      "pitch": 0.8,
+      "yaw": -0.4
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T20:43:36Z",
+    "spot_number": 6,
+    "spot_id": "b_van_behind_apps_hold",
+    "coords": [
+      -1981.9,
+      702.6,
+      -48
+    ],
+    "aim": {
+      "pitch": 1.7,
+      "yaw": 0.5
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T20:44:03Z",
+    "spot_number": 7,
+    "spot_id": "b_site_default_plant_box",
+    "coords": [
+      -1956.5,
+      311.6,
+      -160
+    ],
+    "aim": {
+      "pitch": -13.8,
+      "yaw": 92.2
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:45:00Z",
+    "spot_number": 8,
+    "spot_id": "ct_retake_b_kitchen_entry",
+    "coords": [
+      -1579.2,
+      -722.6,
+      -168
+    ],
+    "aim": {
+      "pitch": 0.2,
+      "yaw": 160
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:45:25Z",
+    "spot_number": 9,
+    "spot_id": "ct_retake_b_market_window_site",
+    "coords": [
+      -1776.2,
+      -622.2,
+      -168
+    ],
+    "aim": {
+      "pitch": -0.4,
+      "yaw": 111.4
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:45:47Z",
+    "spot_number": 10,
+    "spot_id": "ct_retake_b_market_window_tapete",
+    "coords": [
+      -1976.1,
+      -524.4,
+      -168
+    ],
+    "aim": {
+      "pitch": -5.8,
+      "yaw": 74
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T20:46:10Z",
+    "spot_number": 11,
+    "spot_id": "ct_retake_b_door_exit_straight",
+    "coords": [
+      -2316.7,
+      -549.9,
+      -168
+    ],
+    "aim": {
+      "pitch": -0.8,
+      "yaw": 86.8
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:47:21Z",
+    "spot_number": 12,
+    "spot_id": "ct_retake_b_door_exit_close_left",
+    "coords": [
+      -2101,
+      -202.7,
+      -166.8
+    ],
+    "aim": {
+      "pitch": 0,
+      "yaw": 130.6
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:47:49Z",
+    "spot_number": 13,
+    "spot_id": "ct_retake_b_door_exit_right_short",
+    "coords": [
+      -1936.5,
+      -58.3,
+      -165.7
+    ],
+    "aim": {
+      "pitch": -0,
+      "yaw": 32.6
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:48:27Z",
+    "spot_number": 16,
+    "spot_id": "tr_b_forest_hold_short",
+    "coords": [
+      -2529.7,
+      349.2,
+      -168
+    ],
+    "aim": {
+      "pitch": -0.4,
+      "yaw": -8.7
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:48:54Z",
+    "spot_number": 17,
+    "spot_id": "tr_b_forest_hold_market",
+    "coords": [
+      -2582.9,
+      442.1,
+      -167.9
+    ],
+    "aim": {
+      "pitch": 0.1,
+      "yaw": -36.6
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:49:44Z",
+    "spot_number": 14,
+    "spot_id": "tr_b_tapete_window_market_awp",
+    "coords": [
+      -1590.2,
+      708.2,
+      -48
+    ],
+    "aim": {
+      "pitch": 5.5,
+      "yaw": -108.3
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T20:50:16Z",
+    "spot_number": 15,
+    "spot_id": "tr_b_tapete_window_bomb_curve",
+    "coords": [
+      -1551.6,
+      697.6,
+      -48
+    ],
+    "aim": {
+      "pitch": 14.3,
+      "yaw": -152.3
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:50:44Z",
+    "spot_number": 18,
+    "spot_id": "ct_retake_a_market_to_ctspawn",
+    "coords": [
+      -1616.8,
+      -618.9,
+      -168
+    ],
+    "aim": {
+      "pitch": 2,
+      "yaw": -84
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:51:10Z",
+    "spot_number": 19,
+    "spot_id": "ct_retake_a_vents_entry_jungle",
+    "coords": [
+      -1329.4,
+      -964.8,
+      -168
+    ],
+    "aim": {
+      "pitch": -2.3,
+      "yaw": -60.9
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T20:51:57Z",
+    "spot_number": 10,
+    "spot_id": "ct_retake_b_market_window_tapete",
+    "coords": [
+      -1217.7,
+      -652.1,
+      -168
+    ],
+    "aim": {
+      "pitch": 7.9,
+      "yaw": -1.1
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:52:06Z",
+    "spot_number": 20,
+    "spot_id": "ct_retake_a_mid_clear_under_window",
+    "coords": [
+      -1217.7,
+      -652.1,
+      -168
+    ],
+    "aim": {
+      "pitch": 7.9,
+      "yaw": -1.2
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:52:41Z",
+    "spot_number": 10,
+    "spot_id": "ct_retake_b_market_window_tapete",
+    "coords": [
+      -1964,
+      -496.1,
+      -168
+    ],
+    "aim": {
+      "pitch": -5.5,
+      "yaw": 74.1
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T20:53:19Z",
+    "spot_number": 21,
+    "spot_id": "ct_retake_a_jungle_entry_site",
+    "coords": [
+      -1233.6,
+      -1239.9,
+      -168
+    ],
+    "aim": {
+      "pitch": 0.3,
+      "yaw": -34.6
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:54:14Z",
+    "spot_number": 22,
+    "spot_id": "ct_retake_a_jungle_entry_stairs",
+    "coords": [
+      -1245.4,
+      -1374.2,
+      -164.8
+    ],
+    "aim": {
+      "pitch": -0.5,
+      "yaw": 0.5
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:54:37Z",
+    "spot_number": 23,
+    "spot_id": "ct_retake_a_stairs_clear_site",
+    "coords": [
+      -540.6,
+      -1443.6,
+      -73.9
+    ],
+    "aim": {
+      "pitch": -3.1,
+      "yaw": -52.4
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T20:55:05Z",
+    "spot_number": 24,
+    "spot_id": "ct_retake_a_ticket_hold_ramp",
+    "coords": [
+      -1020.9,
+      -2489.1,
+      -168
+    ],
+    "aim": {
+      "pitch": -0.6,
+      "yaw": 37.2
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T20:55:29Z",
+    "spot_number": 25,
+    "spot_id": "ct_retake_a_ramp_clear_site",
+    "coords": [
+      301.7,
+      -1492.3,
+      -176
+    ],
+    "aim": {
+      "pitch": -0.4,
+      "yaw": -143.6
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:55:45Z",
+    "spot_number": 26,
+    "spot_id": "ct_retake_a_ramp_clear_sandwich",
+    "coords": [
+      85,
+      -1717.9,
+      -168
+    ],
+    "aim": {
+      "pitch": 1,
+      "yaw": 160.1
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:56:28Z",
+    "spot_number": 26,
+    "spot_id": "ct_retake_a_ramp_clear_sandwich",
+    "coords": [
+      394.4,
+      -1598.7,
+      -209.1
+    ],
+    "aim": {
+      "pitch": -7.7,
+      "yaw": 164.7
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:57:10Z",
+    "spot_number": 27,
+    "spot_id": "ct_retake_a_ramp_clear_tetris",
+    "coords": [
+      171.2,
+      -1717.9,
+      -168
+    ],
+    "aim": {
+      "pitch": -0.3,
+      "yaw": 164
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:57:46Z",
+    "spot_number": 27,
+    "spot_id": "ct_retake_a_ramp_clear_tetris",
+    "coords": [
+      93.7,
+      -1685.3,
+      -168
+    ],
+    "aim": {
+      "pitch": 0.6,
+      "yaw": 166.9
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:59:00Z",
+    "spot_number": 28,
+    "spot_id": "a_firebox_ninja_hold",
+    "coords": [
+      -409.2,
+      -2101.4,
+      -180
+    ],
+    "aim": {
+      "pitch": -1.2,
+      "yaw": 41.8
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T20:59:31Z",
+    "spot_number": 29,
+    "spot_id": "a_triple_box_hold",
+    "coords": [
+      -742.3,
+      -2074.4,
+      -180
+    ],
+    "aim": {
+      "pitch": -0.2,
+      "yaw": 27.6
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:00:05Z",
+    "spot_number": 30,
+    "spot_id": "a_palace_balcony_tr",
+    "coords": [
+      -99.6,
+      -2138.1,
+      -168
+    ],
+    "aim": {
+      "pitch": -0.8,
+      "yaw": 141
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T21:01:46Z",
+    "spot_number": 31,
+    "spot_id": "a_palace_deep_room",
+    "coords": [
+      90,
+      -2244.6,
+      -40
+    ],
+    "aim": {
+      "pitch": 4.2,
+      "yaw": 142.5
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:03:20Z",
+    "spot_number": 32,
+    "spot_id": "a_shadow_under_palace",
+    "coords": [
+      -219,
+      -2154.3,
+      -170.7
+    ],
+    "aim": {
+      "pitch": -0.6,
+      "yaw": 60.8
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:04:00Z",
+    "spot_number": 33,
+    "spot_id": "mid_window_right_deep",
+    "coords": [
+      -1181.4,
+      -718.5,
+      -168
+    ],
+    "aim": {
+      "pitch": -0.8,
+      "yaw": 17.7
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T21:04:23Z",
+    "spot_number": 34,
+    "spot_id": "mid_connector_top_stairs",
+    "coords": [
+      -808,
+      -921.9,
+      -168
+    ],
+    "aim": {
+      "pitch": -1.2,
+      "yaw": 34.5
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T21:05:42Z",
+    "spot_number": 35,
+    "spot_id": "mid_connector_bottom",
+    "coords": [
+      -576.2,
+      -1082.4,
+      -168
+    ],
+    "aim": {
+      "pitch": -0.6,
+      "yaw": 100.5
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T21:06:15Z",
+    "spot_number": 36,
+    "spot_id": "mid_top_mid_boxes",
+    "coords": [
+      368,
+      -223,
+      -167.7
+    ],
+    "aim": {
+      "pitch": 0.2,
+      "yaw": -162.4
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:06:45Z",
+    "spot_number": 37,
+    "spot_id": "mid_underground_sub",
+    "coords": [
+      -1030.2,
+      -428.9,
+      -321.5
+    ],
+    "aim": {
+      "pitch": -10.2,
+      "yaw": -49.9
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:07:55Z",
+    "spot_number": 38,
+    "spot_id": "mid_catwalk_short",
+    "coords": [
+      -902.8,
+      191.2,
+      -172.8
+    ],
+    "aim": {
+      "pitch": -1.2,
+      "yaw": -64.8
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:08:25Z",
+    "spot_number": 39,
+    "spot_id": "tr_b_apps_house_staging",
+    "coords": [
+      -1103.6,
+      687.5,
+      -80
+    ],
+    "aim": {
+      "pitch": 0.2,
+      "yaw": 177.9
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:08:47Z",
+    "spot_number": 40,
+    "spot_id": "tr_b_apps_kitchen_control",
+    "coords": [
+      -1111.7,
+      687,
+      -80
+    ],
+    "aim": {
+      "pitch": 0.1,
+      "yaw": 178.2
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:09:04Z",
+    "spot_number": 39,
+    "spot_id": "tr_b_apps_house_staging",
+    "coords": [
+      -764.4,
+      522.1,
+      -77
+    ],
+    "aim": {
+      "pitch": -1.5,
+      "yaw": 161.9
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:09:24Z",
+    "spot_number": 41,
+    "spot_id": "ct_b_edward_under_apps",
+    "coords": [
+      -1888,
+      250.5,
+      -160
+    ],
+    "aim": {
+      "pitch": -10.9,
+      "yaw": 58.4
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:10:16Z",
+    "spot_number": 42,
+    "spot_id": "ct_b_empty_pillar_jail",
+    "coords": [
+      -2021.2,
+      -57.5,
+      -166
+    ],
+    "aim": {
+      "pitch": -7.9,
+      "yaw": 85.8
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:10:42Z",
+    "spot_number": 43,
+    "spot_id": "ct_b_short_arch_hold_mid",
+    "coords": [
+      -1489.5,
+      259.9,
+      -167
+    ],
+    "aim": {
+      "pitch": -0.4,
+      "yaw": -15.1
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:11:14Z",
+    "spot_number": 44,
+    "spot_id": "mid_window_left_awp",
+    "coords": [
+      -1200,
+      -597.1,
+      -168
+    ],
+    "aim": {
+      "pitch": -1,
+      "yaw": 12.1
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T21:12:42Z",
+    "spot_number": 45,
+    "spot_id": "mid_chair_delpan_hold",
+    "coords": [
+      -873.2,
+      -789,
+      -222
+    ],
+    "aim": {
+      "pitch": 12.2,
+      "yaw": 103.8
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T21:13:21Z",
+    "spot_number": 46,
+    "spot_id": "mid_ladder_room_control",
+    "coords": [
+      -1234.2,
+      -898,
+      -130
+    ],
+    "aim": {
+      "pitch": 1.7,
+      "yaw": 57.5
+    },
+    "stance": "Agachado"
+  },
+  {
+    "timestamp": "2026-11-06T21:13:51Z",
+    "spot_number": 47,
+    "spot_id": "a_tetris_top_control",
+    "coords": [
+      -203.5,
+      -1600.8,
+      -54
+    ],
+    "aim": {
+      "pitch": 6.8,
+      "yaw": 163.6
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:14:54Z",
+    "spot_number": 48,
+    "spot_id": "a_tetris_corner_ramp_palace",
+    "coords": [
+      -305.7,
+      -1606.7,
+      -168
+    ],
+    "aim": {
+      "pitch": 5.5,
+      "yaw": 2.8
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:15:32Z",
+    "spot_number": 49,
+    "spot_id": "a_default_plant_headshot",
+    "coords": [
+      -632.7,
+      -2183.1,
+      -180
+    ],
+    "aim": {
+      "pitch": -0.8,
+      "yaw": 36.2
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:16:07Z",
+    "spot_number": 51,
+    "spot_id": "ct_retake_a_ramp_hold_sand_pit",
+    "coords": [
+      5.3,
+      -1442.7,
+      -170.1
+    ],
+    "aim": {
+      "pitch": -0.3,
+      "yaw": -94.6
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:17:13Z",
+    "spot_number": 52,
+    "spot_id": "mid_connector_top_hold_underpass",
+    "coords": [
+      -520.1,
+      -1034.8,
+      -168
+    ],
+    "aim": {
+      "pitch": 12.3,
+      "yaw": 130.5
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:17:38Z",
+    "spot_number": 53,
+    "spot_id": "ct_a_sand_pit_under_palace_hold_caverna",
+    "coords": [
+      -17.6,
+      -2003.5,
+      -168
+    ],
+    "aim": {
+      "pitch": 0.1,
+      "yaw": 92.9
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:18:48Z",
+    "spot_number": 29,
+    "spot_id": "a_triple_box_hold",
+    "coords": [
+      -660.9,
+      -2198.9,
+      -180
+    ],
+    "aim": {
+      "pitch": -0.6,
+      "yaw": 36.2
+    },
+    "stance": "Em p\u00E9"
+  },
+  {
+    "timestamp": "2026-11-06T21:19:39Z",
+    "spot_number": 28,
+    "spot_id": "a_firebox_ninja_hold",
+    "coords": [
+      -381.5,
+      -2395,
+      -164
+    ],
+    "aim": {
+      "pitch": -0.1,
+      "yaw": 102.6
+    },
+    "stance": "Agachado"
+  }
+]

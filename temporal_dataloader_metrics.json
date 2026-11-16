@@ -1,0 +1,104 @@
+{
+  "audit_timestamp": "2026-11-07T23:29:43.878270+00:00",
+  "audit_seed": 42026,
+  "total_samples_evaluated": 500,
+  "splits_composition": {
+    "train": 250,
+    "validation": 125,
+    "test": 125
+  },
+  "padded_samples_count": 13,
+  "padded_samples_rate_pct": 2.6,
+  "metrics": {
+    "ToleranceMatchRate": {
+      "value_pct": 100.0,
+      "target_pct": 100.0,
+      "formula": "(500/500)",
+      "status": "PASS"
+    },
+    "SyntheticWindowRate": {
+      "value_pct": 0.0,
+      "target_pct": 0.0,
+      "formula": "(0/500)",
+      "status": "PASS"
+    },
+    "UnmaskedPaddingRate": {
+      "value_pct": 0.0,
+      "target_pct": 0.0,
+      "formula": "(0/500)",
+      "status": "PASS"
+    },
+    "RoundBoundaryViolationRate": {
+      "value_pct": 0.0,
+      "target_pct": 0.0,
+      "formula": "(0/500)",
+      "status": "PASS"
+    },
+    "FutureLeakageRate": {
+      "value_pct": 0.0,
+      "target_pct": 0.0,
+      "formula": "(0/500)",
+      "status": "PASS"
+    },
+    "TeammateRealSlotMatchRate": {
+      "value_pct": 100.0,
+      "target_pct": 100.0,
+      "formula": "(2000/2000)",
+      "status": "PASS"
+    },
+    "MeanSpatialDisplacement": {
+      "world_units": 317.44880382895275,
+      "normalized_units": 0.10581626794298427,
+      "unit": "CS2 game units"
+    },
+    "MeanTemporalVariance": {
+      "world_units_squared": 34179.0090478964,
+      "normalized_units": 0.003797667671988489,
+      "unit": "CS2 game units^2"
+    }
+  },
+  "metrics_by_split": {
+    "train": {
+      "total_samples": 250,
+      "tolerance_matches": 250,
+      "tolerance_match_rate_pct": 100.0,
+      "synthetic_rate_pct": 0.0,
+      "unmasked_padding_rate_pct": 0.0,
+      "round_boundary_violation_rate_pct": 0.0,
+      "future_leakage_rate_pct": 0.0,
+      "teammate_match_rate_pct": 100.0,
+      "padded_samples": 5
+    },
+    "validation": {
+      "total_samples": 125,
+      "tolerance_matches": 125,
+      "tolerance_match_rate_pct": 100.0,
+      "synthetic_rate_pct": 0.0,
+      "unmasked_padding_rate_pct": 0.0,
+      "round_boundary_violation_rate_pct": 0.0,
+      "future_leakage_rate_pct": 0.0,
+      "teammate_match_rate_pct": 100.0,
+      "padded_samples": 3
+    },
+    "test": {
+      "total_samples": 125,
+      "tolerance_matches": 125,
+      "tolerance_match_rate_pct": 100.0,
+      "synthetic_rate_pct": 0.0,
+      "unmasked_padding_rate_pct": 0.0,
+      "round_boundary_violation_rate_pct": 0.0,
+      "future_leakage_rate_pct": 0.0,
+      "teammate_match_rate_pct": 100.0,
+      "padded_samples": 5
+    }
+  },
+  "all_targets_met": true,
+  "verdict": "CANONICAL_TEMPORAL_DATALOADER_AUDIT_PASS",
+  "artifacts": {
+    "npz_window_batch_audit_json": {
+      "path": "training_runs/positioning_v1/npz_window_batch_audit.json",
+      "sha256": "826d66b72207437fa533e2a4bfcd7ce67ebc7150459fa2af3c670b3602880ecd",
+      "bytes": 591332
+    }
+  }
+}

@@ -1,0 +1,59 @@
+Approved task prompt:
+Equipe solicitada: Tier 3 - Alto Risco (Explorer, Graph Analyst, Test Author, Implementer, Mathematical and Statistical Auditor, Data Provenance Auditor, ML Generalization Auditor, Adversarial Reviewer, Success Auditor). Executar o Patch de Governança 1.1 corrigindo exclusivamente as lacunas e falsos positivos da governança e auditar, sem retreinar nem modificar artefatos canônicos, se o checkpoint do Positioning Transformer foi treinado com histórico temporal real ou sintético.
+
+Working directory: c:\Users\ricar\OneDrive\Documentos\Dev\CsBot
+Integrity mode: development
+
+## Requirements
+
+### R1. Governança - Correção de Falsos Positivos e Omissões (Patch 1.1)
+Corrigir exclusivamente as lacunas e falsos positivos da governança documentados pelo Red Team:
+- FP-01: Ajustar regex de SHA-256 com boundaries explícitas para aceitar 64 caracteres hexadecimais completos, reprovar 4 a 63 caracteres isolados ou hashes truncados com reticências, e ignorar exemplos negativos dentro de blocos de código.
+- FP-02: Atualizar `post_test_audit.py` para interpretar saídas com `toolResponse`, `tool_response`, `stdout`, `stderr`, `exitCode` e `exit_code` em formatos de `dotnet test`, `pytest` e `unittest`, atribuindo `UNKNOWN` em vez de `0/0 PASS` quando contagens não puderem ser extraídas, e impedindo `PASS` em saídas com exit code de falha.
+- FP-03: Implementar distinção estrutural em linters entre afirmação executiva (`EXECUTIVE_CLAIM`), exemplo documental (`DOCUMENTATION_EXAMPLE`) e payload adversarial (`ADVERSARIAL_FIXTURE`) em blocos de código (fenced code blocks), garantindo que exemplos documentais não bloqueiem o relatório enquanto afirmações executivas reais sejam auditadas.
+- MISS-S1-02: Implementar parser estrutural de tabelas Markdown para verificar a coluna `Support` e colunas de métricas (`Precision`, `Recall`, `F1`, `Accuracy`, `Balanced Accuracy`), rejeitando qualquer valor numérico quando `Support = 0` (permitindo apenas `N/A` ou `-`).
+- MISS-S4-01: Implementar detecção de padrões de IDs de demos suspeitos/templados com consulta cruzada ao catálogo formal de demos existente no repositório (aprovando se o ID existir no catálogo e reprovando como `UNPROVENANCED_TEMPLATE_ID` se inexistente fora de fixtures/documentação).
+- MISS-S3-01: Manter a separação de responsabilidades entre o Hook (validação de formato e presença do `artifact_path` relativo ao repositório) e o Phase Gate / Provenance Skill (recalculo físico determinístico do hash SHA-256 de 64 caracteres contra o disco).
+
+### R2. Auditoria e Mapeamento Graphify do Histórico Temporal
+Utilizar o Graphify em modo somente leitura para rastrear o fluxo `NPZ → DataLoader → self_history → teammate_history → PositioningTransformerV1.forward → checkpoint`, identificando a função de carga de NPZ, a função construtora de janelas, a linha exata de uso de `np.linspace`, o tensor entregue ao modelo, a diferença entre o DataLoader auditado na Fase 2.2 e o DataLoader de treino, e se Train, Validation e Test usaram o mesmo caminho ou se janelas reais existiam apenas em relatório, gerando `.agents/audit/pre3a3_temporal_history_graph.md` e `.agents/audit/pre3a3_temporal_history_blast_radius.json` sem alterar arquivos de código ou modelo.
+
+### R3. Comparação Determinística entre Fatias NPZ e Saída do DataLoader
+Auditar o caminho real de treino das seeds 42026, 42027 e 42028 (script de treino, classe DataLoader, dataset path, code hash, construção de self/teammate history, sequence source, length, feature dimensions e tick source) gerando `training_runs/positioning_v1/pre3a3_history_provenance.json` e `pre3a3_history_provenance.md`. Extrair deterministicamente 200 amostras sob seed 42026 (100 Train, 50 Validation, 50 Test) e verificar se `DataLoader history == NPZ temporal slice` sob tolerância numérica explícita, calculando `ExactMatchRate`, `ToleranceMatchRate`, `SyntheticWindowRate`, `StaticWindowRate`, `MeanTemporalVariance` e `MeanSpatialDisplacement` em `pre3a3_npz_batch_comparison.json` e `pre3a3_npz_batch_comparison.md`.
+
+### R4. Auditoria de Ocorrências de `np.linspace` e Decisão Canônica do Checkpoint
+Para cada ocorrência relevante de `np.linspace`, registrar arquivo, linha, função, propósito, source_type, output tensor e se alcança loss de treino, validação ou teste, classificando como `LEGITIMATE_INTERPOLATION`, `LABELED_SYNTHETIC_AUGMENTATION`, `UNLABELED_SYNTHETIC_INPUT`, `REPORT_ONLY` ou `DEAD_CODE`. Emitir a conclusão canônica em `pre3a3_checkpoint_decision.md` entre:
+- A: `CHECKPOINT_TEMPORAL_PROVENANCE_VERIFIED`
+- B: `CHECKPOINT_TRAINED_WITH_SYNTHETIC_HISTORY`
+- C: `CHECKPOINT_HISTORY_PROVENANCE_MIXED`
+- D: `CHECKPOINT_HISTORY_PROVENANCE_UNRESOLVED`
+Se o resultado for B, C ou D, o checkpoint atual deve ser preservado como experimental sem ser apagado, recomendando retreino futuro.
+
+### R5. Governança, Habilitação de Skills e Isolamento Estrito de Papéis
+Garantir a disponibilidade da skill `csbot-math-logic-auditor` (localizando a especificação homologada nos relatórios e documentação existentes no repositório e implementando-a caso ainda seja apenas proposta), executar as skills obrigatórias (`csbot-graph-impact`, `csbot-report-skeptic`, `csbot-dataset-forensics`, `csbot-model-validator`, `csbot-phase-gate`), manter isolamento estrito de papéis (Implementer não valida o próprio trabalho, auditores não alteram implementação, Success Auditor não corrige falhas), e respeitar as restrições inegociáveis: não iniciar a Fase 3A.3, não executar retreino/fine-tuning, não modificar checkpoints, datasets canônicos, runtime C# ou modelos ONNX, e não avançar automaticamente de fase.
+
+## Acceptance Criteria
+
+### Testes de Governança
+- [ ] Testes unitários para FP-01 (ValidSha256With64CharsPasses, Truncated63CharShaFails, TruncatedShaWithEllipsisFails, ValidShaInsideMarkdownTablePasses, ExampleViolationInsideCodeFenceDoesNotBlockReport) implementados e com 100% de aprovação.
+- [ ] Testes unitários para FP-02 (CamelCaseToolResponseIsParsed, SnakeCaseToolResponseIsParsed, DotnetSummaryIsParsed, PytestSummaryIsParsed, MissingSummaryProducesUNKNOWNNotZero, FailedExitCodeCannotProducePASS) e fixtures reais para dotnet test, pytest e unittest implementados e com 100% de aprovação.
+- [ ] Testes unitários para FP-03 distinguindo afirmação executiva, exemplo documental e payload adversarial implementados e com 100% de aprovação.
+- [ ] Testes unitários para MISS-S1-02 validando tabelas de 3, 4 e 8 colunas, HTML table, Markdown escapado, ordem alterada de colunas e números com vírgula e ponto com Support=0 e rejeição de métricas numéricas implementados e com 100% de aprovação.
+- [ ] Testes unitários para MISS-S4-01 validando IDs templados contra o catálogo formal de demos (PASS para IDs reais do catálogo, FAIL como UNPROVENANCED_TEMPLATE_ID para IDs inexistentes) implementados e com 100% de aprovação.
+- [ ] Teste fim a fim para MISS-S3-01 (relatório com hash válido de outro arquivo aprovado no Hook e reprovado pelo Phase Gate na validação física) implementado e com 100% de aprovação.
+- [ ] Suite dos 5 hooks e suite de Red Team original executada com 12/12 aprovações.
+- [ ] 100% de aprovação nos novos testes, zero violações críticas não detectadas (`missed_violations críticos: 0`) e zero falsos positivos críticos (`false_positives críticos: 0`).
+- [ ] Todos os scripts Python afetados passam em `py_compile` sem erros sintáticos.
+
+### Auditoria Forense Temporal e Artefatos Materializados
+- [ ] `.agents/audit/pre3a3_temporal_history_graph.md` e `.agents/audit/pre3a3_temporal_history_blast_radius.json` materializados no disco refletindo o mapeamento Graphify completo.
+- [ ] `training_runs/positioning_v1/pre3a3_history_provenance.json` e `training_runs/positioning_v1/pre3a3_history_provenance.md` materializados no disco cobrindo as seeds 42026, 42027 e 42028.
+- [ ] `pre3a3_npz_batch_comparison.json` e `pre3a3_npz_batch_comparison.md` materializados no disco contendo a comparação das 200 amostras com taxas de match e variância.
+- [ ] `pre3a3_checkpoint_decision.md` emitido com classificação explícita (A, B, C ou D).
+- [ ] Entregáveis `governance_patch_1_1_diff.md`, `governance_patch_1_1_test_report.md`, `governance_patch_1_1_redteam_report.md`, `governance_patch_1_1_false_positive_report.md` e `deliverable_evidence.json` materializados no disco com SHA-256 de 64 caracteres e caminhos relativos ao repositório.
+- [ ] Arquivos `missed_violations.json` e `false_positives.json` atualizados com status canônicos (FIXED, ACCEPTED_LAYERED_RESPONSIBILITY, OPEN, NOT_REPRODUCED) preservando o histórico.
+
+### Phase Gate e Finalização
+- [ ] Execução do Phase Gate final via `csbot-phase-gate`, `csbot-report-skeptic`, `csbot-dataset-forensics` e `csbot-math-logic-auditor`.
+- [ ] Conferência requisito por requisito realizada pelo Success Auditor com emissão do veredito final (`CSBOT_GOVERNANCE_PATCH_1_1_PASS` acompanhado da decisão canônica de proveniência do checkpoint).
+- [ ] Nenhuma alteração realizada em runtime C#, modelos ONNX, checkpoints ou datasets canônicos, e nenhuma inicialização de retreino ou da Fase 3A.3.

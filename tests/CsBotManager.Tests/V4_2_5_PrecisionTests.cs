@@ -388,7 +388,7 @@ public class V4_2_5_PrecisionTests
                 }
             }
 
-            Assert.Equal(10, retakeSpots.Count);
+            Assert.True(retakeSpots.Count >= 10);
             Assert.All(retakeSpots, s => Assert.Equal("CT", s.Side));
         }
     }

@@ -1,0 +1,1088 @@
+{
+  "suite_name": "CsBot-Antigravity-Governance-Hooks-Test-Suite",
+  "generated_at_utc": "2026-11-07T16:44:12.619609+00:00",
+  "data_classification": {
+    "stdin_payloads": "SIMULATED",
+    "hook_subprocess_executions": "REAL"
+  },
+  "aggregation_formula": {
+    "numerator": "count(test_cases where passed_assertion == True)",
+    "denominator": "count(all_executed_test_cases across audit-only, blocking, and false_positive_battery)",
+    "filter": "none",
+    "passed": 29,
+    "discovered": 29,
+    "failed": 0,
+    "canonical_summary": "29/29"
+  },
+  "mandatory_10_scenarios_audit_only": [
+    {
+      "hook_script": "protect_sensitive_files.py",
+      "mode": "audit-only",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; python \".agents/hooks/protect_sensitive_files.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "audit-only"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "src/CsBotManager/BotLocomotionDriver.cs",
+          "Content": "// Alteracao comum em arquivo C# nao sensivel\n"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"src/CsBotManager/BotLocomotionDriver.cs\", \"Content\": \"// Alteracao comum em arquivo C# nao sensivel\\n\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Nenhum artefato sensível afetado pela operação."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Nenhum artefato sensível afetado pela operação.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 124.85,
+      "test_id": "T01_common_file_allowed",
+      "scenario": "1. Alteração comum não é bloqueada (write_file em src/CsBotManager/BotLocomotionDriver.cs)",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "protect_sensitive_files.py",
+      "mode": "audit-only",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; $env:CSBOT_SENSITIVE_AUTH_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_auth.json\"; python \".agents/hooks/protect_sensitive_files.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "audit-only",
+        "CSBOT_SENSITIVE_AUTH_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_auth.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "models/de_mirage_positioning_v1.onnx",
+          "Content": "SIMULATED_BINARY_WRITE"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"models/de_mirage_positioning_v1.onnx\", \"Content\": \"SIMULATED_BINARY_WRITE\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [protect-sensitive-files]: Modificação em artefato sensível bloqueada (models/de_mirage_positioning_v1.onnx). Motivo: Arquivo de autorização ausente em '<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_auth.json' para modificar ['models/de_mirage_positioning_v1.onnx']. Ação corretiva: 1) Crie um backup imutável do arquivo original; 2) Calcule o SHA-256 completo (64 caracteres hexadecimais); 3) Registre backup_path, previous_sha256 (64 hex), planned_diff, rollback_command e approved_phase em .agents/audit/sensitive_file_authorization.json antes de modificar o artefato."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [protect-sensitive-files]: Modificação em artefato sensível bloqueada (models/de_mirage_positioning_v1.onnx). Motivo: Arquivo de autorização ausente em '<USER_HOME>\\\\AppData\\\\Local\\\\Temp\\\\csbot_hook_tests_68v4ln6_\\\\non_existent_auth.json' para modificar ['models/de_mirage_positioning_v1.onnx']. Ação corretiva: 1) Crie um backup imutável do arquivo original; 2) Calcule o SHA-256 completo (64 caracteres hexadecimais); 3) Registre backup_path, previous_sha256 (64 hex), planned_diff, rollback_command e approved_phase em .agents/audit/sensitive_file_authorization.json antes de modificar o artefato.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 133.47,
+      "test_id": "T02_onnx_without_auth_blocked",
+      "scenario": "2. Alteração em ONNX sem autorização é bloqueada (models/de_mirage_positioning_v1.onnx)",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "protect_sensitive_files.py",
+      "mode": "audit-only",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; $env:CSBOT_SENSITIVE_AUTH_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\valid_sensitive_auth.json\"; python \".agents/hooks/protect_sensitive_files.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "audit-only",
+        "CSBOT_SENSITIVE_AUTH_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\valid_sensitive_auth.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "models/de_mirage_positioning_v1.onnx",
+          "Content": "SIMULATED_AUTHORIZED_WRITE"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"models/de_mirage_positioning_v1.onnx\", \"Content\": \"SIMULATED_AUTHORIZED_WRITE\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Autorização de artefato sensível verificada com hash e backup."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Autorização de artefato sensível verificada com hash e backup.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 216.51,
+      "test_id": "T03_onnx_with_hash_and_backup_allowed",
+      "scenario": "3. Alteração com hash SHA-256 (64 hex) e backup verificável é permitida",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "validate_generated_report.py",
+      "mode": "audit-only",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; python \".agents/hooks/validate_generated_report.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "audit-only"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "docs/evaluation_report_invalid.md",
+          "Content": "# Relatório Executivo de Avaliação\nArtefato bruto: `outputs/eval_metrics.json` (SHA-256: `eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`)\n| Classe | Support | F1-Score |\n|---|---|---|\n| Hold_Spot | support=0 | F1 = 0.85 |\n"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"docs/evaluation_report_invalid.md\", \"Content\": \"# Relat\\u00f3rio Executivo de Avalia\\u00e7\\u00e3o\\nArtefato bruto: `outputs/eval_metrics.json` (SHA-256: `eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`)\\n| Classe | Support | F1-Score |\\n|---|---|---|\\n| Hold_Spot | support=0 | F1 = 0.85 |\\n\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [validate-generated-report]: Relatório reprovado pela auditoria cética (1 violação(ões)): [Regra 03 / Support=0] Linha com support=0 exibe métrica numérica (F1 = 0.85) em vez de 'N/A'. Ação corretiva: 1) Substitua métricas de classes com support=0 por 'N/A'; 2) Corrija contagens incompatíveis (use '<passed>/<discovered>'); 3) Remova IDs templados, classes fora do contrato e selos humanos não autorizados; 4) Cite os artefatos brutos reais e hashes SHA-256 completos de 64 caracteres."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [validate-generated-report]: Relatório reprovado pela auditoria cética (1 violação(ões)): [Regra 03 / Support=0] Linha com support=0 exibe métrica numérica (F1 = 0.85) em vez de 'N/A'. Ação corretiva: 1) Substitua métricas de classes com support=0 por 'N/A'; 2) Corrija contagens incompatíveis (use '<passed>/<discovered>'); 3) Remova IDs templados, classes fora do contrato e selos humanos não autorizados; 4) Cite os artefatos brutos reais e hashes SHA-256 completos de 64 caracteres.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 132.81,
+      "test_id": "T04_report_support_zero_f1_numeric_blocked",
+      "scenario": "4. Relatório com support=0 e F1>0 é bloqueado (support=0 e F1 = 0.85)",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "validate_generated_report.py",
+      "mode": "audit-only",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; python \".agents/hooks/validate_generated_report.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "audit-only"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "docs/evaluation_report_valid.md",
+          "Content": "# Relatório Executivo de Avaliação Canônica\n\n- **Veredito**: `PASS`\n- **Artefato Bruto**: `outputs/phase3a_val_metrics.json`\n- **SHA-256**: `ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff`\n- **Testes Automatizados**: 340/340 passed\n- **Isolamento de Dados**: Hyperparameter tuning realizado exclusivamente no conjunto Validation.\n\n## Métricas por Classe\n- Classe `Hold_Spot`: support=0 -> Recall: `N/A`, F1-Score: `N/A`\n- Classe `Rotate_A`: support=125 -> Recall: `0.84`, F1-Score: `0.82`\n"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"docs/evaluation_report_valid.md\", \"Content\": \"# Relat\\u00f3rio Executivo de Avalia\\u00e7\\u00e3o Can\\u00f4nica\\n\\n- **Veredito**: `PASS`\\n- **Artefato Bruto**: `outputs/phase3a_val_metrics.json`\\n- **SHA-256**: `ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff`\\n- **Testes Automatizados**: 340/340 passed\\n- **Isolamento de Dados**: Hyperparameter tuning realizado exclusivamente no conjunto Validation.\\n\\n## M\\u00e9tricas por Classe\\n- Classe `Hold_Spot`: support=0 -> Recall: `N/A`, F1-Score: `N/A`\\n- Classe `Rotate_A`: support=125 -> Recall: `0.84`, F1-Score: `0.82`\\n\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Relatório validado com sucesso pelo csbot-report-skeptic (0 violações)."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Relatório validado com sucesso pelo csbot-report-skeptic (0 violações).\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 128.71,
+      "test_id": "T05_valid_report_passes",
+      "scenario": "5. Relatório correto passa (support=0 -> N/A, artefato bruto, SHA-256 64 hex, sem Test em tuning)",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "pre_training_gate.py",
+      "mode": "audit-only",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; $env:CSBOT_PRETRAINING_GATE_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_input_snapshot.json\"; python \".agents/hooks/pre_training_gate.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "audit-only",
+        "CSBOT_PRETRAINING_GATE_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_input_snapshot.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "run_command",
+        "tool_input": {
+          "CommandLine": "python train_positioning.py --epochs 20 --batch-size 64"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"python train_positioning.py --epochs 20 --batch-size 64\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [pre-training-gate]: Execução de treinamento bloqueada por falha nos pré-requisitos de governança. Motivo: Manifesto de prontidão 'input_snapshot.json' ausente em '<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_input_snapshot.json'. Ação corretiva: 1) Gere '.agents/audit/input_snapshot.json' antes de treinar; 2) Garanta split_leakage=0, tests='green', dry_run='pass', dataset_hashes (SHA-256 64 hex), catalog_hash (64 hex), checkpoint_policy definida e no_test_tuning=true; 3) Nunca utilize o split 'test' em tuning_split ou checkpoint_selection_split."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [pre-training-gate]: Execução de treinamento bloqueada por falha nos pré-requisitos de governança. Motivo: Manifesto de prontidão 'input_snapshot.json' ausente em '<USER_HOME>\\\\AppData\\\\Local\\\\Temp\\\\csbot_hook_tests_68v4ln6_\\\\non_existent_input_snapshot.json'. Ação corretiva: 1) Gere '.agents/audit/input_snapshot.json' antes de treinar; 2) Garanta split_leakage=0, tests='green', dry_run='pass', dataset_hashes (SHA-256 64 hex), catalog_hash (64 hex), checkpoint_policy definida e no_test_tuning=true; 3) Nunca utilize o split 'test' em tuning_split ou checkpoint_selection_split.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 130.83,
+      "test_id": "T06_training_without_snapshot_blocked",
+      "scenario": "6. Treino sem snapshot é bloqueado (python train_positioning.py sem input_snapshot.json)",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "pre_training_gate.py",
+      "mode": "audit-only",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; $env:CSBOT_PRETRAINING_GATE_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\contaminated_input_snapshot.json\"; python \".agents/hooks/pre_training_gate.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "audit-only",
+        "CSBOT_PRETRAINING_GATE_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\contaminated_input_snapshot.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "run_command",
+        "tool_input": {
+          "CommandLine": "torchrun --nproc_per_node=1 train.py --config configs/pos.yaml"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"torchrun --nproc_per_node=1 train.py --config configs/pos.yaml\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [pre-training-gate]: Execução de treinamento bloqueada por falha nos pré-requisitos de governança. Motivo: Campo 'no_test_tuning' deve ser booleano true (atual: False). | Regra 02 violada: 'tuning_split' está configurado como 'test' (proibido usar Test/Holdout em tuning ou seleção de checkpoint). Ação corretiva: 1) Gere '.agents/audit/input_snapshot.json' antes de treinar; 2) Garanta split_leakage=0, tests='green', dry_run='pass', dataset_hashes (SHA-256 64 hex), catalog_hash (64 hex), checkpoint_policy definida e no_test_tuning=true; 3) Nunca utilize o split 'test' em tuning_split ou checkpoint_selection_split."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [pre-training-gate]: Execução de treinamento bloqueada por falha nos pré-requisitos de governança. Motivo: Campo 'no_test_tuning' deve ser booleano true (atual: False). | Regra 02 violada: 'tuning_split' está configurado como 'test' (proibido usar Test/Holdout em tuning ou seleção de checkpoint). Ação corretiva: 1) Gere '.agents/audit/input_snapshot.json' antes de treinar; 2) Garanta split_leakage=0, tests='green', dry_run='pass', dataset_hashes (SHA-256 64 hex), catalog_hash (64 hex), checkpoint_policy definida e no_test_tuning=true; 3) Nunca utilize o split 'test' em tuning_split ou checkpoint_selection_split.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 127.35,
+      "test_id": "T07_training_with_test_in_tuning_blocked",
+      "scenario": "7. Treino com Test em tuning é bloqueado (torchrun train.py com tuning_split='test' e no_test_tuning=false)",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "test_id": "T08_failed_test_blocks_pass_verdict",
+      "scenario": "8. Teste falho impede PASS (post_test_audit.py grava FAILED e stop_condition_evidence_gate.py bloqueia PASS)",
+      "mode": "audit-only",
+      "step1_post_test_audit": {
+        "hook_script": "post_test_audit.py",
+        "mode": "audit-only",
+        "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; python \".agents/hooks/post_test_audit.py\"",
+        "env_overrides": {
+          "CSBOT_HOOK_MODE": "audit-only"
+        },
+        "stdin_payload": {
+          "hook_event_name": "PostToolUse",
+          "tool_name": "run_command",
+          "tool_input": {
+            "CommandLine": "pytest tests/test_phase3a_positioning_training.py"
+          },
+          "output": "10 passed, 2 failed in 1.15s\nCommand exited with code 1",
+          "exit_code": 1
+        },
+        "stdin_raw": "{\"hook_event_name\": \"PostToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"pytest tests/test_phase3a_positioning_training.py\"}, \"output\": \"10 passed, 2 failed in 1.15s\\nCommand exited with code 1\", \"exit_code\": 1}",
+        "stdout_json": {},
+        "stdout_raw": "{}",
+        "stderr_raw": "",
+        "exit_code": 0,
+        "duration_ms": 128.46
+      },
+      "step1_recorded_state": {
+        "timestamp_utc": "2026-11-07T16:44:08.692747+00:00",
+        "command": "pytest tests/test_phase3a_positioning_training.py",
+        "working_directory": "<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot",
+        "discovered": 12,
+        "passed": 10,
+        "failed": 2,
+        "skipped": 0,
+        "duration": "1.15s",
+        "exit_code": 1,
+        "error": null,
+        "test_assemblies": [],
+        "canonical_summary": "10/12",
+        "status": "FAILED",
+        "block_pass_verdict": true
+      },
+      "step2_stop_condition_gate": {
+        "hook_script": "stop_condition_evidence_gate.py",
+        "mode": "audit-only",
+        "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; $env:CSBOT_DELIVERABLE_EVIDENCE_FILE=\"<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\deliverable_evidence.json\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+        "env_overrides": {
+          "CSBOT_HOOK_MODE": "audit-only",
+          "CSBOT_DELIVERABLE_EVIDENCE_FILE": "<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\deliverable_evidence.json"
+        },
+        "stdin_payload": {
+          "hook_event_name": "Stop",
+          "verdict": "PASS"
+        },
+        "stdin_raw": "{\"hook_event_name\": \"Stop\", \"verdict\": \"PASS\"}",
+        "stdout_json": {
+          "decision": "allow",
+          "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [stop-condition-evidence-gate]: Encerramento impedido pelo gate de evidências. Motivo: Teste falho impede emissão de veredito PASS (última execução 'pytest tests/test_phase3a_positioning_training.py' teve status=FAILED, summary=10/12). Ação corretiva: Preencha todos os campos obrigatórios (phase, verdict, e em cada claim: claim_id, claim, evidence_files, raw_sources, reproduction_command, validator) em .agents/audit/deliverable_evidence.json, corrija relatórios reprovados e garanta que nenhum veredito PASS seja emitido com teste falho."
+        },
+        "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [stop-condition-evidence-gate]: Encerramento impedido pelo gate de evidências. Motivo: Teste falho impede emissão de veredito PASS (última execução 'pytest tests/test_phase3a_positioning_training.py' teve status=FAILED, summary=10/12). Ação corretiva: Preencha todos os campos obrigatórios (phase, verdict, e em cada claim: claim_id, claim, evidence_files, raw_sources, reproduction_command, validator) em .agents/audit/deliverable_evidence.json, corrija relatórios reprovados e garanta que nenhum veredito PASS seja emitido com teste falho.\"}",
+        "stderr_raw": "",
+        "exit_code": 0,
+        "duration_ms": 129.25
+      },
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; python \".agents/hooks/post_test_audit.py\" ; $env:CSBOT_HOOK_MODE=\"audit-only\"; $env:CSBOT_DELIVERABLE_EVIDENCE_FILE=\"<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\deliverable_evidence.json\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+      "stdin_payload": {
+        "step1": {
+          "hook_event_name": "PostToolUse",
+          "tool_name": "run_command",
+          "tool_input": {
+            "CommandLine": "pytest tests/test_phase3a_positioning_training.py"
+          },
+          "output": "10 passed, 2 failed in 1.15s\nCommand exited with code 1",
+          "exit_code": 1
+        },
+        "step2": {
+          "hook_event_name": "Stop",
+          "verdict": "PASS"
+        }
+      },
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [stop-condition-evidence-gate]: Encerramento impedido pelo gate de evidências. Motivo: Teste falho impede emissão de veredito PASS (última execução 'pytest tests/test_phase3a_positioning_training.py' teve status=FAILED, summary=10/12). Ação corretiva: Preencha todos os campos obrigatórios (phase, verdict, e em cada claim: claim_id, claim, evidence_files, raw_sources, reproduction_command, validator) em .agents/audit/deliverable_evidence.json, corrija relatórios reprovados e garanta que nenhum veredito PASS seja emitido com teste falho."
+      },
+      "exit_code": 0,
+      "duration_ms": 257.71,
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "stop_condition_evidence_gate.py",
+      "mode": "audit-only",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; $env:CSBOT_DELIVERABLE_EVIDENCE_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\unbacked_deliverable_evidence.json\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "audit-only",
+        "CSBOT_DELIVERABLE_EVIDENCE_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\unbacked_deliverable_evidence.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "Stop",
+        "verdict": "PASS"
+      },
+      "stdin_raw": "{\"hook_event_name\": \"Stop\", \"verdict\": \"PASS\"}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [stop-condition-evidence-gate]: Encerramento impedido pelo gate de evidências. Motivo: claims[0 (CLAIM-UNBACKED-01)]: 'evidence_files' deve ser uma lista não-vazia de arquivos de evidência. Ação corretiva: Preencha todos os campos obrigatórios (phase, verdict, e em cada claim: claim_id, claim, evidence_files, raw_sources, reproduction_command, validator) em .agents/audit/deliverable_evidence.json, corrija relatórios reprovados e garanta que nenhum veredito PASS seja emitido com teste falho."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [stop-condition-evidence-gate]: Encerramento impedido pelo gate de evidências. Motivo: claims[0 (CLAIM-UNBACKED-01)]: 'evidence_files' deve ser uma lista não-vazia de arquivos de evidência. Ação corretiva: Preencha todos os campos obrigatórios (phase, verdict, e em cada claim: claim_id, claim, evidence_files, raw_sources, reproduction_command, validator) em .agents/audit/deliverable_evidence.json, corrija relatórios reprovados e garanta que nenhum veredito PASS seja emitido com teste falho.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 123.15,
+      "test_id": "T09_claim_without_evidence_blocks_stop",
+      "scenario": "9. Claim sem evidência impede encerramento (deliverable_evidence.json com evidence_files: [])",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "test_id": "T10_corrupted_stdin_fails_safe",
+      "scenario": "10. Hook em erro falha de modo seguro (stdin '{invalid_json' em protect_sensitive_files.py e stop_condition_evidence_gate.py)",
+      "mode": "audit-only",
+      "protect_sensitive_files_result": {
+        "hook_script": "protect_sensitive_files.py",
+        "mode": "audit-only",
+        "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; python \".agents/hooks/protect_sensitive_files.py\"",
+        "env_overrides": {
+          "CSBOT_HOOK_MODE": "audit-only"
+        },
+        "stdin_payload": "{invalid_json",
+        "stdin_raw": "{invalid_json",
+        "stdout_json": {
+          "decision": "allow",
+          "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [protect-sensitive-files]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook protect-sensitive-files."
+        },
+        "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [protect-sensitive-files]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook protect-sensitive-files.\"}",
+        "stderr_raw": "",
+        "exit_code": 0,
+        "duration_ms": 120.19
+      },
+      "stop_condition_evidence_gate_result": {
+        "hook_script": "stop_condition_evidence_gate.py",
+        "mode": "audit-only",
+        "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+        "env_overrides": {
+          "CSBOT_HOOK_MODE": "audit-only"
+        },
+        "stdin_payload": "{invalid_json",
+        "stdin_raw": "{invalid_json",
+        "stdout_json": {
+          "decision": "allow",
+          "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [stop-condition-evidence-gate]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook stop-condition-evidence-gate."
+        },
+        "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [stop-condition-evidence-gate]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook stop-condition-evidence-gate.\"}",
+        "stderr_raw": "",
+        "exit_code": 0,
+        "duration_ms": 119.55
+      },
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"audit-only\"; python \".agents/hooks/protect_sensitive_files.py\" ; $env:CSBOT_HOOK_MODE=\"audit-only\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+      "stdin_payload": "{invalid_json",
+      "stdout_json": {
+        "protect_sensitive_files": {
+          "decision": "allow",
+          "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [protect-sensitive-files]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook protect-sensitive-files."
+        },
+        "stop_condition_evidence_gate": {
+          "decision": "allow",
+          "reason": "[AUDIT-ONLY] Violação registrada sem bloqueio: BLOQUEIO [stop-condition-evidence-gate]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook stop-condition-evidence-gate."
+        }
+      },
+      "exit_code": 0,
+      "duration_ms": 239.74,
+      "expected_decision": {
+        "protect_sensitive_files": "allow",
+        "stop_condition_evidence_gate": "allow"
+      },
+      "passed_assertion": true
+    }
+  ],
+  "mandatory_10_scenarios_blocking": [
+    {
+      "hook_script": "protect_sensitive_files.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/protect_sensitive_files.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "src/CsBotManager/BotLocomotionDriver.cs",
+          "Content": "// Alteracao comum em arquivo C# nao sensivel\n"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"src/CsBotManager/BotLocomotionDriver.cs\", \"Content\": \"// Alteracao comum em arquivo C# nao sensivel\\n\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Nenhum artefato sensível afetado pela operação."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Nenhum artefato sensível afetado pela operação.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 119.52,
+      "test_id": "T01_common_file_allowed",
+      "scenario": "1. Alteração comum não é bloqueada (write_file em src/CsBotManager/BotLocomotionDriver.cs)",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "protect_sensitive_files.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_SENSITIVE_AUTH_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_auth.json\"; python \".agents/hooks/protect_sensitive_files.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking",
+        "CSBOT_SENSITIVE_AUTH_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_auth.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "models/de_mirage_positioning_v1.onnx",
+          "Content": "SIMULATED_BINARY_WRITE"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"models/de_mirage_positioning_v1.onnx\", \"Content\": \"SIMULATED_BINARY_WRITE\"}}",
+      "stdout_json": {
+        "decision": "deny",
+        "reason": "BLOQUEIO [protect-sensitive-files]: Modificação em artefato sensível bloqueada (models/de_mirage_positioning_v1.onnx). Motivo: Arquivo de autorização ausente em '<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_auth.json' para modificar ['models/de_mirage_positioning_v1.onnx']. Ação corretiva: 1) Crie um backup imutável do arquivo original; 2) Calcule o SHA-256 completo (64 caracteres hexadecimais); 3) Registre backup_path, previous_sha256 (64 hex), planned_diff, rollback_command e approved_phase em .agents/audit/sensitive_file_authorization.json antes de modificar o artefato."
+      },
+      "stdout_raw": "{\"decision\": \"deny\", \"reason\": \"BLOQUEIO [protect-sensitive-files]: Modificação em artefato sensível bloqueada (models/de_mirage_positioning_v1.onnx). Motivo: Arquivo de autorização ausente em '<USER_HOME>\\\\AppData\\\\Local\\\\Temp\\\\csbot_hook_tests_68v4ln6_\\\\non_existent_auth.json' para modificar ['models/de_mirage_positioning_v1.onnx']. Ação corretiva: 1) Crie um backup imutável do arquivo original; 2) Calcule o SHA-256 completo (64 caracteres hexadecimais); 3) Registre backup_path, previous_sha256 (64 hex), planned_diff, rollback_command e approved_phase em .agents/audit/sensitive_file_authorization.json antes de modificar o artefato.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 123.67,
+      "test_id": "T02_onnx_without_auth_blocked",
+      "scenario": "2. Alteração em ONNX sem autorização é bloqueada (models/de_mirage_positioning_v1.onnx)",
+      "expected_decision": "deny",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "protect_sensitive_files.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_SENSITIVE_AUTH_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\valid_sensitive_auth.json\"; python \".agents/hooks/protect_sensitive_files.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking",
+        "CSBOT_SENSITIVE_AUTH_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\valid_sensitive_auth.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "models/de_mirage_positioning_v1.onnx",
+          "Content": "SIMULATED_AUTHORIZED_WRITE"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"models/de_mirage_positioning_v1.onnx\", \"Content\": \"SIMULATED_AUTHORIZED_WRITE\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Autorização de artefato sensível verificada com hash e backup."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Autorização de artefato sensível verificada com hash e backup.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 134.32,
+      "test_id": "T03_onnx_with_hash_and_backup_allowed",
+      "scenario": "3. Alteração com hash SHA-256 (64 hex) e backup verificável é permitida",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "validate_generated_report.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/validate_generated_report.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "docs/evaluation_report_invalid.md",
+          "Content": "# Relatório Executivo de Avaliação\nArtefato bruto: `outputs/eval_metrics.json` (SHA-256: `eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`)\n| Classe | Support | F1-Score |\n|---|---|---|\n| Hold_Spot | support=0 | F1 = 0.85 |\n"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"docs/evaluation_report_invalid.md\", \"Content\": \"# Relat\\u00f3rio Executivo de Avalia\\u00e7\\u00e3o\\nArtefato bruto: `outputs/eval_metrics.json` (SHA-256: `eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`)\\n| Classe | Support | F1-Score |\\n|---|---|---|\\n| Hold_Spot | support=0 | F1 = 0.85 |\\n\"}}",
+      "stdout_json": {
+        "decision": "deny",
+        "reason": "BLOQUEIO [validate-generated-report]: Relatório reprovado pela auditoria cética (1 violação(ões)): [Regra 03 / Support=0] Linha com support=0 exibe métrica numérica (F1 = 0.85) em vez de 'N/A'. Ação corretiva: 1) Substitua métricas de classes com support=0 por 'N/A'; 2) Corrija contagens incompatíveis (use '<passed>/<discovered>'); 3) Remova IDs templados, classes fora do contrato e selos humanos não autorizados; 4) Cite os artefatos brutos reais e hashes SHA-256 completos de 64 caracteres."
+      },
+      "stdout_raw": "{\"decision\": \"deny\", \"reason\": \"BLOQUEIO [validate-generated-report]: Relatório reprovado pela auditoria cética (1 violação(ões)): [Regra 03 / Support=0] Linha com support=0 exibe métrica numérica (F1 = 0.85) em vez de 'N/A'. Ação corretiva: 1) Substitua métricas de classes com support=0 por 'N/A'; 2) Corrija contagens incompatíveis (use '<passed>/<discovered>'); 3) Remova IDs templados, classes fora do contrato e selos humanos não autorizados; 4) Cite os artefatos brutos reais e hashes SHA-256 completos de 64 caracteres.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 134.9,
+      "test_id": "T04_report_support_zero_f1_numeric_blocked",
+      "scenario": "4. Relatório com support=0 e F1>0 é bloqueado (support=0 e F1 = 0.85)",
+      "expected_decision": "deny",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "validate_generated_report.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/validate_generated_report.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "docs/evaluation_report_valid.md",
+          "Content": "# Relatório Executivo de Avaliação Canônica\n\n- **Veredito**: `PASS`\n- **Artefato Bruto**: `outputs/phase3a_val_metrics.json`\n- **SHA-256**: `ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff`\n- **Testes Automatizados**: 340/340 passed\n- **Isolamento de Dados**: Hyperparameter tuning realizado exclusivamente no conjunto Validation.\n\n## Métricas por Classe\n- Classe `Hold_Spot`: support=0 -> Recall: `N/A`, F1-Score: `N/A`\n- Classe `Rotate_A`: support=125 -> Recall: `0.84`, F1-Score: `0.82`\n"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"docs/evaluation_report_valid.md\", \"Content\": \"# Relat\\u00f3rio Executivo de Avalia\\u00e7\\u00e3o Can\\u00f4nica\\n\\n- **Veredito**: `PASS`\\n- **Artefato Bruto**: `outputs/phase3a_val_metrics.json`\\n- **SHA-256**: `ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff`\\n- **Testes Automatizados**: 340/340 passed\\n- **Isolamento de Dados**: Hyperparameter tuning realizado exclusivamente no conjunto Validation.\\n\\n## M\\u00e9tricas por Classe\\n- Classe `Hold_Spot`: support=0 -> Recall: `N/A`, F1-Score: `N/A`\\n- Classe `Rotate_A`: support=125 -> Recall: `0.84`, F1-Score: `0.82`\\n\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Relatório validado com sucesso pelo csbot-report-skeptic (0 violações)."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Relatório validado com sucesso pelo csbot-report-skeptic (0 violações).\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 137.89,
+      "test_id": "T05_valid_report_passes",
+      "scenario": "5. Relatório correto passa (support=0 -> N/A, artefato bruto, SHA-256 64 hex, sem Test em tuning)",
+      "expected_decision": "allow",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "pre_training_gate.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_PRETRAINING_GATE_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_input_snapshot.json\"; python \".agents/hooks/pre_training_gate.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking",
+        "CSBOT_PRETRAINING_GATE_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_input_snapshot.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "run_command",
+        "tool_input": {
+          "CommandLine": "python train_positioning.py --epochs 20 --batch-size 64"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"python train_positioning.py --epochs 20 --batch-size 64\"}}",
+      "stdout_json": {
+        "decision": "deny",
+        "reason": "BLOQUEIO [pre-training-gate]: Execução de treinamento bloqueada por falha nos pré-requisitos de governança. Motivo: Manifesto de prontidão 'input_snapshot.json' ausente em '<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_input_snapshot.json'. Ação corretiva: 1) Gere '.agents/audit/input_snapshot.json' antes de treinar; 2) Garanta split_leakage=0, tests='green', dry_run='pass', dataset_hashes (SHA-256 64 hex), catalog_hash (64 hex), checkpoint_policy definida e no_test_tuning=true; 3) Nunca utilize o split 'test' em tuning_split ou checkpoint_selection_split."
+      },
+      "stdout_raw": "{\"decision\": \"deny\", \"reason\": \"BLOQUEIO [pre-training-gate]: Execução de treinamento bloqueada por falha nos pré-requisitos de governança. Motivo: Manifesto de prontidão 'input_snapshot.json' ausente em '<USER_HOME>\\\\AppData\\\\Local\\\\Temp\\\\csbot_hook_tests_68v4ln6_\\\\non_existent_input_snapshot.json'. Ação corretiva: 1) Gere '.agents/audit/input_snapshot.json' antes de treinar; 2) Garanta split_leakage=0, tests='green', dry_run='pass', dataset_hashes (SHA-256 64 hex), catalog_hash (64 hex), checkpoint_policy definida e no_test_tuning=true; 3) Nunca utilize o split 'test' em tuning_split ou checkpoint_selection_split.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 144.15,
+      "test_id": "T06_training_without_snapshot_blocked",
+      "scenario": "6. Treino sem snapshot é bloqueado (python train_positioning.py sem input_snapshot.json)",
+      "expected_decision": "deny",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "pre_training_gate.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_PRETRAINING_GATE_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\contaminated_input_snapshot.json\"; python \".agents/hooks/pre_training_gate.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking",
+        "CSBOT_PRETRAINING_GATE_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\contaminated_input_snapshot.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "run_command",
+        "tool_input": {
+          "CommandLine": "torchrun --nproc_per_node=1 train.py --config configs/pos.yaml"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"torchrun --nproc_per_node=1 train.py --config configs/pos.yaml\"}}",
+      "stdout_json": {
+        "decision": "deny",
+        "reason": "BLOQUEIO [pre-training-gate]: Execução de treinamento bloqueada por falha nos pré-requisitos de governança. Motivo: Campo 'no_test_tuning' deve ser booleano true (atual: False). | Regra 02 violada: 'tuning_split' está configurado como 'test' (proibido usar Test/Holdout em tuning ou seleção de checkpoint). Ação corretiva: 1) Gere '.agents/audit/input_snapshot.json' antes de treinar; 2) Garanta split_leakage=0, tests='green', dry_run='pass', dataset_hashes (SHA-256 64 hex), catalog_hash (64 hex), checkpoint_policy definida e no_test_tuning=true; 3) Nunca utilize o split 'test' em tuning_split ou checkpoint_selection_split."
+      },
+      "stdout_raw": "{\"decision\": \"deny\", \"reason\": \"BLOQUEIO [pre-training-gate]: Execução de treinamento bloqueada por falha nos pré-requisitos de governança. Motivo: Campo 'no_test_tuning' deve ser booleano true (atual: False). | Regra 02 violada: 'tuning_split' está configurado como 'test' (proibido usar Test/Holdout em tuning ou seleção de checkpoint). Ação corretiva: 1) Gere '.agents/audit/input_snapshot.json' antes de treinar; 2) Garanta split_leakage=0, tests='green', dry_run='pass', dataset_hashes (SHA-256 64 hex), catalog_hash (64 hex), checkpoint_policy definida e no_test_tuning=true; 3) Nunca utilize o split 'test' em tuning_split ou checkpoint_selection_split.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 134.62,
+      "test_id": "T07_training_with_test_in_tuning_blocked",
+      "scenario": "7. Treino com Test em tuning é bloqueado (torchrun train.py com tuning_split='test' e no_test_tuning=false)",
+      "expected_decision": "deny",
+      "passed_assertion": true
+    },
+    {
+      "test_id": "T08_failed_test_blocks_pass_verdict",
+      "scenario": "8. Teste falho impede PASS (post_test_audit.py grava FAILED e stop_condition_evidence_gate.py bloqueia PASS)",
+      "mode": "blocking",
+      "step1_post_test_audit": {
+        "hook_script": "post_test_audit.py",
+        "mode": "blocking",
+        "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/post_test_audit.py\"",
+        "env_overrides": {
+          "CSBOT_HOOK_MODE": "blocking"
+        },
+        "stdin_payload": {
+          "hook_event_name": "PostToolUse",
+          "tool_name": "run_command",
+          "tool_input": {
+            "CommandLine": "pytest tests/test_phase3a_positioning_training.py"
+          },
+          "output": "10 passed, 2 failed in 1.15s\nCommand exited with code 1",
+          "exit_code": 1
+        },
+        "stdin_raw": "{\"hook_event_name\": \"PostToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"pytest tests/test_phase3a_positioning_training.py\"}, \"output\": \"10 passed, 2 failed in 1.15s\\nCommand exited with code 1\", \"exit_code\": 1}",
+        "stdout_json": {},
+        "stdout_raw": "{}",
+        "stderr_raw": "",
+        "exit_code": 0,
+        "duration_ms": 134.9
+      },
+      "step1_recorded_state": {
+        "timestamp_utc": "2026-11-07T16:44:10.253171+00:00",
+        "command": "pytest tests/test_phase3a_positioning_training.py",
+        "working_directory": "<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot",
+        "discovered": 12,
+        "passed": 10,
+        "failed": 2,
+        "skipped": 0,
+        "duration": "1.15s",
+        "exit_code": 1,
+        "error": null,
+        "test_assemblies": [],
+        "canonical_summary": "10/12",
+        "status": "FAILED",
+        "block_pass_verdict": true
+      },
+      "step2_stop_condition_gate": {
+        "hook_script": "stop_condition_evidence_gate.py",
+        "mode": "blocking",
+        "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_DELIVERABLE_EVIDENCE_FILE=\"<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\deliverable_evidence.json\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+        "env_overrides": {
+          "CSBOT_HOOK_MODE": "blocking",
+          "CSBOT_DELIVERABLE_EVIDENCE_FILE": "<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\deliverable_evidence.json"
+        },
+        "stdin_payload": {
+          "hook_event_name": "Stop",
+          "verdict": "PASS"
+        },
+        "stdin_raw": "{\"hook_event_name\": \"Stop\", \"verdict\": \"PASS\"}",
+        "stdout_json": {
+          "decision": "continue",
+          "reason": "BLOQUEIO [stop-condition-evidence-gate]: Encerramento impedido pelo gate de evidências. Motivo: Teste falho impede emissão de veredito PASS (última execução 'pytest tests/test_phase3a_positioning_training.py' teve status=FAILED, summary=10/12). Ação corretiva: Preencha todos os campos obrigatórios (phase, verdict, e em cada claim: claim_id, claim, evidence_files, raw_sources, reproduction_command, validator) em .agents/audit/deliverable_evidence.json, corrija relatórios reprovados e garanta que nenhum veredito PASS seja emitido com teste falho."
+        },
+        "stdout_raw": "{\"decision\": \"continue\", \"reason\": \"BLOQUEIO [stop-condition-evidence-gate]: Encerramento impedido pelo gate de evidências. Motivo: Teste falho impede emissão de veredito PASS (última execução 'pytest tests/test_phase3a_positioning_training.py' teve status=FAILED, summary=10/12). Ação corretiva: Preencha todos os campos obrigatórios (phase, verdict, e em cada claim: claim_id, claim, evidence_files, raw_sources, reproduction_command, validator) em .agents/audit/deliverable_evidence.json, corrija relatórios reprovados e garanta que nenhum veredito PASS seja emitido com teste falho.\"}",
+        "stderr_raw": "",
+        "exit_code": 0,
+        "duration_ms": 124.49
+      },
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/post_test_audit.py\" ; $env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_DELIVERABLE_EVIDENCE_FILE=\"<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\deliverable_evidence.json\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+      "stdin_payload": {
+        "step1": {
+          "hook_event_name": "PostToolUse",
+          "tool_name": "run_command",
+          "tool_input": {
+            "CommandLine": "pytest tests/test_phase3a_positioning_training.py"
+          },
+          "output": "10 passed, 2 failed in 1.15s\nCommand exited with code 1",
+          "exit_code": 1
+        },
+        "step2": {
+          "hook_event_name": "Stop",
+          "verdict": "PASS"
+        }
+      },
+      "stdout_json": {
+        "decision": "continue",
+        "reason": "BLOQUEIO [stop-condition-evidence-gate]: Encerramento impedido pelo gate de evidências. Motivo: Teste falho impede emissão de veredito PASS (última execução 'pytest tests/test_phase3a_positioning_training.py' teve status=FAILED, summary=10/12). Ação corretiva: Preencha todos os campos obrigatórios (phase, verdict, e em cada claim: claim_id, claim, evidence_files, raw_sources, reproduction_command, validator) em .agents/audit/deliverable_evidence.json, corrija relatórios reprovados e garanta que nenhum veredito PASS seja emitido com teste falho."
+      },
+      "exit_code": 0,
+      "duration_ms": 259.39,
+      "expected_decision": "continue",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "stop_condition_evidence_gate.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_DELIVERABLE_EVIDENCE_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\unbacked_deliverable_evidence.json\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking",
+        "CSBOT_DELIVERABLE_EVIDENCE_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\unbacked_deliverable_evidence.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "Stop",
+        "verdict": "PASS"
+      },
+      "stdin_raw": "{\"hook_event_name\": \"Stop\", \"verdict\": \"PASS\"}",
+      "stdout_json": {
+        "decision": "continue",
+        "reason": "BLOQUEIO [stop-condition-evidence-gate]: Encerramento impedido pelo gate de evidências. Motivo: claims[0 (CLAIM-UNBACKED-01)]: 'evidence_files' deve ser uma lista não-vazia de arquivos de evidência. Ação corretiva: Preencha todos os campos obrigatórios (phase, verdict, e em cada claim: claim_id, claim, evidence_files, raw_sources, reproduction_command, validator) em .agents/audit/deliverable_evidence.json, corrija relatórios reprovados e garanta que nenhum veredito PASS seja emitido com teste falho."
+      },
+      "stdout_raw": "{\"decision\": \"continue\", \"reason\": \"BLOQUEIO [stop-condition-evidence-gate]: Encerramento impedido pelo gate de evidências. Motivo: claims[0 (CLAIM-UNBACKED-01)]: 'evidence_files' deve ser uma lista não-vazia de arquivos de evidência. Ação corretiva: Preencha todos os campos obrigatórios (phase, verdict, e em cada claim: claim_id, claim, evidence_files, raw_sources, reproduction_command, validator) em .agents/audit/deliverable_evidence.json, corrija relatórios reprovados e garanta que nenhum veredito PASS seja emitido com teste falho.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 121.36,
+      "test_id": "T09_claim_without_evidence_blocks_stop",
+      "scenario": "9. Claim sem evidência impede encerramento (deliverable_evidence.json com evidence_files: [])",
+      "expected_decision": "continue",
+      "passed_assertion": true
+    },
+    {
+      "test_id": "T10_corrupted_stdin_fails_safe",
+      "scenario": "10. Hook em erro falha de modo seguro (stdin '{invalid_json' em protect_sensitive_files.py e stop_condition_evidence_gate.py)",
+      "mode": "blocking",
+      "protect_sensitive_files_result": {
+        "hook_script": "protect_sensitive_files.py",
+        "mode": "blocking",
+        "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/protect_sensitive_files.py\"",
+        "env_overrides": {
+          "CSBOT_HOOK_MODE": "blocking"
+        },
+        "stdin_payload": "{invalid_json",
+        "stdin_raw": "{invalid_json",
+        "stdout_json": {
+          "decision": "deny",
+          "reason": "BLOQUEIO [protect-sensitive-files]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook protect-sensitive-files."
+        },
+        "stdout_raw": "{\"decision\": \"deny\", \"reason\": \"BLOQUEIO [protect-sensitive-files]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook protect-sensitive-files.\"}",
+        "stderr_raw": "",
+        "exit_code": 0,
+        "duration_ms": 118.83
+      },
+      "stop_condition_evidence_gate_result": {
+        "hook_script": "stop_condition_evidence_gate.py",
+        "mode": "blocking",
+        "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+        "env_overrides": {
+          "CSBOT_HOOK_MODE": "blocking"
+        },
+        "stdin_payload": "{invalid_json",
+        "stdin_raw": "{invalid_json",
+        "stdout_json": {
+          "decision": "continue",
+          "reason": "BLOQUEIO [stop-condition-evidence-gate]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook stop-condition-evidence-gate."
+        },
+        "stdout_raw": "{\"decision\": \"continue\", \"reason\": \"BLOQUEIO [stop-condition-evidence-gate]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook stop-condition-evidence-gate.\"}",
+        "stderr_raw": "",
+        "exit_code": 0,
+        "duration_ms": 121.4
+      },
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/protect_sensitive_files.py\" ; $env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+      "stdin_payload": "{invalid_json",
+      "stdout_json": {
+        "protect_sensitive_files": {
+          "decision": "deny",
+          "reason": "BLOQUEIO [protect-sensitive-files]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook protect-sensitive-files."
+        },
+        "stop_condition_evidence_gate": {
+          "decision": "continue",
+          "reason": "BLOQUEIO [stop-condition-evidence-gate]: Falha fail-safe na leitura do payload stdin (JSON malformado ou falha de leitura no stdin: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)). Ação corretiva: Envie um objeto JSON válido via stdin para o hook stop-condition-evidence-gate."
+        }
+      },
+      "exit_code": 0,
+      "duration_ms": 240.23,
+      "expected_decision": {
+        "protect_sensitive_files": "deny",
+        "stop_condition_evidence_gate": "continue"
+      },
+      "passed_assertion": true
+    }
+  ],
+  "false_positive_and_extended_battery": [
+    {
+      "hook_script": "protect_sensitive_files.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/protect_sensitive_files.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "run_command",
+        "tool_input": {
+          "CommandLine": "Get-FileHash models/model.onnx -Algorithm SHA256"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"Get-FileHash models/model.onnx -Algorithm SHA256\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Operação de leitura ou dry-run permitida."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Operação de leitura ou dry-run permitida.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 121.44,
+      "test_id": "FP01_get_filehash_onnx_allowed",
+      "scenario": "Leitura de hash SHA-256 em modelo ONNX via Get-FileHash não é bloqueada",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "protect_sensitive_files.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/protect_sensitive_files.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "run_command",
+        "tool_input": {
+          "CommandLine": "Get-Content src/CsBotManager/MapProfiles/de_mirage.json"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"Get-Content src/CsBotManager/MapProfiles/de_mirage.json\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Operação de leitura ou dry-run permitida."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Operação de leitura ou dry-run permitida.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 120.24,
+      "test_id": "FP02_get_content_map_profile_allowed",
+      "scenario": "Leitura de MapProfile de_mirage.json via Get-Content não é bloqueada",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "pre_training_gate.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_PRETRAINING_GATE_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_input_snapshot.json\"; python \".agents/hooks/pre_training_gate.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking",
+        "CSBOT_PRETRAINING_GATE_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_input_snapshot.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "run_command",
+        "tool_input": {
+          "CommandLine": "pytest tests/test_phase3a_positioning_training.py -v"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"pytest tests/test_phase3a_positioning_training.py -v\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Comando não inicia execução de treinamento de modelo."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Comando não inicia execução de treinamento de modelo.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 123.81,
+      "test_id": "FP03_pytest_training_test_not_blocked_by_pre_training_gate",
+      "scenario": "Execução de pytest tests/test_phase3a_positioning_training.py não dispara pre_training_gate",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "pre_training_gate.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_PRETRAINING_GATE_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_input_snapshot.json\"; python \".agents/hooks/pre_training_gate.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking",
+        "CSBOT_PRETRAINING_GATE_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\non_existent_input_snapshot.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "run_command",
+        "tool_input": {
+          "CommandLine": "python train_positioning.py --dry-run"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"python train_positioning.py --dry-run\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Comando não inicia execução de treinamento de modelo."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Comando não inicia execução de treinamento de modelo.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 122.69,
+      "test_id": "FP04_train_dry_run_allowed",
+      "scenario": "Comando python train_positioning.py --dry-run é permitido sem bloqueio",
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "pre_training_gate.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_PRETRAINING_GATE_FILE=\"<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\valid_input_snapshot.json\"; python \".agents/hooks/pre_training_gate.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking",
+        "CSBOT_PRETRAINING_GATE_FILE": "<USER_HOME>\\AppData\\Local\\Temp\\csbot_hook_tests_68v4ln6_\\valid_input_snapshot.json"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "run_command",
+        "tool_input": {
+          "CommandLine": "python train_positioning.py --epochs 30"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"run_command\", \"tool_input\": {\"CommandLine\": \"python train_positioning.py --epochs 30\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Pre-training gate aprovado: input_snapshot.json íntegro, split_leakage=0, hashes SHA-256 válidos e Test set isolado."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Pre-training gate aprovado: input_snapshot.json íntegro, split_leakage=0, hashes SHA-256 válidos e Test set isolado.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 124.73,
+      "test_id": "FP05_valid_training_with_snapshot_allowed",
+      "scenario": "Treinamento com input_snapshot.json válido (split_leakage=0, hashes 64 hex, no_test_tuning=true) é permitido",
+      "passed_assertion": true
+    },
+    {
+      "test_id": "FP06_git_status_allowed_everywhere",
+      "scenario": "Comando git status passa sem falso positivo em protect_sensitive_files, pre_training_gate e post_test_audit",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/protect_sensitive_files.py\" ; $env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/pre_training_gate.py\" ; $env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/post_test_audit.py\"",
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "run_command",
+        "tool_input": {
+          "CommandLine": "git status --short"
+        }
+      },
+      "stdout_json": {
+        "protect_sensitive_files": {
+          "decision": "allow",
+          "reason": "Operação de leitura ou dry-run permitida."
+        },
+        "pre_training_gate": {
+          "decision": "allow",
+          "reason": "Comando não inicia execução de treinamento de modelo."
+        },
+        "post_test_audit": {}
+      },
+      "exit_code": 0,
+      "duration_ms": 367.51,
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "validate_generated_report.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/validate_generated_report.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "docs/notes.md",
+          "Content": "# Notas de Desenvolvimento\nAjuste no cálculo de velocidade de rotação do bot.\n"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"docs/notes.md\", \"Content\": \"# Notas de Desenvolvimento\\nAjuste no c\\u00e1lculo de velocidade de rota\\u00e7\\u00e3o do bot.\\n\"}}",
+      "stdout_json": {
+        "decision": "allow",
+        "reason": "Operação não envolve geração de relatório executivo ou de avaliação."
+      },
+      "stdout_raw": "{\"decision\": \"allow\", \"reason\": \"Operação não envolve geração de relatório executivo ou de avaliação.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 125.43,
+      "test_id": "FP07_regular_markdown_notes_allowed",
+      "scenario": "Escrita em docs/notes.md (nota técnica comum) não é bloqueada pelo validate_generated_report.py",
+      "passed_assertion": true
+    },
+    {
+      "test_id": "FP08_dotnet_test_340_340_passes_and_allows_stop",
+      "scenario": "Execução de dotnet test passando 340/340 grava canonical_summary='340/340', status='PASSED' e libera Stop gate com PASS",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/post_test_audit.py\" ; $env:CSBOT_HOOK_MODE=\"blocking\"; $env:CSBOT_DELIVERABLE_EVIDENCE_FILE=\"<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\deliverable_evidence.json\"; python \".agents/hooks/stop_condition_evidence_gate.py\"",
+      "stdin_payload": {
+        "post_test": {
+          "hook_event_name": "PostToolUse",
+          "tool_name": "run_command",
+          "tool_input": {
+            "CommandLine": "dotnet test CsBot.sln --no-build"
+          },
+          "output": "Passed!  - Failed:     0, Passed:   340, Skipped:     0, Total:   340, Duration: 1 s - CsBot.Tests.dll (net8.0)",
+          "exit_code": 0
+        },
+        "stop_gate": {
+          "hook_event_name": "Stop",
+          "verdict": "PASS"
+        }
+      },
+      "stdout_json": {
+        "post_test_audit": {},
+        "last_test_execution_state": {
+          "timestamp_utc": "2026-11-07T16:44:11.975281+00:00",
+          "command": "dotnet test CsBot.sln --no-build",
+          "working_directory": "<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot",
+          "discovered": 340,
+          "passed": 340,
+          "failed": 0,
+          "skipped": 0,
+          "duration": "1 s",
+          "exit_code": 0,
+          "error": null,
+          "test_assemblies": [
+            "CsBot.Tests.dll"
+          ],
+          "canonical_summary": "340/340",
+          "status": "PASSED",
+          "block_pass_verdict": false
+        },
+        "stop_condition_evidence_gate": {
+          "decision": "allow",
+          "reason": "Stop condition evidence gate aprovado (veredito=PASS, evidências brutas e testes íntegros)."
+        }
+      },
+      "exit_code": 0,
+      "duration_ms": 246.46,
+      "passed_assertion": true
+    },
+    {
+      "hook_script": "validate_generated_report.py",
+      "mode": "blocking",
+      "reproducible_command": "$env:CSBOT_HOOK_MODE=\"blocking\"; python \".agents/hooks/validate_generated_report.py\"",
+      "env_overrides": {
+        "CSBOT_HOOK_MODE": "blocking"
+      },
+      "stdin_payload": {
+        "hook_event_name": "PreToolUse",
+        "tool_name": "write_file",
+        "tool_input": {
+          "Path": "docs/audit_report_corrupted.md",
+          "Content": "# Relatório de Auditoria\n- Testes: 340340 aprovados\n- Spot avaliado: DUMMY_SPOT / TEMPLATE_ID\n- Classe predita: SUPER_SECRET_STATE\n- Hash: sha256: a1b2c3d4...\n- Tuning realizado on the test set\n- Status: APPROVED_BY_USER\n"
+        }
+      },
+      "stdin_raw": "{\"hook_event_name\": \"PreToolUse\", \"tool_name\": \"write_file\", \"tool_input\": {\"Path\": \"docs/audit_report_corrupted.md\", \"Content\": \"# Relat\\u00f3rio de Auditoria\\n- Testes: 340340 aprovados\\n- Spot avaliado: DUMMY_SPOT / TEMPLATE_ID\\n- Classe predita: SUPER_SECRET_STATE\\n- Hash: sha256: a1b2c3d4...\\n- Tuning realizado on the test set\\n- Status: APPROVED_BY_USER\\n\"}}",
+      "stdout_json": {
+        "decision": "deny",
+        "reason": "BLOQUEIO [validate-generated-report]: Relatório reprovado pela auditoria cética (8 violação(ões)): [Números Incompatíveis] Contagem concatenada corrompida '340340' detectada (provável '340/340' sem barra). | [Dados Templados / Regra 04] Identificador templado proibido detectado: 'TEMPLATE_ID'. | [Dados Templados / Regra 04] Identificador templado proibido detectado: 'DUMMY_SPOT'. | [Contrato de Classes] Classe inexistente no contrato detectada: 'SUPER_SECRET_STATE'. | [Regra 01 / Hash Truncado] Hash SHA-256 inválido ou truncado detectado: 'a1b2c3d4...' (exigido 64 hex completos). | [Regra 02 / Contaminação do Test Set] Indicação de uso do conjunto Test em decisões de tuning/calibração/checkpoint: 'Tuning realizado on the test set'. | [Regra 05 / Revisão Humana] Selo exclusivo humano (APPROVED_BY_USER / HUMAN_CAPTURE_IN_GAME) emitido por agente/pipeline sem confirmação humana. | [Regra 01 / Relatório Sem Lastro] Relatório executivo não aponta para nenhum artefato bruto verificável nem hash SHA-256. Ação corretiva: 1) Substitua métricas de classes com support=0 por 'N/A'; 2) Corrija contagens incompatíveis (use '<passed>/<discovered>'); 3) Remova IDs templados, classes fora do contrato e selos humanos não autorizados; 4) Cite os artefatos brutos reais e hashes SHA-256 completos de 64 caracteres."
+      },
+      "stdout_raw": "{\"decision\": \"deny\", \"reason\": \"BLOQUEIO [validate-generated-report]: Relatório reprovado pela auditoria cética (8 violação(ões)): [Números Incompatíveis] Contagem concatenada corrompida '340340' detectada (provável '340/340' sem barra). | [Dados Templados / Regra 04] Identificador templado proibido detectado: 'TEMPLATE_ID'. | [Dados Templados / Regra 04] Identificador templado proibido detectado: 'DUMMY_SPOT'. | [Contrato de Classes] Classe inexistente no contrato detectada: 'SUPER_SECRET_STATE'. | [Regra 01 / Hash Truncado] Hash SHA-256 inválido ou truncado detectado: 'a1b2c3d4...' (exigido 64 hex completos). | [Regra 02 / Contaminação do Test Set] Indicação de uso do conjunto Test em decisões de tuning/calibração/checkpoint: 'Tuning realizado on the test set'. | [Regra 05 / Revisão Humana] Selo exclusivo humano (APPROVED_BY_USER / HUMAN_CAPTURE_IN_GAME) emitido por agente/pipeline sem confirmação humana. | [Regra 01 / Relatório Sem Lastro] Relatório executivo não aponta para nenhum artefato bruto verificável nem hash SHA-256. Ação corretiva: 1) Substitua métricas de classes com support=0 por 'N/A'; 2) Corrija contagens incompatíveis (use '<passed>/<discovered>'); 3) Remova IDs templados, classes fora do contrato e selos humanos não autorizados; 4) Cite os artefatos brutos reais e hashes SHA-256 completos de 64 caracteres.\"}",
+      "stderr_raw": "",
+      "exit_code": 0,
+      "duration_ms": 128.27,
+      "test_id": "EXT09_skeptic_multi_violation_detection",
+      "scenario": "Detecção simultânea das regras do csbot-report-skeptic (340340, DUMMY_SPOT, SUPER_SECRET_STATE, hash truncado, Test tuning, APPROVED_BY_USER)",
+      "passed_assertion": true
+    }
+  ],
+  "final_restored_audit_state": {
+    "last_test_execution": {
+      "timestamp_utc": "2026-11-07T16:44:12.479996+00:00",
+      "command": "dotnet test CsBot.sln --no-build",
+      "working_directory": "<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot",
+      "discovered": 340,
+      "passed": 340,
+      "failed": 0,
+      "skipped": 0,
+      "duration": "1 s",
+      "exit_code": 0,
+      "error": null,
+      "test_assemblies": [
+        "CsBot.Tests.dll"
+      ],
+      "canonical_summary": "340/340",
+      "status": "PASSED",
+      "block_pass_verdict": false
+    },
+    "last_report_validation": {
+      "timestamp_utc": "2026-11-07T16:44:12.355876+00:00",
+      "event": "PreToolUse",
+      "mode": "blocking",
+      "target_file": "docs/evaluation_report_valid.md",
+      "status": "PASSED",
+      "violations_count": 0,
+      "violations": []
+    },
+    "stop_gate_verification": {
+      "decision": "allow",
+      "reason": "Stop condition evidence gate aprovado (veredito=PASS, evidências brutas e testes íntegros)."
+    }
+  }
+}

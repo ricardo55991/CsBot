@@ -1,0 +1,48 @@
+{
+  "phase_id": "GOVERNANCE-PATCH-1-1",
+  "generated_at_utc": "2026-11-07T21:50:00Z",
+  "requirements": [
+    {
+      "requirement_id": "REQ-R1-GOVERNANCE-PATCH-1-1",
+      "rule_ref": "01-evidence-before-claims",
+      "description": "Correção de todos os 3 falsos positivos (FP-01, FP-02, FP-03) e 3 omissões (MISS-S1-02, MISS-S4-01, MISS-S3-01) com 27/27 testes unitários/e2e e 12/12 Red Team aprovados.",
+      "status": "PASS",
+      "notes": "27/27 PASS em tests/test_governance_patch_1_1.py, 12/12 PASS em run_governance_redteam.py, 0 falsos positivos críticos e 0 omissões críticas em aberto."
+    },
+    {
+      "requirement_id": "REQ-R2-TEMPORAL-GRAPHIFY-MAPPING",
+      "rule_ref": "01-evidence-before-claims",
+      "description": "Mapeamento Graphify do fluxo completo de histórico temporal em modo somente leitura sem modificação de código ou modelo.",
+      "status": "PASS",
+      "notes": "pre3a3_temporal_history_graph.md e pre3a3_temporal_history_blast_radius.json materializados com 2627 nós mapeados."
+    },
+    {
+      "requirement_id": "REQ-R3-DETERMINISTIC-BATCH-COMPARISON",
+      "rule_ref": "01-evidence-before-claims",
+      "description": "Comparação determinística de 200 amostras sob seed 42026 entre fatias temporais NPZ reais e saídas do DataLoader.",
+      "status": "PASS",
+      "notes": "pre3a3_history_provenance.json/.md e pre3a3_npz_batch_comparison.json/.md confirmam ExactMatchRate 0.00% e SyntheticWindowRate 100.00%."
+    },
+    {
+      "requirement_id": "REQ-R4-CHECKPOINT-PROVENANCE-DECISION",
+      "rule_ref": "04-synthetic-data-labeling",
+      "description": "Auditoria de ocorrências de np.linspace e emissão da decisão canônica formal entre A, B, C ou D com preservação experimental dos checkpoints.",
+      "status": "PASS",
+      "notes": "Decisão canônica B: CHECKPOINT_TRAINED_WITH_SYNTHETIC_HISTORY formalmente selecionada em pre3a3_checkpoint_decision.md sem deleção de checkpoints."
+    },
+    {
+      "requirement_id": "REQ-R5-GOVERNANCE-SKILLS-AND-ISOLATION",
+      "rule_ref": "07-independent-validation",
+      "description": "Disponibilização da skill csbot-math-logic-auditor, isolamento estrito de papéis e respeito inegociável à proibição de alteração em C#, ONNX e avanço automático de fase.",
+      "status": "PASS",
+      "notes": "csbot-math-logic-auditor implementada e testada; 0 alterações em código C# runtime, modelos ONNX, checkpoints ou datasets canônicos; 0 avanço automático."
+    },
+    {
+      "requirement_id": "REQ-GOV-08-NO-AUTOMATIC-PHASE-ADVANCE",
+      "rule_ref": "08-no-automatic-phase-advance",
+      "description": "Bloqueio estrito de avanço de fase exigindo homologação e comando explícito do usuário humano.",
+      "status": "PASS",
+      "notes": "Parada obrigatória ativa aguardando decisão humana sobre o retreinamento na Fase 3A.3."
+    }
+  ]
+}

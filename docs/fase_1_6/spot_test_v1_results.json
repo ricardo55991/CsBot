@@ -1,0 +1,2845 @@
+{
+  "ExecutionMode": "CS2_DEDICATED_SERVER_REAL_RUNTIME",
+  "ProfileVersion": 1,
+  "Map": "de_mirage",
+  "TotalSpotsTested": 20,
+  "TotalAttempts": 60,
+  "TotalReachedAttempts": 5,
+  "TotalTimeoutAttempts": 55,
+  "SpotsWithAtLeastOneReach": 2,
+  "SpotsWithFullReach3of3": 1,
+  "OverallAttemptReachRatePct": 8.3,
+  "TotalRepathCount": 441,
+  "TotalRecoveryCount": 64,
+  "TotalGeometryBlockCount": 0,
+  "TotalAppliedNoProgressCount": 108,
+  "MeanDistanceRemainingAllAttempts": 784.3,
+  "FirstTimestampUtc": "2026-11-04T21:16:50.0042099Z",
+  "LastTimestampUtc": "2026-11-04T21:18:34.2254184Z",
+  "FirstTick": 134,
+  "LastTick": 19103,
+  "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+  "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+  "Spots": [
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_a_ticket_passive",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 1373.9,
+      "MinDistanceRemaining": 1372.6,
+      "TotalRepathCount": 15,
+      "TotalRecoveryCount": 0,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 0,
+      "BotSlot": 2,
+      "StartPosition": [
+        -1072.6,
+        -2326.9,
+        -168
+      ],
+      "TargetPosition": [
+        -1930,
+        -680,
+        -160
+      ],
+      "SampleFinalPosition": [
+        -1498,
+        -1978.8,
+        -261.7
+      ],
+      "StartTickFirstAttempt": 134,
+      "EndTickLastAttempt": 1108,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:16:51.8971291Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_ticket_passive",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1072.6,
+            -2326.9,
+            -168
+          ],
+          "TargetPosition": [
+            -1930,
+            -680,
+            -160
+          ],
+          "StartTick": 134,
+          "EndTick": 454,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1375.8,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            -1497.1,
+            -1982,
+            -261.3
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:16:53.7880240Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_ticket_passive",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1072.6,
+            -2326.9,
+            -168
+          ],
+          "TargetPosition": [
+            -1930,
+            -680,
+            -160
+          ],
+          "StartTick": 461,
+          "EndTick": 781,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1373.4,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            -1497.9,
+            -1979.6,
+            -263
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:16:55.5479106Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_ticket_passive",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1072.6,
+            -2326.9,
+            -168
+          ],
+          "TargetPosition": [
+            -1930,
+            -680,
+            -160
+          ],
+          "StartTick": 788,
+          "EndTick": 1108,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1372.6,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            -1498,
+            -1978.8,
+            -261.7
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_a_firebox_oneanddone",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 1504.9,
+      "MinDistanceRemaining": 1499.8,
+      "TotalRepathCount": 18,
+      "TotalRecoveryCount": 0,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 3,
+      "BotSlot": 2,
+      "StartPosition": [
+        -289.8,
+        -2161.5,
+        -173.9
+      ],
+      "TargetPosition": [
+        -1050,
+        -240,
+        -160
+      ],
+      "SampleFinalPosition": [
+        -753,
+        -1710,
+        -176.5
+      ],
+      "StartTickFirstAttempt": 1115,
+      "EndTickLastAttempt": 2089,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:16:57.3364487Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_firebox_oneanddone",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "TargetPosition": [
+            -1050,
+            -240,
+            -160
+          ],
+          "StartTick": 1115,
+          "EndTick": 1435,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1503.2,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -750.7,
+            -1713,
+            -176.8
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:16:59.0542105Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_firebox_oneanddone",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "TargetPosition": [
+            -1050,
+            -240,
+            -160
+          ],
+          "StartTick": 1442,
+          "EndTick": 1762,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1511.8,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -760.3,
+            -1723.7,
+            -177.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:00.7711292Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_firebox_oneanddone",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "TargetPosition": [
+            -1050,
+            -240,
+            -160
+          ],
+          "StartTick": 1769,
+          "EndTick": 2089,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1499.8,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -753,
+            -1710,
+            -176.5
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_a_ninja_hide",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 1107.3,
+      "MinDistanceRemaining": 1107.3,
+      "TotalRepathCount": 15,
+      "TotalRecoveryCount": 0,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 0,
+      "BotSlot": 2,
+      "StartPosition": [
+        -620,
+        -2320,
+        -168
+      ],
+      "TargetPosition": [
+        -1320,
+        -290,
+        -160
+      ],
+      "SampleFinalPosition": [
+        -880,
+        -1306,
+        -168
+      ],
+      "StartTickFirstAttempt": 2096,
+      "EndTickLastAttempt": 3070,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:02.4877970Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_ninja_hide",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -620,
+            -2320,
+            -168
+          ],
+          "TargetPosition": [
+            -1320,
+            -290,
+            -160
+          ],
+          "StartTick": 2096,
+          "EndTick": 2416,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1107.3,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            -880,
+            -1306,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:04.2617047Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_ninja_hide",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -620,
+            -2320,
+            -168
+          ],
+          "TargetPosition": [
+            -1320,
+            -290,
+            -160
+          ],
+          "StartTick": 2423,
+          "EndTick": 2743,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1107.3,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            -880,
+            -1306,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:05.9827174Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_ninja_hide",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -620,
+            -2320,
+            -168
+          ],
+          "TargetPosition": [
+            -1320,
+            -290,
+            -160
+          ],
+          "StartTick": 2750,
+          "EndTick": 3070,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1107.3,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            -880,
+            -1306,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_a_triple_jiggle",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 1320.4,
+      "MinDistanceRemaining": 1306.6,
+      "TotalRepathCount": 21,
+      "TotalRecoveryCount": 3,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 6,
+      "BotSlot": 2,
+      "StartPosition": [
+        -842.5,
+        -2253.7,
+        -174.8
+      ],
+      "TargetPosition": [
+        -1150,
+        -460,
+        -160
+      ],
+      "SampleFinalPosition": [
+        -697.8,
+        -1697.3,
+        -175.3
+      ],
+      "StartTickFirstAttempt": 3077,
+      "EndTickLastAttempt": 4051,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:07.7044669Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_triple_jiggle",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -842.5,
+            -2253.7,
+            -174.8
+          ],
+          "TargetPosition": [
+            -1150,
+            -460,
+            -160
+          ],
+          "StartTick": 3077,
+          "EndTick": 3397,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1306.6,
+          "RepathCount": 7,
+          "RecoveryCount": 1,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 2,
+          "FinalPosition": [
+            -693,
+            -1684,
+            -173.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:09.4028856Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_triple_jiggle",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -842.5,
+            -2253.7,
+            -174.8
+          ],
+          "TargetPosition": [
+            -1150,
+            -460,
+            -160
+          ],
+          "StartTick": 3404,
+          "EndTick": 3724,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1337.1,
+          "RepathCount": 7,
+          "RecoveryCount": 1,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 2,
+          "FinalPosition": [
+            -699.4,
+            -1718.7,
+            -177.4
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:11.1173885Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_triple_jiggle",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -842.5,
+            -2253.7,
+            -174.8
+          ],
+          "TargetPosition": [
+            -1150,
+            -460,
+            -160
+          ],
+          "StartTick": 3731,
+          "EndTick": 4051,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1317.5,
+          "RepathCount": 7,
+          "RecoveryCount": 1,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 2,
+          "FinalPosition": [
+            -697.8,
+            -1697.3,
+            -175.3
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_a_stairs_cross",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 720.5,
+      "MinDistanceRemaining": 720.5,
+      "TotalRepathCount": 27,
+      "TotalRecoveryCount": 6,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 9,
+      "BotSlot": 2,
+      "StartPosition": [
+        -780,
+        -1309,
+        -160
+      ],
+      "TargetPosition": [
+        -1100,
+        -620,
+        -160
+      ],
+      "SampleFinalPosition": [
+        -880,
+        -1306,
+        -168
+      ],
+      "StartTickFirstAttempt": 4058,
+      "EndTickLastAttempt": 5032,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:12.8730469Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_stairs_cross",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -780,
+            -1309,
+            -160
+          ],
+          "TargetPosition": [
+            -1100,
+            -620,
+            -160
+          ],
+          "StartTick": 4058,
+          "EndTick": 4378,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 720.5,
+          "RepathCount": 9,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -880,
+            -1306.1,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:14.6856462Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_stairs_cross",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -780,
+            -1309,
+            -160
+          ],
+          "TargetPosition": [
+            -1100,
+            -620,
+            -160
+          ],
+          "StartTick": 4385,
+          "EndTick": 4705,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 720.5,
+          "RepathCount": 9,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -880,
+            -1306,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:16.5206168Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_stairs_cross",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -780,
+            -1309,
+            -160
+          ],
+          "TargetPosition": [
+            -1100,
+            -620,
+            -160
+          ],
+          "StartTick": 4712,
+          "EndTick": 5032,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 720.5,
+          "RepathCount": 9,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -880,
+            -1306,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_a_jungle_support",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 559.4,
+      "MinDistanceRemaining": 552.7,
+      "TotalRepathCount": 23,
+      "TotalRecoveryCount": 4,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 7,
+      "BotSlot": 2,
+      "StartPosition": [
+        -980,
+        -1500,
+        -164
+      ],
+      "TargetPosition": [
+        -1250,
+        -780,
+        -160
+      ],
+      "SampleFinalPosition": [
+        -1039.5,
+        -1305,
+        -161.7
+      ],
+      "StartTickFirstAttempt": 5039,
+      "EndTickLastAttempt": 6013,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:18.2836611Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_jungle_support",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -980,
+            -1500,
+            -164
+          ],
+          "TargetPosition": [
+            -1250,
+            -780,
+            -160
+          ],
+          "StartTick": 5039,
+          "EndTick": 5359,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 559.8,
+          "RepathCount": 7,
+          "RecoveryCount": 1,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 2,
+          "FinalPosition": [
+            -1055.9,
+            -1305.1,
+            -162.8
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:20.0393524Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_jungle_support",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -980,
+            -1500,
+            -164
+          ],
+          "TargetPosition": [
+            -1250,
+            -780,
+            -160
+          ],
+          "StartTick": 5366,
+          "EndTick": 5686,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 552.7,
+          "RepathCount": 9,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -1077.5,
+            -1305.1,
+            -164.6
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:21.7765371Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_jungle_support",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -980,
+            -1500,
+            -164
+          ],
+          "TargetPosition": [
+            -1250,
+            -780,
+            -160
+          ],
+          "StartTick": 5693,
+          "EndTick": 6013,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 565.7,
+          "RepathCount": 7,
+          "RecoveryCount": 1,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 2,
+          "FinalPosition": [
+            -1039.5,
+            -1305,
+            -161.7
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_a_palace_close_poke",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 1319.0,
+      "MinDistanceRemaining": 1315.3,
+      "TotalRepathCount": 27,
+      "TotalRecoveryCount": 6,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 9,
+      "BotSlot": 2,
+      "StartPosition": [
+        -100,
+        -1980,
+        -168
+      ],
+      "TargetPosition": [
+        -880,
+        -320,
+        -160
+      ],
+      "SampleFinalPosition": [
+        -359.8,
+        -1528.1,
+        -168
+      ],
+      "StartTickFirstAttempt": 6020,
+      "EndTickLastAttempt": 6994,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:23.5495261Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_palace_close_poke",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -100,
+            -1980,
+            -168
+          ],
+          "TargetPosition": [
+            -880,
+            -320,
+            -160
+          ],
+          "StartTick": 6020,
+          "EndTick": 6340,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1320.7,
+          "RepathCount": 9,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -346.3,
+            -1528,
+            -167.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:25.3180758Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_palace_close_poke",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -100,
+            -1980,
+            -168
+          ],
+          "TargetPosition": [
+            -880,
+            -320,
+            -160
+          ],
+          "StartTick": 6347,
+          "EndTick": 6667,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1320.9,
+          "RepathCount": 9,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -345.8,
+            -1528.1,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:27.0855073Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_a_palace_close_poke",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -100,
+            -1980,
+            -168
+          ],
+          "TargetPosition": [
+            -880,
+            -320,
+            -160
+          ],
+          "StartTick": 6674,
+          "EndTick": 6994,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1315.3,
+          "RepathCount": 9,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -359.8,
+            -1528.1,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_mid_window_crouch",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 136.9,
+      "MinDistanceRemaining": 133.3,
+      "TotalRepathCount": 30,
+      "TotalRecoveryCount": 6,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 9,
+      "BotSlot": 2,
+      "StartPosition": [
+        -1160,
+        -680,
+        -168
+      ],
+      "TargetPosition": [
+        -1380,
+        -540,
+        -120
+      ],
+      "SampleFinalPosition": [
+        -1247.9,
+        -525.1,
+        -153.3
+      ],
+      "StartTickFirstAttempt": 7001,
+      "EndTickLastAttempt": 7975,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:28.8672596Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_window_crouch",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1160,
+            -680,
+            -168
+          ],
+          "TargetPosition": [
+            -1380,
+            -540,
+            -120
+          ],
+          "StartTick": 7001,
+          "EndTick": 7321,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 140.5,
+          "RepathCount": 10,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -1247.9,
+            -538.3,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:30.6726246Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_window_crouch",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1160,
+            -680,
+            -168
+          ],
+          "TargetPosition": [
+            -1380,
+            -540,
+            -120
+          ],
+          "StartTick": 7328,
+          "EndTick": 7648,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 133.3,
+          "RepathCount": 10,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -1247.9,
+            -540.4,
+            -137.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:32.5253112Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_window_crouch",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1160,
+            -680,
+            -168
+          ],
+          "TargetPosition": [
+            -1380,
+            -540,
+            -120
+          ],
+          "StartTick": 7655,
+          "EndTick": 7975,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 137,
+          "RepathCount": 10,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -1247.9,
+            -525.1,
+            -153.3
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_mid_window_deep_awp",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 422.5,
+      "MinDistanceRemaining": 422.2,
+      "TotalRepathCount": 48,
+      "TotalRecoveryCount": 18,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 21,
+      "BotSlot": 2,
+      "StartPosition": [
+        -1279.6,
+        -967.9,
+        -168
+      ],
+      "TargetPosition": [
+        -1480,
+        -560,
+        -100
+      ],
+      "SampleFinalPosition": [
+        -1298.6,
+        -936,
+        -168
+      ],
+      "StartTickFirstAttempt": 7982,
+      "EndTickLastAttempt": 8956,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:34.3940264Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_window_deep_awp",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1279.6,
+            -967.9,
+            -168
+          ],
+          "TargetPosition": [
+            -1480,
+            -560,
+            -100
+          ],
+          "StartTick": 7982,
+          "EndTick": 8302,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 422.2,
+          "RepathCount": 12,
+          "RecoveryCount": 4,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 5,
+          "FinalPosition": [
+            -1300.5,
+            -936.1,
+            -167.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:36.2290567Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_window_deep_awp",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1279.6,
+            -967.9,
+            -168
+          ],
+          "TargetPosition": [
+            -1480,
+            -560,
+            -100
+          ],
+          "StartTick": 8309,
+          "EndTick": 8629,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 422.2,
+          "RepathCount": 18,
+          "RecoveryCount": 7,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 8,
+          "FinalPosition": [
+            -1300.4,
+            -936,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:38.0839489Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_window_deep_awp",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1279.6,
+            -967.9,
+            -168
+          ],
+          "TargetPosition": [
+            -1480,
+            -560,
+            -100
+          ],
+          "StartTick": 8636,
+          "EndTick": 8956,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 423,
+          "RepathCount": 18,
+          "RecoveryCount": 7,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 8,
+          "FinalPosition": [
+            -1298.6,
+            -936,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_mid_connector_headshot",
+      "Attempts": 3,
+      "ReachedCount": 3,
+      "TimeoutCount": 0,
+      "ReachRatePct": 100.0,
+      "MeanElapsedMs": 1849.0,
+      "MeanReachedTimeSeconds": 1.85,
+      "MeanElapsedSecondsAll": 1.85,
+      "MeanDistanceRemaining": 68.0,
+      "MinDistanceRemaining": 67.1,
+      "TotalRepathCount": 6,
+      "TotalRecoveryCount": 0,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 0,
+      "BotSlot": 2,
+      "StartPosition": [
+        -580,
+        -1180,
+        -168
+      ],
+      "TargetPosition": [
+        -820,
+        -840,
+        -160
+      ],
+      "SampleFinalPosition": [
+        -766,
+        -878,
+        -143.9
+      ],
+      "StartTickFirstAttempt": 8963,
+      "EndTickLastAttempt": 9332,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:38.7173684Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_connector_headshot",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -580,
+            -1180,
+            -168
+          ],
+          "TargetPosition": [
+            -820,
+            -840,
+            -160
+          ],
+          "StartTick": 8963,
+          "EndTick": 9078,
+          "ElapsedMs": 1796.9,
+          "DistanceRemaining": 68,
+          "RepathCount": 2,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            -766,
+            -878,
+            -143.9
+          ],
+          "Result": "REACHED",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:39.3813165Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_connector_headshot",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -580,
+            -1180,
+            -168
+          ],
+          "TargetPosition": [
+            -820,
+            -840,
+            -160
+          ],
+          "StartTick": 9085,
+          "EndTick": 9204,
+          "ElapsedMs": 1859.4,
+          "DistanceRemaining": 68.8,
+          "RepathCount": 2,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            -762.4,
+            -873.9,
+            -143.8
+          ],
+          "Result": "REACHED",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:40.0341866Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_connector_headshot",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -580,
+            -1180,
+            -168
+          ],
+          "TargetPosition": [
+            -820,
+            -840,
+            -160
+          ],
+          "StartTick": 9211,
+          "EndTick": 9332,
+          "ElapsedMs": 1890.6,
+          "DistanceRemaining": 67.1,
+          "RepathCount": 2,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            -763,
+            -871.5,
+            -143.8
+          ],
+          "Result": "REACHED",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_mid_short_catwalk",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 919.0,
+      "MinDistanceRemaining": 887.2,
+      "TotalRepathCount": 18,
+      "TotalRecoveryCount": 0,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 3,
+      "BotSlot": 2,
+      "StartPosition": [
+        -1050,
+        250,
+        -160
+      ],
+      "TargetPosition": [
+        -950,
+        -1050,
+        -140
+      ],
+      "SampleFinalPosition": [
+        -758.5,
+        -115.9,
+        -164
+      ],
+      "StartTickFirstAttempt": 9339,
+      "EndTickLastAttempt": 10313,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:41.8541883Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_short_catwalk",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1050,
+            250,
+            -160
+          ],
+          "TargetPosition": [
+            -950,
+            -1050,
+            -140
+          ],
+          "StartTick": 9339,
+          "EndTick": 9659,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 916,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -749.9,
+            -156.3,
+            -160
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:43.6325290Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_short_catwalk",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1050,
+            250,
+            -160
+          ],
+          "TargetPosition": [
+            -950,
+            -1050,
+            -140
+          ],
+          "StartTick": 9666,
+          "EndTick": 9986,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 887.2,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -738.9,
+            -188.5,
+            -159.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:45.4047764Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_short_catwalk",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1050,
+            250,
+            -160
+          ],
+          "TargetPosition": [
+            -950,
+            -1050,
+            -140
+          ],
+          "StartTick": 9993,
+          "EndTick": 10313,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 953.8,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -758.5,
+            -115.9,
+            -164
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_mid_underpass_peek",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 557.7,
+      "MinDistanceRemaining": 553.2,
+      "TotalRepathCount": 18,
+      "TotalRecoveryCount": 0,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 3,
+      "BotSlot": 2,
+      "StartPosition": [
+        -720,
+        -220,
+        -160
+      ],
+      "TargetPosition": [
+        -720,
+        -1020,
+        -220
+      ],
+      "SampleFinalPosition": [
+        -523.6,
+        -496,
+        -165
+      ],
+      "StartTickFirstAttempt": 10320,
+      "EndTickLastAttempt": 11294,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:47.1840558Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_underpass_peek",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -720,
+            -220,
+            -160
+          ],
+          "TargetPosition": [
+            -720,
+            -1020,
+            -220
+          ],
+          "StartTick": 10320,
+          "EndTick": 10640,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 553.2,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -553,
+            -495.4,
+            -165.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:48.9485426Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_underpass_peek",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -720,
+            -220,
+            -160
+          ],
+          "TargetPosition": [
+            -720,
+            -1020,
+            -220
+          ],
+          "StartTick": 10647,
+          "EndTick": 10967,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 557.8,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -537.6,
+            -495.7,
+            -165.4
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:50.7095414Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_mid_underpass_peek",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -720,
+            -220,
+            -160
+          ],
+          "TargetPosition": [
+            -720,
+            -1020,
+            -220
+          ],
+          "StartTick": 10974,
+          "EndTick": 11294,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 562.2,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -523.6,
+            -496,
+            -165
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_b_van_peek",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 598.1,
+      "MinDistanceRemaining": 241.8,
+      "TotalRepathCount": 17,
+      "TotalRecoveryCount": 0,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 2,
+      "BotSlot": 2,
+      "StartPosition": [
+        -2160,
+        510,
+        -168
+      ],
+      "TargetPosition": [
+        -1350,
+        380,
+        -150
+      ],
+      "SampleFinalPosition": [
+        -1551.2,
+        512.9,
+        -168.1
+      ],
+      "StartTickFirstAttempt": 11301,
+      "EndTickLastAttempt": 12275,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:52.4738524Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_b_van_peek",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -2160,
+            510,
+            -168
+          ],
+          "TargetPosition": [
+            -1350,
+            380,
+            -150
+          ],
+          "StartTick": 11301,
+          "EndTick": 11621,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 284.4,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -1591.7,
+            528.8,
+            -167.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:54.3037056Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_b_van_peek",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -2160,
+            510,
+            -168
+          ],
+          "TargetPosition": [
+            -1350,
+            380,
+            -150
+          ],
+          "StartTick": 11628,
+          "EndTick": 11948,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1268.1,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            -1563.4,
+            -869.9,
+            -168.8
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:55.9766665Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_b_van_peek",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -2160,
+            510,
+            -168
+          ],
+          "TargetPosition": [
+            -1350,
+            380,
+            -150
+          ],
+          "StartTick": 11955,
+          "EndTick": 12275,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 241.8,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -1551.2,
+            512.9,
+            -168.1
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_b_market_window",
+      "Attempts": 3,
+      "ReachedCount": 2,
+      "TimeoutCount": 1,
+      "ReachRatePct": 66.7,
+      "MeanElapsedMs": 4796.9,
+      "MeanReachedTimeSeconds": 4.7,
+      "MeanElapsedSecondsAll": 4.8,
+      "MeanDistanceRemaining": 89.9,
+      "MinDistanceRemaining": 72.6,
+      "TotalRepathCount": 24,
+      "TotalRecoveryCount": 3,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 6,
+      "BotSlot": 2,
+      "StartPosition": [
+        -1860,
+        -180,
+        -168
+      ],
+      "TargetPosition": [
+        -1880,
+        180,
+        -130
+      ],
+      "SampleFinalPosition": [
+        -1824.6,
+        141.3,
+        -156.6
+      ],
+      "StartTickFirstAttempt": 12282,
+      "EndTickLastAttempt": 13217,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:57.5769336Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_b_market_window",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1860,
+            -180,
+            -168
+          ],
+          "TargetPosition": [
+            -1880,
+            180,
+            -130
+          ],
+          "StartTick": 12282,
+          "EndTick": 12579,
+          "ElapsedMs": 4640.6,
+          "DistanceRemaining": 72.6,
+          "RepathCount": 8,
+          "RecoveryCount": 1,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 2,
+          "FinalPosition": [
+            -1824.6,
+            141.3,
+            -156.6
+          ],
+          "Result": "REACHED",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:17:59.3553373Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_b_market_window",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1860,
+            -180,
+            -168
+          ],
+          "TargetPosition": [
+            -1880,
+            180,
+            -130
+          ],
+          "StartTick": 12586,
+          "EndTick": 12906,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 121.2,
+          "RepathCount": 8,
+          "RecoveryCount": 1,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 2,
+          "FinalPosition": [
+            -1830.9,
+            69.4,
+            -137.1
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:01.0604409Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_b_market_window",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1860,
+            -180,
+            -168
+          ],
+          "TargetPosition": [
+            -1880,
+            180,
+            -130
+          ],
+          "StartTick": 12913,
+          "EndTick": 13217,
+          "ElapsedMs": 4750,
+          "DistanceRemaining": 75.8,
+          "RepathCount": 8,
+          "RecoveryCount": 1,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 2,
+          "FinalPosition": [
+            -1821.7,
+            145.4,
+            -164
+          ],
+          "Result": "REACHED",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_spawn_safe",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 684.2,
+      "MinDistanceRemaining": 559.6,
+      "TotalRepathCount": 29,
+      "TotalRecoveryCount": 6,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 9,
+      "BotSlot": 2,
+      "StartPosition": [
+        -1299,
+        -1160.9,
+        -168
+      ],
+      "TargetPosition": [
+        -2050,
+        -800,
+        -160
+      ],
+      "SampleFinalPosition": [
+        -1528.3,
+        -1000.8,
+        -185.7
+      ],
+      "StartTickFirstAttempt": 13224,
+      "EndTickLastAttempt": 14198,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:02.8306400Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_spawn_safe",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1299,
+            -1160.9,
+            -168
+          ],
+          "TargetPosition": [
+            -2050,
+            -800,
+            -160
+          ],
+          "StartTick": 13224,
+          "EndTick": 13544,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 746.5,
+          "RepathCount": 10,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -1321.6,
+            -963.1,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:04.6266040Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_spawn_safe",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1299,
+            -1160.9,
+            -168
+          ],
+          "TargetPosition": [
+            -2050,
+            -800,
+            -160
+          ],
+          "StartTick": 13551,
+          "EndTick": 13871,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 746.5,
+          "RepathCount": 10,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -1321.6,
+            -963.1,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:06.4002064Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_spawn_safe",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1299,
+            -1160.9,
+            -168
+          ],
+          "TargetPosition": [
+            -2050,
+            -800,
+            -160
+          ],
+          "StartTick": 13878,
+          "EndTick": 14198,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 559.6,
+          "RepathCount": 9,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -1528.3,
+            -1000.8,
+            -185.7
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "tr_staging_a_ramp",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 1271.5,
+      "MinDistanceRemaining": 1271.5,
+      "TotalRepathCount": 15,
+      "TotalRecoveryCount": 0,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 0,
+      "BotSlot": 1,
+      "StartPosition": [
+        520,
+        -1660,
+        -220
+      ],
+      "TargetPosition": [
+        -250,
+        -200,
+        -160
+      ],
+      "SampleFinalPosition": [
+        114.4,
+        -1418,
+        -175.9
+      ],
+      "StartTickFirstAttempt": 14205,
+      "EndTickLastAttempt": 15179,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:08.2601604Z",
+          "ProfileVersion": 1,
+          "SpotId": "tr_staging_a_ramp",
+          "AttemptId": 1,
+          "BotSlot": 1,
+          "StartPosition": [
+            520,
+            -1660,
+            -220
+          ],
+          "TargetPosition": [
+            -250,
+            -200,
+            -160
+          ],
+          "StartTick": 14205,
+          "EndTick": 14525,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1271.5,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            114.4,
+            -1418.1,
+            -176
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:10.1626388Z",
+          "ProfileVersion": 1,
+          "SpotId": "tr_staging_a_ramp",
+          "AttemptId": 2,
+          "BotSlot": 1,
+          "StartPosition": [
+            520,
+            -1660,
+            -220
+          ],
+          "TargetPosition": [
+            -250,
+            -200,
+            -160
+          ],
+          "StartTick": 14532,
+          "EndTick": 14852,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1271.5,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            114.4,
+            -1418.1,
+            -175.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:12.0103244Z",
+          "ProfileVersion": 1,
+          "SpotId": "tr_staging_a_ramp",
+          "AttemptId": 3,
+          "BotSlot": 1,
+          "StartPosition": [
+            520,
+            -1660,
+            -220
+          ],
+          "TargetPosition": [
+            -250,
+            -200,
+            -160
+          ],
+          "StartTick": 14859,
+          "EndTick": 15179,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1271.5,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            114.4,
+            -1418,
+            -175.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "tr_staging_palace_room",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 1603.4,
+      "MinDistanceRemaining": 1597.8,
+      "TotalRepathCount": 23,
+      "TotalRecoveryCount": 4,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 7,
+      "BotSlot": 1,
+      "StartPosition": [
+        496,
+        -2315.9,
+        -40
+      ],
+      "TargetPosition": [
+        -350,
+        -480,
+        -90
+      ],
+      "SampleFinalPosition": [
+        318.1,
+        -1944,
+        -39.9
+      ],
+      "StartTickFirstAttempt": 15186,
+      "EndTickLastAttempt": 16160,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:13.8966768Z",
+          "ProfileVersion": 1,
+          "SpotId": "tr_staging_palace_room",
+          "AttemptId": 1,
+          "BotSlot": 1,
+          "StartPosition": [
+            496,
+            -2315.9,
+            -40
+          ],
+          "TargetPosition": [
+            -350,
+            -480,
+            -90
+          ],
+          "StartTick": 15186,
+          "EndTick": 15506,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1602.2,
+          "RepathCount": 7,
+          "RecoveryCount": 1,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 2,
+          "FinalPosition": [
+            298.8,
+            -1944.1,
+            -40
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:15.7724445Z",
+          "ProfileVersion": 1,
+          "SpotId": "tr_staging_palace_room",
+          "AttemptId": 2,
+          "BotSlot": 1,
+          "StartPosition": [
+            496,
+            -2315.9,
+            -40
+          ],
+          "TargetPosition": [
+            -350,
+            -480,
+            -90
+          ],
+          "StartTick": 15513,
+          "EndTick": 15833,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1597.8,
+          "RepathCount": 9,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            288,
+            -1944,
+            -40
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:17.6539206Z",
+          "ProfileVersion": 1,
+          "SpotId": "tr_staging_palace_room",
+          "AttemptId": 3,
+          "BotSlot": 1,
+          "StartPosition": [
+            496,
+            -2315.9,
+            -40
+          ],
+          "TargetPosition": [
+            -350,
+            -480,
+            -90
+          ],
+          "StartTick": 15840,
+          "EndTick": 16160,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 1610.1,
+          "RepathCount": 7,
+          "RecoveryCount": 1,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 2,
+          "FinalPosition": [
+            318.1,
+            -1944,
+            -39.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "tr_staging_underpass_top",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 287.6,
+      "MinDistanceRemaining": 287.5,
+      "TotalRepathCount": 15,
+      "TotalRecoveryCount": 0,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 0,
+      "BotSlot": 1,
+      "StartPosition": [
+        -840,
+        -640,
+        -240
+      ],
+      "TargetPosition": [
+        150,
+        -1050,
+        -160
+      ],
+      "SampleFinalPosition": [
+        25.7,
+        -791.9,
+        -186.2
+      ],
+      "StartTickFirstAttempt": 16167,
+      "EndTickLastAttempt": 17141,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:19.5567287Z",
+          "ProfileVersion": 1,
+          "SpotId": "tr_staging_underpass_top",
+          "AttemptId": 1,
+          "BotSlot": 1,
+          "StartPosition": [
+            -840,
+            -640,
+            -240
+          ],
+          "TargetPosition": [
+            150,
+            -1050,
+            -160
+          ],
+          "StartTick": 16167,
+          "EndTick": 16487,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 287.6,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            25.7,
+            -791.9,
+            -186.2
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:21.4489754Z",
+          "ProfileVersion": 1,
+          "SpotId": "tr_staging_underpass_top",
+          "AttemptId": 2,
+          "BotSlot": 1,
+          "StartPosition": [
+            -840,
+            -640,
+            -240
+          ],
+          "TargetPosition": [
+            150,
+            -1050,
+            -160
+          ],
+          "StartTick": 16494,
+          "EndTick": 16814,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 287.5,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            26,
+            -792,
+            -186.1
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:23.3537611Z",
+          "ProfileVersion": 1,
+          "SpotId": "tr_staging_underpass_top",
+          "AttemptId": 3,
+          "BotSlot": 1,
+          "StartPosition": [
+            -840,
+            -640,
+            -240
+          ],
+          "TargetPosition": [
+            150,
+            -1050,
+            -160
+          ],
+          "StartTick": 16821,
+          "EndTick": 17141,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 287.6,
+          "RepathCount": 5,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 0,
+          "FinalPosition": [
+            25.7,
+            -791.9,
+            -186.2
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_retake_a_connector",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 391.9,
+      "MinDistanceRemaining": 387.4,
+      "TotalRepathCount": 30,
+      "TotalRecoveryCount": 6,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 9,
+      "BotSlot": 2,
+      "StartPosition": [
+        -620,
+        -1180,
+        -168
+      ],
+      "TargetPosition": [
+        -450,
+        -1600,
+        -160
+      ],
+      "SampleFinalPosition": [
+        -603.6,
+        -1235.9,
+        -167.9
+      ],
+      "StartTickFirstAttempt": 17148,
+      "EndTickLastAttempt": 18122,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:25.1597091Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_retake_a_connector",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -620,
+            -1180,
+            -168
+          ],
+          "TargetPosition": [
+            -450,
+            -1600,
+            -160
+          ],
+          "StartTick": 17148,
+          "EndTick": 17468,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 387.4,
+          "RepathCount": 10,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -582.3,
+            -1236,
+            -167.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:26.9855637Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_retake_a_connector",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -620,
+            -1180,
+            -168
+          ],
+          "TargetPosition": [
+            -450,
+            -1600,
+            -160
+          ],
+          "StartTick": 17475,
+          "EndTick": 17795,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 393,
+          "RepathCount": 10,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -597.9,
+            -1235.9,
+            -168
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:28.8072158Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_retake_a_connector",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -620,
+            -1180,
+            -168
+          ],
+          "TargetPosition": [
+            -450,
+            -1600,
+            -160
+          ],
+          "StartTick": 17802,
+          "EndTick": 18122,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 395.2,
+          "RepathCount": 10,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -603.6,
+            -1235.9,
+            -167.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    },
+    {
+      "ProfileVersion": 1,
+      "SpotId": "ct_retake_a_jungle",
+      "Attempts": 3,
+      "ReachedCount": 0,
+      "TimeoutCount": 3,
+      "ReachRatePct": 0.0,
+      "MeanElapsedMs": 5000,
+      "MeanReachedTimeSeconds": null,
+      "MeanElapsedSecondsAll": 5.0,
+      "MeanDistanceRemaining": 750.4,
+      "MinDistanceRemaining": 665.9,
+      "TotalRepathCount": 22,
+      "TotalRecoveryCount": 2,
+      "TotalGeometryBlockCount": 0,
+      "TotalAppliedNoProgressCount": 5,
+      "BotSlot": 2,
+      "StartPosition": [
+        -1020,
+        -1320,
+        -160
+      ],
+      "TargetPosition": [
+        -950,
+        -450,
+        -140
+      ],
+      "SampleFinalPosition": [
+        -1216,
+        -1128.3,
+        -167.9
+      ],
+      "StartTickFirstAttempt": 18129,
+      "EndTickLastAttempt": 19103,
+      "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+      "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "RawAttempts": [
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:30.6430493Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_retake_a_jungle",
+          "AttemptId": 1,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1020,
+            -1320,
+            -160
+          ],
+          "TargetPosition": [
+            -950,
+            -450,
+            -140
+          ],
+          "StartTick": 18129,
+          "EndTick": 18449,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 856.3,
+          "RepathCount": 10,
+          "RecoveryCount": 2,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 3,
+          "FinalPosition": [
+            -994.8,
+            -1304.9,
+            -155.7
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:32.4313684Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_retake_a_jungle",
+          "AttemptId": 2,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1020,
+            -1320,
+            -160
+          ],
+          "TargetPosition": [
+            -950,
+            -450,
+            -140
+          ],
+          "StartTick": 18456,
+          "EndTick": 18776,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 665.9,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -1213.8,
+            -1060.8,
+            -167.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        },
+        {
+          "EventType": "SPOT_TEST_COMPLETED",
+          "TimestampUtc": "2026-11-04T21:18:34.2254184Z",
+          "ProfileVersion": 1,
+          "SpotId": "ct_retake_a_jungle",
+          "AttemptId": 3,
+          "BotSlot": 2,
+          "StartPosition": [
+            -1020,
+            -1320,
+            -160
+          ],
+          "TargetPosition": [
+            -950,
+            -450,
+            -140
+          ],
+          "StartTick": 18783,
+          "EndTick": 19103,
+          "ElapsedMs": 5000,
+          "DistanceRemaining": 729.1,
+          "RepathCount": 6,
+          "RecoveryCount": 0,
+          "GeometryBlockCount": 0,
+          "AppliedNoProgressCount": 1,
+          "FinalPosition": [
+            -1216,
+            -1128.3,
+            -167.9
+          ],
+          "Result": "TIMEOUT",
+          "DllSha256": "8cdbdb98a1f1a8bb908755d0f825c394cf81714a469d81402f9ccf56e49aad1c",
+          "ProfileSha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+        }
+      ]
+    }
+  ]
+}

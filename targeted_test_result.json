@@ -1,0 +1,39 @@
+{
+  "schema": "csbot.targeted_test_result.v1",
+  "phase": "OPERATIONAL_OPTIMIZATION_AND_CLEANUP",
+  "generated_utc": "2026-11-09T03:04:00Z",
+  "overall_verdict": "PASS",
+  "suites_executed": [
+    {
+      "test_file": "tests/test_operational_optimization.py",
+      "total_tests": 10,
+      "passed": 10,
+      "failed": 0,
+      "duration_seconds": 0.07,
+      "command": "pytest tests/test_operational_optimization.py -v"
+    },
+    {
+      "test_file": "tests/test_governance_1_2_lean.py",
+      "total_tests": 30,
+      "passed": 30,
+      "failed": 0,
+      "duration_seconds": 0.15,
+      "command": "pytest tests/test_governance_1_2_lean.py -v"
+    }
+  ],
+  "python_compilation": {
+    "files": [
+      ".agents/hooks/common_hook_utils.py",
+      ".agents/hooks/post_test_audit.py",
+      "tools/governance_lean/run_cleanup_analysis.py",
+      "tests/test_operational_optimization.py"
+    ],
+    "status": "PASS",
+    "errors": 0
+  },
+  "forbidden_suites_skipped": [
+    "dotnet test (C# runtime untouched)",
+    "full python ml redteam",
+    "graphify full rebuild"
+  ]
+}

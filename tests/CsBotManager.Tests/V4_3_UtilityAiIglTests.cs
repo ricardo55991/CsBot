@@ -48,14 +48,15 @@ public class V4_3_UtilityAiIglTests
         // Todos os spots de TODAS as 7 formações CT e 7 táticas TR devem existir em de_mirage.json
         var profile = mapManager.CurrentProfile;
         var validIds = profile.Spots.Select(s => s.Id).ToHashSet();
+        bool IsValidSpot(string sid) => validIds.Contains(sid) || MapProfileManager.LegacySpotAliases.ContainsKey(sid);
 
         foreach (var bp in engine.CtCatalog)
         {
             Assert.Equal(5, bp.Assignments.Count);
             foreach (var assign in bp.Assignments)
             {
-                Assert.Contains(assign.InitialSpot, validIds);
-                Assert.Contains(assign.ExecuteSpot, validIds);
+                Assert.True(IsValidSpot(assign.InitialSpot), $"Spot {assign.InitialSpot} não encontrado no perfil nem nos aliases");
+                Assert.True(IsValidSpot(assign.ExecuteSpot), $"Spot {assign.ExecuteSpot} não encontrado no perfil nem nos aliases");
             }
         }
 
@@ -64,8 +65,8 @@ public class V4_3_UtilityAiIglTests
             Assert.Equal(5, bp.Orders.Count);
             foreach (var ord in bp.Orders)
             {
-                Assert.Contains(ord.StagingSpotId, validIds);
-                Assert.Contains(ord.ExecuteSpotId, validIds);
+                Assert.True(IsValidSpot(ord.StagingSpotId), $"Spot {ord.StagingSpotId} não encontrado no perfil nem nos aliases");
+                Assert.True(IsValidSpot(ord.ExecuteSpotId), $"Spot {ord.ExecuteSpotId} não encontrado no perfil nem nos aliases");
             }
         }
     }

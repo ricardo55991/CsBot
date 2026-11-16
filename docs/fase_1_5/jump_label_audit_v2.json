@@ -1,0 +1,158 @@
+{
+  "generated_at": "2026-11-04 16:14:48",
+  "previous_phase1_report_correction": {
+    "phase1_values": {
+      "old_jump_frames": 2363125,
+      "onset_frames": 131290,
+      "bhop_pairs": 32788,
+      "alive_frames": 29082040
+    },
+    "phase1_18x_formula": "2363125 / 131290 = 18.0 (onsets INCLUINDO pares de bhop)",
+    "phase1_0_338_pct_formula": "(131290 - 32788) / 29082040 = 0.3387% (subtraiu PARES de onsets, unidade diferente de eventos)",
+    "inconsistency": "8.13 / 0.338 = 24.05x; o relatorio misturou dois denominadores. O 'liquido' (98.502) e invalido porque 32.788 conta pares consecutivos de onsets <= 20 passos, nao episodios nem saltos.",
+    "phase1_onset_detector": "NAO usou botao IN_JUMP, NAO usou flag grounded. Usou: rotulo antigo (|vz|>45) + vz>=140 + transicao de borda (passo anterior sem rotulo ou vz<50)."
+  },
+  "detector_v2_definition_16hz": {
+    "takeoff": "vz[t]>=120.0 E vz[t-1]<=60.0 E vz[t]-vz[t-1]>=100.0 E -85.0<=vz[t+1]-vz[t]<=-20.0 (gravidade ~ -50 u/s por passo) E continuidade espacial <= 60.0u",
+    "chained_takeoff_bunnyhop": "takeoff E vz[t-1] < -40.0 (nenhuma amostra no chao entre a queda anterior e o novo impulso; contato com o solo < 62.5ms)",
+    "states": "Grounded |vz|<=40.0; Rising vz>40.0; Falling vz<-40.0; Landing = Grounded apos Falling",
+    "uses_button": false,
+    "uses_grounded_flag": false,
+    "uses_vertical_velocity": true,
+    "uses_edge_transition": true,
+    "uses_ballistic_confirmation": true
+  },
+  "raw_demos_64hz_validation": {
+    "demos": 8,
+    "totals": {
+      "player_ticks": 6731924,
+      "takeoff64": 6551,
+      "chained64": 1279,
+      "takeoff64_with_injump": 2626,
+      "injump_edges": 4461,
+      "injump_edges_followed_by_takeoff": 2536,
+      "takeoff64_airborne_flag_t2": 6529,
+      "t16": 8074,
+      "t16_matched": 5204,
+      "t64_recalled": 5206,
+      "chained16": 1102
+    },
+    "signal_reliability": {
+      "IN_JUMP_bit_present_near_takeoff_pct": 40.1,
+      "IN_JUMP_edges_followed_by_takeoff_pct": 56.8,
+      "is_airborne_true_at_takeoff_plus_2_ticks_pct": 99.7,
+      "verdict": "IN_JUMP e is_airborne do GOTV NAO sao confiaveis como ground truth; usar assinatura balistica de vz."
+    },
+    "detector_16hz_vs_64hz": {
+      "precision_pct": 64.5,
+      "recall_pct": 79.5,
+      "match_window": "takeoff 64Hz em (tau-8, tau] ticks para cada takeoff 16Hz em tau"
+    },
+    "takeoffs_per_player_minute_64hz": 3.737,
+    "chained_takeoff_pct_64hz": 19.52,
+    "per_demo": [
+      {
+        "demo": "mouz-nxt-vs-ursa-m2-mirage",
+        "player_ticks": 679341,
+        "takeoff64": 630,
+        "chained64": 81,
+        "t16": 769,
+        "t16_matched": 498
+      },
+      {
+        "demo": "ding-cuts-vs-abyssal-m1-mirage",
+        "player_ticks": 1093716,
+        "takeoff64": 1125,
+        "chained64": 258,
+        "t16": 1361,
+        "t16_matched": 861
+      },
+      {
+        "demo": "depo-vs-winners-m2-mirage",
+        "player_ticks": 1058199,
+        "takeoff64": 900,
+        "chained64": 209,
+        "t16": 1090,
+        "t16_matched": 731
+      },
+      {
+        "demo": "dnk-vs-winners-m1-mirage",
+        "player_ticks": 706989,
+        "takeoff64": 624,
+        "chained64": 109,
+        "t16": 804,
+        "t16_matched": 500
+      },
+      {
+        "demo": "tnc-vs-phantom-academy-m1-mirage",
+        "player_ticks": 577603,
+        "takeoff64": 532,
+        "chained64": 84,
+        "t16": 715,
+        "t16_matched": 432
+      },
+      {
+        "demo": "regain-vs-zomblers-m1-mirage",
+        "player_ticks": 974785,
+        "takeoff64": 1007,
+        "chained64": 215,
+        "t16": 1261,
+        "t16_matched": 840
+      },
+      {
+        "demo": "charrados-vs-alka-m2-mirage",
+        "player_ticks": 727726,
+        "takeoff64": 740,
+        "chained64": 93,
+        "t16": 871,
+        "t16_matched": 577
+      },
+      {
+        "demo": "mibr-academy-vs-bestia-academy-m2-mirage-p2",
+        "player_ticks": 913565,
+        "takeoff64": 993,
+        "chained64": 230,
+        "t16": 1203,
+        "t16_matched": 765
+      }
+    ]
+  },
+  "npz_16hz_audit": {
+    "files": 444,
+    "counts": {
+      "alive_frames": 29082040,
+      "old_jump": 2363125,
+      "old_jump_rising": 1212769,
+      "old_jump_falling": 1150356,
+      "old_jump_grounded_small_vz": 0,
+      "takeoff": 84388,
+      "chained": 11523,
+      "grounded": 26555108,
+      "rising": 1300726,
+      "falling": 1226206,
+      "landing": 254392,
+      "rising_without_takeoff_window": 892292,
+      "discontinuities": 255317
+    },
+    "rates_pct_of_alive_frames": {
+      "old_jump_label": 8.126,
+      "ballistic_takeoff_all": 0.2902,
+      "ballistic_takeoff_net_excluding_chained": 0.2505,
+      "grounded": 91.31,
+      "rising": 4.47,
+      "falling": 4.22,
+      "landing": 0.875
+    },
+    "old_label_breakdown_pct_of_old_jump": {
+      "rising_vz_gt_40": 51.3,
+      "falling_vz_lt_-40": 48.7,
+      "abs_vz_le_40": 0.0
+    },
+    "inflation": {
+      "formula_all": "old_jump_frames / ballistic_takeoff_events",
+      "value_all": 28.0,
+      "formula_net": "old_jump_frames / (ballistic_takeoff_events - chained_takeoff_events)",
+      "value_net": 32.43
+    }
+  }
+}

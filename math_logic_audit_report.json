@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "skill": "csbot-math-logic-auditor",
+  "generated_at_utc": "2026-11-07T22:16:01.804309+00:00",
+  "dry_run": true,
+  "data_nature": "SIMULATED",
+  "verdict": "CONDITIONAL",
+  "total_violations_count": 0,
+  "violations": [],
+  "suites": {
+    "confusion_and_calibration": {
+      "status": "PASS",
+      "violations_count": 0,
+      "violations": [],
+      "details": {
+        "classes_checked": 5,
+        "active_classes_count": 4,
+        "zero_support_classes_count": 1,
+        "counts_row_sum_verified": true,
+        "normalized_row_sum_verified": true,
+        "zero_support_na_verified": true,
+        "dry_run_simulation": true,
+        "simulated_macro_f1": 0.892,
+        "simulated_ece": 0.028
+      }
+    },
+    "temporal_transitions_and_fsm": {
+      "status": "PASS",
+      "violations_count": 0,
+      "violations": [],
+      "details": {
+        "total_transitions_evaluated": 120,
+        "valid_transitions_count": 120,
+        "illegal_transitions_count": 0,
+        "timing_violations_count": 0,
+        "fsm_graph_compliance": true,
+        "dry_run_simulation": true,
+        "simulated_states": [
+          "SPAWN",
+          "NAVIGATE",
+          "HOLD_ANGLE",
+          "SEARCH",
+          "ENGAGE_COMBAT",
+          "PLANT_C4",
+          "DEFUSE_C4",
+          "RETAKE",
+          "POST_ROUND"
+        ]
+      }
+    }
+  }
+}

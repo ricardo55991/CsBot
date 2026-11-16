@@ -1,0 +1,167 @@
+==============================================================================================================
+training_runs/intermediate_domain_study/source_feasibility_report.md  (59871 B, 858 linhas)
+==============================================================================================================
+
+-- HUMAN_SEAL: 1 ocorrencia(s)
+   L773: 4. **[HUMANO]** Revisar o primeiro lote (n├úo ├® selo de revis├úo humana autom├ítica ÔÇö ├® o `APPROVED_BY_USER`
+
+-- HUMAN_PROSE: 8 ocorrencia(s)
+   L35: foi enviada** ÔÇö o envio exige cadastro externo e aceite de termos, portanto exige aprova├º├úo humana.
+   L79: Solicitar aprova├º├úo humana para (i) submeter a aplica├º├úo do FACEIT Downloads API e (ii) aprovar o instrumento
+   L310: | **Aprova├º├úo humana** | necess├íria nesta fase para qualquer cadastro externo | especifica├º├úo ┬º5 |
+   L396: 1. `BLOCK_A_APPLICATION_NOT_SUBMITTED` ÔÇö aplica├º├úo do Downloads API exige aprova├º├úo humana (n├úo enviada).
+   L438: > **aprova├º├úo humana**. O agente apenas **leu publicamente** o formul├írio (sem preencher, sem enviar, sem
+   L538: | Aprova├º├úo humana | necess├íria para qualquer coleta (consentimento individual) | `VERIFIED_IN_REPO` |
+   L622: | Aprova├º├úo humana | necess├íria para decidir sobre compatibilidade da licen├ºa com o projeto | `VERIFIED_IN_REPO` |
+   L696: | Aprova├º├úo humana | obrigat├│ria para o instrumento de consentimento antes do primeiro contato | `VERIFIED_IN_REPO` |
+
+-- VERIFIED_ONLINE: 117 ocorrencia(s)
+   L13: fontes ├® classificada como `VERIFIED_ONLINE`, `VERIFIED_IN_REPO`, `INFERRED` ou `UNVERIFIED`.
+   L32: (`VERIFIED_ONLINE`, docs.faceit.com/docs/data-api/data). O download efetivo, por├®m, exige um **Access
+   L34: 30 dias** (`VERIFIED_ONLINE`, docs.faceit.com/getting-started/Guides/download-api). **Nenhuma solicita├º├úo
+   L38: `IGCVersion_730.GetServerVersion` (`VERIFIED_ONLINE`, api.steampowered.com). O acesso a mensagens do Game
+   L39: Coordinator exige contexto de cliente Steam autenticado (`VERIFIED_ONLINE`,
+   L41: recupera├º├úo de dados "as requested by the end user" (`VERIFIED_ONLINE`). Qualquer variante autom├ítica cai
+   L45: **CC BY-NC-SA 4.0** (n├úo comercial), ~1.300 partidas e 51.498.527.411 bytes (`VERIFIED_ONLINE`), com
+   L103: | `VERIFIED_ONLINE` | A p├ígina foi recuperada nesta sess├úo e o texto citado foi lido do conte├║do recuperado; a URL est├í na tabela ┬º12. |
+   L106: | `UNVERIFIED` | Explicitamente n├úo verificado (falha de acesso, bloqueio, exig├¬ncia de login). |
+   L115: `UNVERIFIED`.
+   L125: `UNKNOWN_UNVERIFIED`, e o r├│tulo derivado `DEFERRED`.
+   L132: padr├úo) por uma URL assinada, mediante token com escopo de Downloads API (`VERIFIED_ONLINE`,
+   L136: end user" (`VERIFIED_ONLINE`, steamcommunity.com/dev/apiterms), pois o jogador ├® quem fornece o arquivo.
+   L138: (`VERIFIED_ONLINE`) e **n├úo foi submetida**; a Fonte D n├úo possui corpus.
+   L146: `stats.skillLevel.{average, range.{min,max}}` (`VERIFIED_ONLINE`, docs.faceit.com/docs/data-api/data).
+   L151: hist├│rico**, isto ├®, um valor associado a cada partida passada (`VERIFIED_ONLINE`). Isso ├® a evid├¬ncia mais
+   L154: `from`/`to` (`VERIFIED_ONLINE`).
+   L156: e `skill_level` como valores de **perfil atual**, n├úo como s├®rie hist├│rica (`VERIFIED_ONLINE`). Logo,
+   L157: "Elo exato no instante da partida" ├® `UNVERIFIED`/`INFERRED` como indispon├¡vel.
+   L167: - N├¡vel por jogador: `game_skill_level`, `skillLevel.average/range` (`VERIFIED_ONLINE`).
+   L168: - Demo por partida: `demo_url` (array) e `instances[].demos[]` (`VERIFIED_ONLINE`).
+   L169: - Identidade de jogador: `player_id`, `game_player_id`, `nickname` (`VERIFIED_ONLINE`).
+   L170: - Regi├úo, `game`, `best_of`, `status`, `started_at`/`finished_at` (`VERIFIED_ONLINE`).
+   L174: (`VERIFIED_ONLINE` quanto ├á aus├¬ncia no documento; a infer├¬ncia de que partidas reais trazem
+   L182: `IGCVersion_730.GetServerVersion` (`VERIFIED_ONLINE`). Caveat honesto: `GetSupportedAPIList` foi chamada
+   ... (+92)
+
+-- HYPOTHESIS_CONFIRMED: 0 ocorrencia(s)
+
+-- READY_TO_SCALE: 0 ocorrencia(s)
+
+-- GATE_PASS_CLAIM: 2 ocorrencia(s)
+   L73: Portanto: **o Gate A n├úo pode ser declarado `PASS`** e **n├úo deve ser declarado `FAIL` definitivo** ÔÇö n├úo h├í
+   L382: - Consequ├¬ncia para o Gate A: o crit├®rio `license_or_authorization_recorded` **n├úo pode** ser `PASS` hoje.
+
+-- F12_INTERFACE_CONFIRMED: 2 ocorrencia(s)
+   L481: `IGCVersion_730.GetServerVersion` (`VERIFIED_ONLINE`, api.steampowered.com). **N├úo h├í** `ICSGOPlayers_730`
+   L484: - `partner.steamgames.com/doc/webapi/ICSGOPlayers_730` **n├úo** serve conte├║do da interface (serviu o ├¡ndice
+
+-- NUMERIC_RATE: 0 ocorrencia(s)
+
+-- URL_SIGNED: 0 ocorrencia(s)
+==============================================================================================================
+training_runs/intermediate_domain_study/domain_training_strategy.md  (33998 B, 621 linhas)
+==============================================================================================================
+
+-- HUMAN_SEAL: 0 ocorrencia(s)
+
+-- HUMAN_PROSE: 0 ocorrencia(s)
+
+-- VERIFIED_ONLINE: 0 ocorrencia(s)
+
+-- HYPOTHESIS_CONFIRMED: 0 ocorrencia(s)
+
+-- READY_TO_SCALE: 0 ocorrencia(s)
+
+-- GATE_PASS_CLAIM: 0 ocorrencia(s)
+
+-- F12_INTERFACE_CONFIRMED: 0 ocorrencia(s)
+
+-- NUMERIC_RATE: 6 ocorrencia(s)
+   L121: ┬º19 (15%) teria poucas demos, e o poder estat├¡stico de qualquer gate seria baixo.
+   L139: profissional tem 67 demos; a 15% de 200 demos, o Test intermedi├írio teria 30 demos ÔÇö ainda menos da
+   L191: - 26 dos 53 spots permanecem com `support = 0` no corpus profissional, ou seja, **49% do cat├ílogo n├úo
+   L267: - Regra pr├ítica a declarar antes do treino: o dom├¡nio minorit├írio n├úo deve representar menos de 20%
+   L461: E com o dom├¡nio minorit├írio abaixo de 20% das sequ├¬ncias.
+   L553: - `N_demos` ÔëÑ 200 e dom├¡nio minorit├írio ÔëÑ 20% das sequ├¬ncias de treino.
+
+-- URL_SIGNED: 0 ocorrencia(s)
+==============================================================================================================
+training_runs/intermediate_domain_study/scale_up_recommendation.md  (7195 B, 114 linhas)
+==============================================================================================================
+
+-- HUMAN_SEAL: 0 ocorrencia(s)
+
+-- HUMAN_PROSE: 0 ocorrencia(s)
+
+-- VERIFIED_ONLINE: 0 ocorrencia(s)
+
+-- HYPOTHESIS_CONFIRMED: 0 ocorrencia(s)
+
+-- READY_TO_SCALE: 0 ocorrencia(s)
+
+-- GATE_PASS_CLAIM: 0 ocorrencia(s)
+
+-- F12_INTERFACE_CONFIRMED: 0 ocorrencia(s)
+
+-- NUMERIC_RATE: 0 ocorrencia(s)
+
+-- URL_SIGNED: 0 ocorrencia(s)
+==============================================================================================================
+training_runs/intermediate_domain_study/legal_and_access_constraints.md  (6439 B, 98 linhas)
+==============================================================================================================
+
+-- HUMAN_SEAL: 0 ocorrencia(s)
+
+-- HUMAN_PROSE: 1 ocorrencia(s)
+   L91: ## 9. O que exige aprova├º├úo humana expl├¡cita
+
+-- VERIFIED_ONLINE: 1 ocorrencia(s)
+   L83: - **FACEIT**: `UNVERIFIED` at├® leitura humana dos termos. Nenhum treino antes disso.
+
+-- HYPOTHESIS_CONFIRMED: 0 ocorrencia(s)
+
+-- READY_TO_SCALE: 0 ocorrencia(s)
+
+-- GATE_PASS_CLAIM: 0 ocorrencia(s)
+
+-- F12_INTERFACE_CONFIRMED: 0 ocorrencia(s)
+
+-- NUMERIC_RATE: 0 ocorrencia(s)
+
+-- URL_SIGNED: 0 ocorrencia(s)
+==============================================================================================================
+training_runs/intermediate_domain_study/valve_opt_in_feasibility.md  (7987 B, 113 linhas)
+==============================================================================================================
+
+-- HUMAN_SEAL: 0 ocorrencia(s)
+
+-- HUMAN_PROSE: 0 ocorrencia(s)
+
+-- VERIFIED_ONLINE: 14 ocorrencia(s)
+   L17: | Consulta de hist├│rico por **Game Authentication Code** de um jogador consentinte | `FEASIBLE_WITH_HUMAN_CONSENT` (`UNVERIFIED` quanto ao fluxo exato) |
+   L26: autenticado** (`VERIFIED_ONLINE`, partner.steamgames.com/doc/api/ISteamGameCoordinator, 2026-11-09T00:55Z).
+   L29: partidas, share code ou demo (`VERIFIED_ONLINE`,
+   L32: maior ÔÇö por isso o negativo ├® forte, mas classificado como `UNVERIFIED` quanto ao conjunto autenticado.
+   L35: (`VERIFIED_ONLINE`, 2026-11-09T00:53Z).
+   L41: | Fluxo oficial de "Game Authentication Code" (wizard do Steam Support) | p├ígina exige login; retornou apenas shell HTML | `UNVERIFIED` |
+   L42: | Formato literal do share code e sem├óntica do c├│digo | wiki de desenvolvedores protegido por challenge anti-bot (Anubis), **n├úo contornado** | `UNVERIFIED` |
+   L43: | Exist├¬ncia de endpoint `GetNextMatchSharingCode` acess├¡vel a terceiros | n├úo aparece na lista p├║blica; documenta├º├úo oficial n├úo recuperada | `UNVERIFIED` |
+   L44: | Janela de reten├º├úo de demos de matchmaking na Valve | n├úo documentada publicamente na documenta├º├úo recuperada | `UNVERIFIED` |
+   L45: | Rela├º├úo entre Premier rating e demos dispon├¡veis | n├úo documentada publicamente na documenta├º├úo recuperada | `UNVERIFIED` |
+   L54: **Steam Web API Terms of Use** (`VERIFIED_ONLINE`, steamcommunity.com/dev/apiterms, 2026-11-09T00:53Z):
+   L67: **Steam Subscriber Agreement** (`VERIFIED_ONLINE`, store.steampowered.com/subscriber_agreement/, 00:53Z):
+   L84: 4. **Limite num├®rico dispon├¡vel:** 100.000 chamadas/dia por chave (`VERIFIED_ONLINE`) ÔÇö suficiente para
+   L107: 5. `BLOCK_B_DOCS_UNREACHABLE` ÔÇö wiki oficial e wizard de suporte inacess├¡veis sem login/JS; fluxo `UNVERIFIED`.
+
+-- HYPOTHESIS_CONFIRMED: 0 ocorrencia(s)
+
+-- READY_TO_SCALE: 0 ocorrencia(s)
+
+-- GATE_PASS_CLAIM: 0 ocorrencia(s)
+
+-- F12_INTERFACE_CONFIRMED: 1 ocorrencia(s)
+   L33: - `partner.steamgames.com/doc/webapi/ICSGOPlayers_730` **n├úo** serve conte├║do dessa interface (devolveu o
+
+-- NUMERIC_RATE: 0 ocorrencia(s)
+
+-- URL_SIGNED: 0 ocorrencia(s)

@@ -1,0 +1,35 @@
+{
+  "script": "audit_parquet_rows.py",
+  "mode": "DRY_RUN",
+  "data_nature": "SIMULATED",
+  "governance_rules": [
+    "01-evidence-before-claims",
+    "04-synthetic-data-labeling"
+  ],
+  "required_columns": [
+    "demo_id",
+    "round_id",
+    "tick",
+    "x",
+    "y",
+    "z"
+  ],
+  "mirage_bounds": {
+    "x": [
+      -3400.0,
+      1900.0
+    ],
+    "y": [
+      -3600.0,
+      1000.0
+    ],
+    "z": [
+      -500.0,
+      1000.0
+    ]
+  },
+  "files_audited": [],
+  "npz_cardinal_alignment": null,
+  "verdict": "CONDITIONAL",
+  "note": "Execução em modo --dry-run (SIMULATED). Pela regra 01-evidence-before-claims, nenhum veredito PASS pode ser emitido sem artefato bruto real."
+}

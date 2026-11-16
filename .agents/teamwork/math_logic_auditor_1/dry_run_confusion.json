@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T21:35:39.118617+00:00",
+  "dry_run": true,
+  "data_nature": "SIMULATED",
+  "verdict": "CONDITIONAL",
+  "violations_count": 0,
+  "violations": [],
+  "details": {
+    "classes_checked": 5,
+    "active_classes_count": 4,
+    "zero_support_classes_count": 1,
+    "counts_row_sum_verified": true,
+    "normalized_row_sum_verified": true,
+    "zero_support_na_verified": true,
+    "dry_run_simulation": true,
+    "simulated_macro_f1": 0.892,
+    "simulated_ece": 0.028
+  }
+}

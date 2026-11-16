@@ -1,0 +1,16 @@
+{
+  "targets": [
+    "training_runs/intermediate_domain_study/source_feasibility_report.md",
+    "training_runs/intermediate_domain_study/legal_and_access_constraints.md",
+    "training_runs/intermediate_domain_study/faceit_access_readiness.json",
+    "training_runs/intermediate_domain_study/valve_opt_in_feasibility.md",
+    "training_runs/intermediate_domain_study/professional_vs_intermediate.json",
+    "training_runs/intermediate_domain_study/ct_standardization_analysis.json",
+    "training_runs/intermediate_domain_study/tr_standardization_analysis.json",
+    "datasets/mirage_domains/intermediate_competitive/acquisition_source_matrix.json",
+    "scratch/2a_intermediate_research_cache/INDEX.md",
+    ".agents/teamwork/researcher_2a_int_1/research_log.md"
+  ],
+  "cache_dir": "scratch/2a_intermediate_research_cache",
+  "cache_log": "scratch/2a_intermediate_research_cache/_recapture_log.json"
+}

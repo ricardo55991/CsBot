@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T19:28:09.020634+00:00",
+  "workspace_root": "C:\\Users\\ricar\\AppData\\Local\\Temp\\tmp02u2xea5",
+  "session_dir": null,
+  "dry_run": false,
+  "data_nature": "REAL",
+  "simulation_prohibition_enforced": true,
+  "status": "ABSENT_TELEMETRY_NA",
+  "verdict": "FAIL",
+  "artifacts": {
+    "csbot_manager_dll": {
+      "path": "C:\\Users\\ricar\\AppData\\Local\\Temp\\tmp02u2xea5\\src\\CsBotManager\\bin\\Release\\net8.0\\CsBotManager.dll",
+      "exists": false,
+      "size_bytes": null,
+      "sha256": null,
+      "status": "ARTIFACT_NOT_FOUND"
+    },
+    "de_mirage_profile": {
+      "path": "C:\\Users\\ricar\\AppData\\Local\\Temp\\tmp02u2xea5\\src\\CsBotManager\\MapProfiles\\de_mirage.json",
+      "exists": false,
+      "size_bytes": null,
+      "sha256": null,
+      "status": "ARTIFACT_NOT_FOUND"
+    },
+    "onnx_models": []
+  },
+  "telemetry": {
+    "telemetry_present": false,
+    "log_path": null,
+    "log_sha256": null,
+    "status": "ABSENT_TELEMETRY_NA",
+    "data_nature": "REAL",
+    "note": "Nenhum arquivo de log de telemetria real foi fornecido ou encontrado. Proibido simular eventos ou inferir contagem 0.",
+    "domains": {
+      "debug_command": {
+        "status": "ABSENT_TELEMETRY_NA",
+        "observed_events": "N/A"
+      },
+      "c4_objective": {
+        "status": "ABSENT_TELEMETRY_NA",
+        "observed_events": "N/A"
+      },
+      "economy_buy": {
+        "status": "ABSENT_TELEMETRY_NA",
+        "observed_events": "N/A"
+      },
+      "jump_gate": {
+        "status": "ABSENT_TELEMETRY_NA",
+        "observed_events": "N/A"
+      },
+      "movement_recovery": {
+        "status": "ABSENT_TELEMETRY_NA",
+        "observed_events": "N/A"
+      },
+      "tactical_spots": {
+        "status": "ABSENT_TELEMETRY_NA",
+        "observed_events": "N/A"
+      },
+      "online_adaptation": {
+        "status": "ABSENT_TELEMETRY_NA",
+        "observed_events": "N/A"
+      },
+      "match_sealing": {
+        "status": "ABSENT_TELEMETRY_NA",
+        "observed_events": "N/A"
+      }
+    }
+  }
+}

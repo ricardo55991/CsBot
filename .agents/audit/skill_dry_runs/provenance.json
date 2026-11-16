@@ -1,0 +1,19 @@
+{
+  "script": "verify_sample_provenance.py",
+  "mode": "DRY_RUN",
+  "data_nature": "SIMULATED",
+  "governance_rules": [
+    "01-evidence-before-claims",
+    "04-synthetic-data-labeling",
+    "05-human-review-integrity"
+  ],
+  "required_provenance_fields": [
+    "source_demo / source_file",
+    "round_id",
+    "tick / tick_start",
+    "player_steamid OR spot_id",
+    "sha256 / source_sha256 (64 hex chars)"
+  ],
+  "verdict": "CONDITIONAL",
+  "note": "Execução em modo --dry-run (SIMULATED). Pela regra 01-evidence-before-claims, nenhum veredito PASS pode ser emitido sem artefato bruto real."
+}

@@ -1,0 +1,67 @@
+{
+  "protect-sensitive-files": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content|write_file|edit_file|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if exist hooks\\protect_sensitive_files.py (python hooks\\protect_sensitive_files.py) else (python .agents\\hooks\\protect_sensitive_files.py)",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  },
+  "pre-training-gate": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if exist hooks\\pre_training_gate.py (python hooks\\pre_training_gate.py) else (python .agents\\hooks\\pre_training_gate.py)",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  },
+  "post-test-audit": {
+    "enabled": true,
+    "PostToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if exist hooks\\post_test_audit.py (python hooks\\post_test_audit.py) else (python .agents\\hooks\\post_test_audit.py)",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  },
+  "validate-generated-report": {
+    "enabled": true,
+    "Stop": [
+      {
+        "type": "command",
+        "command": "if exist hooks\\validate_generated_report.py (python hooks\\validate_generated_report.py) else (python .agents\\hooks\\validate_generated_report.py)",
+        "timeout": 15
+      }
+    ]
+  },
+  "stop-condition-evidence-gate": {
+    "enabled": true,
+    "Stop": [
+      {
+        "type": "command",
+        "command": "if exist hooks\\stop_condition_evidence_gate.py (python hooks\\stop_condition_evidence_gate.py) else (python .agents\\hooks\\stop_condition_evidence_gate.py)",
+        "timeout": 15
+      }
+    ]
+  }
+}

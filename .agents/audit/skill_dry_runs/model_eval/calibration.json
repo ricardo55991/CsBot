@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T16:47:04.061267+00:00",
+  "split_name": "test",
+  "data_nature": "SIMULATED",
+  "calibration": {
+    "expected_calibration_error": 0.0412,
+    "brier_score": 0.0895,
+    "num_bins": 10,
+    "temperature_tuned_on_split": "val"
+  }
+}

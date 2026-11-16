@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T22:16:46.300361+00:00",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "dry_run": false,
+  "data_nature": "REAL",
+  "total_files": 2,
+  "missing_files_count": 0,
+  "missing_files": [],
+  "files": [
+    {
+      "path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\AGENTS.md",
+      "relative_path": "AGENTS.md",
+      "size_bytes": 11600,
+      "sha256": "bb17a1ad935a377a0d483a7a70bdfda2788afd53206eb1e41a7b48671a649a4d",
+      "exists": true,
+      "data_nature": "REAL"
+    },
+    {
+      "path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapProfiles\\de_mirage.json",
+      "relative_path": "src\\CsBotManager\\MapProfiles\\de_mirage.json",
+      "size_bytes": 44679,
+      "sha256": "7f36eff885dead88d1c868dc65340dbf47f9f38e1b5b06575ca185eccda4aed8",
+      "exists": true,
+      "data_nature": "REAL"
+    }
+  ]
+}

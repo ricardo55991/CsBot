@@ -1,0 +1,114 @@
+{
+  "schema": "csbot.cleanup_deletion_proposal.v1",
+  "governance_version": "1.2.0-lean",
+  "summary": {
+    "safe_to_delete_cache_items": 91,
+    "quarantined_items": 11,
+    "keep_canonical_count": 592,
+    "keep_historical_count": 99,
+    "protected_product_count": 440,
+    "orphan_review_required_count": 1587
+  },
+  "permanent_deletion_requires_human_approval": true,
+  "items_quarantined": [
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/project.nuget.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/project.nuget.cache",
+      "sha256": "5b6de6c7b46d2c08528c4be4132fa219838fe1c69e341ae80baaa760dc53c5a3",
+      "size_bytes": 2126,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\project.nuget.cache' -Destination 'tests/CsBotManager.Tests/obj/project.nuget.cache'"
+    },
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.AssemblyInfoInputs.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/CsBotManager.Tests.AssemblyInfoInputs.cache",
+      "sha256": "6a57c5506e03f13a48d9bf3427067a5e34e2240de45adfdc81326db62b277ee8",
+      "size_bytes": 66,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\CsBotManager.Tests.AssemblyInfoInputs.cache' -Destination 'tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.AssemblyInfoInputs.cache'"
+    },
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.assets.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/CsBotManager.Tests.assets.cache",
+      "sha256": "aead8100d535b2358f5906b7e0e383563331af4006c3a0011aabb2431b038114",
+      "size_bytes": 38034,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\CsBotManager.Tests.assets.cache' -Destination 'tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.assets.cache'"
+    },
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.csproj.AssemblyReference.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/CsBotManager.Tests.csproj.AssemblyReference.cache",
+      "sha256": "86072754f3035b2d2c204682d47987bc3111d451ea9bc944d408916b82950182",
+      "size_bytes": 61969,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\CsBotManager.Tests.csproj.AssemblyReference.cache' -Destination 'tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.csproj.AssemblyReference.cache'"
+    },
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.csproj.CoreCompileInputs.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/CsBotManager.Tests.csproj.CoreCompileInputs.cache",
+      "sha256": "1b84b5f44b824ee4285103ec1a32b7416923e55dfbc9e0f997c32bdff97e8d48",
+      "size_bytes": 66,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\CsBotManager.Tests.csproj.CoreCompileInputs.cache' -Destination 'tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.csproj.CoreCompileInputs.cache'"
+    },
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.genruntimeconfig.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/CsBotManager.Tests.genruntimeconfig.cache",
+      "sha256": "f89eaaca909f6905684852b4097b69f00de9c6afc5deed8cecc32bcf11b4e770",
+      "size_bytes": 66,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\CsBotManager.Tests.genruntimeconfig.cache' -Destination 'tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.genruntimeconfig.cache'"
+    },
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.AssemblyInfoInputs.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/CsBotManager.Tests.AssemblyInfoInputs.cache",
+      "sha256": "6aa7a597182e62a52c81459fe5fbc633bba2d99d32a69034c1658a4eeb9cb6c9",
+      "size_bytes": 66,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\CsBotManager.Tests.AssemblyInfoInputs.cache' -Destination 'tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.AssemblyInfoInputs.cache'"
+    },
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.assets.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/CsBotManager.Tests.assets.cache",
+      "sha256": "e4202c58fb5826cf7bea8e413452b1d9dfb91b6fb59c1b0700395b51fb13a786",
+      "size_bytes": 38034,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\CsBotManager.Tests.assets.cache' -Destination 'tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.assets.cache'"
+    },
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.csproj.AssemblyReference.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/CsBotManager.Tests.csproj.AssemblyReference.cache",
+      "sha256": "7014566331500ce4d5e53ba4e626324afeb9739f2a91e6d49cfbc86e51cf42e5",
+      "size_bytes": 62168,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\CsBotManager.Tests.csproj.AssemblyReference.cache' -Destination 'tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.csproj.AssemblyReference.cache'"
+    },
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.csproj.CoreCompileInputs.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/CsBotManager.Tests.csproj.CoreCompileInputs.cache",
+      "sha256": "18c562aa9c83f0a791bc19d6b964276517abae6bb2f127984eb9d6e6e0b02c28",
+      "size_bytes": 66,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\CsBotManager.Tests.csproj.CoreCompileInputs.cache' -Destination 'tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.csproj.CoreCompileInputs.cache'"
+    },
+    {
+      "original_path": "tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.genruntimeconfig.cache",
+      "quarantine_path": ".cleanup/quarantine/cache/CsBotManager.Tests.genruntimeconfig.cache",
+      "sha256": "4a690c382ed9c0ee15430b9c6a0d668f10ce0321f4959c9f423b0449252042f2",
+      "size_bytes": 66,
+      "classification": "TEMPORARY_DELETE_CANDIDATE",
+      "rationale": "Temporary or backup file",
+      "rollback_command": "Move-Item -Path '.cleanup\\quarantine\\cache\\CsBotManager.Tests.genruntimeconfig.cache' -Destination 'tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.genruntimeconfig.cache'"
+    }
+  ]
+}

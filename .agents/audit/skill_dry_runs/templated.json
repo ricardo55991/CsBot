@@ -1,0 +1,12 @@
+{
+  "script": "detect_templated_outputs.py",
+  "mode": "DRY_RUN",
+  "data_nature": "SIMULATED",
+  "governance_rules": [
+    "01-evidence-before-claims",
+    "04-synthetic-data-labeling"
+  ],
+  "templated_detected": false,
+  "verdict": "CONDITIONAL",
+  "note": "Execução em modo --dry-run (SIMULATED). Pela regra 01-evidence-before-claims, nenhum veredito PASS pode ser emitido sem artefato bruto real."
+}

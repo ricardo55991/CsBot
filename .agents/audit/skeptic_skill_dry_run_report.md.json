@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T17:01:07.556242+00:00",
+  "report_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\skill_dry_run_report.md",
+  "report_sha256": "c946952b99ba69eb14c8a389e21c3819974c551a3b75f190fc72690f4e89fda0",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "dry_run": false,
+  "data_nature": "REAL",
+  "verdict": "PASS",
+  "total_vectors_checked": 12,
+  "total_violations": 0,
+  "triggered_vectors": [],
+  "vectors": {
+    "conflicting_numbers": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "unbacked_metrics": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "zero_support_numeric_metrics": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "incompatible_confusion_matrix": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "divergent_or_truncated_hashes": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "hardcoded_report_claims": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "templated_data_unlabeled": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "missing_declared_files": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "undiscovered_tests": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "test_set_used_in_tuning": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "percentage_100_without_denominator": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "unauthorized_human_approval_claim": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    }
+  }
+}

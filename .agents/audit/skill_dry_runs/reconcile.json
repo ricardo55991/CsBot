@@ -1,0 +1,22 @@
+{
+  "script": "reconcile_dataset_counts.py",
+  "mode": "DRY_RUN",
+  "data_nature": "SIMULATED",
+  "governance_rules": [
+    "01-evidence-before-claims",
+    "04-synthetic-data-labeling"
+  ],
+  "tracked_metrics": [
+    "source_file_count",
+    "accepted_file_count",
+    "rejected_file_count",
+    "valid_round_count",
+    "accepted_frame_count",
+    "useful_hours"
+  ],
+  "conservation_equation": "N_raw_extracted == N_train + N_val + N_test + sum(rejection_ledger.values())",
+  "unaccounted_delta": 0,
+  "divergences": [],
+  "verdict": "CONDITIONAL",
+  "note": "Execução em modo --dry-run (SIMULATED). Pela regra 01-evidence-before-claims, nenhum veredito PASS pode ser emitido sem artefato bruto real."
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T16:47:42.919275+00:00",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "dry_run": false,
+  "data_nature": "REAL",
+  "total_files": 2,
+  "missing_files_count": 0,
+  "missing_files": [],
+  "files": [
+    {
+      "path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\AGENTS.md",
+      "relative_path": "AGENTS.md",
+      "size_bytes": 6740,
+      "sha256": "dfc29fac7d3953f33c3ee3329d878a2f427d1da6268d88e5b928b338518694af",
+      "exists": true,
+      "data_nature": "REAL"
+    },
+    {
+      "path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills.json",
+      "relative_path": ".agents\\skills.json",
+      "size_bytes": 66,
+      "sha256": "2f9471e01ffd7af746412d11494e0930a4d0ca96bd7d573214e645260fea3a31",
+      "exists": true,
+      "data_nature": "REAL"
+    }
+  ]
+}

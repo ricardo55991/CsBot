@@ -1,0 +1,2033 @@
+{
+  "session_name": "mirage_all_spots",
+  "map": "de_mirage",
+  "version": "3.0.0",
+  "description": "Fila completa com todos os 45 spots oficiais de Mirage para homologação física no CS2",
+  "spots": [
+    {
+      "queue_index": 1,
+      "spot_id": "ct_a_ticket_passive",
+      "requested_position_role": "CT - Ticket / Cabine CT",
+      "target_name": "Ticket / Cabine CT",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Mira longa fechada segurando a saída da Caverna/Rampa A.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Ticket / Cabine CT",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 2,
+      "spot_id": "ct_a_firebox_oneanddone",
+      "requested_position_role": "CT - Firebox (One & Done)",
+      "target_name": "Firebox (One & Done)",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "ONE_AND_DONE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Pixel agressivo atrás do fogo. Dispara no primeiro inimigo e recua imediatamente.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Firebox (One & Done)",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 3,
+      "spot_id": "ct_a_ninja_hide",
+      "requested_position_role": "CT - Ninja / Atrás da Tripla",
+      "target_name": "Ninja / Atrás da Tripla",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Posição oculta esperando o avanço dos adversários para pegar de lado.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Ninja / Atrás da Tripla",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 4,
+      "spot_id": "ct_a_triple_jiggle",
+      "requested_position_role": "CT - Caixa Tripla (Jiggle)",
+      "target_name": "Caixa Tripla (Jiggle)",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "JIGGLE_INFO",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Jiggle no ombro para colher informação visual da rampa sem se comprometer.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Caixa Tripla (Jiggle)",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 5,
+      "spot_id": "ct_a_stairs_cross",
+      "requested_position_role": "CT - Degraus / Cabecinha",
+      "target_name": "Degraus / Cabecinha",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Marcação clássica cobrindo saída do Palácio e Rampa A.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Degraus / Cabecinha",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 6,
+      "spot_id": "ct_a_jungle_support",
+      "requested_position_role": "CT - Ligação / Jungle",
+      "target_name": "Ligação / Jungle",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Suporte de granadas e crossfire direto com o jogador dos degraus.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Ligação / Jungle",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 7,
+      "spot_id": "ct_a_palace_close_poke",
+      "requested_position_role": "CT - Debaixo do Palácio",
+      "target_name": "Debaixo do Palácio",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Pixel surpresa colado no palácio para punir entrada sem checagem profunda.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Debaixo do Palácio",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 8,
+      "spot_id": "ct_mid_window_crouch",
+      "requested_position_role": "CT - Janela Meio (Agachado)",
+      "target_name": "Janela Meio (Agachado)",
+      "team_side": "CT",
+      "sector": "Mid",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "JIGGLE_INFO",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Espia rápida no Top Mid com retorno para trás do tijolo se avistar fumaça.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Janela Meio (Agachado)",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 9,
+      "spot_id": "ct_mid_window_deep_awp",
+      "requested_position_role": "CT - Janela Fundo (AWP)",
+      "target_name": "Janela Fundo (AWP)",
+      "team_side": "CT",
+      "sector": "Mid",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Ângulo fechado profundo na janela segurando a passagem do Meio.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Janela Fundo (AWP)",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 10,
+      "spot_id": "ct_mid_connector_headshot",
+      "requested_position_role": "CT - Conector Degrau (Headshot)",
+      "target_name": "Conector Degrau (Headshot)",
+      "team_side": "CT",
+      "sector": "Mid",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Pixel de headshot protegendo a transição do Meio para a Ligação.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Conector Degrau (Headshot)",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 11,
+      "spot_id": "ct_mid_short_catwalk",
+      "requested_position_role": "CT - Short / Catwalk",
+      "target_name": "Short / Catwalk",
+      "team_side": "CT",
+      "sector": "Mid",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Pressão agressiva no L para impedir domínio de Meio e apoio ao Bomb B.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Short / Catwalk",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 12,
+      "spot_id": "ct_mid_underpass_peek",
+      "requested_position_role": "CT - Beco / Saída do Rato",
+      "target_name": "Beco / Saída do Rato",
+      "team_side": "CT",
+      "sector": "Mid",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "ONE_AND_DONE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Off-angle perigoso punindo o avanço silencioso pelo rato.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Beco / Saída do Rato",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 13,
+      "spot_id": "ct_b_van_peek",
+      "requested_position_role": "CT - Van B (Jiggle Peek)",
+      "target_name": "Van B (Jiggle Peek)",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "JIGGLE_INFO",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Jiggle rápido no para-brisa da Van para detectar rush de tapete.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Van B (Jiggle Peek)",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 14,
+      "spot_id": "ct_b_bench_deep",
+      "requested_position_role": "CT - Banco / Floreira B",
+      "target_name": "Banco / Floreira B",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Âncora sólida no fundo do Bomb B com proteção traseira e visão do tapete.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Banco / Floreira B",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 15,
+      "spot_id": "ct_b_site_default_crouch",
+      "requested_position_role": "CT - Caixa Plant B (Default)",
+      "target_name": "Caixa Plant B (Default)",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Segura a entrada agachado atrás da caixa central do Bomb B.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Caixa Plant B (Default)",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 16,
+      "spot_id": "ct_b_market_window",
+      "requested_position_role": "CT - Janela do Mercado B",
+      "target_name": "Janela do Mercado B",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Cobertura de retake e mira no pós-plant ou travessia do tapete.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Janela do Mercado B",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 17,
+      "spot_id": "ct_b_market_door",
+      "requested_position_role": "CT - Porta do Mercado B",
+      "target_name": "Porta do Mercado B",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Suporte lateral com ângulo cruzado na Van e no Banco.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Porta do Mercado B",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 18,
+      "spot_id": "ct_b_short_corner",
+      "requested_position_role": "CT - Canto do L (Short)",
+      "target_name": "Canto do L (Short)",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "ONE_AND_DONE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Pixel agressivo segurando quem pula da janela do tapete ou rusha da rampa do L.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Canto do L (Short)",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 19,
+      "spot_id": "ct_spawn_safe",
+      "requested_position_role": "CT - Recuo Seguro Base CT",
+      "target_name": "Recuo Seguro Base CT",
+      "team_side": "CT",
+      "sector": "CT Spawn",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Posição ultra segura para preservação de arma ou agrupamento de retake.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Recuo Seguro Base CT",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 20,
+      "spot_id": "ct_jungle_safe",
+      "requested_position_role": "CT - Recuo Seguro Jungle",
+      "target_name": "Recuo Seguro Jungle",
+      "team_side": "CT",
+      "sector": "Jungle",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Refúgio fechado com acesso à Janela e Base CT.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Recuo Seguro Jungle",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 21,
+      "spot_id": "tr_staging_a_ramp",
+      "requested_position_role": "TR - Staging: Rampa A / Caverna",
+      "target_name": "Staging: Rampa A / Caverna",
+      "team_side": "TR",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "JIGGLE_INFO",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Espera segura na entrada da rampa aguardando smokes de Cabecinha e CT.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Staging: Rampa A / Caverna",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 22,
+      "spot_id": "tr_staging_palace_room",
+      "requested_position_role": "TR - Staging: Sala do Palácio",
+      "target_name": "Staging: Sala do Palácio",
+      "team_side": "TR",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Posicionamento silencioso no interior do Palácio para sincronizar com a Rampa.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Staging: Sala do Palácio",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 23,
+      "spot_id": "tr_staging_top_mid_boxes",
+      "requested_position_role": "TR - Staging: Caixas Top Mid",
+      "target_name": "Staging: Caixas Top Mid",
+      "team_side": "TR",
+      "sector": "Mid",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "JIGGLE_INFO",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Controle de linha de visão com a Janela do Meio e Conector.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Staging: Caixas Top Mid",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 24,
+      "spot_id": "tr_staging_underpass_top",
+      "requested_position_role": "TR - Staging: Entrada do Rato",
+      "target_name": "Staging: Entrada do Rato",
+      "team_side": "TR",
+      "sector": "Mid",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Ponto de espera para infiltração simultânea no Meio e Rato.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Staging: Entrada do Rato",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 25,
+      "spot_id": "tr_staging_b_apartments_house",
+      "requested_position_role": "TR - Staging: Fundo dos Apartamentos B",
+      "target_name": "Staging: Fundo dos Apartamentos B",
+      "team_side": "TR",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Agrupamento tático no corredor de madeira do tapete B.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Staging: Fundo dos Apartamentos B",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 26,
+      "spot_id": "tr_staging_b_apartments_kitchen",
+      "requested_position_role": "TR - Staging: Cozinha do Tapete B",
+      "target_name": "Staging: Cozinha do Tapete B",
+      "team_side": "TR",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "JIGGLE_INFO",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Checagem do avanço de CTs antes do sinal de invasão ao Bomb B.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Staging: Cozinha do Tapete B",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 27,
+      "spot_id": "tr_staging_t_roof",
+      "requested_position_role": "TR - Staging: Telhado TR",
+      "target_name": "Staging: Telhado TR",
+      "team_side": "TR",
+      "sector": "Mid",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Posição elevada para lançamento de smokes táticas no Meio e A.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Staging: Telhado TR",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 28,
+      "spot_id": "tr_spawn_safe",
+      "requested_position_role": "TR - Recuo Seguro Base TR",
+      "target_name": "Recuo Seguro Base TR",
+      "team_side": "TR",
+      "sector": "TR Spawn",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Recuo seguro para manter posse de arma e reset de round.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Recuo Seguro Base TR",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 29,
+      "spot_id": "tr_exec_a_site_default",
+      "requested_position_role": "TR - Exec: Plant Default A",
+      "target_name": "Exec: Plant Default A",
+      "team_side": "TR",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Invasão com foco em plantar a C4 na quina default do Bomb A.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Exec: Plant Default A",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 30,
+      "spot_id": "tr_exec_a_triple_clear",
+      "requested_position_role": "TR - Exec: Limpeza Tripla A",
+      "target_name": "Exec: Limpeza Tripla A",
+      "team_side": "TR",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Entrada de choque limpando a caixa tripla e a quina do Ninja.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Exec: Limpeza Tripla A",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 31,
+      "spot_id": "tr_exec_a_stairs_clear",
+      "requested_position_role": "TR - Exec: Domínio Degraus / Jungle",
+      "target_name": "Exec: Domínio Degraus / Jungle",
+      "team_side": "TR",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Corte de rotações vindas da Jungle e Conector.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Exec: Domínio Degraus / Jungle",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 32,
+      "spot_id": "tr_exec_mid_connector_push",
+      "requested_position_role": "TR - Exec: Avanço Conector Meio",
+      "target_name": "Exec: Avanço Conector Meio",
+      "team_side": "TR",
+      "sector": "Mid",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Split agressivo entrando pelo conector para isolar a defesa do A.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Exec: Avanço Conector Meio",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 33,
+      "spot_id": "tr_exec_b_site_plant",
+      "requested_position_role": "TR - Exec: Plant Default B",
+      "target_name": "Exec: Plant Default B",
+      "team_side": "TR",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Invasão fulminante ao Bomb B para garantir plant default.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Exec: Plant Default B",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 34,
+      "spot_id": "tr_exec_b_van_clear",
+      "requested_position_role": "TR - Exec: Limpeza da Van B",
+      "target_name": "Exec: Limpeza da Van B",
+      "team_side": "TR",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Abertura direta na Van e floreira para eliminar o âncora do B.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Exec: Limpeza da Van B",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 35,
+      "spot_id": "tr_exec_b_market_push",
+      "requested_position_role": "TR - Exec: Pressão Janela/Porta Mercado",
+      "target_name": "Exec: Pressão Janela/Porta Mercado",
+      "team_side": "TR",
+      "sector": "Bombsite B",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Corte da rotação dos CTs vindos pelo mercado.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Exec: Pressão Janela/Porta Mercado",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 36,
+      "spot_id": "ct_retake_a_connector",
+      "requested_position_role": "CT - Retake A: Conector",
+      "target_name": "Retake A: Conector",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Staging, Retake",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Retake A via Conector",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Retake A: Conector",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 37,
+      "spot_id": "ct_retake_a_stairs",
+      "requested_position_role": "CT - Retake A: Degraus / Jungle",
+      "target_name": "Retake A: Degraus / Jungle",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Staging, Retake",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Retake A via Degraus / Jungle",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Retake A: Degraus / Jungle",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 38,
+      "spot_id": "ct_retake_a_jungle",
+      "requested_position_role": "CT - Retake A: Selva",
+      "target_name": "Retake A: Selva",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Staging, Retake",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Retake A via Selva",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Retake A: Selva",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 39,
+      "spot_id": "ct_retake_a_ticket",
+      "requested_position_role": "CT - Retake A: CT Spawn / Cabine",
+      "target_name": "Retake A: CT Spawn / Cabine",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Staging, Retake",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Retake A via Ticket",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Retake A: CT Spawn / Cabine",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 40,
+      "spot_id": "ct_retake_a_defuse_cover",
+      "requested_position_role": "CT - Retake A: Defuse Cover Site",
+      "target_name": "Retake A: Defuse Cover Site",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Execute, Defuse, Retake",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Retake A defuse cover no bombsite",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Retake A: Defuse Cover Site",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 41,
+      "spot_id": "ct_retake_b_market",
+      "requested_position_role": "CT - Retake B: Mercado / Cozinha",
+      "target_name": "Retake B: Mercado / Cozinha",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "B",
+      "usage": "Staging, Retake",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Retake B via Mercado",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Retake B: Mercado / Cozinha",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 42,
+      "spot_id": "ct_retake_b_short",
+      "requested_position_role": "CT - Retake B: Catwalk / L",
+      "target_name": "Retake B: Catwalk / L",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "B",
+      "usage": "Staging, Retake",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Retake B via Short",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Retake B: Catwalk / L",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 43,
+      "spot_id": "ct_retake_b_entry",
+      "requested_position_role": "CT - Retake B: Entrada do Site",
+      "target_name": "Retake B: Entrada do Site",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "B",
+      "usage": "Execute, Retake",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Retake B entrada principal",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Retake B: Entrada do Site",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 44,
+      "spot_id": "ct_retake_b_defuse_cover",
+      "requested_position_role": "CT - Retake B: Cobertura Defuse",
+      "target_name": "Retake B: Cobertura Defuse",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "B",
+      "usage": "Execute, Defuse, Retake",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "AGGRESSIVE_POKE",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Retake B defuse cover",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Retake B: Cobertura Defuse",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    },
+    {
+      "queue_index": 45,
+      "spot_id": "ct_retake_b_awp_cover",
+      "requested_position_role": "CT - Retake B: Suporte AWP",
+      "target_name": "Retake B: Suporte AWP",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "B",
+      "usage": "Staging, Retake, FlankWatch",
+      "allowed_roles": [
+        "Anchor",
+        "Rotator"
+      ],
+      "recommended_stance": "PASSIVE_HOLD",
+      "categories": [
+        "STANDARD"
+      ],
+      "objective": "Retake B suporte AWP Mercado",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "primary",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ângulo principal de visada para Retake B: Suporte AWP",
+          "trigger": "None"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "secondary",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Ângulo de checagem secundária / suporte",
+          "trigger": "EnemyContact"
+        }
+      ],
+      "questions_for_user": [
+        "A visada está livre de obstrução?",
+        "A cobertura física protege contra o flanco esperado?"
+      ],
+      "validation_requirements": [
+        "Posição finita e no solo",
+        "Trace maior que 128 unidades"
+      ]
+    }
+  ]
+}

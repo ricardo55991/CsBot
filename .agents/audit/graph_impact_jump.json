@@ -1,0 +1,439 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T17:47:20.534073+00:00",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "graph_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+  "graph_exists": true,
+  "dry_run": false,
+  "data_nature": "INFERRED",
+  "workspace_files_nature": "REAL",
+  "verdict": "PASS",
+  "required_attributes": [
+    "entry_points",
+    "writers",
+    "readers",
+    "authoritative_state",
+    "fallbacks",
+    "caches",
+    "side_effects",
+    "telemetry",
+    "tests",
+    "blast_radius"
+  ],
+  "total_flows_analyzed": 1,
+  "flows": {
+    "ONNX Jump request -> JumpExecutionGate -> usercmd": {
+      "flow_name": "ONNX Jump request -> JumpExecutionGate -> usercmd",
+      "data_nature": "INFERRED",
+      "entry_points": [
+        "src/CsBotManager/JumpExecutionGate.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/MicroMoveEngine.cs",
+        "src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "entry_points_verified": [
+        {
+          "path": "src/CsBotManager/JumpExecutionGate.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\JumpExecutionGate.cs",
+          "exists": true,
+          "sha256": "55e2ff88b2e13aad3739219ba6b7b2697f9da7b8e84ccc1e199ff4102637259d",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/BotLocomotionDriver.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+          "exists": true,
+          "sha256": "7a5b9115cfa1239adcf8576093639e06f27f525f435e3fdac2d74da777b92d0b",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/MicroMoveEngine.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+          "exists": true,
+          "sha256": "e1f56099938355fdf2a90018c42e1c2b2575caf55dec16987dcab105428f1954",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/CsBotManagerPlugin.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+          "exists": true,
+          "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb",
+          "data_nature": "REAL"
+        }
+      ],
+      "writers": [
+        "src/CsBotManager/MicroMoveEngine.cs (decisão de micro-movimento e requisição de pulo)",
+        "src/CsBotManager/JumpExecutionGate.cs (avaliação e filtragem de permissão de pulo)"
+      ],
+      "readers": [
+        "src/CsBotManager/BotLocomotionDriver.cs (aplicação de botões/usercmd de locomoção)",
+        "src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "authoritative_state": [
+        "src/CsBotManager/JumpExecutionGate.cs (cooldown, validação contextual e gate de execução de pulo)"
+      ],
+      "fallbacks": [
+        "src/CsBotManager/JumpExecutionGate.cs (bloqueio determinístico de pulo quando fora das condições seguras)"
+      ],
+      "caches": [
+        "src/CsBotManager/JumpExecutionGate.cs (estado temporal do último pulo por bot)"
+      ],
+      "side_effects": [
+        "Emissão ou supressão do comando físico de pulo em src/CsBotManager/BotLocomotionDriver.cs"
+      ],
+      "telemetry": [
+        "src/CsBotManager/CsBotManagerPlugin.cs (telemetria de decisões e bloqueios do JumpExecutionGate)"
+      ],
+      "tests": [
+        "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+        "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+        "tests/CsBotManager.Tests/Phase17SemanticAndJumpTests.cs",
+        "tests/CsBotManager.Tests/Phase2DatasetInvariantsTests.cs",
+        "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs"
+      ],
+      "tests_verified": [],
+      "blast_radius": [
+        "src/CsBotManager/JumpExecutionGate.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/MovementArbitrator.cs"
+      ],
+      "workspace_verification": {
+        "data_nature": "REAL",
+        "matched_source_files_count": 21,
+        "matched_source_files": [
+          {
+            "file": "src/CsBotManager/BotLocomotionDriver.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CombatAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CombatAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/ContextualSmokeAndAudioBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\ContextualSmokeAndAudioBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CsBotManagerPlugin.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtDefenseController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtDefenseController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtRetakeAndDefuseBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtRetakeAndDefuseBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/EconomyManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\EconomyManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/JumpExecutionGate.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\JumpExecutionGate.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "JumpExecutionGate"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MatchTelemetryLogger.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MatchTelemetryLogger.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MicroMoveEngine.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MidRoundAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MobilityController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MobilityController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MovementArbitrator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MovementArbitrator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/PacingAndFallbackController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\PacingAndFallbackController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/SiteClearAndPlantController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\SiteClearAndPlantController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/SpotTestRunner.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\SpotTestRunner.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TacticalCatalogs/MirageTacticalCatalog.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TacticalCatalogs\\MirageTacticalCatalog.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TrackerMetricsAggregator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TrackerMetricsAggregator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TrMacroPivotController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TrMacroPivotController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/UtilityAndClockCoordinator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\UtilityAndClockCoordinator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "matched_test_files_count": 12,
+        "matched_test_files": [
+          {
+            "file": "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementArbitrationAndStuckTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementExecutionTrackerTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine",
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase17SemanticAndJumpTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase17SemanticAndJumpTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "JumpExecutionGate"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2DatasetInvariantsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2DatasetInvariantsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2ForensicAuditTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2TrainingInputsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2TrainingInputsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/RoundLifecycleTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\RoundLifecycleTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/TickDeltaAndAppliedIntentTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\TickDeltaAndAppliedIntentTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_4_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_4_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MicroMoveEngine"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_6_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_6_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_8_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Jump",
+              "JumpExecutionGate"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_ComprehensiveTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "BotLocomotionDriver"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "graphify": {
+          "graph_json_present": true,
+          "graph_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+          "graph_sha256": "7a09693f1f6568803fa7f2ae7a0286cbe38c09f3900d08b96c6538f4eaa264f0",
+          "total_graph_nodes": 2627,
+          "matched_nodes_count": 193,
+          "sample_matched_nodes": [
+            "src_csbotmanager_botlocomotiondriver_cs_concurrentdictionary",
+            "src_csbotmanager_botlocomotiondriver_cs_ibotcontrollerapi",
+            "src_csbotmanager_botlocomotiondriver_cs_bool",
+            "src_csbotmanager_botlocomotiondriver_cs_vector",
+            "src_csbotmanager_botlocomotiondriver_cs_float",
+            "src_csbotmanager_botlocomotiondriver_cs_ccsplayercontroller",
+            "src_csbotmanager_botlocomotiondriver_cs_csteam",
+            "src_csbotmanager_micromoveengine_cs_list",
+            "src_csbotmanager_micromoveengine_cs_ccsplayercontroller",
+            "src_csbotmanager_micromoveengine_cs_concurrentdictionary",
+            "src_csbotmanager_micromoveengine_cs_int",
+            "src_csbotmanager_micromoveengine_cs_string",
+            "src_csbotmanager_micromoveengine_cs_random",
+            "src_csbotmanager_micromoveengine_cs_object",
+            "src_csbotmanager_micromoveengine_cs_float"
+          ]
+        }
+      },
+      "all_10_attributes_present": true,
+      "missing_attributes": []
+    }
+  }
+}

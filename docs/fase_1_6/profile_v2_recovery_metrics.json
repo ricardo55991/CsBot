@@ -1,0 +1,70 @@
+{
+  "RecoveryStarted": 35,
+  "RecoverySucceeded": 35,
+  "RecoveryFailed": 0,
+  "RecoveryStage2": 0,
+  "RecoveryStage3": 0,
+  "RepeatedRecoverySameSlot": {
+    "8": 1,
+    "1": 6,
+    "3": 4,
+    "9": 4,
+    "7": 4,
+    "5": 5,
+    "4": 5,
+    "6": 3,
+    "2": 2,
+    "10": 1
+  },
+  "RecoveryBySpotId": {
+    "ct_a_jungle_support": 6,
+    "tr_staging_b_apartments_house": 6,
+    "tr_staging_a_ramp": 3,
+    "ct_a_ticket_passive": 4,
+    "ct_mid_connector_headshot": 1,
+    "ct_a_stairs_cross": 3,
+    "ct_b_market_window": 4,
+    "ct_jungle_safe": 3,
+    "tr_staging_b_apartments_kitchen": 1,
+    "tr_staging_t_roof": 1,
+    "ct_b_bench_deep": 1,
+    "tr_spawn_safe": 1,
+    "tr_staging_top_mid_boxes": 1
+  },
+  "RecoveryByClassification": {
+    "RecoveryAtSpotDestination_le_85u": 0,
+    "RecoveryEnRouteToDestination_gt_85u": 35
+  },
+  "CorrectedSpotsAudit": {
+    "TotalRecoveriesAssociatedWithCorrectedSpots": 21,
+    "Breakdown": {
+      "ct_a_ticket_passive": 4,
+      "ct_a_firebox_oneanddone": 0,
+      "ct_a_ninja_hide": 0,
+      "ct_a_triple_jiggle": 0,
+      "ct_a_stairs_cross": 3,
+      "ct_a_jungle_support": 6,
+      "ct_a_palace_close_poke": 0,
+      "ct_mid_window_crouch": 0,
+      "ct_mid_window_deep_awp": 0,
+      "ct_mid_connector_headshot": 1,
+      "ct_mid_short_catwalk": 0,
+      "ct_mid_underpass_peek": 0,
+      "ct_b_van_peek": 0,
+      "ct_b_market_window": 4,
+      "ct_spawn_safe": 0,
+      "tr_staging_a_ramp": 3,
+      "tr_staging_palace_room": 0,
+      "tr_staging_underpass_top": 0,
+      "ct_retake_a_connector": 0,
+      "ct_retake_a_jungle": 0
+    },
+    "RecoveriesOccurringAtSpotCoordinates": 0,
+    "ConcentratesTwoOrMoreAtSpotDestination": false,
+    "RecoveryLoopDetected": false,
+    "GeometryBlocksDetected": 0,
+    "SystematicFailureDetected": false
+  },
+  "AuditVerdict": "PASSED_WITH_NO_SPOT_GEOMETRY_CONCENTRATION",
+  "TechnicalExplanation": "Todas as 35 ocorrências de SPOT_RECOVERY foram acionadas enquanto os bots transitavam em longas distâncias pelo mapa (distância remanescente mínima de 295.6u, média de ~1100u, originadas em CT Spawn, TR Spawn e corredores de ligação). Zero ocorrências ocorreram no destino físico do spot (distância <= 85u). Nenhum spot corrigido apresentou armadilha geométrica."
+}

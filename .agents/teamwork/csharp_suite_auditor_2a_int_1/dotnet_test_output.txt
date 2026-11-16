@@ -1,0 +1,8 @@
+  Determinando os projetos a serem restaurados...
+  Todos os projetos estão atualizados para restauração.
+  CsBotManager -> C:\Users\ricar\OneDrive\Documentos\Dev\CsBot\src\CsBotManager\bin\Debug\net10.0\CsBotManager.dll
+  CsBotManager.Tests -> C:\Users\ricar\OneDrive\Documentos\Dev\CsBot\tests\CsBotManager.Tests\bin\Debug\net10.0\CsBotManager.Tests.dll
+Execução de teste para C:\Users\ricar\OneDrive\Documentos\Dev\CsBot\tests\CsBotManager.Tests\bin\Debug\net10.0\CsBotManager.Tests.dll (.NETCoreApp,Version=v10.0)
+1 arquivos de teste no total corresponderam ao padrão especificado.
+
+Aprovado!  – Com falha:     0, Aprovado:   340, Ignorado:     0, Total:   340, Duração: 8 s - CsBotManager.Tests.dll (net10.0)

@@ -18,8 +18,9 @@ public enum MovementIntentSource
     CounterStrafe = 4,
     EmergencyFallback = 5,
     TradeSpacing = 6,
-    MicroMove = 7,
-    TacticalNavigation = 8
+    TeamDeparturePassiveHold = 7,
+    MicroMove = 8,
+    TacticalNavigation = 9
 }
 
 public enum MovementCommandKind
@@ -144,6 +145,7 @@ public sealed class MovementArbitrator
     public BotSystemConfig Config { get; set; } = BotSystemConfig.Default;
     public MatchTelemetryLogger? TelemetryLogger { get; set; }
     public Func<BombObjectiveState?>? GetActiveBombObjectiveState { get; set; }
+    public MovementAuthorityLeaseManager? LeaseManager { get; set; }
 
     public const int MaxQueuedIntentsPerSlot = 8;
 
@@ -152,6 +154,13 @@ public sealed class MovementArbitrator
     private readonly ConcurrentDictionary<int, ArbitratedMovementDecision> _lastDecisionsBySlot = new();
     private readonly ConcurrentDictionary<int, long> _activeUsercmdHandleBySlot = new();
     private readonly ConcurrentDictionary<int, int> _lastAppliedTickBySlot = new();
+    private readonly ConcurrentDictionary<int, int> _lastCanaryJumpTickBySlot = new();
+    private readonly ConcurrentDictionary<int, int> _unconsumedAppliedCanaryJumpTickBySlot = new();
+
+    public bool TryConsumeAppliedCanaryJumpTick(int slot, out int appliedTick)
+    {
+        return _unconsumedAppliedCanaryJumpTickBySlot.TryRemove(slot, out appliedTick);
+    }
     private readonly ConcurrentDictionary<int, float> _lastConflictLogTimeBySlot = new();
     private readonly ConcurrentDictionary<int, float> _lastQueueFullWarnTimeBySlot = new();
 
@@ -444,7 +453,12 @@ public sealed class MovementArbitrator
         }
 
         // Se a fase já é Resolved, Applied ou Closed, chamada genérica para PublishIntent após a resolução é rejeitada (Adendo 5)
-        return QueueForNextTick(intent, CurrentGameTick, effectiveRoundId, IntentPublishChannel.UnexpectedAfterResolution);
+        // Em testes unitários de janela de arbitragem (CurrentInternalRoundId > 0), chamadas no mesmo tick após CloseCollectionWindow são UnexpectedAfterResolution.
+        // Fora do ciclo de tick (timers/eventos da engine com CurrentGameTick == 0 ou entre ticks), enfileira para o próximo tick.
+        var channel = (CurrentInternalRoundId > 0 && intent.GameTick == CurrentGameTick)
+            ? IntentPublishChannel.UnexpectedAfterResolution
+            : IntentPublishChannel.ExpectedBetweenTicks;
+        return QueueForNextTick(intent, CurrentGameTick, effectiveRoundId, channel);
     }
 
     public void CloseCollectionWindow()
@@ -535,6 +549,47 @@ public sealed class MovementArbitrator
                 };
             }
             return null;
+        }
+
+        // Se o slot possui MovementAuthorityLease ativo (Opening Route Canary) e estamos em modo isolado,
+        // suprime todas as intenções concorrentes que não sejam do Canary (Path A - Ownership autoritativo)
+        if (LeaseManager != null && LeaseManager.IsSlotLeasedByCanary(botSlot) &&
+            LeaseManager.GetIsolationMode() != CanaryIsolationMode.BaselineNoIsolation)
+        {
+            var canaryCandidates = candidates.Where(c =>
+                c.Reason.StartsWith("OpeningCanary", StringComparison.OrdinalIgnoreCase)).ToList();
+
+            int activeRound = LeaseManager.ActiveLease?.RoundId ?? 1;
+            foreach (var comp in candidates.Except(canaryCandidates))
+            {
+                LeaseManager.AllowCompetingWriter(
+                    activeRound,
+                    botSlot,
+                    gameTick,
+                    $"Arbitrator:{comp.Source}",
+                    $"{comp.Kind}:{comp.Reason}");
+                float[] compGoal = (comp.GoalX.HasValue && comp.GoalY.HasValue && comp.GoalZ.HasValue)
+                    ? new[] { MathF.Round(comp.GoalX.Value, 1), MathF.Round(comp.GoalY.Value, 1), MathF.Round(comp.GoalZ.Value, 1) }
+                    : Array.Empty<float>();
+                LeaseManager.RecordGoalWriteAudit(
+                    writerId: $"Arbitrator:{comp.Source}",
+                    tick: gameTick,
+                    roundId: activeRound,
+                    botSlot: botSlot,
+                    tickPhase: "ARBITRATION_COLLECT",
+                    previousGoal: Array.Empty<float>(),
+                    newGoal: compGoal,
+                    reason: $"{comp.Kind}:{comp.Reason}",
+                    leaseActive: true,
+                    writeAccepted: false,
+                    writeSuppressed: true);
+            }
+
+            if (canaryCandidates.Count == 0)
+            {
+                return null;
+            }
+            candidates = canaryCandidates;
         }
 
         // Ordena deterministicamente: menor Source (maior prioridade) -> comando mais recente -> não-StandStill
@@ -632,8 +687,49 @@ public sealed class MovementArbitrator
         var bot = pawn?.Bot;
         if (pawn == null || bot == null) return true;
 
-        // 1. Gerencia UsercmdMovement ativo via BotControllerApi
-        if (intent.UseUsercmdVelocity && api != null)
+        bool isLeasedCanary = LeaseManager != null && LeaseManager.IsSlotLeasedByCanary(slot);
+        var isolationMode = LeaseManager?.GetIsolationMode() ?? CanaryIsolationMode.LeaseIsolated;
+
+        if (isLeasedCanary && isolationMode != CanaryIsolationMode.BaselineNoIsolation &&
+            !intent.Reason.StartsWith("OpeningCanary", StringComparison.OrdinalIgnoreCase))
+        {
+            int activeRound = LeaseManager?.ActiveLease?.RoundId ?? 1;
+            float[] compGoal = (intent.GoalX.HasValue && intent.GoalY.HasValue && intent.GoalZ.HasValue)
+                ? new[] { MathF.Round(intent.GoalX.Value, 1), MathF.Round(intent.GoalY.Value, 1), MathF.Round(intent.GoalZ.Value, 1) }
+                : Array.Empty<float>();
+            LeaseManager?.RecordGoalWriteAudit(
+                writerId: $"Arbitrator:{intent.Source}",
+                tick: tick,
+                roundId: activeRound,
+                botSlot: slot,
+                tickPhase: "APPLY_WINNING_INTENT",
+                previousGoal: new[] { MathF.Round(bot.GoalPosition[0], 1), MathF.Round(bot.GoalPosition[1], 1), MathF.Round(bot.GoalPosition[2], 1) },
+                newGoal: compGoal,
+                reason: $"SUPPRESSED_NON_CANARY:{intent.Kind}:{intent.Reason}",
+                leaseActive: true,
+                writeAccepted: false,
+                writeSuppressed: true);
+            return false;
+        }
+
+        if (isLeasedCanary && intent.GoalX.HasValue && intent.GoalY.HasValue && intent.GoalZ.HasValue)
+        {
+            LeaseManager?.RecordGoalWriteAudit(
+                writerId: "OPENING_ROUTE_CANARY",
+                tick: tick,
+                roundId: LeaseManager?.ActiveLease?.RoundId ?? 1,
+                botSlot: slot,
+                tickPhase: "APPLY_WINNING_INTENT",
+                previousGoal: new[] { MathF.Round(bot.GoalPosition[0], 1), MathF.Round(bot.GoalPosition[1], 1), MathF.Round(bot.GoalPosition[2], 1) },
+                newGoal: new[] { MathF.Round(intent.GoalX.Value, 1), MathF.Round(intent.GoalY.Value, 1), MathF.Round(intent.GoalZ.Value, 1) },
+                reason: intent.Reason,
+                leaseActive: true,
+                writeAccepted: true,
+                writeSuppressed: false);
+        }
+
+        // 1. Gerencia UsercmdMovement ativo via BotControllerApi (Proibido UsercmdVector contínuo no Canary - Seção 6)
+        if (intent.UseUsercmdVelocity && !isLeasedCanary && api != null)
         {
             if (_activeUsercmdHandleBySlot.TryGetValue(slot, out long oldHandle) && oldHandle != 0)
             {
@@ -666,12 +762,25 @@ public sealed class MovementArbitrator
             }
         }
 
-        // 2. Aplica botões (IN_JUMP, IN_DUCK, IN_SPEED, IN_USE) se solicitados
-        if (intent.Buttons != 0UL && api != null)
+        // 2. Aplica botões (IN_JUMP, IN_DUCK, IN_SPEED, IN_USE) — no Canary permite APENAS pulso único autorizado de STEP_UP
+        bool allowSingleCanaryJumpPulse = isLeasedCanary &&
+                                          (intent.Buttons & 0x2UL) != 0 &&
+                                          intent.Reason.Contains("TransitionStepUpJumpPulse", StringComparison.Ordinal) &&
+                                          (!_lastCanaryJumpTickBySlot.TryGetValue(slot, out int lastCanaryJumpTick) || (tick - lastCanaryJumpTick) >= 44);
+        if (allowSingleCanaryJumpPulse)
+        {
+            _lastCanaryJumpTickBySlot[slot] = tick;
+            _unconsumedAppliedCanaryJumpTickBySlot[slot] = tick;
+        }
+        ulong effectiveButtons = isLeasedCanary
+            ? (allowSingleCanaryJumpPulse ? intent.Buttons : (intent.Buttons & ~0x2UL))
+            : intent.Buttons;
+        if (effectiveButtons != 0UL && api != null)
         {
             try
             {
-                api.InjectUsercmd(slot, intent.Buttons, Math.Clamp(intent.ButtonsDurationMs, 50, 1000));
+                int durMs = allowSingleCanaryJumpPulse ? 32 : Math.Clamp(intent.ButtonsDurationMs, 50, 1000);
+                api.InjectUsercmd(slot, effectiveButtons, durMs);
             }
             catch { }
         }
@@ -691,8 +800,8 @@ public sealed class MovementArbitrator
             bot.WaitTimer.Timestamp = 0f;
         }
 
-        // 4. Aplica GoalPosition e Repath no NavMesh apenas se Scope não for LocalMicroMove (Ajuste 2)
-        if (intent.Scope != MovementScope.LocalMicroMove)
+        // 4. Aplica GoalPosition e Repath no NavMesh apenas se Scope não for LocalMicroMove e não for TeamDeparturePassiveHold
+        if (intent.Scope != MovementScope.LocalMicroMove && intent.Source != MovementIntentSource.TeamDeparturePassiveHold)
         {
             if (intent.GoalX.HasValue && intent.GoalY.HasValue && intent.GoalZ.HasValue)
             {
@@ -711,13 +820,31 @@ public sealed class MovementArbitrator
                 var valResult = MapPlayableBounds.ValidateGoal(worldGoal, currentOrigin, null, $"{intent.Source}:{intent.Kind}");
                 if (valResult.IsValid)
                 {
-                    bot.GoalPosition[0] = valResult.SanitizedGoal.X;
-                    bot.GoalPosition[1] = valResult.SanitizedGoal.Y;
-                    bot.GoalPosition[2] = valResult.SanitizedGoal.Z;
+                    if (isLeasedCanary && !intent.IsStopping &&
+                        (isolationMode == CanaryIsolationMode.LeaseIsolated || isolationMode == CanaryIsolationMode.ExternalPluginsDisabled))
+                    {
+                        NativeCcsBotLocomotionBridge.ApplyIsolatedMoveTo(
+                            controller,
+                            bot,
+                            slot,
+                            tick,
+                            valResult.SanitizedGoal.X,
+                            valResult.SanitizedGoal.Y,
+                            valResult.SanitizedGoal.Z,
+                            intent.ForceRepath,
+                            isolateExternalBotState: isolationMode == CanaryIsolationMode.LeaseIsolated,
+                            applyStepUpJumpImpulse: allowSingleCanaryJumpPulse);
+                    }
+                    else
+                    {
+                        bot.GoalPosition[0] = valResult.SanitizedGoal.X;
+                        bot.GoalPosition[1] = valResult.SanitizedGoal.Y;
+                        bot.GoalPosition[2] = valResult.SanitizedGoal.Z;
+                    }
                 }
             }
 
-            if (intent.ForceRepath || intent.Kind == MovementCommandKind.ReleaseHoldAndRepath)
+            if (!isLeasedCanary && (intent.ForceRepath || intent.Kind == MovementCommandKind.ReleaseHoldAndRepath))
             {
                 bot.RepathTimer.Timestamp = 0f;
             }
@@ -730,6 +857,12 @@ public sealed class MovementArbitrator
             bot.MustRunTimer.Duration = 2.5f;
             bot.MustRunTimer.Timestamp = intent.CurrentTime + 2.5f;
             bot.SneakTimer.Timestamp = 0f;
+        }
+        else if (isLeasedCanary)
+        {
+            // Impede que o CCSBot nativo puxe a faca de volta após a transição para arma principal
+            bot.HurryTimer.Timestamp = 0f;
+            bot.MustRunTimer.Timestamp = 0f;
         }
         else if (intent.Sneak)
         {

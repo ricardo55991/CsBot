@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T16:47:43.221709+00:00",
+  "report_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_real_tests\\sample_invalid_report.md",
+  "report_sha256": "ad9872a9de8e9ccc7cb2c07f14c9b557dfb245a461b42cbcf1ac8b7749d7f88c",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "dry_run": false,
+  "data_nature": "REAL",
+  "verdict": "FAIL",
+  "total_vectors_checked": 12,
+  "total_violations": 3,
+  "triggered_vectors": [
+    "zero_support_numeric_metrics",
+    "percentage_100_without_denominator",
+    "unauthorized_human_approval_claim"
+  ],
+  "vectors": {
+    "conflicting_numbers": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "unbacked_metrics": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "zero_support_numeric_metrics": {
+      "status": "FAIL",
+      "violation_count": 1,
+      "findings": [
+        {
+          "line": 3,
+          "content": "Classe SAVE: support=0, F1 = 0.92",
+          "detail": "Classe com support=0 exibindo métrica numérica em vez de 'N/A' (violação da regra 03-zero-support-is-na)."
+        }
+      ]
+    },
+    "incompatible_confusion_matrix": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "divergent_or_truncated_hashes": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "hardcoded_report_claims": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "templated_data_unlabeled": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "missing_declared_files": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "undiscovered_tests": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "test_set_used_in_tuning": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "percentage_100_without_denominator": {
+      "status": "FAIL",
+      "violation_count": 1,
+      "findings": [
+        {
+          "line": 4,
+          "content": "100% de acurácia sem denominador!",
+          "detail": "Afirmação de '100%' sem denominador explícito (N/N) na mesma linha."
+        }
+      ]
+    },
+    "unauthorized_human_approval_claim": {
+      "status": "FAIL",
+      "violation_count": 1,
+      "findings": [
+        {
+          "line": 5,
+          "seal": "APPROVED_BY_USER",
+          "content": "Status: APPROVED_BY_USER",
+          "detail": "Selo exclusivo humano 'APPROVED_BY_USER' utilizado sem registro de homologação humana verificável (violação da regra 05-human-review-integrity)."
+        }
+      ]
+    }
+  }
+}

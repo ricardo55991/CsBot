@@ -1,0 +1,757 @@
+{
+ "generated_by": "provenance_auditor_2a_int_1",
+ "read_only": true,
+ "B_professional_corpus": {
+  "references_total": 33,
+  "references_hash_and_size_match": 33,
+  "ratio": "(33/33)",
+  "all_match": true,
+  "reference_ids": [
+   "canonical_temporal_splits",
+   "corpus_manifest_v2",
+   "temporal_index_manifest",
+   "temporal_demo_inventory",
+   "temporal_excluded_demos",
+   "supervised_spot_mask",
+   "pilot_preservation_catalog",
+   "spot_catalog_53",
+   "spot_catalog_53_checksum",
+   "label_contract_v2",
+   "label_contract_v2_temporal_copy",
+   "temporal_shard_000",
+   "temporal_shard_001",
+   "temporal_shard_002",
+   "temporal_shard_003",
+   "temporal_shard_004",
+   "temporal_shard_005",
+   "label_sidecar_000",
+   "label_sidecar_001",
+   "label_sidecar_002",
+   "label_sidecar_003",
+   "label_sidecar_004",
+   "label_sidecar_005",
+   "canonical_temporal_dataloader",
+   "materialize_full_temporal_index",
+   "extract_16hz_tensors",
+   "mlmove_contract_spec",
+   "pause_marker",
+   "selected_candidate_marco_2b3",
+   "marco_2b3_evidence",
+   "marco_2b2_report",
+   "marco_2b1_report",
+   "pilot_subset_manifest"
+  ],
+  "shards_in_sample": [
+   "datasets/mirage_v2/positioning_v2_full_temporal/shard_000.parquet",
+   "datasets/mirage_v2/positioning_v2_full_temporal/shard_001.parquet",
+   "datasets/mirage_v2/positioning_v2_full_temporal/shard_002.parquet",
+   "datasets/mirage_v2/positioning_v2_full_temporal/shard_003.parquet",
+   "datasets/mirage_v2/positioning_v2_full_temporal/shard_004.parquet",
+   "datasets/mirage_v2/positioning_v2_full_temporal/shard_005.parquet"
+  ],
+  "sidecars_in_sample": [
+   "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_000_labels.parquet",
+   "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_001_labels.parquet",
+   "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_002_labels.parquet",
+   "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_003_labels.parquet",
+   "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_004_labels.parquet",
+   "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_005_labels.parquet"
+  ],
+  "shards_n": 6,
+  "sidecars_n": 6,
+  "rows": [
+   {
+    "reference_id": "canonical_temporal_splits",
+    "repo_relative_path": "datasets/mirage_v2/canonical_temporal_splits_v1.json",
+    "declared_size": 17364,
+    "actual_size": 17364,
+    "declared_sha256": "9bd9d18362601d5416a7cb3b0292b3c31d0054ffa16b14214d195f4c6d9b3918",
+    "actual_sha256": "9bd9d18362601d5416a7cb3b0292b3c31d0054ffa16b14214d195f4c6d9b3918",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "corpus_manifest_v2",
+    "repo_relative_path": "datasets/mirage_v2/dataset_manifest_v2.json",
+    "declared_size": 2684,
+    "actual_size": 2684,
+    "declared_sha256": "b38e4dc5b660585ecb5f1938f58898a5dbfbc3244e38400671a5caeab7820a37",
+    "actual_sha256": "b38e4dc5b660585ecb5f1938f58898a5dbfbc3244e38400671a5caeab7820a37",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "temporal_index_manifest",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/dataset_manifest.json",
+    "declared_size": 2670,
+    "actual_size": 2670,
+    "declared_sha256": "cd7d8ea2435e5b45936d869eb190eb9b0f32b6ee9f1bf45d7bba47cc8f8f6d4c",
+    "actual_sha256": "cd7d8ea2435e5b45936d869eb190eb9b0f32b6ee9f1bf45d7bba47cc8f8f6d4c",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "temporal_demo_inventory",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/demo_inventory.json",
+    "declared_size": 206964,
+    "actual_size": 206964,
+    "declared_sha256": "01d68490ff60098c4775b6f94156043c2474cffa10da9deb5743ccb31e4a450f",
+    "actual_sha256": "01d68490ff60098c4775b6f94156043c2474cffa10da9deb5743ccb31e4a450f",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "temporal_excluded_demos",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/excluded_demos_manifest.json",
+    "declared_size": 4125,
+    "actual_size": 4125,
+    "declared_sha256": "721a921204c472f1f9278e679c9bc6ade1b5b2f67bdd82a629084fa75b96433f",
+    "actual_sha256": "721a921204c472f1f9278e679c9bc6ade1b5b2f67bdd82a629084fa75b96433f",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "supervised_spot_mask",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/supervised_spot_mask_v1.json",
+    "declared_size": 15430,
+    "actual_size": 15430,
+    "declared_sha256": "56cc9263d383ba2b47878a7d66ca9770257775d63b67fcf5e582b05d7ddb3a7f",
+    "actual_sha256": "56cc9263d383ba2b47878a7d66ca9770257775d63b67fcf5e582b05d7ddb3a7f",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "pilot_preservation_catalog",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/pilot_preservation_catalog.json",
+    "declared_size": 659,
+    "actual_size": 659,
+    "declared_sha256": "60990c026548a2472fe63edaa1a1aa4a392b9fba6a7f42d37a6bf4472871253e",
+    "actual_sha256": "60990c026548a2472fe63edaa1a1aa4a392b9fba6a7f42d37a6bf4472871253e",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "spot_catalog_53",
+    "repo_relative_path": "datasets/mirage_v2/contracts/mirage_spot_catalog_v3.json",
+    "declared_size": 43151,
+    "actual_size": 43151,
+    "declared_sha256": "8248adc181a6341929f5d916d9ea98322cc8e791156201f8015563a0d8b293f9",
+    "actual_sha256": "8248adc181a6341929f5d916d9ea98322cc8e791156201f8015563a0d8b293f9",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "spot_catalog_53_checksum",
+    "repo_relative_path": "datasets/mirage_v2/contracts/mirage_spot_catalog_v3.sha256",
+    "declared_size": 95,
+    "actual_size": 95,
+    "declared_sha256": "92865cd293017e525ec862c0d57a49c369a647c8c0c8a655e09c7ee1130919ce",
+    "actual_sha256": "92865cd293017e525ec862c0d57a49c369a647c8c0c8a655e09c7ee1130919ce",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "label_contract_v2",
+    "repo_relative_path": "datasets/mirage_v2/contracts/label_contract_v2.json",
+    "declared_size": 5862,
+    "actual_size": 5862,
+    "declared_sha256": "85e0fcb6bcd01c2cbbb32da9c048167bf236796e138f136b063cadbe80fe7385",
+    "actual_sha256": "85e0fcb6bcd01c2cbbb32da9c048167bf236796e138f136b063cadbe80fe7385",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "label_contract_v2_temporal_copy",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/label_contract_v2.json",
+    "declared_size": 5862,
+    "actual_size": 5862,
+    "declared_sha256": "85e0fcb6bcd01c2cbbb32da9c048167bf236796e138f136b063cadbe80fe7385",
+    "actual_sha256": "85e0fcb6bcd01c2cbbb32da9c048167bf236796e138f136b063cadbe80fe7385",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "temporal_shard_000",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/shard_000.parquet",
+    "declared_size": 9837613,
+    "actual_size": 9837613,
+    "declared_sha256": "39ebbe19d9782ffba743d968517b8624530af2daa9375ece6ba742d648c6bebb",
+    "actual_sha256": "39ebbe19d9782ffba743d968517b8624530af2daa9375ece6ba742d648c6bebb",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "temporal_shard_001",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/shard_001.parquet",
+    "declared_size": 9814687,
+    "actual_size": 9814687,
+    "declared_sha256": "f849f724a67338c1d0158f6c407e615e6a9fa5d1faa675779eb1d8125ad27e6a",
+    "actual_sha256": "f849f724a67338c1d0158f6c407e615e6a9fa5d1faa675779eb1d8125ad27e6a",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "temporal_shard_002",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/shard_002.parquet",
+    "declared_size": 9840915,
+    "actual_size": 9840915,
+    "declared_sha256": "619e0416f779ba6a9aedeb6b34d380469e72e89557bf7c67eff5cfafaaab8d5a",
+    "actual_sha256": "619e0416f779ba6a9aedeb6b34d380469e72e89557bf7c67eff5cfafaaab8d5a",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "temporal_shard_003",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/shard_003.parquet",
+    "declared_size": 9811017,
+    "actual_size": 9811017,
+    "declared_sha256": "546f0df72594e80b5bc8780be17b06ed2876a38bbccbc367adfdee776d2f0612",
+    "actual_sha256": "546f0df72594e80b5bc8780be17b06ed2876a38bbccbc367adfdee776d2f0612",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "temporal_shard_004",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/shard_004.parquet",
+    "declared_size": 9852670,
+    "actual_size": 9852670,
+    "declared_sha256": "a79d189b18ad1f7cc71d6ead3f4528cde3371d10cbea81193cb7f1337a1a7166",
+    "actual_sha256": "a79d189b18ad1f7cc71d6ead3f4528cde3371d10cbea81193cb7f1337a1a7166",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "temporal_shard_005",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/shard_005.parquet",
+    "declared_size": 9769907,
+    "actual_size": 9769907,
+    "declared_sha256": "7aec90a0b5d40570b0aee2a52e9080cc802486f7955686b68453c2c093d10b70",
+    "actual_sha256": "7aec90a0b5d40570b0aee2a52e9080cc802486f7955686b68453c2c093d10b70",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "label_sidecar_000",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_000_labels.parquet",
+    "declared_size": 3342453,
+    "actual_size": 3342453,
+    "declared_sha256": "804ae845e505768117aab5a6aa4bcbdfe3e8d49ad6ee229432bbf7d5c81647c1",
+    "actual_sha256": "804ae845e505768117aab5a6aa4bcbdfe3e8d49ad6ee229432bbf7d5c81647c1",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "label_sidecar_001",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_001_labels.parquet",
+    "declared_size": 3338546,
+    "actual_size": 3338546,
+    "declared_sha256": "a3396445214af56d2f5abff1448e9d3adfb2682eb01e1ce34210438d40738db8",
+    "actual_sha256": "a3396445214af56d2f5abff1448e9d3adfb2682eb01e1ce34210438d40738db8",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "label_sidecar_002",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_002_labels.parquet",
+    "declared_size": 3327900,
+    "actual_size": 3327900,
+    "declared_sha256": "7b7a3b3dfd185634dae61b5b5a18ff4d8361c8d8f5fea03a51e894a37c59569e",
+    "actual_sha256": "7b7a3b3dfd185634dae61b5b5a18ff4d8361c8d8f5fea03a51e894a37c59569e",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "label_sidecar_003",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_003_labels.parquet",
+    "declared_size": 3335465,
+    "actual_size": 3335465,
+    "declared_sha256": "aca89bd064027102821e0b08c2ad10387a3d38d31d9833de75dbcbd1577ffa63",
+    "actual_sha256": "aca89bd064027102821e0b08c2ad10387a3d38d31d9833de75dbcbd1577ffa63",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "label_sidecar_004",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_004_labels.parquet",
+    "declared_size": 3339685,
+    "actual_size": 3339685,
+    "declared_sha256": "beb1f3848dd21035faed69de1fb6ee6197114adb929a6ad5ed06be345da0a9a8",
+    "actual_sha256": "beb1f3848dd21035faed69de1fb6ee6197114adb929a6ad5ed06be345da0a9a8",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "label_sidecar_005",
+    "repo_relative_path": "datasets/mirage_v2/positioning_v2_full_temporal/label_sidecar_v2/shard_005_labels.parquet",
+    "declared_size": 3342312,
+    "actual_size": 3342312,
+    "declared_sha256": "d77849c7e2b30af4c115ff1a877a86216389b7adbfcf01c0d0cb4f9361710d8f",
+    "actual_sha256": "d77849c7e2b30af4c115ff1a877a86216389b7adbfcf01c0d0cb4f9361710d8f",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "canonical_temporal_dataloader",
+    "repo_relative_path": "tools/phase3a_training/canonical_temporal_dataloader.py",
+    "declared_size": 24058,
+    "actual_size": 24058,
+    "declared_sha256": "83c6d16e3f06ca7ec569b74fb3d8a766bdb289dc5cffe081f4d8fcb89173e0ed",
+    "actual_sha256": "83c6d16e3f06ca7ec569b74fb3d8a766bdb289dc5cffe081f4d8fcb89173e0ed",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "materialize_full_temporal_index",
+    "repo_relative_path": "tools/phase3a_training/materialize_full_temporal_index.py",
+    "declared_size": 56135,
+    "actual_size": 56135,
+    "declared_sha256": "ed6201e24eb84e3985c4d77a09eae48c00a21976fcf359d25e01e05f2cf6d6e0",
+    "actual_sha256": "ed6201e24eb84e3985c4d77a09eae48c00a21976fcf359d25e01e05f2cf6d6e0",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "extract_16hz_tensors",
+    "repo_relative_path": "tools/mlmove_pipeline/extract_16hz_tensors.py",
+    "declared_size": 13417,
+    "actual_size": 13417,
+    "declared_sha256": "7ee913baf023d078eafe7c0bb28cd6e86607a9392c34d080f2702cd9cebffee2",
+    "actual_sha256": "7ee913baf023d078eafe7c0bb28cd6e86607a9392c34d080f2702cd9cebffee2",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "mlmove_contract_spec",
+    "repo_relative_path": "tools/mlmove_pipeline/contract_spec.py",
+    "declared_size": 8111,
+    "actual_size": 8111,
+    "declared_sha256": "1587cd31a4744e70246ab9fd59869a01da58d6eecf31661f6a485f3c919a4664",
+    "actual_sha256": "1587cd31a4744e70246ab9fd59869a01da58d6eecf31661f6a485f3c919a4664",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "pause_marker",
+    "repo_relative_path": "training_runs/positioning_v2_real_temporal/PAUSED_FOR_INTERMEDIATE_DOMAIN_ACQUISITION_STUDY.json",
+    "declared_size": 37114,
+    "actual_size": 37114,
+    "declared_sha256": "465f4cb93e41cbc50fb86a8fb9e2544b901633e8d0282ee0a31fe9db9813efad",
+    "actual_sha256": "465f4cb93e41cbc50fb86a8fb9e2544b901633e8d0282ee0a31fe9db9813efad",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "selected_candidate_marco_2b3",
+    "repo_relative_path": "training_runs/positioning_v2_real_temporal/full_training/selected_candidate.pt",
+    "declared_size": 19022035,
+    "actual_size": 19022035,
+    "declared_sha256": "4bcf26a04ec57d7d87132bba43bcd2be5cd5426471a46ae37dad33a38365e352",
+    "actual_sha256": "4bcf26a04ec57d7d87132bba43bcd2be5cd5426471a46ae37dad33a38365e352",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "marco_2b3_evidence",
+    "repo_relative_path": "training_runs/positioning_v2_real_temporal/full_training/milestone_2b3_evidence_matrix.json",
+    "declared_size": 12089,
+    "actual_size": 12089,
+    "declared_sha256": "bc53c4bd45d535628323821f2519174587cac3baac729b9291a7434c268c5b28",
+    "actual_sha256": "bc53c4bd45d535628323821f2519174587cac3baac729b9291a7434c268c5b28",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "marco_2b2_report",
+    "repo_relative_path": "training_runs/positioning_v2_real_temporal/marco_2b2_final_report.md",
+    "declared_size": 25414,
+    "actual_size": 25414,
+    "declared_sha256": "8354e2df649ec37c54b1f195bd9638612de46a8be53bffc7ccbbf1e3c9dd9573",
+    "actual_sha256": "8354e2df649ec37c54b1f195bd9638612de46a8be53bffc7ccbbf1e3c9dd9573",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "marco_2b1_report",
+    "repo_relative_path": "training_runs/positioning_v2_real_temporal/marco_2b1_final_report.md",
+    "declared_size": 26179,
+    "actual_size": 26179,
+    "declared_sha256": "79999b88f08fe5e1284c4f88c73a3a98c871bbebe2dd7e163cc153ddcba7c81d",
+    "actual_sha256": "79999b88f08fe5e1284c4f88c73a3a98c871bbebe2dd7e163cc153ddcba7c81d",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   },
+   {
+    "reference_id": "pilot_subset_manifest",
+    "repo_relative_path": "training_runs/positioning_v2_real_temporal/pilot_subset_manifest.json",
+    "declared_size": 8595,
+    "actual_size": 8595,
+    "declared_sha256": "9258426b03ee7279fdff334908af8aaa448876bd5e4121b288488f0732d10cc4",
+    "actual_sha256": "9258426b03ee7279fdff334908af8aaa448876bd5e4121b288488f0732d10cc4",
+    "size_match": true,
+    "hash_match": true,
+    "exists": true
+   }
+  ],
+  "mirage_v2_enumeration": {
+   "files": 176,
+   "bytes": 102952120
+  },
+  "full_training": {
+   "n_files": 57,
+   "files_nonzero": 57,
+   "ratio_nonzero": "(57/57)"
+  }
+ },
+ "B_professional_dir_only_readme": {
+  "entries": [
+   "README.md"
+  ],
+  "only_readme": true
+ },
+ "C_no_fabrication": {
+  "manifests": [
+   {
+    "path": "datasets/mirage_domains/intermediate_competitive/intermediate_demo_inventory_v1.json",
+    "top_keys": [
+     "manifest_name",
+     "manifest_version",
+     "schema_version",
+     "phase",
+     "spec_section",
+     "produced_by_role",
+     "review_status",
+     "verification_label",
+     "generated_utc",
+     "domain_id",
+     "map_name",
+     "data_nature",
+     "acquisition_status",
+     "acquisition_status_source",
+     "empty_corpus_declaration",
+     "record_count",
+     "records",
+     "expected_pilot_target",
+     "accounting",
+     "schema",
+     "acceptance_and_exclusion_criteria_applied",
+     "steamid_pseudonymization_policy",
+     "rank_policy_reference",
+     "blockers",
+     "blockers_source",
+     "cross_references",
+     "build_tool_relationship",
+     "governance_notes"
+    ],
+    "record_lists": {
+     "records": 0
+    },
+    "all_records_empty": true,
+    "numerator_fields": [
+     [
+      "accounting.numerator",
+      0
+     ],
+     [
+      "acceptance_and_exclusion_criteria_applied.numerator",
+      0
+     ]
+    ],
+    "denominator_fields": [
+     [
+      "accounting.denominator",
+      0
+     ],
+     [
+      "acceptance_and_exclusion_criteria_applied.denominator",
+      0
+     ]
+    ],
+    "ratio_fields": [],
+    "zero_counts": [],
+    "nonzero_counts": []
+   },
+   {
+    "path": "datasets/mirage_domains/intermediate_competitive/intermediate_npz_manifest_v1.json",
+    "top_keys": [
+     "manifest_name",
+     "manifest_version",
+     "schema_version",
+     "phase",
+     "spec_section",
+     "produced_by_role",
+     "review_status",
+     "verification_label",
+     "generated_utc",
+     "domain_id",
+     "map_name",
+     "status",
+     "status_reason",
+     "data_nature",
+     "record_count",
+     "npz_count",
+     "records",
+     "accounting",
+     "npz_tensor_contract",
+     "validations",
+     "hard_requirements",
+     "zero_synthetic_history",
+     "dem_vs_npz_comparison",
+     "reused_pipeline_reference",
+     "parser_reference",
+     "blockers",
+     "blockers_source",
+     "cross_references",
+     "governance_notes"
+    ],
+    "record_lists": {
+     "records": 0
+    },
+    "all_records_empty": true,
+    "numerator_fields": [
+     [
+      "accounting.numerator",
+      0
+     ],
+     [
+      "zero_synthetic_history.numerator",
+      0
+     ],
+     [
+      "dem_vs_npz_comparison.numerator",
+      0
+     ]
+    ],
+    "denominator_fields": [
+     [
+      "accounting.denominator",
+      0
+     ],
+     [
+      "zero_synthetic_history.denominator",
+      0
+     ],
+     [
+      "dem_vs_npz_comparison.denominator",
+      0
+     ]
+    ],
+    "ratio_fields": [],
+    "zero_counts": [],
+    "nonzero_counts": []
+   },
+   {
+    "path": "datasets/mirage_domains/intermediate_competitive/pilot_download_manifest.json",
+    "top_keys": [
+     "manifest_name",
+     "manifest_version",
+     "phase",
+     "spec_section",
+     "produced_by_role",
+     "review_status",
+     "verification_label",
+     "generated_utc",
+     "domain_id",
+     "map_name",
+     "dry_run",
+     "dry_run_is_default",
+     "execute_mode_available",
+     "execute_block_reason",
+     "downloads_attempted",
+     "downloads_completed",
+     "downloads_failed",
+     "bytes_downloaded",
+     "files_written_to_raw_demos",
+     "files_written_to_archives",
+     "network_requests_executed",
+     "accounting",
+     "signed_urls_persisted",
+     "secrets_persisted",
+     "resume_state",
+     "resume_state_note",
+     "source_authorization_status",
+     "source_authorization_detail",
+     "pilot_targets",
+     "allowlist_domains",
+     "network_policy",
+     "signed_url_policy",
+     "credential_policy",
+     "audit_log_policy",
+     "quarantine_policy",
+     "pilot_execution_plan",
+     "blockers",
+     "blockers_source",
+     "downloader_reference",
+     "cross_references",
+     "governance_notes"
+    ],
+    "record_lists": {},
+    "all_records_empty": null,
+    "numerator_fields": [
+     [
+      "accounting.numerator",
+      0
+     ]
+    ],
+    "denominator_fields": [
+     [
+      "accounting.denominator",
+      0
+     ]
+    ],
+    "ratio_fields": [],
+    "zero_counts": [],
+    "nonzero_counts": []
+   },
+   {
+    "path": "datasets/mirage_domains/intermediate_competitive/quarantine_manifest.json",
+    "top_keys": [
+     "manifest_name",
+     "manifest_version",
+     "phase",
+     "spec_section",
+     "produced_by_role",
+     "review_status",
+     "verification_label",
+     "generated_utc",
+     "domain_id",
+     "map_name",
+     "status",
+     "status_reason",
+     "quarantine_directory",
+     "directory_scan",
+     "record_count",
+     "records",
+     "total_quarantined",
+     "bytes_quarantined",
+     "accounting",
+     "deletion_policy",
+     "quarantine_reason_schema",
+     "record_schema",
+     "blockers",
+     "blockers_source",
+     "cross_references",
+     "governance_notes"
+    ],
+    "record_lists": {
+     "records": 0
+    },
+    "all_records_empty": true,
+    "numerator_fields": [
+     [
+      "accounting.numerator",
+      0
+     ]
+    ],
+    "denominator_fields": [
+     [
+      "accounting.denominator",
+      0
+     ]
+    ],
+    "ratio_fields": [],
+    "zero_counts": [],
+    "nonzero_counts": []
+   }
+  ]
+ },
+ "D_domain_contract": {
+  "top_keys": [
+   "contract_version",
+   "schema_version",
+   "contract_name",
+   "phase",
+   "generated_at_utc",
+   "produced_by_role",
+   "review_status",
+   "description",
+   "scope_note",
+   "domains",
+   "subdomains",
+   "rank_conversion_policy",
+   "faceit_buckets",
+   "valve_competitive_candidates",
+   "valve_premier_policy",
+   "excluded_from_primary_corpus",
+   "mandatory_fields",
+   "mandatory_fields_count",
+   "mandatory_fields_count_note",
+   "demo_acceptance_criteria",
+   "demo_exclusion_criteria",
+   "steamid_pseudonymization_policy",
+   "cross_references",
+   "governance_notes"
+  ],
+  "domains_present": {
+   "PROFESSIONAL": true,
+   "INTERMEDIATE_COMPETITIVE": true,
+   "UNKNOWN": true
+  },
+  "subdomains_present": {
+   "PROFESSIONAL_HLTV": true,
+   "FACEIT_LEVEL_5_6": true,
+   "FACEIT_LEVEL_7_8": true,
+   "FACEIT_LEVEL_9_10": true,
+   "VALVE_COMPETITIVE_MAP_RANK": true,
+   "VALVE_PREMIER_RATING": true,
+   "VALVE_OPT_IN_UNKNOWN_RANK": true
+  },
+  "fields": {
+   "domain_id": true,
+   "platform": true,
+   "rank_system": true,
+   "skill_level": true,
+   "elo_or_rating": true,
+   "rank_at_collection_time": true,
+   "rank_at_match_time_if_available": true,
+   "map_specific_rank": true,
+   "map_name": true,
+   "match_date": true,
+   "region": true,
+   "source": true,
+   "source_license": true,
+   "acquisition_method": true,
+   "consent_type": true,
+   "metadata_confidence": true,
+   "exclusion_reason": true
+  },
+  "fields_ratio": "(17/17)",
+  "faceit_1_4_excluded_mention": 0,
+  "premier_status_mentions": [
+   "NOT_DEFINED_PENDING_DISTRIBUTION_AUDIT",
+   "NOT_DEFINED_PENDING_DISTRIBUTION_AUDIT",
+   "NOT_DEFINED_PENDING_DISTRIBUTION_AUDIT"
+  ]
+ }
+}

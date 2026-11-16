@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T16:47:42.920271+00:00",
+  "dry_run": false,
+  "data_nature": "REAL",
+  "total_evidences": 2,
+  "valid_evidences": 2,
+  "invalid_evidences": 0,
+  "validation_errors": [],
+  "evidences": [
+    {
+      "evidence_id": "EV-001",
+      "artifact_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\AGENTS.md",
+      "sha256": "dfc29fac7d3953f33c3ee3329d878a2f427d1da6268d88e5b928b338518694af",
+      "reproducible_command": "python .agents/skills/csbot-phase-gate/scripts/run_phase_gate.py --workspace-root \"C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\"",
+      "aggregation_formula": "count(valid_hashed_files) / count(declared_input_files) = 2/2",
+      "data_nature": "REAL",
+      "valid": true,
+      "issues": []
+    },
+    {
+      "evidence_id": "EV-002",
+      "artifact_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills.json",
+      "sha256": "2f9471e01ffd7af746412d11494e0930a4d0ca96bd7d573214e645260fea3a31",
+      "reproducible_command": "python .agents/skills/csbot-phase-gate/scripts/run_phase_gate.py --workspace-root \"C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\"",
+      "aggregation_formula": "count(valid_hashed_files) / count(declared_input_files) = 2/2",
+      "data_nature": "REAL",
+      "valid": true,
+      "issues": []
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+ "inventory": ".agents/teamwork/orchestrator_2a_intermediate/ARTIFACT_INVENTORY.md",
+ "rows": 57,
+ "matches": 57,
+ "ratio": "(57/57)",
+ "bytes_checked": 3021280,
+ "divergences": [],
+ "classes": {
+  "DELIVERABLE": 32,
+  "SUPPORT": 9,
+  "TRANSIENT_CACHE": 5,
+  "TEST": 1,
+  "EVIDENCE_CACHE_RECAPTURED": 10
+ }
+}

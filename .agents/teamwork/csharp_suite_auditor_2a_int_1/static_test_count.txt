@@ -1,0 +1,26 @@
+﻿EconomyAndIglTests.cs | Fact=5 Theory=0 InlineData=0 SkipAttrs=0
+GeographyAndPivotTests.cs | Fact=3 Theory=0 InlineData=0 SkipAttrs=0
+MovementArbitrationAndStuckTests.cs | Fact=7 Theory=0 InlineData=0 SkipAttrs=0
+MovementExecutionTrackerTests.cs | Fact=16 Theory=0 InlineData=0 SkipAttrs=0
+OllamaIntegrationDiagnosticTests.cs | Fact=4 Theory=0 InlineData=0 SkipAttrs=0
+OrganicRushesAndFakesTests.cs | Fact=10 Theory=0 InlineData=0 SkipAttrs=0
+Phase17SemanticAndJumpTests.cs | Fact=17 Theory=0 InlineData=0 SkipAttrs=0
+Phase2DatasetInvariantsTests.cs | Fact=4 Theory=0 InlineData=0 SkipAttrs=0
+Phase2ForensicAuditTests.cs | Fact=25 Theory=0 InlineData=0 SkipAttrs=0
+Phase2TrainingInputsTests.cs | Fact=20 Theory=0 InlineData=0 SkipAttrs=0
+RoundLifecycleTests.cs | Fact=8 Theory=0 InlineData=0 SkipAttrs=0
+TelemetryAndDamageTests.cs | Fact=7 Theory=0 InlineData=0 SkipAttrs=0
+TickDeltaAndAppliedIntentTests.cs | Fact=11 Theory=1 InlineData=2 SkipAttrs=0
+V4_2_2_FinalAdjustmentsTests.cs | Fact=10 Theory=0 InlineData=0 SkipAttrs=0
+V4_2_4_PrecisionTests.cs | Fact=28 Theory=0 InlineData=0 SkipAttrs=0
+V4_2_5_PrecisionTests.cs | Fact=30 Theory=0 InlineData=0 SkipAttrs=0
+V4_2_6_PrecisionTests.cs | Fact=15 Theory=0 InlineData=0 SkipAttrs=0
+V4_2_7_PrecisionTests.cs | Fact=13 Theory=0 InlineData=0 SkipAttrs=0
+V4_2_8_PrecisionTests.cs | Fact=26 Theory=0 InlineData=0 SkipAttrs=0
+V4_2_9_MirageV2ProfileTests.cs | Fact=7 Theory=0 InlineData=0 SkipAttrs=0
+V4_2_ComprehensiveTests.cs | Fact=33 Theory=0 InlineData=0 SkipAttrs=0
+V4_2_DeepValidationTests.cs | Fact=17 Theory=1 InlineData=10 SkipAttrs=0
+V4_3_UtilityAiIglTests.cs | Fact=6 Theory=1 InlineData=6 SkipAttrs=0
+=== TOTALS ===
+Fact=322 Theory=3 InlineData=18 SkipAttrs=0
+STATIC_DISCOVERED_MIN (Fact+InlineData) = 340

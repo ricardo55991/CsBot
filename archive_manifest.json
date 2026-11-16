@@ -1,0 +1,6 @@
+{
+  "schema": "csbot.archive_manifest.v1",
+  "governance_version": "1.2.0-lean",
+  "archived_items": [],
+  "note": "Nenhum arquivo historico foi movido para archive/ sem autorizacao expressa; todos os historicos foram preservados in situ sob KEEP_HISTORICAL."
+}

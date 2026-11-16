@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T16:47:04.062268+00:00",
+  "data_nature": "SIMULATED",
+  "no_test_contamination_verified": true,
+  "checkpoint_comparison": {
+    "selection_split": "val",
+    "test_set_used_for_selection": false,
+    "candidates": [
+      {
+        "checkpoint": "epoch_12.pt",
+        "val_macro_f1": 0.812,
+        "selected": true
+      },
+      {
+        "checkpoint": "epoch_10.pt",
+        "val_macro_f1": 0.794,
+        "selected": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,849 @@
+<USER_REQUEST>
+# FASE 1.7: NORMALIZAÇÃO SEMÂNTICA DO PERFIL MIRAGE V2 E HOMOLOGAÇÃO VISUAL HUMANA
+
+## OBJETIVO
+
+O perfil Mirage V2 já passou por:
+
+- inventário de 444 arquivos NPZ;
+- análise de 13.676 rounds profissionais;
+- clustering espacial;
+- correção controlada de 20 spots críticos;
+- testes físicos A/B no servidor dedicado;
+- 274 testes unitários aprovados;
+- partida normal de cinco rounds;
+- reconciliação entre perfil, runtime e documentação.
+
+Os spots corrigidos já estão aprovados como base espacial para o dataset V2.
+
+Entretanto, antes da Fase 2, ainda precisamos:
+
+1. auditar os chokepoints antigos do perfil;
+2. uniformizar os metadados dos 45 spots;
+3. atribuir confiança e status de validação;
+4. instrumentar o `JumpExecutionGate`;
+5. gerar evidências visuais dos oito spots mais sensíveis;
+6. permitir que o usuário faça a aprovação humana olhando screenshots reais do CS2.
+
+Esta fase não deve iniciar treinamento.
+
+Esta fase não deve alterar o ONNX.
+
+Esta fase não deve alterar automaticamente as coordenadas dos 20 spots já homologados.
+
+Esta fase não deve preencher decisões humanas automaticamente.
+
+---
+
+# 1. REGRAS DE ESCOPO
+
+## Não alterar
+
+Não alterar:
+
+- ONNX atual;
+- Utility AI;
+- `MovementArbitrator`;
+- `MicroMoveEngine`;
+- economia;
+- C4;
+- retake;
+- recovery;
+- probabilidades táticas;
+- coordenadas dos 20 spots corrigidos;
+- coordenadas dos 12 `SMALL_ADJUSTMENT`;
+- coordenadas dos 6 `INSUFFICIENT_EVIDENCE`.
+
+## Permitido alterar
+
+Pode alterar somente:
+
+- metadados semânticos do perfil;
+- schema dos spots;
+- estruturas de confiança;
+- instrumentação de Jump;
+- documentação;
+- ferramentas de auditoria;
+- scripts de geração de imagens e relatórios;
+- testes relacionados a esta fase.
+
+## Não fazer
+
+Não:
+
+- treinar Transformer;
+- gerar dataset definitivo ainda;
+- alterar chokepoints automaticamente;
+- promover spot de baixa confiança sem evidência;
+- preencher `APPROVED_BY_USER`;
+- declarar inspeção humana sem confirmação do usuário;
+- criar screenshots sintéticas;
+- usar minimapa desenhado como substituto de screenshot do jogo;
+- editar coordenadas para melhorar visualmente as screenshots.
+
+---
+
+# 2. AUDITAR CHOKEPOINTS DO PERFIL
+
+O `de_mirage.json` ainda possui chokepoints potencialmente baseados em coordenadas antigas.
+
+Auditar individualmente:
+
+    caverna
+    palacio
+    janela_meio
+    conector
+    catwalk
+    tapete_b
+    underpass
+
+Para cada chokepoint, gerar:
+
+    ChokepointId
+    CurrentPosition
+    ValvePlaceName
+    ExpectedLandmark
+    RelatedSpotIds
+    DistanceToRelatedV2Spots
+    BoundsValid
+    NavMeshValid
+    EvidenceCount
+    UniqueDemos
+    UniquePlayers
+    MedianProfessionalPosition
+    MedoidProfessionalPosition
+    ProposedPosition
+    Classification
+    Confidence
+    DecisionReason
+
+Classificações possíveis:
+
+    VALID_REGION_CENTER
+    WRONG_SECTOR
+    WRONG_HEIGHT
+    AMBIGUOUS_REGION_CENTER
+    INSUFFICIENT_EVIDENCE
+
+## Regra importante
+
+Um chokepoint representa uma região de passagem ou gargalo.
+
+Um chokepoint não precisa possuir a mesma coordenada de um spot de hold ou staging.
+
+Exemplo:
+
+    tr_staging_a_ramp
+
+pode representar uma posição segura de preparação.
+
+    chokepoint_caverna
+
+pode representar o ponto de passagem ou entrada da Rampa.
+
+Não copiar automaticamente a coordenada do staging para o chokepoint.
+
+## Dados para clustering
+
+Para chokepoints, usar:
+
+- trajetórias;
+- passagens;
+- entradas;
+- transições;
+- pontos com variação de direção;
+- concentração de jogadores atravessando o gargalo.
+
+Não usar apenas holds.
+
+## Saída
+
+Criar:
+
+    docs/fase_1_7/mirage_chokepoint_audit.json
+    docs/fase_1_7/mirage_chokepoint_change_proposal.md
+
+Não aplicar as propostas nesta fase.
+
+---
+
+# 3. NORMALIZAR O SCHEMA DOS 45 SPOTS
+
+Garantir que todos os spots possuam explicitamente:
+
+    id
+    name
+    sector
+    side
+    associated_bombsite
+    usage
+    allowed_roles
+    x
+    y
+    z
+    pitch
+    yaw
+    recommended_stance
+    is_off_angle
+    fallback_spot_id
+    confidence
+    validation_status
+
+## Enums tipados
+
+### side
+
+    CounterTerrorist
+    Terrorist
+
+### associated_bombsite
+
+    None
+    A
+    B
+    Mid
+    Dynamic
+
+### usage
+
+    Spawn
+    Staging
+    Execute
+    Hold
+    Fallback
+    Plant
+    Retake
+    Lurk
+    Cover
+    FlankWatch
+    Defuse
+    Save
+
+### confidence
+
+    HIGH
+    MEDIUM
+    LOW
+
+### validation_status
+
+    PROFESSIONAL_CLUSTER_VALIDATED
+    PIPELINE_GEOMETRY_VALIDATED
+    RUNTIME_LOCAL_VALIDATED
+    RUNTIME_OBSERVED
+    RUNTIME_NOT_OBSERVED
+    INSUFFICIENT_EVIDENCE
+    PENDING_HUMAN_REVIEW
+    APPROVED_BY_USER
+    REJECTED_BY_USER
+
+## Regras
+
+Não inferir:
+
+- `side` pelo prefixo `ct_` ou `tr_`;
+- bombsite pela presença de `A` ou `B` no nome;
+- `usage` pelo nome;
+- papel permitido por substring;
+- confiança pelo fato de o JSON carregar sem erros.
+
+Os campos devem estar armazenados explicitamente.
+
+## Compatibilidade
+
+Se o runtime atual usa nomes de propriedades diferentes:
+
+- manter aliases de leitura temporários;
+- gerar migração compatível;
+- não criar segunda fonte de estado;
+- não alterar a semântica das propriedades existentes;
+- documentar o mapeamento antigo → novo.
+
+## Saída
+
+Criar:
+
+    docs/fase_1_7/mirage_uniform_spot_schema.json
+    docs/fase_1_7/mirage_profile_schema_migration.md
+
+---
+
+# 4. ATRIBUIR CONFIANÇA AOS SPOTS
+
+A confiança deve considerar:
+
+- número de frames;
+- número de episódios;
+- número de demos;
+- diversidade de jogadores;
+- diversidade de times;
+- diversidade de eventos;
+- cluster profissional;
+- validação geométrica;
+- teste local no CS2;
+- observação em partida normal;
+- revisão humana.
+
+## HIGH
+
+Permitir `HIGH` somente quando houver combinação forte, por exemplo:
+
+- cluster profissional válido;
+- Runtime local aprovado;
+- metadados coerentes;
+- posição dentro de bounds;
+- NavMesh válido;
+- evidência em múltiplas demos.
+
+## MEDIUM
+
+Usar quando:
+
+- posição tecnicamente válida;
+- evidência profissional moderada;
+- runtime local aprovado;
+- ainda não observada em partida normal;
+- ou revisão humana pendente.
+
+## LOW
+
+Usar quando:
+
+- evidência insuficiente;
+- cluster fraco;
+- poucas demos;
+- posição não observada;
+- sem revisão visual;
+- sem validação física suficiente.
+
+## Regras especiais
+
+Os 19 spots não observados na partida normal não podem receber:
+
+    RUNTIME_OBSERVED
+
+Os 6 spots `INSUFFICIENT_EVIDENCE` devem permanecer `LOW` ou, no máximo, `MEDIUM` com justificativa explícita.
+
+Os 12 `SMALL_ADJUSTMENT` continuam com a coordenada atual.
+
+Não promover automaticamente os 20 spots corrigidos para `APPROVED_BY_USER`.
+
+## Saída
+
+Criar:
+
+    docs/fase_1_7/mirage_spot_confidence_report.md
+    docs/fase_1_7/mirage_spot_confidence.json
+
+---
+
+# 5. INSTRUMENTAR O JUMPEXECUTIONGATE
+
+O relatório anterior declarou:
+
+    JUMP_METRICS_NOT_INSTRUMENTED
+
+Portanto, não existem métricas forenses suficientes para concluir quantitativamente que houve zero spam de Jump.
+
+Adicionar eventos estruturados:
+
+    JUMP_REQUESTED
+    JUMP_EXECUTED
+    JUMP_SUPPRESSED_AIRBORNE
+    JUMP_SUPPRESSED_COOLDOWN
+    JUMP_SUPPRESSED_CONTEXT
+    JUMP_SUPPRESSED_NO_JUMP_ZONE
+    JUMP_LANDED
+    REPEATED_JUMP_SEQUENCE_DETECTED
+
+Campos obrigatórios:
+
+    InternalRoundId
+    OfficialRoundNumber
+    Tick
+    Slot
+    Team
+    Role
+    Source
+    JumpReason
+    Grounded
+    Airborne
+    Falling
+    LastJumpTick
+    LastLandingTick
+    CooldownRemaining
+    Allowed
+    SuppressionReason
+    Position
+    Velocity2D
+    VelocityZ
+    TacticId
+    PlanStage
+
+## Não alterar lógica
+
+Não modificar:
+
+- cooldown;
+- edge trigger;
+- regras de grounded;
+- supressão airborne;
+- regras de contexto;
+- interação com recovery.
+
+Somente instrumentar.
+
+## Deduplicação
+
+Não registrar o mesmo evento em todos os ticks.
+
+Registrar:
+
+- solicitação única;
+- decisão única;
+- execução única;
+- landing;
+- supressão como episódio.
+
+## Resumo
+
+Gerar ao final:
+
+    JumpRequested
+    JumpExecuted
+    JumpSuppressedAirborne
+    JumpSuppressedCooldown
+    JumpSuppressedContext
+    JumpSuppressedNoJumpZone
+    RepeatedJumpSequences
+    AirborneReissueExecuted
+    JumpByReason
+    JumpByRole
+    JumpByTactic
+    JumpBySector
+
+Critérios futuros:
+
+    RepeatedJumpSequences = 0
+    AirborneReissueExecuted = 0
+
+## Bunny hop
+
+Não implementar bunny hop.
+
+Não expor bunny hop como ação.
+
+Se detectar sequência compatível:
+
+    REPEATED_JUMP_SEQUENCE_DETECTED
+
+O gate deve impedir a execução da sequência.
+
+## Saída
+
+Criar:
+
+    docs/fase_1_7/jump_gate_instrumentation_spec.md
+    docs/fase_1_7/jump_gate_event_schema.json
+
+---
+
+# 6. GERAR EVIDÊNCIA VISUAL REAL PARA O USUÁRIO
+
+O usuário precisa homologar visualmente os oito spots pendentes.
+
+A evidência deve ser produzida no CS2 real, no mapa `de_mirage`.
+
+## Spots obrigatórios
+
+    ct_a_ticket_passive
+    ct_a_firebox_oneanddone
+    ct_a_ninja_hide
+    ct_mid_window_crouch
+    ct_b_van_peek
+    tr_staging_a_ramp
+    tr_staging_palace_room
+    ct_retake_a_connector
+
+## Fonte dos comandos
+
+Ler automaticamente:
+
+    docs/fase_1_6/profile_v2_human_review_checklist.md
+
+ou o arquivo canônico equivalente.
+
+Não redigitar coordenadas manualmente.
+
+Confirmar que a posição lida é igual ao `de_mirage.json` implantado.
+
+Se divergir:
+
+    EVIDENCE_COORDINATE_MISMATCH
+
+Não gerar a imagem até reconciliar o relatório.
+
+## Processo por spot
+
+Para cada spot:
+
+1. iniciar o CS2 em modo offline ou servidor adequado;
+2. carregar `de_mirage`;
+3. executar exatamente o `setpos`;
+4. executar exatamente o `setang`;
+5. aguardar a câmera estabilizar;
+6. capturar screenshot em primeira pessoa;
+7. capturar screenshot externa ou aérea;
+8. registrar timestamp;
+9. registrar coordenada usada;
+10. registrar ângulo usado;
+11. preservar a imagem original;
+12. não aplicar crop que esconda a localização;
+13. não aplicar filtros;
+14. não desenhar uma posição que não foi capturada.
+
+## Screenshot em primeira pessoa
+
+Precisa mostrar:
+
+- ângulo vigiado;
+- cobertura;
+- exposição;
+- landmark;
+- altura;
+- linha de mira.
+
+Nome:
+
+    01_ct_a_ticket_passive_first_person.png
+
+## Screenshot externa ou aérea
+
+Precisa mostrar:
+
+- localização no mapa;
+- relação com caixas e paredes;
+- bombsite ou setor;
+- posição em relação ao cover;
+- altura;
+- orientação aproximada.
+
+Nome:
+
+    01_ct_a_ticket_passive_external.png
+
+## Repetir para os oito spots
+
+Total obrigatório:
+
+    16 screenshots
+
+## Não preencher a decisão
+
+Cada spot terá:
+
+    UserDecision = PENDING_HUMAN_REVIEW
+    UserNote = ""
+
+Valores que somente o usuário pode escolher:
+
+    APPROVED_BY_USER
+    APPROVED_BY_USER_WITH_NOTE
+    REJECTED_BY_USER
+
+O pipeline não pode escolher esses valores.
+
+---
+
+# 7. MONTAR O RELATÓRIO VISUAL
+
+Criar:
+
+    docs/fase_1_7/profile_v2_visual_homologation_report.md
+
+Para cada spot, incluir:
+
+    SpotId
+    Name
+    Sector
+    Side
+    AssociatedBombsite
+    Usage
+    AllowedRoles
+    Confidence
+    ValidationStatus
+    Position
+    Angles
+    ProfileSha256
+    ScreenshotFirstPerson
+    ScreenshotExternal
+    UserDecision
+    UserNote
+
+Modelo:
+
+    ## ct_a_ticket_passive
+
+    Position:
+    [-1011.5, -2479.9, -168.0]
+
+    Angles:
+    [0.0, 60.0, 0.0]
+
+    First-person screenshot:
+    <imagem>
+
+    External screenshot:
+    <imagem>
+
+    UserDecision:
+    PENDING_HUMAN_REVIEW
+
+    UserNote:
+
+## O que o usuário avaliará
+
+O relatório deve informar ao usuário que a avaliação contém somente quatro perguntas:
+
+1. O spot está no landmark correto?
+2. O bot está apoiado corretamente, sem flutuar ou entrar na geometria?
+3. A posição oferece a cobertura coerente com o uso?
+4. O ângulo aponta para a entrada ou linha que deveria vigiar?
+
+Não exigir que o usuário valide:
+
+- NavMesh;
+- hash;
+- bounds;
+- clustering;
+- parser;
+- coordenadas numéricas;
+- contratos internos.
+
+Esses itens são responsabilidade técnica do pipeline.
+
+---
+
+# 8. GERAR UM CHECKLIST CURTO PARA RESPOSTA
+
+Criar:
+
+    docs/fase_1_7/profile_v2_user_decision_template.md
+
+Conteúdo:
+
+    Ticket:
+    APPROVED_BY_USER / APPROVED_BY_USER_WITH_NOTE / REJECTED_BY_USER
+    Note:
+
+    Firebox:
+    APPROVED_BY_USER / APPROVED_BY_USER_WITH_NOTE / REJECTED_BY_USER
+    Note:
+
+    Ninja:
+    APPROVED_BY_USER / APPROVED_BY_USER_WITH_NOTE / REJECTED_BY_USER
+    Note:
+
+    Window:
+    APPROVED_BY_USER / APPROVED_BY_USER_WITH_NOTE / REJECTED_BY_USER
+    Note:
+
+    Van:
+    APPROVED_BY_USER / APPROVED_BY_USER_WITH_NOTE / REJECTED_BY_USER
+    Note:
+
+    Ramp:
+    APPROVED_BY_USER / APPROVED_BY_USER_WITH_NOTE / REJECTED_BY_USER
+    Note:
+
+    Palace:
+    APPROVED_BY_USER / APPROVED_BY_USER_WITH_NOTE / REJECTED_BY_USER
+    Note:
+
+    Retake Connector:
+    APPROVED_BY_USER / APPROVED_BY_USER_WITH_NOTE / REJECTED_BY_USER
+    Note:
+
+Não preencher.
+
+---
+
+# 9. TESTES OBRIGATÓRIOS
+
+Adicionar testes:
+
+1. `AllSpotsHaveUniformSemanticSchema`
+2. `NoSpotInfersSideFromPrefix`
+3. `NoSpotInfersBombsiteFromSubstring`
+4. `AllChokepointsInsidePlayableBounds`
+5. `ChokepointRegionMayDifferFromHoldSpot`
+6. `LowConfidenceSpotCannotBeSoleNeuralTarget`
+7. `RuntimeObservedRequiresTelemetryEvidence`
+8. `JumpRequestProducesOneTerminalEvent`
+9. `AirborneJumpRequestIsSuppressed`
+10. `RepeatedJumpSequenceIsDetected`
+11. `RepeatedJumpSequenceIsNotExecuted`
+12. `VisualEvidencePositionMatchesProfile`
+13. `VisualEvidenceContainsTwoImagesPerSpot`
+14. `PipelineCannotApproveHumanReview`
+15. `HumanDecisionDefaultsToPending`
+16. `InsufficientEvidenceCoordinatesRemainUnchanged`
+17. `SmallAdjustmentCoordinatesRemainUnchanged`
+
+Executar:
+
+    dotnet clean CsBot.slnx
+    dotnet restore CsBot.slnx
+    dotnet build CsBot.slnx -c Release --nologo
+    dotnet test CsBot.slnx -c Release --no-build --nologo
+
+Exigir:
+
+    discovered >= 274
+    failed = 0
+    skipped = 0
+
+Executar também os testes Python da pipeline.
+
+Informar:
+
+    comando
+    arquivos de teste
+    discovered
+    passed
+    failed
+    skipped
+    warnings
+    duração
+
+---
+
+# 10. ENTREGÁVEIS
+
+Criar:
+
+    docs/fase_1_7/mirage_chokepoint_audit.json
+    docs/fase_1_7/mirage_chokepoint_change_proposal.md
+    docs/fase_1_7/mirage_uniform_spot_schema.json
+    docs/fase_1_7/mirage_profile_schema_migration.md
+    docs/fase_1_7/mirage_spot_confidence.json
+    docs/fase_1_7/mirage_spot_confidence_report.md
+    docs/fase_1_7/jump_gate_instrumentation_spec.md
+    docs/fase_1_7/jump_gate_event_schema.json
+    docs/fase_1_7/profile_v2_visual_homologation_report.md
+    docs/fase_1_7/profile_v2_user_decision_template.md
+    docs/fase_1_7/fase_1_7_final_report.md
+
+Criar diretório de screenshots:
+
+    docs/fase_1_7/screenshots/
+
+Com exatamente:
+
+    01_ct_a_ticket_passive_first_person.png
+    01_ct_a_ticket_passive_external.png
+
+    02_ct_a_firebox_oneanddone_first_person.png
+    02_ct_a_firebox_oneanddone_external.png
+
+    03_ct_a_ninja_hide_first_person.png
+    03_ct_a_ninja_hide_external.png
+
+    04_ct_mid_window_crouch_first_person.png
+    04_ct_mid_window_crouch_external.png
+
+    05_ct_b_van_peek_first_person.png
+    05_ct_b_van_peek_external.png
+
+    06_tr_staging_a_ramp_first_person.png
+    06_tr_staging_a_ramp_external.png
+
+    07_tr_staging_palace_room_first_person.png
+    07_tr_staging_palace_room_external.png
+
+    08_ct_retake_a_connector_first_person.png
+    08_ct_retake_a_connector_external.png
+
+---
+
+# 11. DECISÃO TÉCNICA
+
+Após concluir a parte técnica, responder:
+
+    MIRAGE_SEMANTIC_PROFILE_READY_FOR_PHASE_2_PENDING_HUMAN_REVIEW
+
+somente se:
+
+- chokepoints foram auditados;
+- schema foi uniformizado;
+- confiança foi registrada;
+- spots pendentes não foram promovidos indevidamente;
+- Jump foi instrumentado;
+- testes passaram;
+- 16 screenshots foram geradas;
+- coordenadas das screenshots correspondem ao perfil;
+- decisões humanas permanecem pendentes.
+
+Não responder:
+
+    MIRAGE_SEMANTIC_PROFILE_READY_FOR_PHASE_2
+
+antes do usuário revisar as imagens.
+
+---
+
+# 12. DECISÃO APÓS O USUÁRIO
+
+Depois que o usuário devolver o checklist:
+
+## Se todos estiverem aprovados
+
+Atualizar os oito spots com:
+
+    validation_status = APPROVED_BY_USER
+
+Responder:
+
+    MIRAGE_SEMANTIC_PROFILE_READY_FOR_PHASE_2
+
+## Se houver APPROVED_WITH_NOTE
+
+Registrar a observação.
+
+Não alterar automaticamente a coordenada.
+
+Avaliar se a observação bloqueia dataset ou apenas produção.
+
+## Se houver REJECTED
+
+Responder:
+
+    MIRAGE_SEMANTIC_PROFILE_NOT_READY_FOR_PHASE_2
+
+Criar proposta isolada para o spot rejeitado.
+
+Não alterar os demais spots.
+
+---
+
+# 13. PROIBIÇÃO DE TREINAMENTO
+
+Não iniciar:
+
+- Positioning Transformer;
+- MLMove V2;
+- Jump Head;
+- exportação ONNX;
+- shadow mode;
+- canary.
+
+O treinamento só poderá começar depois de:
+
+    MIRAGE_SEMANTIC_PROFILE_READY_FOR_PHASE_2
+
+e depois da auditoria dos manifests da Fase 2.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-11-05T00:01:35-03:00.
+</ADDITIONAL_METADATA>

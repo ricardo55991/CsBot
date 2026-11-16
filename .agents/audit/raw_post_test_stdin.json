@@ -1,0 +1,23 @@
+{
+  "artifactDirectoryPath": "C:/Users/ricar/.gemini/antigravity/brain/d65e2bde-5cae-4311-b714-4707e256a192",
+  "conversationId": "d65e2bde-5cae-4311-b714-4707e256a192",
+  "cwd": "c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "error": "",
+  "hookEventName": "PostToolUse",
+  "lastUserInput": "Commite tudo e D\u00ea push, mas antes revise o gitignore e adicione algo que est\u00e1 de fora",
+  "modelName": "gemini-4-hydrogen-medium",
+  "stepIdx": 33164,
+  "toolCall": {
+    "args": {
+      "CommandLine": "cd c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot; git add -A; git status --short | Measure-Object -Line",
+      "WaitMsBeforeAsync": 15000,
+      "toolSummary": "Stage changes and count files"
+    },
+    "id": "call_10935072216333130758",
+    "name": "run_command"
+  },
+  "transcriptPath": "C:/Users/ricar/.gemini/antigravity/brain/d65e2bde-5cae-4311-b714-4707e256a192/.system_generated/logs/transcript_full.jsonl",
+  "workspacePaths": [
+    "c:/Users/ricar/OneDrive/Documentos/Dev/CsBot"
+  ]
+}

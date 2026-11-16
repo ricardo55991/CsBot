@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 950" width="1100" height="950">
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" opacity="0.85"/>
+  </marker>
+  <marker id="yawArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <path d="M 0 2 L 10 5 L 0 8 z" fill="#22c55e"/>
+  </marker>
+</defs>
+<rect width="1100" height="950" fill="#0f172a"/>
+<text x="35" y="38" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="bold">DE_MIRAGE — Inspeção Visual Espacial dos 20 Spots Críticos (V1 vs V2 + Yaw + Aproximação)</text>
+<text x="35" y="60" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="13">Vermelho = Coordenada Legada V1 (WRONG_SECTOR / WRONG_HEIGHT) | Verde = Medoid Empírico V2 (444 Demos Pro) | Seta Azul = Correção V1→V2 | Seta Verde Curta = Vetor de Mira (Yaw)</text>
+<rect x="105.6" y="116.2" width="182.29999999999998" height="162.0" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5" opacity="0.75"/>
+<text x="113.6" y="134.2" fill="#64748b" font-family="Segoe UI, monospace" font-size="11" font-weight="bold">BOMBSITE B / VAN / BENCH</text>
+<rect x="151.2" y="280.4" width="182.3" height="168.40000000000003" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5" opacity="0.75"/>
+<text x="159.2" y="298.4" fill="#64748b" font-family="Segoe UI, monospace" font-size="11" font-weight="bold">MERCADO / SHOP / WINDOW B</text>
+<rect x="363.1" y="384.8" width="86.59999999999997" height="93.80000000000001" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" opacity="0.75"/>
+<text x="371.1" y="402.8" fill="#64748b" font-family="Segoe UI, monospace" font-size="11" font-weight="bold">SNIPERS NEST (JANELA MEIO)</text>
+<rect x="287.9" y="491.4" width="143.60000000000002" height="260.0" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5" opacity="0.75"/>
+<text x="295.9" y="509.4" fill="#64748b" font-family="Segoe UI, monospace" font-size="11" font-weight="bold">CT SPAWN</text>
+<rect x="436.0" y="487.1" width="141.29999999999995" height="162.0" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" opacity="0.75"/>
+<text x="444.0" y="505.1" fill="#64748b" font-family="Segoe UI, monospace" font-size="11" font-weight="bold">JUNGLE & CONECTOR</text>
+<rect x="440.6" y="248.4" width="296.29999999999995" height="230.20000000000002" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5" opacity="0.75"/>
+<text x="448.6" y="266.4" fill="#64748b" font-family="Segoe UI, monospace" font-size="11" font-weight="bold">MEIO / CATWALK / UNDERPASS</text>
+<rect x="431.5" y="570.3" width="296.29999999999995" height="292.0" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" opacity="0.75"/>
+<text x="439.5" y="588.3" fill="#64748b" font-family="Segoe UI, monospace" font-size="11" font-weight="bold">BOMBSITE A (TICKET / TRIPLE / FIREBOX / STAIRS)</text>
+<rect x="727.8" y="619.3" width="123.0" height="221.70000000000005" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5" opacity="0.75"/>
+<text x="735.8" y="637.3" fill="#64748b" font-family="Segoe UI, monospace" font-size="11" font-weight="bold">PALÁCIO & RAMPA A (TR STAGING)</text>
+<rect x="857.7" y="207.9" width="166.29999999999995" height="383.70000000000005" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5" opacity="0.75"/>
+<text x="865.7" y="225.9" fill="#64748b" font-family="Segoe UI, monospace" font-size="11" font-weight="bold">TR SPAWN</text>
+<line x1="246.9" y1="448.8" x2="456.2" y2="832.4" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="246.9" cy="448.8" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="253.9" y="444.8" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#1 V1</text>
+<line x1="456.2" y1="832.4" x2="468.2" y2="811.6" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="456.2" cy="832.4" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="464.2" y="845.4" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#1 ct_a_ticket_passive</text>
+<line x1="447.4" y1="355.0" x2="622.0" y2="815.4" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="447.4" cy="355.0" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="454.4" y="351.0" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#2 V1</text>
+<line x1="622.0" y1="815.4" x2="613.8" y2="792.8" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="622.0" cy="815.4" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="630.0" y="807.4" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#2 ct_a_firebox_oneanddone</text>
+<line x1="385.9" y1="365.6" x2="586.5" y2="802.1" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="385.9" cy="365.6" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="392.9" y="361.6" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#3 V1</text>
+<line x1="586.5" y1="802.1" x2="574.5" y2="781.3" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="586.5" cy="802.1" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="594.5" y="815.1" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#3 ct_a_ninja_hide</text>
+<line x1="424.7" y1="401.9" x2="524.7" y2="757.8" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="424.7" cy="401.9" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="431.7" y="397.9" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#4 V1</text>
+<line x1="524.7" y1="757.8" x2="520.5" y2="734.2" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="524.7" cy="757.8" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="532.7" y="749.8" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#4 ct_a_triple_jiggle</text>
+<line x1="436.0" y1="436.0" x2="573.3" y2="582.8" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="436.0" cy="436.0" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="443.0" y="432.0" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#5 V1</text>
+<line x1="573.3" y1="582.8" x2="577.5" y2="559.2" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="573.3" cy="582.8" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="581.3" y="595.8" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#5 ct_a_stairs_cross</text>
+<line x1="401.9" y1="470.1" x2="460.6" y2="582.0" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="401.9" cy="470.1" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="408.9" y="466.1" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#6 V1</text>
+<line x1="460.6" y1="582.0" x2="468.8" y2="559.4" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="460.6" cy="582.0" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="468.6" y="574.0" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#6 ct_a_jungle_support</text>
+<line x1="486.2" y1="372.0" x2="721.4" y2="711.8" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="486.2" cy="372.0" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="493.2" y="368.0" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#7 V1</text>
+<line x1="721.4" y1="711.8" x2="703.0" y2="696.4" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="721.4" cy="711.8" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="729.4" y="724.8" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#7 ct_a_palace_close_poke</text>
+<line x1="372.2" y1="418.9" x2="427.1" y2="402.4" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="372.2" cy="418.9" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="379.2" y="414.9" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#8 V1</text>
+<line x1="427.1" y1="402.4" x2="449.7" y2="410.6" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="427.1" cy="402.4" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="435.1" y="394.4" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#8 ct_mid_window_crouch</text>
+<line x1="349.4" y1="423.2" x2="418.8" y2="460.0" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="349.4" cy="423.2" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="356.4" y="419.2" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#9 V1</text>
+<line x1="418.8" y1="460.0" x2="440.6" y2="470.1" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="418.8" cy="460.0" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="426.8" y="473.0" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#9 ct_mid_window_deep_awp</text>
+<line x1="499.9" y1="482.9" x2="568.2" y2="513.6" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="499.9" cy="482.9" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="506.9" y="478.9" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#10 V1</text>
+<line x1="568.2" y1="513.6" x2="583.6" y2="532.0" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="568.2" cy="513.6" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="576.2" y="505.6" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#10 ct_mid_connector_headshot</text>
+<line x1="470.2" y1="527.6" x2="480.2" y2="287.1" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="470.2" cy="527.6" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="477.2" y="523.6" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#11 V1</text>
+<line x1="480.2" y1="287.1" x2="498.6" y2="302.5" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="480.2" cy="287.1" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="488.2" y="300.1" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#11 ct_mid_short_catwalk</text>
+<line x1="522.7" y1="521.2" x2="518.8" y2="308.3" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="522.7" cy="521.2" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="529.7" y="517.2" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#12 V1</text>
+<line x1="518.8" y1="308.3" x2="537.2" y2="292.9" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="518.8" cy="308.3" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="526.8" y="300.3" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#12 ct_mid_underpass_peek</text>
+<line x1="379.1" y1="222.8" x2="187.3" y2="151.9" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="379.1" cy="222.8" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="386.1" y="218.8" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#13 V1</text>
+<line x1="187.3" y1="151.9" x2="189.4" y2="175.8" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="187.3" cy="151.9" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="195.3" y="164.9" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#13 ct_b_van_peek</text>
+<line x1="258.3" y1="265.4" x2="250.8" y2="302.7" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="258.3" cy="265.4" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="265.3" y="261.4" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#14 V1</text>
+<line x1="250.8" y1="302.7" x2="267.8" y2="319.7" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="250.8" cy="302.7" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="258.8" y="294.7" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#14 ct_b_market_window</text>
+<line x1="219.5" y1="474.3" x2="395.1" y2="510.1" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="219.5" cy="474.3" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="226.5" y="470.3" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#15 V1</text>
+<line x1="395.1" y1="510.1" x2="419.1" y2="510.1" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="395.1" cy="510.1" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="403.1" y="523.1" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#15 ct_spawn_safe</text>
+<line x1="629.8" y1="346.4" x2="759.9" y2="667.9" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="629.8" cy="346.4" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="636.8" y="342.4" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#16 V1</text>
+<line x1="759.9" y1="667.9" x2="742.9" y2="684.9" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="759.9" cy="667.9" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="767.9" y="659.9" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#16 tr_staging_a_ramp</text>
+<line x1="607.0" y1="406.1" x2="752.4" y2="809.7" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="607.0" cy="406.1" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="614.0" y="402.1" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#17 V1</text>
+<line x1="752.4" y1="809.7" x2="734.0" y2="825.1" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="752.4" cy="809.7" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="760.4" y="822.7" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#17 tr_staging_palace_room</text>
+<line x1="720.9" y1="527.6" x2="450.0" y2="459.1" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="720.9" cy="527.6" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="727.9" y="523.6" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#18 V1</text>
+<line x1="450.0" y1="459.1" x2="427.4" y2="467.3" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="450.0" cy="459.1" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="458.0" y="451.1" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#18 tr_staging_underpass_top</text>
+<line x1="584.2" y1="644.9" x2="503.9" y2="564.1" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="584.2" cy="644.9" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="591.2" y="640.9" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#19 V1</text>
+<line x1="503.9" y1="564.1" x2="527.9" y2="564.1" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="503.9" cy="564.1" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="511.9" y="577.1" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#19 ct_retake_a_connector</text>
+<line x1="470.2" y1="399.7" x2="455.1" y2="629.4" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.8"/>
+<circle cx="470.2" cy="399.7" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+<text x="477.2" y="395.7" fill="#fca5a5" font-family="Segoe UI, monospace" font-size="9.5">#20 V1</text>
+<line x1="455.1" y1="629.4" x2="478.7" y2="625.2" stroke="#22c55e" stroke-width="2.2" marker-end="url(#yawArrow)"/>
+<circle cx="455.1" cy="629.4" r="6.5" fill="#22c55e" stroke="#052e16" stroke-width="1.5"/>
+<text x="463.1" y="621.4" fill="#bbf7d0" font-family="Segoe UI, monospace" font-size="10.5" font-weight="bold">#20 ct_retake_a_jungle</text>
+</svg>

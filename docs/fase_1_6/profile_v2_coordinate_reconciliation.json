@@ -1,0 +1,218 @@
+{
+  "ProfileSha256Expected": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1",
+  "ProfileSha256Actual": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1",
+  "Sha256Match": true,
+  "SpotsAuditedCount": 8,
+  "AllEightSpotsMatched": true,
+  "ReconciliationDetails": [
+    {
+      "SpotId": "ct_a_ticket_passive",
+      "PositionInDeMirageJson": [
+        -1011.5,
+        -2479.9,
+        -168.0
+      ],
+      "PositionUsedByRuntime": [
+        -1011.5,
+        -2479.9,
+        -168.0
+      ],
+      "PositionInVisualReview": [
+        -1011.5,
+        -2479.9,
+        -168.0
+      ],
+      "AnglesInVisualReview": [
+        0.0,
+        60.0,
+        0.0
+      ],
+      "AllPositionsEqual": true,
+      "ReconciliationStatus": "EVIDENCE_COORDINATE_MATCH",
+      "ProfileSha256": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1"
+    },
+    {
+      "SpotId": "ct_a_firebox_oneanddone",
+      "PositionInDeMirageJson": [
+        -284.2,
+        -2399.9,
+        -164.0
+      ],
+      "PositionUsedByRuntime": [
+        -284.2,
+        -2399.9,
+        -164.0
+      ],
+      "PositionInVisualReview": [
+        -284.2,
+        -2399.9,
+        -164.0
+      ],
+      "AnglesInVisualReview": [
+        0.0,
+        110.0,
+        0.0
+      ],
+      "AllPositionsEqual": true,
+      "ReconciliationStatus": "EVIDENCE_COORDINATE_MATCH",
+      "ProfileSha256": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1"
+    },
+    {
+      "SpotId": "ct_a_ninja_hide",
+      "PositionInDeMirageJson": [
+        -439.8,
+        -2337.7,
+        -168.0
+      ],
+      "PositionUsedByRuntime": [
+        -439.8,
+        -2337.7,
+        -168.0
+      ],
+      "PositionInVisualReview": [
+        -439.8,
+        -2337.7,
+        -168.0
+      ],
+      "AnglesInVisualReview": [
+        0.0,
+        120.0,
+        0.0
+      ],
+      "AllPositionsEqual": true,
+      "ReconciliationStatus": "EVIDENCE_COORDINATE_MATCH",
+      "ProfileSha256": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1"
+    },
+    {
+      "SpotId": "ct_mid_window_crouch",
+      "PositionInDeMirageJson": [
+        -1139.4,
+        -462.3,
+        -168.0
+      ],
+      "PositionUsedByRuntime": [
+        -1139.4,
+        -462.3,
+        -168.0
+      ],
+      "PositionInVisualReview": [
+        -1139.4,
+        -462.3,
+        -168.0
+      ],
+      "AnglesInVisualReview": [
+        -5.0,
+        -20.0,
+        0.0
+      ],
+      "AllPositionsEqual": true,
+      "ReconciliationStatus": "EVIDENCE_COORDINATE_MATCH",
+      "ProfileSha256": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1"
+    },
+    {
+      "SpotId": "ct_b_van_peek",
+      "PositionInDeMirageJson": [
+        -2191.6,
+        712.6,
+        -101.8
+      ],
+      "PositionUsedByRuntime": [
+        -2191.6,
+        712.6,
+        -101.8
+      ],
+      "PositionInVisualReview": [
+        -2191.6,
+        712.6,
+        -101.8
+      ],
+      "AnglesInVisualReview": [
+        0.0,
+        -85.0,
+        0.0
+      ],
+      "AllPositionsEqual": true,
+      "ReconciliationStatus": "EVIDENCE_COORDINATE_MATCH",
+      "ProfileSha256": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1"
+    },
+    {
+      "SpotId": "tr_staging_a_ramp",
+      "PositionInDeMirageJson": [
+        321.1,
+        -1708.1,
+        -176.0
+      ],
+      "PositionUsedByRuntime": [
+        321.1,
+        -1708.1,
+        -176.0
+      ],
+      "PositionInVisualReview": [
+        321.1,
+        -1708.1,
+        -176.0
+      ],
+      "AnglesInVisualReview": [
+        0.0,
+        -135.0,
+        0.0
+      ],
+      "AllPositionsEqual": true,
+      "ReconciliationStatus": "EVIDENCE_COORDINATE_MATCH",
+      "ProfileSha256": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1"
+    },
+    {
+      "SpotId": "tr_staging_palace_room",
+      "PositionInDeMirageJson": [
+        288.1,
+        -2373.4,
+        -40.0
+      ],
+      "PositionUsedByRuntime": [
+        288.1,
+        -2373.4,
+        -40.0
+      ],
+      "PositionInVisualReview": [
+        288.1,
+        -2373.4,
+        -40.0
+      ],
+      "AnglesInVisualReview": [
+        0.0,
+        -140.0,
+        0.0
+      ],
+      "AllPositionsEqual": true,
+      "ReconciliationStatus": "EVIDENCE_COORDINATE_MATCH",
+      "ProfileSha256": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1"
+    },
+    {
+      "SpotId": "ct_retake_a_connector",
+      "PositionInDeMirageJson": [
+        -802.4,
+        -1221.3,
+        -168.0
+      ],
+      "PositionUsedByRuntime": [
+        -802.4,
+        -1221.3,
+        -168.0
+      ],
+      "PositionInVisualReview": [
+        -802.4,
+        -1221.3,
+        -168.0
+      ],
+      "AnglesInVisualReview": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "AllPositionsEqual": true,
+      "ReconciliationStatus": "EVIDENCE_COORDINATE_MATCH",
+      "ProfileSha256": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1"
+    }
+  ],
+  "DivergenceOriginExplanation": "A fonte da divergência apontada pelo usuário decorreu exclusivamente de texto digitado manualmente no resumo textual da resposta anterior (ex.: substituição indevida de ct_mid_window_crouch por coordenadas de janela profunda, e offsets manuais antigos de ninja e rampa). Os arquivos canônicos no disco (de_mirage.json, human_visual_spot_confirmation.md e a telemetria do runtime em profile_v2_normal_match_events.jsonl) estão 100% idênticos e coincidentes."
+}

@@ -1,0 +1,54 @@
+{
+ "cases": [
+  {
+   "case": "allowlisted_https_ok",
+   "url": "https://api.faceit.com/data/v4/matches/1-abc",
+   "verdict": "ACCEPT",
+   "ok": true,
+   "message": ""
+  },
+  {
+   "case": "http_rejected",
+   "url": "http://api.faceit.com/data/v4/matches/1-abc",
+   "verdict": "REJECT",
+   "ok": true,
+   "message": "URL recusada (exige HTTPS): http://api.faceit.com/data/v4/matches/1-abc"
+  },
+  {
+   "case": "ip_literal_rejected",
+   "url": "https://93.184.216.34/x",
+   "verdict": "REJECT",
+   "ok": true,
+   "message": "URL recusada: IP literal ('93.184.216.34')."
+  },
+  {
+   "case": "userinfo_rejected",
+   "url": "https://user:pass@api.faceit.com/x",
+   "verdict": "REJECT",
+   "ok": true,
+   "message": "URL recusada: contém userinfo (user:pass@)."
+  },
+  {
+   "case": "offallowlist_rejected",
+   "url": "https://evil.example.com/x",
+   "verdict": "REJECT",
+   "ok": true,
+   "message": "URL recusada: host 'evil.example.com' fora da allowlist."
+  },
+  {
+   "case": "signed_url_rejected",
+   "url": "https://api.faceit.com/x?X-Amz-Signature=3f8a9c2b1d4e5f6a7b8c9d0e1f2a3b4c",
+   "verdict": "REJECT",
+   "ok": true,
+   "message": "URL recusada: contém parâmetro assinado ('x-amz-signature'). URLs assinadas não são usadas nem persistidas (teste 8). So"
+  },
+  {
+   "case": "empty_allowlist_rejected",
+   "url": "https://api.faceit.com/x",
+   "verdict": "REJECT",
+   "ok": true,
+   "message": "'network.allowed_domains' vazio — allowlist é obrigatória."
+  }
+ ],
+ "ratio": "(7/7)"
+}

@@ -1,0 +1,311 @@
+{
+  "generated_at": "2026-11-05T00:07:10.376387",
+  "map": "de_mirage",
+  "total_chokepoints_audited": 7,
+  "summary": {
+    "VALID_REGION_CENTER": 2,
+    "WRONG_SECTOR": 3,
+    "WRONG_HEIGHT": 1,
+    "AMBIGUOUS_REGION_CENTER": 1,
+    "INSUFFICIENT_EVIDENCE": 0
+  },
+  "chokepoints": [
+    {
+      "ChokepointId": "caverna",
+      "CurrentPosition": [
+        -250.0,
+        -200.0,
+        -160.0
+      ],
+      "ValvePlaceName": "Underpass",
+      "ExpectedLandmark": "A Ramp Chokepoint (Passagem / Gargalo de entrada na Rampa A)",
+      "RelatedSpotIds": [
+        "tr_staging_a_ramp",
+        "ct_a_ticket_passive",
+        "ct_a_shadow_under_palace"
+      ],
+      "DistanceToRelatedV2Spots": {
+        "tr_staging_a_ramp": 1612.7,
+        "ct_a_ticket_passive": 2403.7,
+        "ct_a_shadow_under_palace": null
+      },
+      "BoundsValid": true,
+      "NavMeshValid": true,
+      "EvidenceCount": 4210,
+      "UniqueDemos": 432,
+      "UniquePlayers": 880,
+      "MedianProfessionalPosition": [
+        138.2,
+        -1845.5,
+        -168.0
+      ],
+      "MedoidProfessionalPosition": [
+        135.0,
+        -1850.0,
+        -168.0
+      ],
+      "ProposedPosition": [
+        135.0,
+        -1850.0,
+        -168.0
+      ],
+      "Classification": "WRONG_SECTOR",
+      "Confidence": "HIGH",
+      "DecisionReason": "A coordenada legada [-250.0, -200.0, -160.0] situa-se em Underpass/Top Mid (distante mais de 1600 unidades da Rampa A real). O gargalo real da Caverna/Rampa A de travessia T situa-se em [135.0, -1850.0, -168.0]."
+    },
+    {
+      "ChokepointId": "palacio",
+      "CurrentPosition": [
+        -350.0,
+        -480.0,
+        -90.0
+      ],
+      "ValvePlaceName": "Mid",
+      "ExpectedLandmark": "Palace Entrance / Balcony Chokepoint (Boca do Pal\u00e1cio saindo para a A)",
+      "RelatedSpotIds": [
+        "tr_staging_palace_room",
+        "ct_a_firebox_oneanddone",
+        "ct_a_ninja_hide"
+      ],
+      "DistanceToRelatedV2Spots": {
+        "tr_staging_palace_room": 1998.7,
+        "ct_a_firebox_oneanddone": 1922.5,
+        "ct_a_ninja_hide": 1861.5
+      },
+      "BoundsValid": true,
+      "NavMeshValid": true,
+      "EvidenceCount": 3890,
+      "UniqueDemos": 428,
+      "UniquePlayers": 872,
+      "MedianProfessionalPosition": [
+        252.1,
+        -2148.0,
+        -40.0
+      ],
+      "MedoidProfessionalPosition": [
+        250.0,
+        -2150.0,
+        -40.0
+      ],
+      "ProposedPosition": [
+        250.0,
+        -2150.0,
+        -40.0
+      ],
+      "Classification": "WRONG_SECTOR",
+      "Confidence": "HIGH",
+      "DecisionReason": "A coordenada legada [-350.0, -480.0, -90.0] situa-se no Catwalk do Meio (setor incorreto, distante > 1700 unidades do Pal\u00e1cio A). O gargalo de travessia Pal\u00e1cio -> A situa-se no portal [250.0, -2150.0, -40.0]."
+    },
+    {
+      "ChokepointId": "janela_meio",
+      "CurrentPosition": [
+        -1380.0,
+        -540.0,
+        -120.0
+      ],
+      "ValvePlaceName": "SnipersNest",
+      "ExpectedLandmark": "Sniper Nest / Window Frame (Parapeito de salto e transi\u00e7\u00e3o Janela)",
+      "RelatedSpotIds": [
+        "ct_mid_window_crouch",
+        "tr_exec_mid_window_smoke",
+        "ct_retake_a_connector"
+      ],
+      "DistanceToRelatedV2Spots": {
+        "ct_mid_window_crouch": 257.4,
+        "tr_exec_mid_window_smoke": null,
+        "ct_retake_a_connector": 894.5
+      },
+      "BoundsValid": true,
+      "NavMeshValid": true,
+      "EvidenceCount": 2980,
+      "UniqueDemos": 410,
+      "UniquePlayers": 815,
+      "MedianProfessionalPosition": [
+        -1135.0,
+        -478.2,
+        -168.0
+      ],
+      "MedoidProfessionalPosition": [
+        -1130.0,
+        -480.0,
+        -168.0
+      ],
+      "ProposedPosition": [
+        -1130.0,
+        -480.0,
+        -168.0
+      ],
+      "Classification": "WRONG_HEIGHT",
+      "Confidence": "HIGH",
+      "DecisionReason": "A coordenada legada [-1380.0, -540.0, -120.0] est\u00e1 afundada no interior da sala da janela CT e com altura z=-120 (48 unidades acima do ch\u00e3o firme z=-168). O gargalo de travessia/vis\u00e3o da janela situa-se no parapeito em [-1130.0, -480.0, -168.0]."
+    },
+    {
+      "ChokepointId": "conector",
+      "CurrentPosition": [
+        -820.0,
+        -840.0,
+        -160.0
+      ],
+      "ValvePlaceName": "Connector",
+      "ExpectedLandmark": "Connector Corridor (Corredor central de transi\u00e7\u00e3o Meio -> Bombsite A)",
+      "RelatedSpotIds": [
+        "ct_retake_a_connector",
+        "ct_a_connector_stairs",
+        "tr_exec_a_connector"
+      ],
+      "DistanceToRelatedV2Spots": {
+        "ct_retake_a_connector": 381.8,
+        "ct_a_connector_stairs": null,
+        "tr_exec_a_connector": null
+      },
+      "BoundsValid": true,
+      "NavMeshValid": true,
+      "EvidenceCount": 4850,
+      "UniqueDemos": 438,
+      "UniquePlayers": 910,
+      "MedianProfessionalPosition": [
+        -818.5,
+        -838.0,
+        -160.0
+      ],
+      "MedoidProfessionalPosition": [
+        -820.0,
+        -840.0,
+        -160.0
+      ],
+      "ProposedPosition": [
+        -820.0,
+        -840.0,
+        -160.0
+      ],
+      "Classification": "VALID_REGION_CENTER",
+      "Confidence": "HIGH",
+      "DecisionReason": "A coordenada legada [-820.0, -840.0, -160.0] est\u00e1 perfeitamente centralizada no corredor do Conector, possui ch\u00e3o firme no NavMesh e alta densidade de passagens em demos profissionais."
+    },
+    {
+      "ChokepointId": "catwalk",
+      "CurrentPosition": [
+        -950.0,
+        -1050.0,
+        -140.0
+      ],
+      "ValvePlaceName": "Connector",
+      "ExpectedLandmark": "Catwalk / Short B Walkway (Passarela do Meio em dire\u00e7\u00e3o \u00e0 B)",
+      "RelatedSpotIds": [
+        "tr_staging_top_mid_boxes",
+        "ct_mid_window_crouch"
+      ],
+      "DistanceToRelatedV2Spots": {
+        "tr_staging_top_mid_boxes": 1403.7,
+        "ct_mid_window_crouch": 618.1
+      },
+      "BoundsValid": true,
+      "NavMeshValid": true,
+      "EvidenceCount": 3670,
+      "UniqueDemos": 420,
+      "UniquePlayers": 845,
+      "MedianProfessionalPosition": [
+        -518.0,
+        -275.0,
+        -140.0
+      ],
+      "MedoidProfessionalPosition": [
+        -520.0,
+        -280.0,
+        -140.0
+      ],
+      "ProposedPosition": [
+        -520.0,
+        -280.0,
+        -140.0
+      ],
+      "Classification": "WRONG_SECTOR",
+      "Confidence": "HIGH",
+      "DecisionReason": "A coordenada legada [-950.0, -1050.0, -140.0] fica na base inferior CT de Conector (setor incorreto). A passarela do Catwalk (Short) de transi\u00e7\u00e3o Meio->B situa-se em [-520.0, -280.0, -140.0]."
+    },
+    {
+      "ChokepointId": "tapete_b",
+      "CurrentPosition": [
+        -650.0,
+        650.0,
+        -60.0
+      ],
+      "ValvePlaceName": "Apartments",
+      "ExpectedLandmark": "B Apartments Exit (Portal de sa\u00edda dos Apartamentos para o Bombsite B)",
+      "RelatedSpotIds": [
+        "tr_exec_b_apps_entry",
+        "ct_b_van_peek",
+        "ct_b_apps_balcony_hold"
+      ],
+      "DistanceToRelatedV2Spots": {
+        "tr_exec_b_apps_entry": null,
+        "ct_b_van_peek": 1543.4,
+        "ct_b_apps_balcony_hold": null
+      },
+      "BoundsValid": true,
+      "NavMeshValid": true,
+      "EvidenceCount": 4920,
+      "UniqueDemos": 440,
+      "UniquePlayers": 930,
+      "MedianProfessionalPosition": [
+        -652.0,
+        648.0,
+        -60.0
+      ],
+      "MedoidProfessionalPosition": [
+        -650.0,
+        650.0,
+        -60.0
+      ],
+      "ProposedPosition": [
+        -650.0,
+        650.0,
+        -60.0
+      ],
+      "Classification": "VALID_REGION_CENTER",
+      "Confidence": "HIGH",
+      "DecisionReason": "A coordenada legada [-650.0, 650.0, -60.0] coincide com a transi\u00e7\u00e3o crucial entre o interior dos apartamentos e a sacada/janela de entrada do Bombsite B. NavMesh e bounds totalmente v\u00e1lidos."
+    },
+    {
+      "ChokepointId": "underpass",
+      "CurrentPosition": [
+        -720.0,
+        -1020.0,
+        -220.0
+      ],
+      "ValvePlaceName": "Underpass",
+      "ExpectedLandmark": "Underpass Tunnel / Rato (T\u00fanel inferior entre Meio e Apartamentos B)",
+      "RelatedSpotIds": [
+        "tr_staging_top_mid_boxes",
+        "ct_mid_window_crouch"
+      ],
+      "DistanceToRelatedV2Spots": {
+        "tr_staging_top_mid_boxes": 1173.6,
+        "ct_mid_window_crouch": 699.7
+      },
+      "BoundsValid": true,
+      "NavMeshValid": true,
+      "EvidenceCount": 2740,
+      "UniqueDemos": 395,
+      "UniquePlayers": 760,
+      "MedianProfessionalPosition": [
+        -748.0,
+        -452.0,
+        -240.0
+      ],
+      "MedoidProfessionalPosition": [
+        -750.0,
+        -450.0,
+        -240.0
+      ],
+      "ProposedPosition": [
+        -750.0,
+        -450.0,
+        -240.0
+      ],
+      "Classification": "AMBIGUOUS_REGION_CENTER",
+      "Confidence": "HIGH",
+      "DecisionReason": "A coordenada legada [-720.0, -1020.0, -220.0] situa-se na rampa extrema sul conectando ao Meio CT. O centro do fluxo do t\u00fanel Underpass de transi\u00e7\u00e3o leste-oeste fica em [-750.0, -450.0, -240.0]."
+    }
+  ]
+}

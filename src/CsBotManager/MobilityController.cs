@@ -93,6 +93,15 @@ public class MobilityController
         {
             if (bot == null || !bot.IsValid || !bot.PawnIsAlive || !bot.IsBot) continue;
 
+            if (_locomotionDriver.IsOpeningCanaryActiveSlot?.Invoke(bot.Slot) == true)
+            {
+                int rnd = _locomotionDriver.GetCurrentRoundId?.Invoke() ?? 1;
+                if (_locomotionDriver.LeaseManager == null || !_locomotionDriver.LeaseManager.AllowCompetingWriter(rnd, bot.Slot, Server.TickCount, "MobilityController.UpdateTick", "WeaponMobilitySlotSwitch"))
+                {
+                    continue;
+                }
+            }
+
             var pawn = bot.PlayerPawn.Value;
             if (pawn == null || pawn.AbsOrigin == null) continue;
 

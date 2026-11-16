@@ -1,0 +1,544 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T17:47:19.826427+00:00",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "graph_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+  "graph_exists": true,
+  "dry_run": false,
+  "data_nature": "INFERRED",
+  "workspace_files_nature": "REAL",
+  "verdict": "PASS",
+  "required_attributes": [
+    "entry_points",
+    "writers",
+    "readers",
+    "authoritative_state",
+    "fallbacks",
+    "caches",
+    "side_effects",
+    "telemetry",
+    "tests",
+    "blast_radius"
+  ],
+  "total_flows_analyzed": 1,
+  "flows": {
+    "Positioning Transformer -> GoalPosition": {
+      "flow_name": "Positioning Transformer -> GoalPosition",
+      "data_nature": "INFERRED",
+      "entry_points": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/MapProfileManager.cs",
+        "src/CsBotManager/MidRoundAdapter.cs",
+        "src/CsBotManager/CtDefenseController.cs"
+      ],
+      "entry_points_verified": [
+        {
+          "path": "src/CsBotManager/CsBotManagerPlugin.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+          "exists": true,
+          "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/MapProfileManager.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapProfileManager.cs",
+          "exists": true,
+          "sha256": "8bcf19cfe74d3071dbdbecd040714f86dfcc22f984779407e0a68e5b5bd08734",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/MidRoundAdapter.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+          "exists": true,
+          "sha256": "9596905385e719a7c8c95e66893a06f43770bc98478f78df95f02d96084fb80c",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/CtDefenseController.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtDefenseController.cs",
+          "exists": true,
+          "sha256": "88becc5d15f25c15c5fda2ebc22f6e650dd718198ca878aade6ab3442444af09",
+          "data_nature": "REAL"
+        }
+      ],
+      "writers": [
+        "src/CsBotManager/CsBotManagerPlugin.cs (atualização de GoalPosition por inferência/perfil)",
+        "src/CsBotManager/MidRoundAdapter.cs (adaptação tática de destino no mid-round)",
+        "src/CsBotManager/CtDefenseController.cs (atribuição de âncoras e rotações CT)"
+      ],
+      "readers": [
+        "src/CsBotManager/MovementArbitrator.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/MicroMoveEngine.cs",
+        "src/CsBotManager/GameplaySpotTelemetryTracker.cs"
+      ],
+      "authoritative_state": [
+        "src/CsBotManager/Models.cs (estado tático e GoalPosition do bot)",
+        "src/CsBotManager/MapProfileManager.cs (spots carregados de de_mirage.json)"
+      ],
+      "fallbacks": [
+        "src/CsBotManager/MapProfileManager.cs (fallback determinístico para spots/âncoras de src/CsBotManager/MapProfiles/de_mirage.json)",
+        "src/CsBotManager/MapPlayableBounds.cs (clamping dentro dos limites jogáveis do mapa)"
+      ],
+      "caches": [
+        "src/CsBotManager/MapProfileManager.cs (cache em memória do perfil tático de_mirage.json)"
+      ],
+      "side_effects": [
+        "Atualização do objetivo espacial consumido por src/CsBotManager/MovementArbitrator.cs e src/CsBotManager/BotLocomotionDriver.cs"
+      ],
+      "telemetry": [
+        "src/CsBotManager/GameplaySpotTelemetryTracker.cs",
+        "src/CsBotManager/LiveRadarTelemetryService.cs"
+      ],
+      "tests": [
+        "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+        "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+        "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+        "tests/CsBotManager.Tests/OllamaIntegrationDiagnosticTests.cs",
+        "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs"
+      ],
+      "tests_verified": [],
+      "blast_radius": [
+        "src/CsBotManager/MovementArbitrator.cs",
+        "src/CsBotManager/BotLocomotionDriver.cs",
+        "src/CsBotManager/GameplaySpotTelemetryTracker.cs"
+      ],
+      "workspace_verification": {
+        "data_nature": "REAL",
+        "matched_source_files_count": 34,
+        "matched_source_files": [
+          {
+            "file": "src/CsBotManager/BotLocomotionDriver.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CombatAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CombatAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/ContextualSmokeAndAudioBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\ContextualSmokeAndAudioBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CsBotManagerPlugin.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtDefenseController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtDefenseController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtRetakeAndDefuseBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtRetakeAndDefuseBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/GameplaySpotTelemetryTracker.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\GameplaySpotTelemetryTracker.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/LiveRadarTelemetryService.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\LiveRadarTelemetryService.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MapPlayableBounds.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapPlayableBounds.cs",
+            "exists": true,
+            "matched_keywords": [
+              "GoalPosition"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MapProfileManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapProfileManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MatchTelemetryLogger.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MatchTelemetryLogger.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MicroMoveEngine.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MidRoundAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MobilityController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MobilityController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/Models.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\Models.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MovementArbitrator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MovementArbitrator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "GoalPosition",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MovementExecutionTracker.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MovementExecutionTracker.cs",
+            "exists": true,
+            "matched_keywords": [
+              "GoalPosition"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/OllamaIglService.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\OllamaIglService.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/PacingAndFallbackController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\PacingAndFallbackController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/PlayerIntentTracker.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\PlayerIntentTracker.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "matched_test_files_count": 20,
+        "matched_test_files": [
+          {
+            "file": "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\EconomyAndIglTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementArbitrationAndStuckTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementExecutionTrackerTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "GoalPosition",
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/OllamaIntegrationDiagnosticTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\OllamaIntegrationDiagnosticTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\OrganicRushesAndFakesTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase17SemanticAndJumpTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase17SemanticAndJumpTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2DatasetInvariantsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2DatasetInvariantsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2ForensicAuditTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Positioning",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2TrainingInputsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2TrainingInputsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Positioning",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/TickDeltaAndAppliedIntentTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\TickDeltaAndAppliedIntentTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_2_FinalAdjustmentsTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_2_FinalAdjustmentsTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_4_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_4_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_5_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_5_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_6_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_6_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_7_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_7_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_8_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_9_MirageV2ProfileTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_9_MirageV2ProfileTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_ComprehensiveTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "GoalPosition",
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_DeepValidationTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_DeepValidationTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot",
+              "MidRoundAdapter"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_3_UtilityAiIglTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_3_UtilityAiIglTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "MapProfileManager",
+              "Spot"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "graphify": {
+          "graph_json_present": true,
+          "graph_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+          "graph_sha256": "7a09693f1f6568803fa7f2ae7a0286cbe38c09f3900d08b96c6538f4eaa264f0",
+          "total_graph_nodes": 2627,
+          "matched_nodes_count": 292,
+          "sample_matched_nodes": [
+            "src_csbotmanager_mapprofilemanager_cs_dictionary",
+            "src_csbotmanager_mapprofilemanager_cs_object",
+            "src_csbotmanager_mapprofilemanager_cs_random",
+            "src_csbotmanager_mapprofilemanager_cs_list",
+            "src_csbotmanager_mapprofilemanager_cs_vector",
+            "src_csbotmanager_mapprofilemanager_cs_ccsplayercontroller",
+            "src_csbotmanager_mapprofilemanager_cs_csteam",
+            "src_csbotmanager_midroundadapter_cs_random",
+            "src_csbotmanager_midroundadapter_cs_cstimer",
+            "src_csbotmanager_midroundadapter_cs_list",
+            "src_csbotmanager_midroundadapter_cs_ccsplayercontroller",
+            "src_csbotmanager_midroundadapter_cs_eventplayerdeath",
+            "src_csbotmanager_midroundadapter_cs_eventbombplanted",
+            "src_csbotmanager_midroundadapter_cs_eventbombbegindefuse",
+            "src_csbotmanager_tacticalspotsmanager_cs_list"
+          ]
+        }
+      },
+      "all_10_attributes_present": true,
+      "missing_attributes": []
+    }
+  }
+}

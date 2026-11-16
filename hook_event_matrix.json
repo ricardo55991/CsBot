@@ -1,0 +1,43 @@
+{
+  "schema": "csbot.hook_event_matrix.v1",
+  "governance_version": "1.2.0-lean",
+  "updated_at_utc": "2026-11-09T03:00:00Z",
+  "description": "Matriz formal de eventos dos hooks CsBot 1.2 Lean, otimizada para evitar execucoes redundantes e loops de reescrita.",
+  "hooks": [
+    {
+      "name": "protect-sensitive-files",
+      "target_event": "PreToolUse",
+      "matcher": "write_to_file|replace_file_content|multi_replace_file_content|write_file|edit_file|run_command",
+      "mode": "blocking",
+      "purpose": "Intercepta previamente modificacoes nao autorizadas em checkpoints, modelos, perfis e contratos sensiveis."
+    },
+    {
+      "name": "pre-training-gate",
+      "target_event": "PreToolUse",
+      "matcher": "run_command",
+      "mode": "blocking",
+      "purpose": "Intercepta previamente qualquer comando de treino ou tuning que tente consumir o split Test."
+    },
+    {
+      "name": "post-test-audit",
+      "target_event": "PostToolUse",
+      "matcher": "run_command",
+      "mode": "audit-only",
+      "purpose": "Audita saídas de suites de teste automatizadas (pytest, unittest, dotnet test); ignora comandos comuns imediatamente."
+    },
+    {
+      "name": "validate-generated-report",
+      "target_event": "Stop",
+      "matcher": "turn_completion",
+      "mode": "audit-only",
+      "purpose": "Valida relatorios executivos apenas no encerramento do turno; bloqueia somente falhas criticas (Test set, segredos, support zero)."
+    },
+    {
+      "name": "stop-condition-evidence-gate",
+      "target_event": "Stop",
+      "matcher": "turn_completion",
+      "mode": "blocking",
+      "purpose": "Impede conclusao formal PASS sem apresentacao de artefatos brutos fisicos materializados no disco."
+    }
+  ]
+}

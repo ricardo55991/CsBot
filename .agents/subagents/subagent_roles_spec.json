@@ -1,0 +1,213 @@
+{
+  "schema_version": "1.1.0",
+  "project": "CsBot",
+  "orchestration_topology": "hub-and-spoke-via-orchestrator",
+  "isolation_invariants": {
+    "implementer_cannot_edit_auditor_reports": true,
+    "auditor_cannot_modify_implementation": true,
+    "success_auditor_cannot_fix_failures": true,
+    "on_audit_failure_return_to": "Orchestrator"
+  },
+  "risk_matrix": {
+    "tier_1_low": {
+      "description": "Manutenção pontual, documentação, testes unitários isolados",
+      "required_auditors_count": 1,
+      "recommended_roles": ["Success Auditor"]
+    },
+    "tier_2_medium": {
+      "description": "Refatorações sem quebra de contrato, filtros de dataset, tooling",
+      "required_auditors_count": "2-3",
+      "recommended_roles": ["Data Provenance Auditor", "Success Auditor"]
+    },
+    "tier_3_high": {
+      "description": "Mudança de arquitetura, retreino de heads, alterações em C# runtime",
+      "required_auditors_count": "4-5",
+      "recommended_roles": [
+        "ML Generalization Auditor",
+        "Temporal Logic and FSM Auditor",
+        "Runtime and Safety Auditor",
+        "Adversarial Reviewer",
+        "Success Auditor"
+      ]
+    },
+    "tier_4_critical": {
+      "description": "Homologações finais, fechamento de fase canônica, novos modelos mestre .pt/.onnx",
+      "required_auditors_count": 8,
+      "recommended_roles": [
+        "Mathematical and Statistical Auditor",
+        "Temporal Logic and FSM Auditor",
+        "ML Generalization Auditor",
+        "Optimization and Training Auditor",
+        "Data Provenance Auditor",
+        "CS2 Domain Reviewer",
+        "Runtime and Safety Auditor",
+        "Adversarial Reviewer"
+      ]
+    }
+  },
+  "roles": [
+    {
+      "role_id": "Explorer",
+      "subagent_type_name": "csbot-explorer",
+      "builtin_fallback": "research",
+      "enable_write_tools": false,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Somente leitura: explora código, schemas, contratos e artefatos existentes.",
+      "allowed_write_paths": [],
+      "forbidden_write_paths": ["*"]
+    },
+    {
+      "role_id": "Graph Analyst",
+      "subagent_type_name": "csbot-graph-analyst",
+      "enable_write_tools": true,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Executa csbot-graph-impact (Graphify) e produz o blast radius nos 10 eixos obrigatórios.",
+      "allowed_write_paths": [".agents/audit/graph_impact/*", ".agents/audit/*impact*.json"],
+      "forbidden_write_paths": ["src/*", "tools/*", "tests/*", "models/*", "datasets/*", "*report*.md"]
+    },
+    {
+      "role_id": "Implementer",
+      "subagent_type_name": "csbot-implementer",
+      "enable_write_tools": true,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Realiza mudanças de código e pipeline estritamente dentro do blast radius aprovado.",
+      "allowed_write_paths": ["src/*", "tools/*"],
+      "forbidden_write_paths": [
+        "*audit*.md",
+        "*audit*.json",
+        "*skeptic*.json",
+        "*validation_report*.md",
+        "phase_gate_report.md",
+        "deliverable_evidence.json"
+      ]
+    },
+    {
+      "role_id": "Test Author",
+      "subagent_type_name": "csbot-test-author",
+      "enable_write_tools": true,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Escreve e executa testes automatizados antes (TDD) ou junto da implementação.",
+      "allowed_write_paths": ["tests/*"],
+      "forbidden_write_paths": [
+        "src/*",
+        "*audit*.md",
+        "*skeptic*.json",
+        "phase_gate_report.md",
+        "deliverable_evidence.json"
+      ]
+    },
+    {
+      "role_id": "Metrics Reproducer",
+      "subagent_type_name": "csbot-metrics-reproducer",
+      "enable_write_tools": true,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Recalcula métricas e matrizes de confusão diretamente dos artefatos brutos.",
+      "allowed_write_paths": [".agents/audit/*"],
+      "forbidden_write_paths": ["src/*", "tools/*", "tests/*"]
+    },
+    {
+      "role_id": "Adversarial Reviewer",
+      "subagent_type_name": "csbot-adversarial-reviewer",
+      "enable_write_tools": false,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Tenta reprovar a entrega procurando contradições, leakage, templates e claims sem evidência.",
+      "allowed_write_paths": [],
+      "forbidden_write_paths": ["*"],
+      "on_failure_action": "Emitir FAIL e devolver imediatamente ao Orchestrator sem alterar arquivos."
+    },
+    {
+      "role_id": "Success Auditor",
+      "subagent_type_name": "csbot-success-auditor",
+      "enable_write_tools": false,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Confere requisito por requisito ao final do fluxo; nunca corrige falhas.",
+      "allowed_write_paths": [],
+      "forbidden_write_paths": ["*"],
+      "on_failure_action": "Emitir FAIL com lista de bloqueadores e devolver ao Orchestrator para reencaminhamento ao Implementer/Test Author."
+    },
+    {
+      "role_id": "Mathematical and Statistical Auditor",
+      "subagent_type_name": "csbot-math-auditor",
+      "enable_write_tools": false,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Audita consistência matemática pura, ECE, calibração, balanced accuracy, e exige que support=0 seja estritamente N/A.",
+      "allowed_write_paths": [],
+      "forbidden_write_paths": ["*"],
+      "on_failure_action": "Emitir FAIL e devolver ao Orchestrator."
+    },
+    {
+      "role_id": "Temporal Logic and FSM Auditor",
+      "subagent_type_name": "csbot-fsm-auditor",
+      "enable_write_tools": false,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Audita invariantes temporais entre ticks 64Hz/16Hz, FSM de C4, estados de round e recovery.",
+      "allowed_write_paths": [],
+      "forbidden_write_paths": ["*"],
+      "on_failure_action": "Emitir FAIL e devolver ao Orchestrator."
+    },
+    {
+      "role_id": "ML Generalization Auditor",
+      "subagent_type_name": "csbot-generalization-auditor",
+      "enable_write_tools": false,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Audita isolamento estrito de splits (leakage zero), conformidade com a Regra 02 e detecção de OOD.",
+      "allowed_write_paths": [],
+      "forbidden_write_paths": ["*"],
+      "on_failure_action": "Emitir FAIL e devolver ao Orchestrator."
+    },
+    {
+      "role_id": "Optimization and Training Auditor",
+      "subagent_type_name": "csbot-optimization-auditor",
+      "enable_write_tools": false,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Audita estabilidade de loss, gradiente norms, learning rate schedules e ausência de esquecimento catastrófico.",
+      "allowed_write_paths": [],
+      "forbidden_write_paths": ["*"],
+      "on_failure_action": "Emitir FAIL e devolver ao Orchestrator."
+    },
+    {
+      "role_id": "Data Provenance Auditor",
+      "subagent_type_name": "csbot-provenance-auditor",
+      "enable_write_tools": false,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Audita materialização física em disco (size > 0), linhagem demo -> parquet -> npz e rotulagem de dados sintéticos/templados.",
+      "allowed_write_paths": [],
+      "forbidden_write_paths": ["*"],
+      "on_failure_action": "Emitir FAIL ou WARNING_REQUIRES_PROVENANCE_REVIEW e devolver ao Orchestrator."
+    },
+    {
+      "role_id": "CS2 Domain Reviewer",
+      "subagent_type_name": "csbot-domain-reviewer",
+      "enable_write_tools": false,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Audita plausibilidade física (subtick, Havok, air acceleration, quakemove), economia MR12 e timings de C4.",
+      "allowed_write_paths": [],
+      "forbidden_write_paths": ["*"],
+      "on_failure_action": "Emitir FAIL e devolver ao Orchestrator."
+    },
+    {
+      "role_id": "Runtime and Safety Auditor",
+      "subagent_type_name": "csbot-safety-auditor",
+      "enable_write_tools": false,
+      "enable_mcp_tools": false,
+      "enable_subagent_tools": false,
+      "responsibility": "Audita latência de inferência C# (< 5ms), ausência de GC spikes, thread safety e proteção de null pointers.",
+      "allowed_write_paths": [],
+      "forbidden_write_paths": ["*"],
+      "on_failure_action": "Emitir FAIL e devolver ao Orchestrator."
+    }
+  ]
+}

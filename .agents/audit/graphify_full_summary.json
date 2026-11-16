@@ -1,0 +1,4577 @@
+{
+  "graph_metrics": {
+    "total_nodes": 2627,
+    "total_edges": 5533,
+    "directed": false,
+    "communities_count": 253,
+    "connected_components_count": 159,
+    "largest_component_nodes": 1515,
+    "disconnected_components_count": 158,
+    "disconnected_nodes_outside_largest_component": 1112,
+    "orphan_nodes_degree_0_count": 96,
+    "orphan_nodes_degree_0_sample": [
+      "scripts_archive_botbuy",
+      "scripts_check_enums",
+      "scripts_check_env",
+      "scripts_check_ollama",
+      "scripts_check_types",
+      "scripts_inspect_botbuy",
+      "scripts_inspect_bots",
+      "scripts_inspect_css_api",
+      "scripts_inspect_nade",
+      "scripts_inspect_rdr",
+      "scripts_inspect_wp",
+      "scripts_setup_junctions_and_links",
+      "scripts_test_ollama",
+      "cancellationtokensource",
+      "long",
+      "src_csbotmanager_models_cs_list",
+      "httpclient",
+      "cancellationtoken",
+      "task",
+      "func",
+      "httplistener",
+      "iasyncresult",
+      "module",
+      "device",
+      "tools_apply_5_fixes_complete"
+    ],
+    "weakly_connected_nodes_degree_le_1_count": 912,
+    "weakly_connected_nodes_degree_le_1_sample": [
+      "scripts_archive_botbuy",
+      "scripts_check_enums",
+      "scripts_check_env",
+      "scripts_check_ollama",
+      "scripts_check_types",
+      "scripts_inspect_botbuy",
+      "scripts_inspect_bots",
+      "scripts_inspect_css_api",
+      "scripts_inspect_nade",
+      "scripts_inspect_rdr",
+      "scripts_inspect_wp",
+      "scripts_setup_junctions_and_links",
+      "scripts_test_ollama",
+      "plugincapability",
+      "src_csbotmanager_botlocomotiondriver_cs_concurrentdictionary",
+      "src_csbotmanager_botlocomotiondriver_cs_ibotcontrollerapi",
+      "src_csbotmanager_botlocomotiondriver_cs_bool",
+      "src_csbotmanager_botlocomotiondriver_cs_float",
+      "ulong",
+      "src_csbotmanager_botlocomotiondriver_cs_csteam",
+      "src_csbotmanager_combatadapter_cs_dictionary",
+      "src_csbotmanager_combatadapter_cs_float",
+      "src_csbotmanager_combatadapter_cs_eventplayerhurt",
+      "src_csbotmanager_combatadapter_cs_list",
+      "src_csbotmanager_contextualsmokeandaudiobrain_cs_baseplugin"
+    ],
+    "import_cycles_count": 0,
+    "import_cycles": [],
+    "undirected_cycle_basis_count": 3065,
+    "top_15_god_nodes": [
+      {
+        "id": "src_csbotmanager_models_csbotmanager_tacticalplan",
+        "label": "TacticalPlan",
+        "degree": 96,
+        "source_file": "src/CsBotManager/Models.cs",
+        "community": 33
+      },
+      {
+        "id": "src_csbotmanager_csbotmanagerplugin_csbotmanager_csbotmanagerplugin",
+        "label": "CsBotManagerPlugin",
+        "degree": 76,
+        "source_file": "src/CsBotManager/CsBotManagerPlugin.cs",
+        "community": 1
+      },
+      {
+        "id": "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager",
+        "label": "MapProfileManager",
+        "degree": 71,
+        "source_file": "src/CsBotManager/MapProfileManager.cs",
+        "community": 85
+      },
+      {
+        "id": "src_csbotmanager_matchtelemetrylogger_csbotmanager_matchtelemetrylogger",
+        "label": "MatchTelemetryLogger",
+        "degree": 66,
+        "source_file": "src/CsBotManager/MatchTelemetryLogger.cs",
+        "community": 14
+      },
+      {
+        "id": "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver",
+        "label": "BotLocomotionDriver",
+        "degree": 65,
+        "source_file": "src/CsBotManager/BotLocomotionDriver.cs",
+        "community": 17
+      },
+      {
+        "id": "src_csbotmanager_models",
+        "label": "Models.cs",
+        "degree": 54,
+        "source_file": "src/CsBotManager/Models.cs",
+        "community": 4
+      },
+      {
+        "id": "csharp_namespace:8ba75c39628f7d8f",
+        "label": "CsBotManager",
+        "degree": 51,
+        "source_file": "src/CsBotManager/BotLocomotionDriver.cs",
+        "community": 58
+      },
+      {
+        "id": "src_csbotmanager_micromoveengine_csbotmanager_micromoveengine",
+        "label": "MicroMoveEngine",
+        "degree": 47,
+        "source_file": "src/CsBotManager/MicroMoveEngine.cs",
+        "community": 50
+      },
+      {
+        "id": "tests_test_phase2_mirage_dataset_invariants_testphase2miragedatasetinvariants",
+        "label": "TestPhase2MirageDatasetInvariants",
+        "degree": 42,
+        "source_file": "tests/test_phase2_mirage_dataset_invariants.py",
+        "community": 5
+      },
+      {
+        "id": "src_csbotmanager_economymanager_csbotmanager_economymanager",
+        "label": "EconomyManager",
+        "degree": 41,
+        "source_file": "src/CsBotManager/EconomyManager.cs",
+        "community": 2
+      },
+      {
+        "id": "src_csbotmanager_rolemanager_csbotmanager_rolemanager_getbotrole",
+        "label": ".GetBotRole()",
+        "degree": 40,
+        "source_file": "src/CsBotManager/RoleManager.cs",
+        "community": 24
+      },
+      {
+        "id": "src_csbotmanager_rolemanager_csbotmanager_rolemanager",
+        "label": "RoleManager",
+        "degree": 39,
+        "source_file": "src/CsBotManager/RoleManager.cs",
+        "community": 7
+      },
+      {
+        "id": "src_csbotmanager_movementexecutiontracker_csbotmanager_movementexecutiontracker",
+        "label": "MovementExecutionTracker",
+        "degree": 38,
+        "source_file": "src/CsBotManager/MovementExecutionTracker.cs",
+        "community": 19
+      },
+      {
+        "id": "tests_csbotmanager_tests_v4_2_comprehensivetests_csbotmanager_tests_v4_2_comprehensivetests",
+        "label": "V4_2_ComprehensiveTests",
+        "degree": 35,
+        "source_file": "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs",
+        "community": 8
+      },
+      {
+        "id": "src_arsenal_web_static_script",
+        "label": "script.js",
+        "degree": 34,
+        "source_file": "src/arsenal_web/static/script.js",
+        "community": 15
+      }
+    ],
+    "communities_top_20": [
+      {
+        "id": 0,
+        "name": ".UpdateTick()",
+        "count": 78,
+        "sample_nodes": [
+          "Random",
+          "bool",
+          "float",
+          "int",
+          "CCSPlayerController",
+          "Vector",
+          "List",
+          "Stuck2DEvaluationResult"
+        ]
+      },
+      {
+        "id": 1,
+        "name": "CsBotManagerPlugin",
+        "count": 73,
+        "sample_nodes": [
+          "BasePlugin",
+          "int",
+          "bool",
+          "float",
+          "CsTimer",
+          "List",
+          "string",
+          "GameEventInfo"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "EconomyManager",
+        "count": 72,
+        "sample_nodes": [
+          "Dictionary",
+          "float",
+          "EventPlayerHurt",
+          "List",
+          "CCSPlayerController",
+          "EventRoundStart",
+          "Random",
+          "List"
+        ]
+      },
+      {
+        "id": 3,
+        "name": "SpotTestRunner",
+        "count": 46,
+        "sample_nodes": [
+          "Vector",
+          "BasePlugin",
+          "Dictionary",
+          "float",
+          "EventPlayerHurt",
+          "EventPlayerFootstep",
+          "List",
+          "CCSPlayerController"
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Models.cs",
+        "count": 43,
+        "sample_nodes": [
+          "Dictionary",
+          "CsTeam",
+          ".ClassifyStandstillState()",
+          "Models.cs",
+          "CtFormationRole",
+          "CtFormationAssignment",
+          "BuyCompletionState",
+          "RoundPhase"
+        ]
+      },
+      {
+        "id": 5,
+        "name": "TestPhase2MirageDatasetInvariants",
+        "count": 43,
+        "sample_nodes": [
+          "test_phase2_mirage_dataset_invariants.py",
+          "TestPhase2MirageDatasetInvariants",
+          ".setUpClass()",
+          ".test_01_splits_no_leakage()",
+          ".test_02_unique_hashes()",
+          ".test_03_rounds_ordered_and_monotonic()",
+          ".test_04_movement_diagonals_preserved()",
+          ".test_05_jump_press_leading_edge()"
+        ]
+      },
+      {
+        "id": 6,
+        "name": "V4_2_DeepValidationTests",
+        "count": 42,
+        "sample_nodes": [
+          "MapPlayableBounds.cs",
+          "MapPlayableBounds",
+          "Dictionary",
+          ".GetBoundsForMap()",
+          ".TransformSuggestedGoalToWorld()",
+          "Vector",
+          ".ValidateGoal()",
+          ".SetSpotsForTesting()"
+        ]
+      },
+      {
+        "id": 7,
+        "name": "RoleManager",
+        "count": 40,
+        "sample_nodes": [
+          "CsTimer",
+          "float",
+          "bool",
+          "Random",
+          "Action",
+          "Dictionary",
+          "List",
+          "CCSPlayerController"
+        ]
+      },
+      {
+        "id": 8,
+        "name": "V4_2_ComprehensiveTests",
+        "count": 39,
+        "sample_nodes": [
+          ".FindAlternativeWaypointForRecovery()",
+          ".ValidateCaptureFooter()",
+          ".ClassifyPhysicalOutcome()",
+          "V4_2_ComprehensiveTests",
+          ".CreateMockMapProfile()",
+          "MapProfileManager",
+          ".Test01_MovementWith120Units_IsAppliedWithProgress_EvenIfStateChanged()",
+          "Fact"
+        ]
+      },
+      {
+        "id": 10,
+        "name": "🎮 Manual do Jogador & Guia Completo de C",
+        "count": 37,
+        "sample_nodes": [
+          "🎮 Manual do Jogador & Guia Completo de Comandos: CsBot AI",
+          "📋 Sumário",
+          "1. Referência Rápida de Comandos de Chat de Texto",
+          "2. Guia de Comandos de Voz (Voice IGL & Microfone)",
+          "Principais Intenções e Sinônimos Reconhecidos:",
+          "⚡ 1. Ataque e Entrada Imediata (Executar)",
+          "🔄 2. Rotação Silenciosa e Abortar Entrada (Miou)",
+          "💥 3. Pop-Flash em Dupla"
+        ]
+      },
+      {
+        "id": 11,
+        "name": "cs2_vconsole_bridge.py",
+        "count": 37,
+        "sample_nodes": [
+          "build_complete_automated_spots_catalog.py",
+          "world_to_radar()",
+          "generate_spot_card()",
+          "update_de_mirage_json()",
+          "generate_catalog_pdf()",
+          "capture_all_53_spots.py",
+          "compare_catalog_vs_live.py",
+          "cs2_vconsole_bridge.py"
+        ]
+      },
+      {
+        "id": 9,
+        "name": "DateTime",
+        "count": 37,
+        "sample_nodes": [
+          "DateTime",
+          "capture_all_16_screenshots.py",
+          "clean_screenshots_folder()",
+          "capture_single_shot()",
+          "phase17_audit_chokepoints.py",
+          "dist3d()",
+          "dist2d()",
+          "is_in_playable_bounds()"
+        ]
+      },
+      {
+        "id": 12,
+        "name": "load_and_preprocess_shard()",
+        "count": 36,
+        "sample_nodes": [
+          "DataLoader",
+          "InMemoryPositioningDataset",
+          "Dataset",
+          ".__init__()",
+          "Tensor",
+          "Any",
+          ".__len__()",
+          ".__getitem__()"
+        ]
+      },
+      {
+        "id": 13,
+        "name": "V4_2_4_PrecisionTests",
+        "count": 36,
+        "sample_nodes": [
+          ".CalculateDistanceToBomb()",
+          ".GetWeaponValue()",
+          ".CanSaveOnRound()",
+          ".MaterializeTacticalOrders()",
+          "CsTeam",
+          "IReadOnlyDictionary",
+          "Dictionary",
+          "V4_2_4_PrecisionTests"
+        ]
+      },
+      {
+        "id": 14,
+        "name": "MatchTelemetryLogger",
+        "count": 35,
+        "sample_nodes": [
+          "BasePlugin",
+          "bool",
+          "string",
+          "object",
+          "float",
+          "int",
+          "List",
+          "Vector"
+        ]
+      },
+      {
+        "id": 15,
+        "name": "script.js",
+        "count": 35,
+        "sample_nodes": [
+          "script.js",
+          "syncTeamRestrictions()",
+          "init()",
+          "setupEventListeners()",
+          "updateCategoryView()",
+          "updateFloatDisplay()",
+          "fetchCatalog()",
+          "fetchInventory()"
+        ]
+      },
+      {
+        "id": 16,
+        "name": "OllamaIglService",
+        "count": 34,
+        "sample_nodes": [
+          "List",
+          "object",
+          "string",
+          "CsTeam",
+          "OllamaIglService.cs",
+          "IglCallTelemetry",
+          "DateTime",
+          ".ToLogString()"
+        ]
+      },
+      {
+        "id": 17,
+        "name": "BotLocomotionDriver",
+        "count": 34,
+        "sample_nodes": [
+          "PluginCapability",
+          "ConcurrentDictionary",
+          "IBotControllerApi",
+          "bool",
+          "Vector",
+          "float",
+          "ulong",
+          "CCSPlayerController"
+        ]
+      },
+      {
+        "id": 18,
+        "name": "RoundLifecycleManager",
+        "count": 32,
+        "sample_nodes": [
+          "RoundLifecycleManager",
+          "object",
+          "Stopwatch",
+          "long",
+          "int",
+          "CancellationTokenSource",
+          "List",
+          ".IsCurrentContext()"
+        ]
+      },
+      {
+        "id": 19,
+        "name": "MovementExecutionTracker",
+        "count": 32,
+        "sample_nodes": [
+          "MovementExecutionTracker.cs",
+          "ExpectedEngineStateChange",
+          "TickRateSource",
+          "EffectiveTickRateInfo",
+          "OverrideEventRecord",
+          "Guid",
+          "IntegrityEpisode",
+          "TrackedOutcomeMetadata"
+        ]
+      }
+    ],
+    "all_communities": [
+      {
+        "id": 0,
+        "name": ".UpdateTick()",
+        "count": 78,
+        "sample_nodes": [
+          "Random",
+          "bool",
+          "float",
+          "int",
+          "CCSPlayerController",
+          "Vector",
+          "List",
+          "Stuck2DEvaluationResult"
+        ]
+      },
+      {
+        "id": 1,
+        "name": "CsBotManagerPlugin",
+        "count": 73,
+        "sample_nodes": [
+          "BasePlugin",
+          "int",
+          "bool",
+          "float",
+          "CsTimer",
+          "List",
+          "string",
+          "GameEventInfo"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "EconomyManager",
+        "count": 72,
+        "sample_nodes": [
+          "Dictionary",
+          "float",
+          "EventPlayerHurt",
+          "List",
+          "CCSPlayerController",
+          "EventRoundStart",
+          "Random",
+          "List"
+        ]
+      },
+      {
+        "id": 3,
+        "name": "SpotTestRunner",
+        "count": 46,
+        "sample_nodes": [
+          "Vector",
+          "BasePlugin",
+          "Dictionary",
+          "float",
+          "EventPlayerHurt",
+          "EventPlayerFootstep",
+          "List",
+          "CCSPlayerController"
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Models.cs",
+        "count": 43,
+        "sample_nodes": [
+          "Dictionary",
+          "CsTeam",
+          ".ClassifyStandstillState()",
+          "Models.cs",
+          "CtFormationRole",
+          "CtFormationAssignment",
+          "BuyCompletionState",
+          "RoundPhase"
+        ]
+      },
+      {
+        "id": 5,
+        "name": "TestPhase2MirageDatasetInvariants",
+        "count": 43,
+        "sample_nodes": [
+          "test_phase2_mirage_dataset_invariants.py",
+          "TestPhase2MirageDatasetInvariants",
+          ".setUpClass()",
+          ".test_01_splits_no_leakage()",
+          ".test_02_unique_hashes()",
+          ".test_03_rounds_ordered_and_monotonic()",
+          ".test_04_movement_diagonals_preserved()",
+          ".test_05_jump_press_leading_edge()"
+        ]
+      },
+      {
+        "id": 6,
+        "name": "V4_2_DeepValidationTests",
+        "count": 42,
+        "sample_nodes": [
+          "MapPlayableBounds.cs",
+          "MapPlayableBounds",
+          "Dictionary",
+          ".GetBoundsForMap()",
+          ".TransformSuggestedGoalToWorld()",
+          "Vector",
+          ".ValidateGoal()",
+          ".SetSpotsForTesting()"
+        ]
+      },
+      {
+        "id": 7,
+        "name": "RoleManager",
+        "count": 40,
+        "sample_nodes": [
+          "CsTimer",
+          "float",
+          "bool",
+          "Random",
+          "Action",
+          "Dictionary",
+          "List",
+          "CCSPlayerController"
+        ]
+      },
+      {
+        "id": 8,
+        "name": "V4_2_ComprehensiveTests",
+        "count": 39,
+        "sample_nodes": [
+          ".FindAlternativeWaypointForRecovery()",
+          ".ValidateCaptureFooter()",
+          ".ClassifyPhysicalOutcome()",
+          "V4_2_ComprehensiveTests",
+          ".CreateMockMapProfile()",
+          "MapProfileManager",
+          ".Test01_MovementWith120Units_IsAppliedWithProgress_EvenIfStateChanged()",
+          "Fact"
+        ]
+      },
+      {
+        "id": 10,
+        "name": "🎮 Manual do Jogador & Guia Completo de C",
+        "count": 37,
+        "sample_nodes": [
+          "🎮 Manual do Jogador & Guia Completo de Comandos: CsBot AI",
+          "📋 Sumário",
+          "1. Referência Rápida de Comandos de Chat de Texto",
+          "2. Guia de Comandos de Voz (Voice IGL & Microfone)",
+          "Principais Intenções e Sinônimos Reconhecidos:",
+          "⚡ 1. Ataque e Entrada Imediata (Executar)",
+          "🔄 2. Rotação Silenciosa e Abortar Entrada (Miou)",
+          "💥 3. Pop-Flash em Dupla"
+        ]
+      },
+      {
+        "id": 11,
+        "name": "cs2_vconsole_bridge.py",
+        "count": 37,
+        "sample_nodes": [
+          "build_complete_automated_spots_catalog.py",
+          "world_to_radar()",
+          "generate_spot_card()",
+          "update_de_mirage_json()",
+          "generate_catalog_pdf()",
+          "capture_all_53_spots.py",
+          "compare_catalog_vs_live.py",
+          "cs2_vconsole_bridge.py"
+        ]
+      },
+      {
+        "id": 9,
+        "name": "DateTime",
+        "count": 37,
+        "sample_nodes": [
+          "DateTime",
+          "capture_all_16_screenshots.py",
+          "clean_screenshots_folder()",
+          "capture_single_shot()",
+          "phase17_audit_chokepoints.py",
+          "dist3d()",
+          "dist2d()",
+          "is_in_playable_bounds()"
+        ]
+      },
+      {
+        "id": 12,
+        "name": "load_and_preprocess_shard()",
+        "count": 36,
+        "sample_nodes": [
+          "DataLoader",
+          "InMemoryPositioningDataset",
+          "Dataset",
+          ".__init__()",
+          "Tensor",
+          "Any",
+          ".__len__()",
+          ".__getitem__()"
+        ]
+      },
+      {
+        "id": 13,
+        "name": "V4_2_4_PrecisionTests",
+        "count": 36,
+        "sample_nodes": [
+          ".CalculateDistanceToBomb()",
+          ".GetWeaponValue()",
+          ".CanSaveOnRound()",
+          ".MaterializeTacticalOrders()",
+          "CsTeam",
+          "IReadOnlyDictionary",
+          "Dictionary",
+          "V4_2_4_PrecisionTests"
+        ]
+      },
+      {
+        "id": 14,
+        "name": "MatchTelemetryLogger",
+        "count": 35,
+        "sample_nodes": [
+          "BasePlugin",
+          "bool",
+          "string",
+          "object",
+          "float",
+          "int",
+          "List",
+          "Vector"
+        ]
+      },
+      {
+        "id": 15,
+        "name": "script.js",
+        "count": 35,
+        "sample_nodes": [
+          "script.js",
+          "syncTeamRestrictions()",
+          "init()",
+          "setupEventListeners()",
+          "updateCategoryView()",
+          "updateFloatDisplay()",
+          "fetchCatalog()",
+          "fetchInventory()"
+        ]
+      },
+      {
+        "id": 16,
+        "name": "OllamaIglService",
+        "count": 34,
+        "sample_nodes": [
+          "List",
+          "object",
+          "string",
+          "CsTeam",
+          "OllamaIglService.cs",
+          "IglCallTelemetry",
+          "DateTime",
+          ".ToLogString()"
+        ]
+      },
+      {
+        "id": 17,
+        "name": "BotLocomotionDriver",
+        "count": 34,
+        "sample_nodes": [
+          "PluginCapability",
+          "ConcurrentDictionary",
+          "IBotControllerApi",
+          "bool",
+          "Vector",
+          "float",
+          "ulong",
+          "CCSPlayerController"
+        ]
+      },
+      {
+        "id": 18,
+        "name": "RoundLifecycleManager",
+        "count": 32,
+        "sample_nodes": [
+          "RoundLifecycleManager",
+          "object",
+          "Stopwatch",
+          "long",
+          "int",
+          "CancellationTokenSource",
+          "List",
+          ".IsCurrentContext()"
+        ]
+      },
+      {
+        "id": 19,
+        "name": "MovementExecutionTracker",
+        "count": 32,
+        "sample_nodes": [
+          "MovementExecutionTracker.cs",
+          "ExpectedEngineStateChange",
+          "TickRateSource",
+          "EffectiveTickRateInfo",
+          "OverrideEventRecord",
+          "Guid",
+          "IntegrityEpisode",
+          "TrackedOutcomeMetadata"
+        ]
+      },
+      {
+        "id": 20,
+        "name": "Relatório de Auditoria Forense Técnica: ",
+        "count": 31,
+        "sample_nodes": [
+          "Relatório de Auditoria Forense Técnica: Arquitetura, Engine Source 2 e Performance (`CsBotManager`)",
+          "Sumário Executivo (Veredito Forense)",
+          "1. Controle Real da Engine vs. \"Código Simulado (Mock)\"",
+          "1.1. Movimentação para `StagingSpotId`, `ExecuteSpotId` e `FallbackSpotId`",
+          "🔴 ACHADO CRÍTICO 1A: `StagingSpotId` é 100% Simulado (Zero Efeito Motor no Jogo)",
+          "🔴 ACHADO CRÍTICO 1B: Setup do Time Adversário (`_enemyBotSpots`) é Código 100% Morto (*Dead Code*)",
+          "🔴 ACHADO CRÍTICO 1C: Uso de `pawn.Teleport()` em vez de Navegação NavMesh no `ExecuteSpotId` e `FallbackSpotId`",
+          "1.2. Posturas (`EngagementStance`) e Micro-Ações (`MidRoundAction`)"
+        ]
+      },
+      {
+        "id": 21,
+        "name": "TacticalCalloutSystem",
+        "count": 31,
+        "sample_nodes": [
+          "List",
+          "Dictionary",
+          "HashSet",
+          "Random",
+          "CCSPlayerController",
+          "EventPlayerHurt",
+          "EventPlayerDeath",
+          "EventWeaponFire"
+        ]
+      },
+      {
+        "id": 22,
+        "name": "V4_2_5_PrecisionTests",
+        "count": 31,
+        "sample_nodes": [
+          ".StartTacticalAdaptation()",
+          ".CtEntryDeathUsesDefensiveReaction()",
+          ".TrEntryKilledLowTimeMustCommit()",
+          "V4_2_5_PrecisionTests",
+          "MapProfileManager",
+          ".Test01_OnPlayerDeath_TrVictim_PassesTrTeam()",
+          "Fact",
+          ".Test02_OnPlayerDeath_CtVictim_PassesCtTeam()"
+        ]
+      },
+      {
+        "id": 23,
+        "name": "contract_spec.py",
+        "count": 31,
+        "sample_nodes": [
+          "ndarray",
+          "Path",
+          "ndarray",
+          "ndarray",
+          "contract_spec.py",
+          "quantize_angle_to_direction_index()",
+          "encode_action()",
+          "velocity_to_action_id()"
+        ]
+      },
+      {
+        "id": 24,
+        "name": ".GetBotRole()",
+        "count": 30,
+        "sample_nodes": [
+          "float",
+          "CsTimer",
+          "Random",
+          "List",
+          "CCSPlayerController",
+          "List",
+          "CCSPlayerController",
+          ".ThrowUtility()"
+        ]
+      },
+      {
+        "id": 25,
+        "name": "app.py",
+        "count": 29,
+        "sample_nodes": [
+          "app.py",
+          "resolve_steamids()",
+          "get_db()",
+          "load_catalog_data()",
+          "KnifeEquipRequest",
+          "BaseModel",
+          "SkinEquipRequest",
+          "GloveEquipRequest"
+        ]
+      },
+      {
+        "id": 26,
+        "name": "3. Detalhamento Técnico de Cada Bloco e ",
+        "count": 29,
+        "sample_nodes": [
+          "PLANO_IMPLANTACAO_CORRECOES.md",
+          "🛠️ Plano de Implantação Detalhado: Correção Estrutural Completa (`CsBotManager`)",
+          "1. Visão Geral da Arquitetura de Correção",
+          "2. Mapa de Rastreabilidade Total (Todos os 19 Problemas Auditados)",
+          "3. Detalhamento Técnico de Cada Bloco e Como Ajustar",
+          "BLOCO 1: Locomoção Física Nativa (`CCSBot`), Integração `BotControllerApi.dll` e Fim dos Teleportes (`C-01A` a `C-02B`)",
+          "1.1. Referenciar `BotControllerApi.dll` em [`CsBotManager.csproj`](file:///c:/Users/ricar/OneDrive/Documentos/Dev/CsBot/src/CsBotManager/CsBotManager.csproj) (`C-02A`)",
+          "1.2. Criar o Controlador Físico Nativo `BotLocomotionDriver.cs` (`C-01A`, `C-01C`, `C-01D`, `C-01E`, `C-02A`)"
+        ]
+      },
+      {
+        "id": 27,
+        "name": "run_mining_and_training_loop.py",
+        "count": 29,
+        "sample_nodes": [
+          "no_grad",
+          "Path",
+          "model_mlmove.py",
+          "MLMoveTransformer",
+          "count_parameters()",
+          "Module",
+          "Fase 6C (Camada 3 - Parte 1): Arquitetura Neural Transformer MLMove (~5.43M…",
+          "Rede Neural Transformer MLMove (~5.43M parâmetros, ~20.75 MB em float32, <…"
+        ]
+      },
+      {
+        "id": 28,
+        "name": "V4_2_8_PrecisionTests",
+        "count": 28,
+        "sample_nodes": [
+          ".UpdateGroundedState()",
+          "V4_2_8_PrecisionTests",
+          ".Test01_TrHighMoneySelectsFullBuyNeverUnknownIncomplete()",
+          "Fact",
+          ".Test02_FullBuyTrPurchasesPrimaryAndArmorBeforeUtility()",
+          ".Test03_TrFullBuyHighMoneyAcquiresValuablePrimary()",
+          ".Test04_TrInsufficientForAkFallsBackToGalilNeverGlock()",
+          ".Test05_WeaponC4NeverClassifiedAsPrimary()"
+        ]
+      },
+      {
+        "id": 29,
+        "name": "Phase2ForensicAuditTests",
+        "count": 28,
+        "sample_nodes": [
+          "Phase2ForensicAuditTests",
+          "string",
+          ".Test_Invariant_01_SplitsMutuallyExclusive()",
+          "Fact",
+          ".Test_Invariant_02_CatalogAndInventoryUniqueHashes()",
+          ".Test_Invariant_03_MonotonicRoundAndTickSequence()",
+          ".Test_Invariant_04_IndependentDiagonalsPreserved()",
+          ".Test_Invariant_05_JumpPressLeadingEdgeOnly()"
+        ]
+      },
+      {
+        "id": 30,
+        "name": "TacticalSpot",
+        "count": 27,
+        "sample_nodes": [
+          "Dictionary",
+          "List",
+          "CCSPlayerController",
+          "CsTeam",
+          "List",
+          "CCSPlayerController",
+          "CsTeam",
+          "Dictionary"
+        ]
+      },
+      {
+        "id": 31,
+        "name": "TacticalUtilityIglEngine",
+        "count": 27,
+        "sample_nodes": [
+          "TacticalDecisionSource",
+          "UtilityScoreBreakdown",
+          "List",
+          ".FormatAuditSummary()",
+          "TacticalUtilityIglEngine",
+          "Random",
+          "object",
+          "Dictionary"
+        ]
+      },
+      {
+        "id": 32,
+        "name": ".PredictBatch16Hz()",
+        "count": 26,
+        "sample_nodes": [
+          "ForwardMove",
+          "SideMove",
+          "MicroMoveEngine.cs",
+          "MicroSpeedTier",
+          "TradeSpacingPairState",
+          "Vector",
+          "CounterStrafeDiagnostic",
+          "MicroMoveStep"
+        ]
+      },
+      {
+        "id": 33,
+        "name": "TacticalPlan",
+        "count": 26,
+        "sample_nodes": [
+          "Random",
+          "bool",
+          "float",
+          "Dictionary",
+          "EventPlayerHurt",
+          "CCSPlayerController",
+          "List",
+          "AlertLevel"
+        ]
+      },
+      {
+        "id": 34,
+        "name": "test_phase3a_positioning_training.py",
+        "count": 25,
+        "sample_nodes": [
+          "PositioningMultitaskLoss",
+          ".forward()",
+          "Função de perda multitarefa com: - Pesos balanceados para classes raras de…",
+          "outputs: dict de forward targets: dict com: - positioning_state: [B] -…",
+          "test_phase3a_positioning_training.py",
+          "test_01_dry_run_report_exists()",
+          "test_02_spot_loss_zero_in_transit()",
+          "test_03_spot_loss_positive_when_eligible()"
+        ]
+      },
+      {
+        "id": 35,
+        "name": ".PrintTeamChatAndRadio()",
+        "count": 24,
+        "sample_nodes": [
+          "BasePlugin",
+          "Random",
+          "float",
+          "List",
+          "CCSPlayerController",
+          "Vector",
+          "CsTeam",
+          "ContextualSmokeAndAudioBrain"
+        ]
+      },
+      {
+        "id": 36,
+        "name": "MidRoundAdapter",
+        "count": 24,
+        "sample_nodes": [
+          "Action",
+          "TimerFlags",
+          "Timer",
+          "Random",
+          "CsTimer",
+          "List",
+          "CCSPlayerController",
+          "EventPlayerDeath"
+        ]
+      },
+      {
+        "id": 37,
+        "name": "Phase2TrainingInputsTests",
+        "count": 24,
+        "sample_nodes": [
+          "Phase2TrainingInputsTests.cs",
+          "Phase2TrainingInputsTests",
+          "string",
+          ".Test_01_ParquetSchemaMatchesDeclaredContract()",
+          "Fact",
+          ".Test_02_TemporalWindowIsMaterialized()",
+          ".Test_03_DataloaderBuildsExpectedBatchShapes()",
+          ".Test_04_TicksAreStrictlyMonotonic()"
+        ]
+      },
+      {
+        "id": 38,
+        "name": ".EvaluateJumpRequest()",
+        "count": 23,
+        "sample_nodes": [
+          "JumpExecutionGate.cs",
+          "JumpGateState",
+          "Vector",
+          "JumpGateEventType",
+          "JumpGateEvent",
+          "JumpContextType",
+          "JumpExecutionGate",
+          "ConcurrentDictionary"
+        ]
+      },
+      {
+        "id": 39,
+        "name": "test_phase3a_2_objective_save_enrichment",
+        "count": 23,
+        "sample_nodes": [
+          "test_phase3a_2_objective_save_enrichment.py",
+          "fixture",
+          "paths()",
+          "test_01_plant_event_produces_objective_candidate()",
+          "test_02_defuse_event_produces_objective_candidate()",
+          "test_03_post_plant_does_not_label_all_players_objective()",
+          "test_04_survival_alone_does_not_produce_save()",
+          "test_05_explicit_save_produces_save()"
+        ]
+      },
+      {
+        "id": 40,
+        "name": "MovementExecutionTrackerTests",
+        "count": 23,
+        "sample_nodes": [
+          "Guid",
+          ".EnsureLogicalActionId()",
+          "MovementExecutionOutcome",
+          ".MillisecondsToTicks()",
+          ".CancelBotSamples()",
+          ".ArchiveCompletedSample()",
+          ".RecordOrUpdateIntentIssued()",
+          ".CompleteSample()"
+        ]
+      },
+      {
+        "id": 41,
+        "name": "TestPhase22TrainingInputs",
+        "count": 23,
+        "sample_nodes": [
+          "test_phase2_2_training_inputs.py",
+          "TestPhase22TrainingInputs",
+          ".setUpClass()",
+          ".test_01_ParquetSchemaMatchesDeclaredContract()",
+          ".test_02_TemporalWindowIsMaterialized()",
+          ".test_03_DataloaderBuildsExpectedBatchShapes()",
+          ".test_04_TicksAreStrictlyMonotonic()",
+          ".test_05_SequenceDoesNotCrossRoundBoundary()"
+        ]
+      },
+      {
+        "id": 42,
+        "name": "test_phase3a_1_forensic_reconciliation.p",
+        "count": 23,
+        "sample_nodes": [
+          "test_phase3a_1_forensic_reconciliation.py",
+          "compute_sha256()",
+          "Path",
+          "test_01_metrics_come_from_canonical_arrays()",
+          "test_02_confusion_matrix_counts_match_support()",
+          "test_03_zero_support_class_shows_na()",
+          "test_04_macro_f1_matches_sklearn()",
+          "test_05_balanced_accuracy_matches_sklearn()"
+        ]
+      },
+      {
+        "id": 43,
+        "name": "MinerState",
+        "count": 23,
+        "sample_nodes": [
+          "real_demo_miner.py",
+          "MinerState",
+          ".__init__()",
+          "Path",
+          ".load()",
+          ".save()",
+          ".is_url_done()",
+          ".mark_url_done()"
+        ]
+      },
+      {
+        "id": 44,
+        "name": "V4_2_6_PrecisionTests",
+        "count": 22,
+        "sample_nodes": [
+          ".GetPlantZone()",
+          ".DeterminePlantedBombsite()",
+          ".InitializeVersioning()",
+          ".SetFakeExecution()",
+          ".ResolveBombCarrierTargetSite()",
+          "V4_2_6_PrecisionTests",
+          "MapProfileManager",
+          ".Test01_NormalExecuteACommitsA()"
+        ]
+      },
+      {
+        "id": 45,
+        "name": "CtTacticBlueprint",
+        "count": 22,
+        "sample_nodes": [
+          "RoundTempo",
+          "RoundHistoryItem",
+          ".RecordRoundResult()",
+          "IMapTacticalCatalog",
+          "IReadOnlyList",
+          ".TryRouteMapSpecificLexicalCall()",
+          "CsTeam",
+          "MirageTacticalCatalog.cs"
+        ]
+      },
+      {
+        "id": 46,
+        "name": "Phase17SemanticAndJumpTests",
+        "count": 22,
+        "sample_nodes": [
+          "Phase17SemanticAndJumpTests",
+          ".GetRepoRoot()",
+          ".GetMirageJsonPath()",
+          ".GetUniformSchemaPath()",
+          ".GetChokepointAuditPath()",
+          ".GetSpotConfidencePath()",
+          ".GetHumanChecklistPath()",
+          ".Test01_AllSpotsHaveUniformSemanticSchema()"
+        ]
+      },
+      {
+        "id": 47,
+        "name": "Arquetipos Competitivos de Bots",
+        "count": 21,
+        "sample_nodes": [
+          "Visao Geral e Filosofia (CsBot)",
+          "Arquitetura dos Dois Cerebros",
+          "Cerebro Macro (IGL / Capitão)",
+          "Cerebro Micro (Soldado / Mecânica)",
+          "CounterStrikeSharp Framework",
+          "CS2-Bot-Improver (ed0ard)",
+          "cs2-WeaponPaints (Nereziel)",
+          "Ollama + Qwen 2.5 3B (SLM)"
+        ]
+      },
+      {
+        "id": 48,
+        "name": ".ComputeDamage()",
+        "count": 21,
+        "sample_nodes": [
+          "Dictionary",
+          "HashSet",
+          ".ComputeDamage()",
+          ".ComputeVelocity()",
+          "Vel2D",
+          "VelZ",
+          "Vel3D",
+          "TelemetryAndDamageTests"
+        ]
+      },
+      {
+        "id": 49,
+        "name": "RELATÓRIO DE AUDITORIA FORENSE TÉCNICA V",
+        "count": 20,
+        "sample_nodes": [
+          "RELATÓRIO DE AUDITORIA FORENSE TÉCNICA V2 — CsBot",
+          "1. Resumo executivo",
+          "2. Escopo efetivamente disponível",
+          "3. Limitações e artefatos indisponíveis",
+          "4. Branch e commit analisados",
+          "5. Inventário completo dos arquivos",
+          "7. Configuração de projeto identificada",
+          "8. Mapa de arquitetura"
+        ]
+      },
+      {
+        "id": 50,
+        "name": "MicroMoveEngine",
+        "count": 20,
+        "sample_nodes": [
+          "int",
+          "string",
+          "Random",
+          "object",
+          "float",
+          "InferenceSession",
+          "bool",
+          "Dictionary"
+        ]
+      },
+      {
+        "id": 51,
+        "name": "TacticalProbabilityEngine",
+        "count": 20,
+        "sample_nodes": [
+          "Random",
+          "Dictionary",
+          "HashSet",
+          "int",
+          "CsTeam",
+          "List",
+          "CtDuoPlayType",
+          "TrTacticType"
+        ]
+      },
+      {
+        "id": 52,
+        "name": "TestMovementContractV2",
+        "count": 20,
+        "sample_nodes": [
+          "test_movement_contract_v2.py",
+          "TestMovementContractV2",
+          ".setUpClass()",
+          ".test_ForwardLeftIsRepresentable()",
+          ".test_ForwardRightIsRepresentable()",
+          ".test_BackwardLeftIsRepresentable()",
+          ".test_BackwardRightIsRepresentable()",
+          ".test_StopIsNeutralNeutral()"
+        ]
+      },
+      {
+        "id": 53,
+        "name": "radar.js",
+        "count": 18,
+        "sample_nodes": [
+          "radar.js",
+          "worldToRadar()",
+          "lerpAngle()",
+          "updateInterpolation()",
+          "render()",
+          "drawRadarOverlay()",
+          "drawCallouts()",
+          "drawC4()"
+        ]
+      },
+      {
+        "id": 54,
+        "name": ".ResetRound()",
+        "count": 18,
+        "sample_nodes": [
+          ".BeginMovementTick()",
+          ".ResetRound()",
+          "TickDeltaAndAppliedIntentTests",
+          ".TickDelta_At64Hz_IsCloseTo0_015625()",
+          "Fact",
+          ".TickDelta_TwoMethodsInSameTick_UseExactSameDelta()",
+          ".TickDelta_FirstTick_UsesEffectiveIntervalAsFallback()",
+          ".TickDelta_ResetRound_ClearsClockAndResetsToEffectiveInterval()"
+        ]
+      },
+      {
+        "id": 55,
+        "name": "PositioningDatasetV1",
+        "count": 18,
+        "sample_nodes": [
+          "dataloaders.py",
+          "PositioningDatasetV1",
+          ".__init__()",
+          "Path",
+          ".__len__()",
+          ".__getitem__()",
+          "MovementDatasetV2",
+          ".__init__()"
+        ]
+      },
+      {
+        "id": 56,
+        "name": "data_utils.py",
+        "count": 18,
+        "sample_nodes": [
+          "audit_errors_and_episodes.py",
+          "main()",
+          "data_utils.py",
+          "np_accuracy_score()",
+          "ndarray",
+          "np_per_class_prf()",
+          "np_macro_f1()",
+          "np_balanced_accuracy()"
+        ]
+      },
+      {
+        "id": 57,
+        "name": ".NavigateToSpot()",
+        "count": 17,
+        "sample_nodes": [
+          "List",
+          "CCSPlayerController",
+          "EventPlayerHurt",
+          "CCSPlayerController",
+          "List",
+          ".NavigateToSpot()",
+          ".CommandPos()",
+          ".RecordCommunication()"
+        ]
+      },
+      {
+        "id": 58,
+        "name": "CsBotManager",
+        "count": 16,
+        "sample_nodes": [
+          "CsBotManager",
+          "BotSystemConfig.cs",
+          "C4MismatchEpisode.cs",
+          "C4MismatchEpisode",
+          "Guid",
+          "ContextualSmokeAndAudioBrain.cs",
+          "CsBotManagerPlugin.cs",
+          "CtDefenseController.cs"
+        ]
+      },
+      {
+        "id": 59,
+        "name": ".MaterializeCtRetakeOrdersDeterministic(",
+        "count": 16,
+        "sample_nodes": [
+          "TacticalOrderMaterializer.cs",
+          "TacticalOrderMaterializer",
+          "IReadOnlyList",
+          ".CloneOrder()",
+          ".MaterializeCtRetakeOrders()",
+          "Vector",
+          ".MaterializeCtRetakeOrdersDeterministic()",
+          "Slot"
+        ]
+      },
+      {
+        "id": 60,
+        "name": "MovementIntent",
+        "count": 16,
+        "sample_nodes": [
+          ".LogExtremeCoordinateAnomaly()",
+          "MovementArbitrator.cs",
+          "MovementIntentSource",
+          "MovementCommandKind",
+          "MovementScope",
+          "MovementIntentDisposition",
+          "IntentPublishChannel",
+          "MovementIntent"
+        ]
+      },
+      {
+        "id": 61,
+        "name": ".ClassifyPlayer()",
+        "count": 16,
+        "sample_nodes": [
+          "MirageSectorClassifier.cs",
+          "MirageSectorVolume",
+          ".Contains3D()",
+          ".DistanceToVolume3D()",
+          "SectorClassificationResult",
+          "MirageSectorClassifier",
+          "Dictionary",
+          "IReadOnlyList"
+        ]
+      },
+      {
+        "id": 62,
+        "name": ".ValidateAndRepairOrders()",
+        "count": 16,
+        "sample_nodes": [
+          ".ValidateAndRepairOrders()",
+          "V4_2_7_PrecisionTests",
+          ".Test01_FakeAExecuteBCommitsBombToB()",
+          "Fact",
+          ".Test02_FakeBExecuteACommitsBombToA()",
+          ".Test03_FakeCarrierIsNeverInFakeGroup()",
+          ".Test04_CommittedSiteComesFromMaterializedPlan()",
+          ".Test05_RuntimeCannotOverwriteCommittedSiteFromFakeTarget()"
+        ]
+      },
+      {
+        "id": 63,
+        "name": "phase163_reconcile_and_report.py",
+        "count": 16,
+        "sample_nodes": [
+          "phase163_reconcile_and_report.py",
+          "compute_sha256()",
+          "Path",
+          "load_profile()",
+          "load_events()",
+          "load_spottest()",
+          "parse_visual_review()",
+          "generate_coordinate_reconciliation()"
+        ]
+      },
+      {
+        "id": 64,
+        "name": "PositioningTransformerV1",
+        "count": 16,
+        "sample_nodes": [
+          "Path",
+          "create_dataset_from_shards()",
+          "evaluate.py",
+          "evaluate_test_and_holdouts()",
+          "positioning_model.py",
+          "PositioningTransformerV1",
+          "run_target_leakage_audit.py",
+          "main()"
+        ]
+      },
+      {
+        "id": 65,
+        "name": "12. Achados detalhados por critério",
+        "count": 15,
+        "sample_nodes": [
+          "12. Achados detalhados por critério",
+          "F-001",
+          "F-002",
+          "F-003",
+          "F-004",
+          "F-005",
+          "F-006",
+          "F-007"
+        ]
+      },
+      {
+        "id": 66,
+        "name": "SiteClearAndPlantController",
+        "count": 15,
+        "sample_nodes": [
+          "BasePlugin",
+          "float",
+          "bool",
+          "EventPlayerHurt",
+          "CCSPlayerController",
+          "Vector",
+          "TargetPos",
+          "IsOpen"
+        ]
+      },
+      {
+        "id": 67,
+        "name": "phase15_spatial_audit.py",
+        "count": 15,
+        "sample_nodes": [
+          "phase15_spatial_audit.py",
+          "spot_filter()",
+          "spot_usage()",
+          "spot_bombsite()",
+          "team_names()",
+          "load_place_model()",
+          "classify_place()",
+          "vkey()"
+        ]
+      },
+      {
+        "id": 68,
+        "name": "CsBotManager.Tests",
+        "count": 14,
+        "sample_nodes": [
+          "CsBotManager.Tests",
+          "MovementExecutionTrackerTests.cs",
+          "Phase17SemanticAndJumpTests.cs",
+          "Phase2ForensicAuditTests.cs",
+          "RoundLifecycleTests.cs",
+          "TelemetryAndDamageTests.cs",
+          "TickDeltaAndAppliedIntentTests.cs",
+          "V4_2_4_PrecisionTests.cs"
+        ]
+      },
+      {
+        "id": 69,
+        "name": "Checklist de Testes e Validação - Fase 3",
+        "count": 14,
+        "sample_nodes": [
+          "CHECKLIST_TESTES_FASE3.md",
+          "Checklist de Testes e Validação - Fase 3: Dinâmica Tática, Matriz de Variações & Sobrevivência",
+          "1. Pré-Requisitos de Inicialização",
+          "2. Testes de Cadência e Ritmo de Round (`RoundTempo`)",
+          "Teste 2.1: Visualização do Chip HUD Atualizado",
+          "Teste 2.2: Staging Hold (Eliminação do Rush Suicida)",
+          "3. Teste de Intervenção do Jogador Humano: `!executar` / `!go`",
+          "4. Teste da Matriz de 20+ Variações Orgânicas dos Adversários"
+        ]
+      },
+      {
+        "id": 70,
+        "name": ".BuildFogOfWarInputTensorForTeam()",
+        "count": 14,
+        "sample_nodes": [
+          "List",
+          "CCSPlayerController",
+          "ConcurrentDictionary",
+          "IBotControllerApi",
+          "CsTeam",
+          ".HasC4()",
+          "AdrenalineTriggerType",
+          ".PredictBatch16Hz()"
+        ]
+      },
+      {
+        "id": 71,
+        "name": "BombsiteTarget",
+        "count": 14,
+        "sample_nodes": [
+          "BombsiteTarget",
+          "BombsiteParser",
+          ".TryParseBombsiteTarget()",
+          ".ParseOrDefault()",
+          "BombObjectiveState",
+          "Guid",
+          ".CommitMaterializedSite()",
+          ".UpdateCommittedSite()"
+        ]
+      },
+      {
+        "id": 72,
+        "name": "TrackerMetricsAggregator",
+        "count": 14,
+        "sample_nodes": [
+          "TrackerMetricsAggregator.cs",
+          "TrackerMetricsAggregator",
+          "ConcurrentDictionary",
+          "int",
+          ".IncrementStaleObjectivesRejected()",
+          ".RecordJump()",
+          ".IncrementRepeatedJumpSequences()",
+          ".RecordCrossTeamAttempt()"
+        ]
+      },
+      {
+        "id": 73,
+        "name": "UtilityAndClockCoordinator",
+        "count": 14,
+        "sample_nodes": [
+          "BasePlugin",
+          "Dictionary",
+          "Random",
+          "float",
+          "bool",
+          "List",
+          "CCSPlayerController",
+          "UtilityAndClockCoordinator.cs"
+        ]
+      },
+      {
+        "id": 74,
+        "name": "OrganicRushesAndFakesTests",
+        "count": 14,
+        "sample_nodes": [
+          "OrganicRushesAndFakesTests.cs",
+          "OrganicRushesAndFakesTests",
+          "MapProfileManager",
+          ".Test1_FakeA_MaterializesA_ForDistraction_And_B_ForPlant()",
+          "Fact",
+          ".Test2_FakeB_MaterializesB_ForDistraction_And_A_ForPlant()",
+          ".Test3_ValidateAndRepair_RepairsMidSpoofInFakeA()",
+          ".Test4_ValidateAndRepair_RepairsMidSpoofInFakeB()"
+        ]
+      },
+      {
+        "id": 75,
+        "name": "build_and_evaluate_challenge_set.py",
+        "count": 14,
+        "sample_nodes": [
+          "forensic_step2_positioning_multitask.py",
+          "main()",
+          "build_and_evaluate_challenge_set.py",
+          "compute_sha256()",
+          "Path",
+          "main()",
+          "build_challenge_v2.py",
+          "compute_sha256()"
+        ]
+      },
+      {
+        "id": 76,
+        "name": ".ClassifyPhysicalOutcomeDetailed()",
+        "count": 13,
+        "sample_nodes": [
+          "StateIntegrityOutcome",
+          ".EvaluateStateIntegrity()",
+          "Outcome",
+          "Details",
+          ".ClassifyPhysicalOutcomeDetailed()",
+          "Physical",
+          "Reason",
+          ".GetLatestOutcome()"
+        ]
+      },
+      {
+        "id": 77,
+        "name": ".RecordPeriodicSnapshot()",
+        "count": 13,
+        "sample_nodes": [
+          "CCSPlayerController",
+          "MatchTelemetryLogger.cs",
+          "TelemetryAdmissionResult",
+          ".Admit()",
+          ".WriteNormal()",
+          ".LogEvent()",
+          ".LogUtilityThrow()",
+          ".LogCombat()"
+        ]
+      },
+      {
+        "id": 78,
+        "name": "V4_2_2_FinalAdjustmentsTests",
+        "count": 13,
+        "sample_nodes": [
+          "V4_2_2_FinalAdjustmentsTests.cs",
+          "V4_2_2_FinalAdjustmentsTests",
+          "MapProfileManager",
+          ".Test1_ExecuteBMaterializesBSpots()",
+          "Fact",
+          ".Test2_ExecuteAMaterializesASpots()",
+          ".Test3_LlmMidOrderIsRepairedForExecuteB()",
+          ".Test4_ExplicitLurkerMayUseDifferentRoute()"
+        ]
+      },
+      {
+        "id": 79,
+        "name": "V4_3_UtilityAiIglTests",
+        "count": 13,
+        "sample_nodes": [
+          "V4_3_UtilityAiIglTests.cs",
+          "V4_3_UtilityAiIglTests",
+          ".DecideRoundPlans_ExecutesUnderOneMillisecond_WithValidMirageSpots()",
+          "Fact",
+          ".ScoreCalculation_AdaptsToEconomyAndRepeatedBombHistory()",
+          ".RepetitionPenalty_PreventsImmediateStagnation()",
+          ".FastLexicalCommandRouter_MatchesInstantaneously()",
+          "CsTeam"
+        ]
+      },
+      {
+        "id": 80,
+        "name": "demo_collector.py",
+        "count": 13,
+        "sample_nodes": [
+          "Path",
+          "demo_collector.py",
+          "ensure_map_raw_dir()",
+          "decompress_single_file()",
+          "ingest_directory()",
+          "ingest_cstv_server_demos()",
+          "download_urls_batch()",
+          "main()"
+        ]
+      },
+      {
+        "id": 81,
+        "name": ".ValidateOrder()",
+        "count": 12,
+        "sample_nodes": [
+          "PresetSpatialValidator.cs",
+          "PresetValidationResult",
+          "PresetValidationOutcome",
+          "PresetStartupAudit",
+          "List",
+          ".FormatSummary()",
+          "PresetSpatialValidator",
+          ".ValidateOrder()"
+        ]
+      },
+      {
+        "id": 82,
+        "name": "Bateria de Validação — 2º Ajuste (Revali",
+        "count": 11,
+        "sample_nodes": [
+          "README.md",
+          "BATERIA_SEGUNDO_AJUSTE_VALIDACAO.md",
+          "Bateria de Validação — 2º Ajuste (Revalidação Final)",
+          "Resultado consolidado",
+          "Matriz por bloco",
+          "Conclusão",
+          "MANUAL_DO_JOGADOR_E_COMANDOS.md",
+          "RELATORIO_AUDITORIA_TECNICA.md"
+        ]
+      },
+      {
+        "id": 83,
+        "name": "Checklist Unificado de Testes em Jogo (F",
+        "count": 11,
+        "sample_nodes": [
+          "CHECKLIST_TESTE_COMPLETO_JOGO.md",
+          "Checklist Unificado de Testes em Jogo (Fases 2, 3 e 4)",
+          "1. Passo a Passo para Iniciar o Ambiente",
+          "2. Validação da Fase 2: Economia, Arquétipos & Chip HUD",
+          "3. Validação da Fase 3: Cadência, Staging & Sobrevivência",
+          "4. Validação da Fase 4: Defesa Anti-Fake, Micro-Actions & Voz",
+          "4.1 Módulo 1: Domínio CT em Dupla & Rotação Cautelosa Anti-Fake",
+          "4.2 Módulo 2: Fake Real de TR (Divisão por C4) & Micro-Ações"
+        ]
+      },
+      {
+        "id": 84,
+        "name": "Checklist de Testes e Validação - Fase 2",
+        "count": 11,
+        "sample_nodes": [
+          "CHECKLIST_TESTES_FASE2.md",
+          "Checklist de Testes e Validação - Fase 2 (Maestro Tático, Economia, Arquétipos & Chip HUD)",
+          "1. Verificações Prévias de Inicialização",
+          "2. Conexão e Validação do Chip HUD no Freeze Time",
+          "3. Comandos Interativos do Capitão Humano",
+          "A. Comando `!tatica <sua call>`",
+          "B. Comando `!rejeitar`",
+          "C. Comando `!drop` (Pedido Inteligente de Armas)"
+        ]
+      },
+      {
+        "id": 85,
+        "name": "MapProfileManager",
+        "count": 11,
+        "sample_nodes": [
+          "object",
+          "Random",
+          "MapProfileManager",
+          ".LoadProfile()",
+          ".ResolveVoiceSynonym()",
+          ".GenerateUniversalFallbackProfile()",
+          ".ValidateTacticalPlanPresets()",
+          "ValidCount"
+        ]
+      },
+      {
+        "id": 86,
+        "name": "OllamaIntegrationDiagnosticTests",
+        "count": 11,
+        "sample_nodes": [
+          "OllamaIntegrationDiagnosticTests.cs",
+          "OllamaIntegrationDiagnosticTests",
+          "string",
+          "HttpClient",
+          ".IsOllamaRunningAsync()",
+          "Task",
+          ".StepA_GetModelAvailabilityAndListing()",
+          "Fact"
+        ]
+      },
+      {
+        "id": 87,
+        "name": "22. Plano de Execução Definitivo (8 Bloc",
+        "count": 10,
+        "sample_nodes": [
+          "22. Plano de Execução Definitivo (8 Blocos Cirúrgicos de Implementação)",
+          "Bloco 1: Correção de Passos Aliados e Percepção Legítima Sem \"Wallhack por Raio\" (`F-009` e `Seção 13.4`)",
+          "Bloco 2: Ativação Real do Gate Anti-Dupla Smoke (`F-015`)",
+          "Bloco 3: Sincronia Imediata do Save CT com o Guard de Defuse (`F-005`)",
+          "Bloco 4: Hierarquia Leve de Prioridade e Cancelamento Atômico no `BotLocomotionDriver` (`F-007` e `F-016`)",
+          "Bloco 5: Guard de Round/Sequência do Ollama, Lock de Perfil e Registry de Timers por Round (`F-001`, `F-002`, `F-003`, `F-004`, `F-006`)",
+          "Bloco 6: Invariantes de Inventário e C4 Única (`F-008`)",
+          "Bloco 7: Escape HTML no HUD e Validação Defensiva de Entidades (`F-011` e `F-012`)"
+        ]
+      },
+      {
+        "id": 88,
+        "name": "🎮 CsBot — Autonomous & Tactical AI Syste",
+        "count": 10,
+        "sample_nodes": [
+          "🎮 CsBot — Autonomous & Tactical AI System for Counter-Strike 2",
+          "⚡ Destaques da Arquitetura",
+          "📂 Estrutura do Repositório",
+          "🚀 Como Executar",
+          "1. Pré-Requisitos",
+          "2. Compilação do Plugin",
+          "3. Inicialização do Servidor",
+          "4. Personalização de Skins e Arsenal (Web UI)"
+        ]
+      },
+      {
+        "id": 89,
+        "name": "C4MismatchEpisodeTracker",
+        "count": 10,
+        "sample_nodes": [
+          "C4MismatchEpisodeTracker.cs",
+          "C4MismatchEpisodeTracker",
+          "ConcurrentDictionary",
+          "ConcurrentBag",
+          "int",
+          ".RecordSemanticMismatch()",
+          ".RecordMismatch()",
+          "Guid"
+        ]
+      },
+      {
+        "id": 90,
+        "name": "phase161_audit_and_aggregate.py",
+        "count": 10,
+        "sample_nodes": [
+          "phase161_audit_and_aggregate.py",
+          "dist2d()",
+          "dist3d()",
+          "load_raw_events()",
+          "aggregate_version_results()",
+          "generate_visual_svg()",
+          "generate_visual_review_evidence()",
+          "generate_verified_and_main_reports()"
+        ]
+      },
+      {
+        "id": 91,
+        "name": "phase162_generate_all_reports.py",
+        "count": 10,
+        "sample_nodes": [
+          "phase162_generate_all_reports.py",
+          "load_events()",
+          "load_match_md()",
+          "analyze_data()",
+          "generate_summary_json()",
+          "generate_spot_report_md()",
+          "generate_gameplay_val_md()",
+          "generate_production_decision_md()"
+        ]
+      },
+      {
+        "id": 92,
+        "name": "Evidências de fechamento (arquivo:linhas",
+        "count": 9,
+        "sample_nodes": [
+          "Evidências de fechamento (arquivo:linhas)",
+          "Bloco 1",
+          "Bloco 2",
+          "Bloco 3",
+          "Bloco 4",
+          "Bloco 5",
+          "Bloco 6",
+          "Bloco 7"
+        ]
+      },
+      {
+        "id": 93,
+        "name": "1. O Que Você Deve Testar e Aprovar (Cri",
+        "count": 9,
+        "sample_nodes": [
+          "CHECKLIST_TESTES_FASE1.md",
+          "Checklist de Testes e Validação - Fase 1 (Servidor & Mecânica Base)",
+          "1. O Que Você Deve Testar e Aprovar (Critérios de Sucesso)",
+          "A. Inicialização do Servidor e Banco de Dados",
+          "B. Conexão do Cliente (Steam)",
+          "C. Sistema de Skins e Cosméticos (`WeaponPaints`)",
+          "D. Mecânica e Comportamento dos Bots (`CS2-Bot-Improver`)",
+          "2. O Que NÃO Pode Estar Acontecendo (Sinais de Alerta)"
+        ]
+      },
+      {
+        "id": 94,
+        "name": "overnight_massive_worker.py",
+        "count": 9,
+        "sample_nodes": [
+          "overnight_massive_worker.py",
+          "decompress_zst()",
+          "Path",
+          "collect_candidate_demos()",
+          "HfApi",
+          "run_rolling_mining_and_extraction()",
+          "write_final_report()",
+          "main()"
+        ]
+      },
+      {
+        "id": 95,
+        "name": ".CheckAndAuditPreTickOverride()",
+        "count": 9,
+        "sample_nodes": [
+          "BotStateFingerprint",
+          ".RegisterExpectedEngineStateChange()",
+          ".StorePostApplyFingerprint()",
+          ".CheckAndAuditPreTickOverride()",
+          ".MovementExecutionTracker_Detects_PossibleExternalOverride()",
+          ".CheckAndAuditPreTickOverride_SuppressesFalsePositives_WhenExpectedEngineStateChangeRegistered()",
+          ".ExpectedRepathDoesNotTriggerExternalOverride()",
+          ".ExpectedMacroGoalChangeDoesNotTriggerExternalOverride()"
+        ]
+      },
+      {
+        "id": 96,
+        "name": "RoundLifecycleManager.cs",
+        "count": 9,
+        "sample_nodes": [
+          "RoundLifecycleManager.cs",
+          "RoundLifecyclePhase",
+          "LateEventReason",
+          "CaptureEndReason",
+          "RoundExecutionContext",
+          "RoundStateRecord",
+          "CsTeam",
+          "EventAdmissionEnvelope"
+        ]
+      },
+      {
+        "id": 97,
+        "name": "phase15_jump_audit.py",
+        "count": 9,
+        "sample_nodes": [
+          "phase15_jump_audit.py",
+          "detect_takeoff_16hz()",
+          "ndarray",
+          "physical_states_16hz()",
+          "audit_raw_demos()",
+          "audit_npz()",
+          "main()",
+          "Fase 1.5 - Auditoria de rotulos de Jump (V1 vs. detector balistico V2). Parte A…"
+        ]
+      },
+      {
+        "id": 100,
+        "name": "audit_raw_demos_places()",
+        "count": 8,
+        "sample_nodes": [
+          "audit_and_catalog_mirage.py",
+          "audit_raw_demos_places()",
+          "Path",
+          "Any",
+          "audit_444_npz_dataset()",
+          "main()",
+          "Fase 1: Inventário, Auditoria Espacial e Catalogação das 444 Demos…",
+          "Usa demoparser2 nas demos brutas (.dem) para extrair os limites exatos e os…"
+        ]
+      },
+      {
+        "id": 101,
+        "name": "MultiHeadPlayerSelfAttention",
+        "count": 8,
+        "sample_nodes": [
+          "Tensor",
+          "MultiHeadPlayerSelfAttention",
+          ".__init__()",
+          ".forward()",
+          ".__init__()",
+          ".forward()",
+          "Atenção N x N explícita (10x10 jogadores) 100% compatível com ONNX Runtime CPU…",
+          "Args: input_state: Tensor float32 [B, 10, 18] Returns: output_logits: Tensor…"
+        ]
+      },
+      {
+        "id": 102,
+        "name": "ShardedMemmapDataset",
+        "count": 8,
+        "sample_nodes": [
+          "Tensor",
+          ".__init__()",
+          "ShardedMemmapDataset",
+          "Dataset",
+          ".__init__()",
+          ".__len__()",
+          ".__getitem__()",
+          "Dataset sharded de alta performance e baixo consumo de RAM (< 1.5 GB). Descarta…"
+        ]
+      },
+      {
+        "id": 103,
+        "name": "NumberedCanvas",
+        "count": 8,
+        "sample_nodes": [
+          "forensic_step5_real_sampling_and_pdf.py",
+          "NumberedCanvas",
+          ".__init__()",
+          ".showPage()",
+          ".save()",
+          ".draw_page_decorations()",
+          "main()",
+          "Canvas com rodapé de paginação profissional e hash forense."
+        ]
+      },
+      {
+        "id": 98,
+        "name": "CsBotManager.Tests.csproj",
+        "count": 8,
+        "sample_nodes": [
+          "CsBotManager.csproj",
+          "net10.0",
+          "Microsoft.ML.OnnxRuntime (1.31.0)",
+          "Microsoft.NET.Sdk",
+          "CsBotManager.Tests.csproj",
+          "Microsoft.NET.Test.Sdk (17.12.0)",
+          "xunit (2.9.2)",
+          "xunit.runner.visualstudio (2.8.2)"
+        ]
+      },
+      {
+        "id": 99,
+        "name": "Phase2DatasetInvariantsTests",
+        "count": 8,
+        "sample_nodes": [
+          "Phase2DatasetInvariantsTests.cs",
+          "Phase2DatasetInvariantsTests",
+          "string",
+          ".CatalogManifest_HasExact53Spots_AndValidSha256()",
+          "Fact",
+          ".SpotSemanticClassification_CoversAll53Spots_WithoutExcessiveClearanceDwell()",
+          ".DataSplits_AreMutuallyExclusive_NoDataLeakage()",
+          ".JumpEpisodeManifest_AndParquetExist_WithBallisticStats()"
+        ]
+      },
+      {
+        "id": 104,
+        "name": "BotRole",
+        "count": 7,
+        "sample_nodes": [
+          ".ResolvePairPriority()",
+          "PrioritySlot",
+          "YieldingSlot",
+          ".GetRolePriorityRank()",
+          "BotRole",
+          ".AssignInitialRoleForSlot()",
+          ".GetBotProfileRole()"
+        ]
+      },
+      {
+        "id": 105,
+        "name": "validate_e2e_onnx.py",
+        "count": 7,
+        "sample_nodes": [
+          "ndarray",
+          "decode_action()",
+          "Decodifica ActionId [0..96] em (dir_index, speed_tier, is_jump).",
+          "validate_e2e_onnx.py",
+          "sample_softmax_numpy()",
+          "main()",
+          "Fase 6C / Etapa 5 (Validador Ponta a Ponta C# <-> ONNX): Verifica: 1.…"
+        ]
+      },
+      {
+        "id": 106,
+        "name": "phase162_analyze_normal_match.py",
+        "count": 7,
+        "sample_nodes": [
+          "phase162_analyze_normal_match.py",
+          "load_events()",
+          "load_match_md()",
+          "analyze_spots()",
+          "analyze_match_md()",
+          "main()",
+          "FASE 1.6.2: Script de Análise Forense de Gameplay Normal (5 Rounds Oficiais +…"
+        ]
+      },
+      {
+        "id": 107,
+        "name": "test_real_capture.py",
+        "count": 7,
+        "sample_nodes": [
+          "test_real_capture.py",
+          "KeyBdInput",
+          "HardwareInput",
+          "MouseInput",
+          "Input_I",
+          "Input",
+          "send_key_scan()"
+        ]
+      },
+      {
+        "id": 108,
+        "name": "PositionalEncoding",
+        "count": 7,
+        "sample_nodes": [
+          "PositionalEncoding",
+          ".__init__()",
+          ".forward()",
+          "Tensor",
+          ".__init__()",
+          ".forward()",
+          ".__init__()"
+        ]
+      },
+      {
+        "id": 109,
+        "name": "PlayerIntentTracker",
+        "count": 6,
+        "sample_nodes": [
+          "CsTimer",
+          "float",
+          "bool",
+          "PlayerIntentTracker.cs",
+          "PlayerIntentTracker",
+          ".OnRoundStart()"
+        ]
+      },
+      {
+        "id": 110,
+        "name": ".ResolveFirstKillExploitContext_UsesReal",
+        "count": 6,
+        "sample_nodes": [
+          "GeographyAndPivotTests.cs",
+          "GeographyAndPivotTests",
+          ".MirageSectorClassifier_ClassifiesInteriorBoundaryVerticalOverlapAndNeverReturnsGenericFallback()",
+          "Fact",
+          ".EvaluateSiteClearance_RejectsBotOutsidePlantPerimeterOrWithInsufficientDwellOrEnemies()",
+          ".ResolveFirstKillExploitContext_UsesRealSectorsAndIncrementsTacticRevision()"
+        ]
+      },
+      {
+        "id": 111,
+        "name": "phase16_runtime_validation.py",
+        "count": 6,
+        "sample_nodes": [
+          "phase16_runtime_validation.py",
+          "dist3d()",
+          "evaluate_runtime_for_spot()",
+          "generate_report()",
+          "run_validation()",
+          "FASE 1.6 - Item 8 & 9: Validação de Runtime e Relatório Comparativo V1 vs V2…"
+        ]
+      },
+      {
+        "id": 112,
+        "name": "phase16_static_tests.py",
+        "count": 6,
+        "sample_nodes": [
+          "phase16_static_tests.py",
+          "dist2d()",
+          "dist3d()",
+          "determine_spot_bombsite()",
+          "run_static_tests()",
+          "FASE 1.6 - Item 7: Testes Estáticos Detalhados do Perfil Mirage V2 Valida: 1.…"
+        ]
+      },
+      {
+        "id": 113,
+        "name": "extract_from_corpus()",
+        "count": 6,
+        "sample_nodes": [
+          "extract_objective_save_events.py",
+          "is_in_box()",
+          "is_in_safe_zone()",
+          "load_splits()",
+          "Path",
+          "extract_from_corpus()"
+        ]
+      },
+      {
+        "id": 114,
+        "name": "main()",
+        "count": 6,
+        "sample_nodes": [
+          "generate_visual_reports.py",
+          "create_learning_curves_pdf()",
+          "Path",
+          "create_confusion_matrices_pdf()",
+          "generate_consolidated_markdown_report()",
+          "main()"
+        ]
+      },
+      {
+        "id": 115,
+        "name": "25. Tabela final consolidada",
+        "count": 5,
+        "sample_nodes": [
+          "25. Tabela final consolidada",
+          "🔴 Crítico",
+          "🟠 Importante",
+          "🟡 Otimização e polimento",
+          "Conclusão"
+        ]
+      },
+      {
+        "id": 116,
+        "name": "9. Mapa de listeners, timers, Tasks e ca",
+        "count": 5,
+        "sample_nodes": [
+          "9. Mapa de listeners, timers, Tasks e callbacks",
+          "Listeners/eventos",
+          "Tasks assíncronas",
+          "Timers críticos (amostra)",
+          "Cancelamento/lifecycle"
+        ]
+      },
+      {
+        "id": 117,
+        "name": "RecoveryAttempt",
+        "count": 5,
+        "sample_nodes": [
+          ".RequestRecovery()",
+          "RecoveryAttempt.cs",
+          "RecoveryAttempt",
+          "Guid",
+          "Vector"
+        ]
+      },
+      {
+        "id": 118,
+        "name": "LiveRadarTelemetryService.cs",
+        "count": 5,
+        "sample_nodes": [
+          "LiveRadarTelemetryService.cs",
+          "RadarPlayerDto",
+          "RadarC4Dto",
+          "RadarStateDto",
+          "List"
+        ]
+      },
+      {
+        "id": 119,
+        "name": "phase16_apply_changes.py",
+        "count": 5,
+        "sample_nodes": [
+          "phase16_apply_changes.py",
+          "get_sha256()",
+          "Path",
+          "main()",
+          "Executa a correcao controlada de de_mirage.json conforme a Fase 1.6: 1. Backup…"
+        ]
+      },
+      {
+        "id": 120,
+        "name": "CustomHandler",
+        "count": 5,
+        "sample_nodes": [
+          "serve_pdf_mobile.py",
+          "CustomHandler",
+          ".__init__()",
+          ".end_headers()",
+          ".do_GET()"
+        ]
+      },
+      {
+        "id": 121,
+        "name": "partition_and_audit_dataset()",
+        "count": 5,
+        "sample_nodes": [
+          "forensic_step2_materialize_shards.py",
+          "compute_file_sha256()",
+          "Path",
+          "partition_and_audit_dataset()",
+          "main()"
+        ]
+      },
+      {
+        "id": 122,
+        "name": "main()",
+        "count": 5,
+        "sample_nodes": [
+          "freeze_inputs_and_env.py",
+          "compute_file_sha256()",
+          "Path",
+          "get_git_commit()",
+          "main()"
+        ]
+      },
+      {
+        "id": 123,
+        "name": "HumanCommunicationLogger.cs",
+        "count": 4,
+        "sample_nodes": [
+          "HumanCommunicationLogger.cs",
+          "HumanCommunicationLogEntry",
+          "HumanCommunicationLogger",
+          "object"
+        ]
+      },
+      {
+        "id": 124,
+        "name": "BotRoleAssignmentState",
+        "count": 4,
+        "sample_nodes": [
+          "RoleManager.cs",
+          "BotRoleAssignmentState",
+          ".FormatRoleSummary()",
+          ".GetRoleAssignmentState()"
+        ]
+      },
+      {
+        "id": 125,
+        "name": ".MaterializeCtStandard212Formation()",
+        "count": 4,
+        "sample_nodes": [
+          ".MaterializeCtStandard212Formation()",
+          "CCSPlayerController",
+          ".MaterializeCt212Orders()",
+          ".RecordCtFormation()"
+        ]
+      },
+      {
+        "id": 126,
+        "name": "generate_all_45_spots_guide.py",
+        "count": 4,
+        "sample_nodes": [
+          "generate_all_45_spots_guide.py",
+          "world_to_radar()",
+          "generate_spot_card()",
+          "main()"
+        ]
+      },
+      {
+        "id": 127,
+        "name": "generate_tactical_spot_images.py",
+        "count": 4,
+        "sample_nodes": [
+          "generate_tactical_spot_images.py",
+          "world_to_radar()",
+          "generate_spot_card()",
+          "main()"
+        ]
+      },
+      {
+        "id": 128,
+        "name": "phase15_generate_proposal_doc.py",
+        "count": 4,
+        "sample_nodes": [
+          "phase15_generate_proposal_doc.py",
+          "fmt_pos()",
+          "main()",
+          "Gera docs/fase_1_5/mirage_spot_change_proposal.md a partir de…"
+        ]
+      },
+      {
+        "id": 129,
+        "name": "CS2 MLMove Pipeline (Fases 6B & 6C)",
+        "count": 4,
+        "sample_nodes": [
+          "mlmove_pipeline/README.md",
+          "CS2 MLMove Pipeline (Fases 6B & 6C)",
+          "Arquitetura de Armazenamento (Disco `F:\\` (520+ GB livres) Isolado)",
+          "Como Treinar Novos Lotes de Demos (1 Clique)"
+        ]
+      },
+      {
+        "id": 130,
+        "name": "compute_file_sha256()",
+        "count": 4,
+        "sample_nodes": [
+          "forensic_step1_corpus_and_hash.py",
+          "compute_file_sha256()",
+          "Path",
+          "main()"
+        ]
+      },
+      {
+        "id": 131,
+        "name": "audit_parquet_dataset()",
+        "count": 4,
+        "sample_nodes": [
+          "forensic_step1_schema_and_size.py",
+          "audit_parquet_dataset()",
+          "Path",
+          "main()"
+        ]
+      },
+      {
+        "id": 132,
+        "name": "24. Apêndice com arquivos e comandos som",
+        "count": 3,
+        "sample_nodes": [
+          "24. Apêndice com arquivos e comandos somente leitura utilizados",
+          "Comandos (read-only) usados na auditoria",
+          "Observação"
+        ]
+      },
+      {
+        "id": 133,
+        "name": "6. Dependências internas e externas",
+        "count": 3,
+        "sample_nodes": [
+          "6. Dependências internas e externas",
+          "Internas (versionadas)",
+          "Externas (não versionadas no repo)"
+        ]
+      },
+      {
+        "id": 134,
+        "name": ".GetChokepoints()",
+        "count": 3,
+        "sample_nodes": [
+          ".GetChokepoints()",
+          "IReadOnlyList",
+          ".HasActiveUtilityAtOrNear()"
+        ]
+      },
+      {
+        "id": 135,
+        "name": "phase16_manual_review.py",
+        "count": 3,
+        "sample_nodes": [
+          "phase16_manual_review.py",
+          "main()",
+          "Gera mirage_spot_manual_review.json para a Fase 1.6 Revisa individualmente os…"
+        ]
+      },
+      {
+        "id": 136,
+        "name": "forensic_step6_baselines.py",
+        "count": 3,
+        "sample_nodes": [
+          "forensic_step6_baselines.py",
+          "compute_classification_metrics()",
+          "main()"
+        ]
+      },
+      {
+        "id": 137,
+        "name": "diag_ollama.py",
+        "count": 2,
+        "sample_nodes": [
+          "diag_ollama.py",
+          "test_diag()"
+        ]
+      },
+      {
+        "id": 138,
+        "name": "test_concurrent_concise.py",
+        "count": 2,
+        "sample_nodes": [
+          "test_concurrent_concise.py",
+          "call()"
+        ]
+      },
+      {
+        "id": 139,
+        "name": "build_rich_tactical_database.py",
+        "count": 2,
+        "sample_nodes": [
+          "build_rich_tactical_database.py",
+          "compile_enriched_catalog.py"
+        ]
+      },
+      {
+        "id": 140,
+        "name": "generate_homologation_pdf.py",
+        "count": 2,
+        "sample_nodes": [
+          "generate_homologation_pdf.py",
+          "build_pdf()"
+        ]
+      },
+      {
+        "id": 141,
+        "name": "generate_spot_recording_field_guide_pdf.",
+        "count": 2,
+        "sample_nodes": [
+          "generate_spot_recording_field_guide_pdf.py",
+          "build_pdf()"
+        ]
+      },
+      {
+        "id": 142,
+        "name": "test_cs2_render_capture.py",
+        "count": 2,
+        "sample_nodes": [
+          "test_cs2_render_capture.py",
+          "find_cs2_hwnd()"
+        ]
+      },
+      {
+        "id": 143,
+        "name": "test_f8_capture.py",
+        "count": 2,
+        "sample_nodes": [
+          "test_f8_capture.py",
+          "find_cs2_hwnd()"
+        ]
+      },
+      {
+        "id": 144,
+        "name": "test_native_screenshot.py",
+        "count": 2,
+        "sample_nodes": [
+          "test_native_screenshot.py",
+          "get_images()"
+        ]
+      },
+      {
+        "id": 145,
+        "name": "test_window_capture.py",
+        "count": 2,
+        "sample_nodes": [
+          "test_window_capture.py",
+          "find_cs2_window()"
+        ]
+      },
+      {
+        "id": 146,
+        "name": "forensic_step3_aim_provenance_v2.py",
+        "count": 2,
+        "sample_nodes": [
+          "forensic_step3_aim_provenance_v2.py",
+          "main()"
+        ]
+      },
+      {
+        "id": 147,
+        "name": "forensic_step3_spots_and_aims.py",
+        "count": 2,
+        "sample_nodes": [
+          "forensic_step3_spots_and_aims.py",
+          "main()"
+        ]
+      },
+      {
+        "id": 148,
+        "name": "forensic_step4_jumps_and_rejections.py",
+        "count": 2,
+        "sample_nodes": [
+          "forensic_step4_jumps_and_rejections.py",
+          "main()"
+        ]
+      },
+      {
+        "id": 149,
+        "name": "forensic_step4_temporal_windows.py",
+        "count": 2,
+        "sample_nodes": [
+          "forensic_step4_temporal_windows.py",
+          "main()"
+        ]
+      },
+      {
+        "id": 150,
+        "name": "forensic_step6_clusters_and_traceability",
+        "count": 2,
+        "sample_nodes": [
+          "forensic_step6_clusters_and_traceability.py",
+          "main()"
+        ]
+      },
+      {
+        "id": 151,
+        "name": "generate_training_readiness_report.py",
+        "count": 2,
+        "sample_nodes": [
+          "generate_training_readiness_report.py",
+          "main()"
+        ]
+      },
+      {
+        "id": 152,
+        "name": "inspect_catalog.py",
+        "count": 2,
+        "sample_nodes": [
+          "inspect_catalog.py",
+          "inspect()"
+        ]
+      },
+      {
+        "id": 153,
+        "name": "test_npz_audit.py",
+        "count": 2,
+        "sample_nodes": [
+          "test_npz_audit.py",
+          "audit_npz_files()"
+        ]
+      },
+      {
+        "id": 154,
+        "name": "test_rounds.py",
+        "count": 2,
+        "sample_nodes": [
+          "test_rounds.py",
+          "check_rounds()"
+        ]
+      },
+      {
+        "id": 155,
+        "name": "test_scan.py",
+        "count": 2,
+        "sample_nodes": [
+          "test_scan.py",
+          "scan_files()"
+        ]
+      },
+      {
+        "id": 156,
+        "name": "generate_canonical_learning_curves.py",
+        "count": 2,
+        "sample_nodes": [
+          "generate_canonical_learning_curves.py",
+          "generate_curves()"
+        ]
+      },
+      {
+        "id": 157,
+        "name": "CancellationToken",
+        "count": 1,
+        "sample_nodes": [
+          "CancellationToken"
+        ]
+      },
+      {
+        "id": 158,
+        "name": "CancellationTokenSource",
+        "count": 1,
+        "sample_nodes": [
+          "CancellationTokenSource"
+        ]
+      },
+      {
+        "id": 159,
+        "name": "device",
+        "count": 1,
+        "sample_nodes": [
+          "device"
+        ]
+      },
+      {
+        "id": 160,
+        "name": "Func",
+        "count": 1,
+        "sample_nodes": [
+          "Func"
+        ]
+      },
+      {
+        "id": 161,
+        "name": "HttpClient",
+        "count": 1,
+        "sample_nodes": [
+          "HttpClient"
+        ]
+      },
+      {
+        "id": 162,
+        "name": "HttpListener",
+        "count": 1,
+        "sample_nodes": [
+          "HttpListener"
+        ]
+      },
+      {
+        "id": 163,
+        "name": "IAsyncResult",
+        "count": 1,
+        "sample_nodes": [
+          "IAsyncResult"
+        ]
+      },
+      {
+        "id": 164,
+        "name": "long",
+        "count": 1,
+        "sample_nodes": [
+          "long"
+        ]
+      },
+      {
+        "id": 165,
+        "name": "Module",
+        "count": 1,
+        "sample_nodes": [
+          "Module"
+        ]
+      },
+      {
+        "id": 166,
+        "name": "archive_botbuy.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "archive_botbuy.ps1"
+        ]
+      },
+      {
+        "id": 167,
+        "name": "check_enums.cs",
+        "count": 1,
+        "sample_nodes": [
+          "check_enums.cs"
+        ]
+      },
+      {
+        "id": 168,
+        "name": "check_env.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "check_env.ps1"
+        ]
+      },
+      {
+        "id": 169,
+        "name": "check_ollama.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "check_ollama.ps1"
+        ]
+      },
+      {
+        "id": 170,
+        "name": "check_types.cs",
+        "count": 1,
+        "sample_nodes": [
+          "check_types.cs"
+        ]
+      },
+      {
+        "id": 171,
+        "name": "inspect_botbuy.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_botbuy.ps1"
+        ]
+      },
+      {
+        "id": 172,
+        "name": "inspect_bots.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_bots.ps1"
+        ]
+      },
+      {
+        "id": 173,
+        "name": "inspect_css_api.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_css_api.ps1"
+        ]
+      },
+      {
+        "id": 174,
+        "name": "inspect_nade.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_nade.ps1"
+        ]
+      },
+      {
+        "id": 175,
+        "name": "inspect_rdr.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_rdr.ps1"
+        ]
+      },
+      {
+        "id": 176,
+        "name": "inspect_wp.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_wp.ps1"
+        ]
+      },
+      {
+        "id": 177,
+        "name": "setup_junctions_and_links.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "setup_junctions_and_links.ps1"
+        ]
+      },
+      {
+        "id": 178,
+        "name": "test_ollama.ps1",
+        "count": 1,
+        "sample_nodes": [
+          "test_ollama.ps1"
+        ]
+      },
+      {
+        "id": 179,
+        "name": "List",
+        "count": 1,
+        "sample_nodes": [
+          "List"
+        ]
+      },
+      {
+        "id": 180,
+        "name": "Task",
+        "count": 1,
+        "sample_nodes": [
+          "Task"
+        ]
+      },
+      {
+        "id": 181,
+        "name": "test_concise.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_concise.py"
+        ]
+      },
+      {
+        "id": 182,
+        "name": "apply_5_fixes_complete.py",
+        "count": 1,
+        "sample_nodes": [
+          "apply_5_fixes_complete.py"
+        ]
+      },
+      {
+        "id": 183,
+        "name": "fix_compile_errors.py",
+        "count": 1,
+        "sample_nodes": [
+          "fix_compile_errors.py"
+        ]
+      },
+      {
+        "id": 184,
+        "name": "fix_micromove_stationary.py",
+        "count": 1,
+        "sample_nodes": [
+          "fix_micromove_stationary.py"
+        ]
+      },
+      {
+        "id": 185,
+        "name": "fix_micromove_stationary2.py",
+        "count": 1,
+        "sample_nodes": [
+          "fix_micromove_stationary2.py"
+        ]
+      },
+      {
+        "id": 186,
+        "name": "fix_ollama.py",
+        "count": 1,
+        "sample_nodes": [
+          "fix_ollama.py"
+        ]
+      },
+      {
+        "id": 187,
+        "name": "fix_ollama2.py",
+        "count": 1,
+        "sample_nodes": [
+          "fix_ollama2.py"
+        ]
+      },
+      {
+        "id": 188,
+        "name": "fix_plugin_warnings.py",
+        "count": 1,
+        "sample_nodes": [
+          "fix_plugin_warnings.py"
+        ]
+      },
+      {
+        "id": 189,
+        "name": "inspect_log.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_log.py"
+        ]
+      },
+      {
+        "id": 190,
+        "name": "check_conf_summary.py",
+        "count": 1,
+        "sample_nodes": [
+          "check_conf_summary.py"
+        ]
+      },
+      {
+        "id": 191,
+        "name": "check_diff.py",
+        "count": 1,
+        "sample_nodes": [
+          "check_diff.py"
+        ]
+      },
+      {
+        "id": 192,
+        "name": "check_diff_center.py",
+        "count": 1,
+        "sample_nodes": [
+          "check_diff_center.py"
+        ]
+      },
+      {
+        "id": 193,
+        "name": "check_extrema.py",
+        "count": 1,
+        "sample_nodes": [
+          "check_extrema.py"
+        ]
+      },
+      {
+        "id": 194,
+        "name": "check_tga.py",
+        "count": 1,
+        "sample_nodes": [
+          "check_tga.py"
+        ]
+      },
+      {
+        "id": 195,
+        "name": "create_interactive_reviewer.py",
+        "count": 1,
+        "sample_nodes": [
+          "create_interactive_reviewer.py"
+        ]
+      },
+      {
+        "id": 196,
+        "name": "dump_fase17_prompt.py",
+        "count": 1,
+        "sample_nodes": [
+          "dump_fase17_prompt.py"
+        ]
+      },
+      {
+        "id": 197,
+        "name": "dump_fase17_prompt_full.py",
+        "count": 1,
+        "sample_nodes": [
+          "dump_fase17_prompt_full.py"
+        ]
+      },
+      {
+        "id": 198,
+        "name": "ensure_16_files.py",
+        "count": 1,
+        "sample_nodes": [
+          "ensure_16_files.py"
+        ]
+      },
+      {
+        "id": 199,
+        "name": "fix_pipeline.py",
+        "count": 1,
+        "sample_nodes": [
+          "fix_pipeline.py"
+        ]
+      },
+      {
+        "id": 200,
+        "name": "fix_syntax.py",
+        "count": 1,
+        "sample_nodes": [
+          "fix_syntax.py"
+        ]
+      },
+      {
+        "id": 201,
+        "name": "fix_typo.py",
+        "count": 1,
+        "sample_nodes": [
+          "fix_typo.py"
+        ]
+      },
+      {
+        "id": 202,
+        "name": "generate_confidence_report.py",
+        "count": 1,
+        "sample_nodes": [
+          "generate_confidence_report.py"
+        ]
+      },
+      {
+        "id": 203,
+        "name": "generate_visual_report.py",
+        "count": 1,
+        "sample_nodes": [
+          "generate_visual_report.py"
+        ]
+      },
+      {
+        "id": 204,
+        "name": "inspect_all_spots_meta.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_all_spots_meta.py"
+        ]
+      },
+      {
+        "id": 205,
+        "name": "inspect_chokepoints.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_chokepoints.py"
+        ]
+      },
+      {
+        "id": 206,
+        "name": "inspect_de_mirage_spots.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_de_mirage_spots.py"
+        ]
+      },
+      {
+        "id": 207,
+        "name": "inspect_fase15_audit.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_fase15_audit.py"
+        ]
+      },
+      {
+        "id": 208,
+        "name": "inspect_live_recordings.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_live_recordings.py"
+        ]
+      },
+      {
+        "id": 209,
+        "name": "inspect_observed_spots.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_observed_spots.py"
+        ]
+      },
+      {
+        "id": 210,
+        "name": "inspect_prompt.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_prompt.py"
+        ]
+      },
+      {
+        "id": 211,
+        "name": "inspect_rcon.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_rcon.py"
+        ]
+      },
+      {
+        "id": 212,
+        "name": "inspect_rcon_shots.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_rcon_shots.py"
+        ]
+      },
+      {
+        "id": 213,
+        "name": "inspect_requested_spots.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_requested_spots.py"
+        ]
+      },
+      {
+        "id": 214,
+        "name": "inspect_saved_pngs.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_saved_pngs.py"
+        ]
+      },
+      {
+        "id": 215,
+        "name": "list_all_45_spots.py",
+        "count": 1,
+        "sample_nodes": [
+          "list_all_45_spots.py"
+        ]
+      },
+      {
+        "id": 216,
+        "name": "patch_catalog_and_capture.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_catalog_and_capture.py"
+        ]
+      },
+      {
+        "id": 217,
+        "name": "patch_cover.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_cover.py"
+        ]
+      },
+      {
+        "id": 218,
+        "name": "patch_extract.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_extract.py"
+        ]
+      },
+      {
+        "id": 219,
+        "name": "patch_extract2.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_extract2.py"
+        ]
+      },
+      {
+        "id": 220,
+        "name": "patch_fast_dataset.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_fast_dataset.py"
+        ]
+      },
+      {
+        "id": 221,
+        "name": "patch_np.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_np.py"
+        ]
+      },
+      {
+        "id": 222,
+        "name": "patch_pdf_dual_panel.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_pdf_dual_panel.py"
+        ]
+      },
+      {
+        "id": 223,
+        "name": "patch_spot06.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_spot06.py"
+        ]
+      },
+      {
+        "id": 224,
+        "name": "patch_train.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_train.py"
+        ]
+      },
+      {
+        "id": 225,
+        "name": "print_insufficient_coords.py",
+        "count": 1,
+        "sample_nodes": [
+          "print_insufficient_coords.py"
+        ]
+      },
+      {
+        "id": 226,
+        "name": "query_market_clusters.py",
+        "count": 1,
+        "sample_nodes": [
+          "query_market_clusters.py"
+        ]
+      },
+      {
+        "id": 227,
+        "name": "read_capture_tail.py",
+        "count": 1,
+        "sample_nodes": [
+          "read_capture_tail.py"
+        ]
+      },
+      {
+        "id": 228,
+        "name": "test_clipboard_grab.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_clipboard_grab.py"
+        ]
+      },
+      {
+        "id": 229,
+        "name": "test_condebug.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_condebug.py"
+        ]
+      },
+      {
+        "id": 230,
+        "name": "test_cs2_client.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_cs2_client.py"
+        ]
+      },
+      {
+        "id": 231,
+        "name": "test_cs2_condebug.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_cs2_condebug.py"
+        ]
+      },
+      {
+        "id": 232,
+        "name": "test_demirage_cfg.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_demirage_cfg.py"
+        ]
+      },
+      {
+        "id": 233,
+        "name": "test_f10.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_f10.py"
+        ]
+      },
+      {
+        "id": 234,
+        "name": "test_httplistener.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_httplistener.py"
+        ]
+      },
+      {
+        "id": 235,
+        "name": "test_imagegrab.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_imagegrab.py"
+        ]
+      },
+      {
+        "id": 236,
+        "name": "test_jointeam.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_jointeam.py"
+        ]
+      },
+      {
+        "id": 237,
+        "name": "test_multi.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_multi.py"
+        ]
+      },
+      {
+        "id": 238,
+        "name": "test_shot1.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_shot1.py"
+        ]
+      },
+      {
+        "id": 239,
+        "name": "verify_checklist_coords.py",
+        "count": 1,
+        "sample_nodes": [
+          "verify_checklist_coords.py"
+        ]
+      },
+      {
+        "id": 240,
+        "name": "verify_key_spots.py",
+        "count": 1,
+        "sample_nodes": [
+          "verify_key_spots.py"
+        ]
+      },
+      {
+        "id": 241,
+        "name": "patch_bot_locomotion.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_bot_locomotion.py"
+        ]
+      },
+      {
+        "id": 242,
+        "name": "patch_economy_manager.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_economy_manager.py"
+        ]
+      },
+      {
+        "id": 243,
+        "name": "patch_micromove_clean.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_micromove_clean.py"
+        ]
+      },
+      {
+        "id": 244,
+        "name": "patch_micromove_engine.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_micromove_engine.py"
+        ]
+      },
+      {
+        "id": 245,
+        "name": "patch_ollama_service.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_ollama_service.py"
+        ]
+      },
+      {
+        "id": 246,
+        "name": "patch_plugin.py",
+        "count": 1,
+        "sample_nodes": [
+          "patch_plugin.py"
+        ]
+      },
+      {
+        "id": 247,
+        "name": "generate_jump_dist_json.py",
+        "count": 1,
+        "sample_nodes": [
+          "generate_jump_dist_json.py"
+        ]
+      },
+      {
+        "id": 248,
+        "name": "inspect_features.py",
+        "count": 1,
+        "sample_nodes": [
+          "inspect_features.py"
+        ]
+      },
+      {
+        "id": 249,
+        "name": "list_raw_dems.py",
+        "count": 1,
+        "sample_nodes": [
+          "list_raw_dems.py"
+        ]
+      },
+      {
+        "id": 250,
+        "name": "test_resets2.py",
+        "count": 1,
+        "sample_nodes": [
+          "test_resets2.py"
+        ]
+      },
+      {
+        "id": 251,
+        "name": "refine_watchdog_and_igl.py",
+        "count": 1,
+        "sample_nodes": [
+          "refine_watchdog_and_igl.py"
+        ]
+      },
+      {
+        "id": 252,
+        "name": "run_match_and_monitor.py",
+        "count": 1,
+        "sample_nodes": [
+          "run_match_and_monitor.py"
+        ]
+      }
+    ]
+  },
+  "graphify_artifacts_hashes": {
+    "graphify-out/graph.json": {
+      "size_bytes": 4033979,
+      "sha256": "7a09693f1f6568803fa7f2ae7a0286cbe38c09f3900d08b96c6538f4eaa264f0"
+    },
+    "graphify-out/GRAPH_REPORT.md": {
+      "size_bytes": 37406,
+      "sha256": "c61b333860ee82bcc2dbb9ada62e5458ff671b780ba795d415387913b554e1ae"
+    }
+  },
+  "impact_reports": {
+    "graph_impact_positioning.json": {
+      "path": ".agents/audit/graph_impact_positioning.json",
+      "sha256": "155704e067df0e77f34be90073ec2216679954633e88e34cda7bf03b6cbf6a3f",
+      "verdict": "PASS",
+      "total_flows_analyzed": 1,
+      "flows": {
+        "Positioning Transformer -> GoalPosition": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 34,
+          "matched_test_files_count": 20,
+          "graph_matched_nodes_count": 292
+        }
+      }
+    },
+    "graph_impact_mlmove.json": {
+      "path": ".agents/audit/graph_impact_mlmove.json",
+      "sha256": "1f8e1bc2adf83e5a6ac861528a4d06f9c48a907828aea60408a0accb715bfa6a",
+      "verdict": "PASS",
+      "total_flows_analyzed": 1,
+      "flows": {
+        "mlmove": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 3,
+          "matched_test_files_count": 0,
+          "graph_matched_nodes_count": 361
+        }
+      }
+    },
+    "graph_impact_jump.json": {
+      "path": ".agents/audit/graph_impact_jump.json",
+      "sha256": "b1bbc815e760e6ce9feb2c711287fcf45af28ba5c9670011425918a4e9dd3e9c",
+      "verdict": "PASS",
+      "total_flows_analyzed": 1,
+      "flows": {
+        "ONNX Jump request -> JumpExecutionGate -> usercmd": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 21,
+          "matched_test_files_count": 12,
+          "graph_matched_nodes_count": 193
+        }
+      }
+    },
+    "graph_impact_c4.json": {
+      "path": ".agents/audit/graph_impact_c4.json",
+      "sha256": "9d3abba0ed8c8c70cb571e95ce0c74a1a5e4a9f42536f5a315a857347f85306f",
+      "verdict": "PASS",
+      "total_flows_analyzed": 1,
+      "flows": {
+        "BombObjectiveState -> C4 movement": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 39,
+          "matched_test_files_count": 18,
+          "graph_matched_nodes_count": 148
+        }
+      }
+    },
+    "graph_impact_recovery.json": {
+      "path": ".agents/audit/graph_impact_recovery.json",
+      "sha256": "b53ad2d034a20ee1be805a10b3eb98a38dbcb4abf6560da11bf23e32752e342f",
+      "verdict": "PASS",
+      "total_flows_analyzed": 1,
+      "flows": {
+        "Recovery request -> MovementArbitrator -> physical movement": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 27,
+          "matched_test_files_count": 11,
+          "graph_matched_nodes_count": 170
+        }
+      }
+    },
+    "graph_impact_economy.json": {
+      "path": ".agents/audit/graph_impact_economy.json",
+      "sha256": "0dc5352b84ec87400c799ca387cdc675eed6a1b0c4d67fb219c3d8eb6bd45d45",
+      "verdict": "PASS",
+      "total_flows_analyzed": 1,
+      "flows": {
+        "Economy decision -> buy command -> inventory confirmation": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 24,
+          "matched_test_files_count": 9,
+          "graph_matched_nodes_count": 98
+        }
+      }
+    },
+    "graph_impact_all.json": {
+      "path": ".agents/audit/graph_impact_all.json",
+      "sha256": "d05d89e62e16d76508c865780165ebc033974658050efd2cd14a1174ba2489f7",
+      "verdict": "PASS",
+      "total_flows_analyzed": 5,
+      "flows": {
+        "Positioning Transformer -> GoalPosition": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 34,
+          "matched_test_files_count": 20,
+          "graph_matched_nodes_count": 292
+        },
+        "BombObjectiveState -> C4 movement": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 39,
+          "matched_test_files_count": 18,
+          "graph_matched_nodes_count": 148
+        },
+        "ONNX Jump request -> JumpExecutionGate -> usercmd": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 21,
+          "matched_test_files_count": 12,
+          "graph_matched_nodes_count": 193
+        },
+        "Recovery request -> MovementArbitrator -> physical movement": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 27,
+          "matched_test_files_count": 11,
+          "graph_matched_nodes_count": 170
+        },
+        "Economy decision -> buy command -> inventory confirmation": {
+          "all_10_attributes_present": true,
+          "matched_source_files_count": 24,
+          "matched_test_files_count": 9,
+          "graph_matched_nodes_count": 98
+        }
+      }
+    }
+  },
+  "directory_file_hashes": {
+    "src/CsBotManager": [
+      {
+        "path": "src/CsBotManager/BotLocomotionDriver.cs",
+        "size_bytes": 71220,
+        "sha256": "7a5b9115cfa1239adcf8576093639e06f27f525f435e3fdac2d74da777b92d0b"
+      },
+      {
+        "path": "src/CsBotManager/BotSystemConfig.cs",
+        "size_bytes": 8351,
+        "sha256": "10aad9d31084237e4e27f175056290aa58d261f14749d50e292e398562e2a8d9"
+      },
+      {
+        "path": "src/CsBotManager/C4MismatchEpisode.cs",
+        "size_bytes": 559,
+        "sha256": "8b8e5b40432e36d8ee97ca3b7bc7c491b8d916b3d33bdfa7b72788ba745d68f9"
+      },
+      {
+        "path": "src/CsBotManager/C4MismatchEpisodeTracker.cs",
+        "size_bytes": 2989,
+        "sha256": "46f50a5d10b4798050e6b1e4d6ea8051491196584b90e6f586a2ae59fa27b27f"
+      },
+      {
+        "path": "src/CsBotManager/CombatAdapter.cs",
+        "size_bytes": 8723,
+        "sha256": "10bf1b51bf7f7589da76600fa6b4cdd7111b5a83f3d373fd1c16df615ce72999"
+      },
+      {
+        "path": "src/CsBotManager/ContextualSmokeAndAudioBrain.cs",
+        "size_bytes": 16417,
+        "sha256": "70123f022026a898b1fb403208f4942a3a414083266e3804bf310f715933124a"
+      },
+      {
+        "path": "src/CsBotManager/CsBotManager.csproj",
+        "size_bytes": 2216,
+        "sha256": "2f0e6747be2184ef355d382e0ad0a797484dad576176745405ab38b84664f087"
+      },
+      {
+        "path": "src/CsBotManager/CsBotManagerPlugin.cs",
+        "size_bytes": 68842,
+        "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb"
+      },
+      {
+        "path": "src/CsBotManager/CtDefenseController.cs",
+        "size_bytes": 31617,
+        "sha256": "88becc5d15f25c15c5fda2ebc22f6e650dd718198ca878aade6ab3442444af09"
+      },
+      {
+        "path": "src/CsBotManager/CtRetakeAndDefuseBrain.cs",
+        "size_bytes": 12173,
+        "sha256": "1d78ceddf29ee47ea0292517a9a819df285e4cf361289146f3ffb707bf7688b7"
+      },
+      {
+        "path": "src/CsBotManager/EconomyManager.cs",
+        "size_bytes": 56474,
+        "sha256": "032f34410ea4d2f15bef8b40934956805fac378c7326c625421d81c5371cdf5c"
+      },
+      {
+        "path": "src/CsBotManager/GameplaySpotTelemetryTracker.cs",
+        "size_bytes": 11478,
+        "sha256": "34507ec778b1caa7d11a87ab10d85c7ed2ddae43baae522dbd083d6b9452cbf4"
+      },
+      {
+        "path": "src/CsBotManager/HumanCommunicationLogger.cs",
+        "size_bytes": 3480,
+        "sha256": "30f8c45dbf00bd267cd9772ab202fa6ce47ce534267b4d61fe402582107f15b5"
+      },
+      {
+        "path": "src/CsBotManager/JumpExecutionGate.cs",
+        "size_bytes": 17423,
+        "sha256": "55e2ff88b2e13aad3739219ba6b7b2697f9da7b8e84ccc1e199ff4102637259d"
+      },
+      {
+        "path": "src/CsBotManager/LiveRadarTelemetryService.cs",
+        "size_bytes": 18014,
+        "sha256": "a286fe22b15fd09d9c875367e6e7a96b2849ebd4121740574c31d119cd4342df"
+      },
+      {
+        "path": "src/CsBotManager/MapPlayableBounds.cs",
+        "size_bytes": 11194,
+        "sha256": "9a4cbfb0d277cd5a3e0c32ce69392cba65801d6fcea7f913d0192ee6ac86ca07"
+      },
+      {
+        "path": "src/CsBotManager/MapProfileManager.cs",
+        "size_bytes": 24100,
+        "sha256": "8bcf19cfe74d3071dbdbecd040714f86dfcc22f984779407e0a68e5b5bd08734"
+      },
+      {
+        "path": "src/CsBotManager/MapProfiles/backups/de_mirage.v1_backup.json",
+        "size_bytes": 24546,
+        "sha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b"
+      },
+      {
+        "path": "src/CsBotManager/MapProfiles/backups/de_mirage_pre_v3_2.json",
+        "size_bytes": 24576,
+        "sha256": "25710e892ff653c9cd4220deb766c6c03312427b6b0a8d51c388f886eccebc07"
+      },
+      {
+        "path": "src/CsBotManager/MapProfiles/de_dust2.json",
+        "size_bytes": 5908,
+        "sha256": "aefd3d113faf5861d7eeca463d74e59ec990b67a654fec3f381f4b303d03fb0e"
+      },
+      {
+        "path": "src/CsBotManager/MapProfiles/de_inferno.json",
+        "size_bytes": 4452,
+        "sha256": "b6e5cf6653960c0d50439ca2c5a4996f19ac1474e912ade1e5056668990770a2"
+      },
+      {
+        "path": "src/CsBotManager/MapProfiles/de_mirage.json",
+        "size_bytes": 44679,
+        "sha256": "7f36eff885dead88d1c868dc65340dbf47f9f38e1b5b06575ca185eccda4aed8"
+      },
+      {
+        "path": "src/CsBotManager/MatchTelemetryLogger.cs",
+        "size_bytes": 45192,
+        "sha256": "c0be0dd73a9d520e3355c77574b96a235fccd5330cf991b78dc1390cc183d52b"
+      },
+      {
+        "path": "src/CsBotManager/MicroMoveEngine.cs",
+        "size_bytes": 68860,
+        "sha256": "e1f56099938355fdf2a90018c42e1c2b2575caf55dec16987dcab105428f1954"
+      },
+      {
+        "path": "src/CsBotManager/MidRoundAdapter.cs",
+        "size_bytes": 22170,
+        "sha256": "9596905385e719a7c8c95e66893a06f43770bc98478f78df95f02d96084fb80c"
+      },
+      {
+        "path": "src/CsBotManager/MirageSectorClassifier.cs",
+        "size_bytes": 18213,
+        "sha256": "a877eb3fc763029fb3166e4fcae5ac4f41c4dea3087383dc6b78732c27c59596"
+      },
+      {
+        "path": "src/CsBotManager/MobilityController.cs",
+        "size_bytes": 7062,
+        "sha256": "e078f3346b0e321d1c6e9856b88806fe8e71be163e337d8655a58ea97b673b7b"
+      },
+      {
+        "path": "src/CsBotManager/Models.cs",
+        "size_bytes": 32228,
+        "sha256": "6e18489868b6706d5b93fbcfcf0adb4a3f005bb322d6931a61a41af56f1c2bc9"
+      },
+      {
+        "path": "src/CsBotManager/MovementArbitrator.cs",
+        "size_bytes": 31603,
+        "sha256": "9326c8c62a50560dd3fd3d07bf4901aa9fbe97097f5d4208bd098c2d364dcb35"
+      },
+      {
+        "path": "src/CsBotManager/MovementExecutionTracker.cs",
+        "size_bytes": 51811,
+        "sha256": "7b2c8153dd285680eb30126a2d57fcb4ac991644aa60fa5209f08e974d10cd12"
+      },
+      {
+        "path": "src/CsBotManager/OllamaIglService.cs",
+        "size_bytes": 65780,
+        "sha256": "568abef79d533a4fef78f4f0c028afd03efaf9c57339b4c513d5aa81d237c779"
+      },
+      {
+        "path": "src/CsBotManager/PacingAndFallbackController.cs",
+        "size_bytes": 10186,
+        "sha256": "c42a2ff6dca111be28036466dd76bcfe5b4b1808ede9e69acd2d4507fbf92bd7"
+      },
+      {
+        "path": "src/CsBotManager/PlayerIntentTracker.cs",
+        "size_bytes": 4354,
+        "sha256": "83ad7b9268a666479edd52440ec9f32a7d85c8c40c4e14cbf15e40363627a54d"
+      },
+      {
+        "path": "src/CsBotManager/PresetSpatialValidator.cs",
+        "size_bytes": 15162,
+        "sha256": "842f31d72adce2999d481740b81c69e0eac0140d728ec37a73ba893a19209699"
+      },
+      {
+        "path": "src/CsBotManager/RecoveryAttempt.cs",
+        "size_bytes": 1585,
+        "sha256": "d6e21935aa2b10412c02d128bbb02a0bcb1de04ed3e3111f407942fb27ee6dd9"
+      },
+      {
+        "path": "src/CsBotManager/RoleManager.cs",
+        "size_bytes": 20059,
+        "sha256": "bf2ce47bc6eed7930ba742a40b7d277cea6020d4be77db4d755c66f703f155e8"
+      },
+      {
+        "path": "src/CsBotManager/RoundLifecycleManager.cs",
+        "size_bytes": 24851,
+        "sha256": "22e80634f0708a387c1793a435a16f92cd8fc7442137ca5a3d09809dc19b58f0"
+      },
+      {
+        "path": "src/CsBotManager/SiteClearAndPlantController.cs",
+        "size_bytes": 7339,
+        "sha256": "a7201c5ab998d39188d35b67e2db898512a957556f4e38a0ba0a76b7836b1de3"
+      },
+      {
+        "path": "src/CsBotManager/SpotRecordingController.cs",
+        "size_bytes": 13274,
+        "sha256": "07b162132af05d7ed365cf3d6b7e2f93be368cc1c094332da9e68d764a92acca"
+      },
+      {
+        "path": "src/CsBotManager/SpotTestRunner.cs",
+        "size_bytes": 27165,
+        "sha256": "00b4745e4c3e45c64446b0de25c510a85a280e9125421a6a65f5e5d5461b085c"
+      },
+      {
+        "path": "src/CsBotManager/TacticalCalloutSystem.cs",
+        "size_bytes": 25119,
+        "sha256": "011118ddb46bd2ee9e9f96c766f6eafcb8097bd67cff84cd640c45a8f17692a4"
+      },
+      {
+        "path": "src/CsBotManager/TacticalCatalogs/IMapTacticalCatalog.cs",
+        "size_bytes": 852,
+        "sha256": "db802eacd96d7f03bcbe941b07eb43f842b19b6b0d137250d37ebb346209b81e"
+      },
+      {
+        "path": "src/CsBotManager/TacticalCatalogs/MirageTacticalCatalog.cs",
+        "size_bytes": 34545,
+        "sha256": "955ab38726efcf3fa7e82e47cacef767fe9d04e4a2084d8eaadb455106fe0172"
+      },
+      {
+        "path": "src/CsBotManager/TacticalHudRenderer.cs",
+        "size_bytes": 7238,
+        "sha256": "021b60188d9f6c1fd8074a39b59d6505749b8b601c868df1f3d48a077d204634"
+      },
+      {
+        "path": "src/CsBotManager/TacticalOrderMaterializer.cs",
+        "size_bytes": 42518,
+        "sha256": "b26598660349bd1ba45959c2fbca09ffee76637885be6e3410185d269c57379d"
+      },
+      {
+        "path": "src/CsBotManager/TacticalProbabilityEngine.cs",
+        "size_bytes": 10265,
+        "sha256": "44c04c1dd343e10b2b2511ef74238c8406abcda96c941e17fff90ad4ec0c4caa"
+      },
+      {
+        "path": "src/CsBotManager/TacticalSpotsManager.cs",
+        "size_bytes": 1478,
+        "sha256": "813bf7a55791039c9783851f5070ab1bfe7d8c6355770fc1a5b6870063336129"
+      },
+      {
+        "path": "src/CsBotManager/TacticalUtilityIglEngine.cs",
+        "size_bytes": 35230,
+        "sha256": "1d51f4b0ab14dc43b0ba1a6d82b87fd23974a20c7ec7d77fe69733aa56a0c976"
+      },
+      {
+        "path": "src/CsBotManager/TrackerMetricsAggregator.cs",
+        "size_bytes": 46927,
+        "sha256": "f14edff1292a02b84744ac2b1d0f4c312726d89229d53c2900a6272582db7cde"
+      },
+      {
+        "path": "src/CsBotManager/TrMacroPivotController.cs",
+        "size_bytes": 30367,
+        "sha256": "b895e79564424f429fad014a731c7b8ee7777ca26dbbb4667c259d196cdf6e7b"
+      },
+      {
+        "path": "src/CsBotManager/UtilityAndClockCoordinator.cs",
+        "size_bytes": 11835,
+        "sha256": "1c79c02b93bc300e88c2eb986edf44e17a0c5115713d8bfcf5aeefee851b85f1"
+      },
+      {
+        "path": "src/CsBotManager/VoiceCommandBridge.cs",
+        "size_bytes": 22501,
+        "sha256": "f943b5caabeae1a0d87df1172cd553118523f230b26007e663db97132d25bbdf"
+      }
+    ],
+    "tools/phase2_dataset": [
+      {
+        "path": "tools/phase2_dataset/dataloaders.py",
+        "size_bytes": 13756,
+        "sha256": "921836c8a9c4590f91a2ed3aa8da090a4470878bb8f6e66a8dc25997d198183d"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step1_corpus_and_hash.py",
+        "size_bytes": 13040,
+        "sha256": "ab6d197b1b8571e2e11a6e9481bd8d74ac045cb4a8a637ed3079ea9675932f05"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step1_schema_and_size.py",
+        "size_bytes": 12217,
+        "sha256": "8a572589f9b4a93de98acbcc9919316761562cd048406c39a33703a55f52071d"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step2_materialize_shards.py",
+        "size_bytes": 8768,
+        "sha256": "2df2f5138e6c6a02128e8598a66c51b281ee75ca3c0508f9df50f1542d9a6a93"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step2_positioning_multitask.py",
+        "size_bytes": 11594,
+        "sha256": "bda4aa2485545208fec08f0ed577e2a3b88ebd7c47f2cffe50eb5f72de10026c"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step3_aim_provenance_v2.py",
+        "size_bytes": 5933,
+        "sha256": "f95ac03108200adeee23c6422bd5d5f4b836a98668b46e0f0f8463eda44f933b"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step3_spots_and_aims.py",
+        "size_bytes": 16778,
+        "sha256": "2617522cbd0decd8f320227a9fb15368783bd4d4846d24e811ea1a454d19f9a4"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step4_jumps_and_rejections.py",
+        "size_bytes": 11390,
+        "sha256": "c271cdc1e1b6b30583b3ecac31a2b7f770edc4929d244543e7c588c9e2e2951a"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step4_temporal_windows.py",
+        "size_bytes": 8636,
+        "sha256": "c553f1df4837f5d950d1febd266a0f5bd7504be2a09089ea64f2c3f315b84136"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step5_real_sampling_and_pdf.py",
+        "size_bytes": 26116,
+        "sha256": "8c08d66fc6e562d4a4d219e89e99b5b9ade58361eea880f5495ee0caa2ef5bae"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step6_baselines.py",
+        "size_bytes": 10478,
+        "sha256": "fabc2de3730b056223e0826f654fd4ab1e3d39e3c1f3a7b62eaa9aa52e8b0668"
+      },
+      {
+        "path": "tools/phase2_dataset/forensic_step6_clusters_and_traceability.py",
+        "size_bytes": 18496,
+        "sha256": "82acf5a2f90e898d77047eef5a4b6dd80f3255162a21b404a28cc213b84f3556"
+      },
+      {
+        "path": "tools/phase2_dataset/generate_jump_dist_json.py",
+        "size_bytes": 1905,
+        "sha256": "13c1aa0494f97b0da371d60065d1cc22e84f722563c109ae27293c21613fa73e"
+      },
+      {
+        "path": "tools/phase2_dataset/generate_master_manifest.py",
+        "size_bytes": 5438,
+        "sha256": "4e4c6ab1672438c5e3244e546d40d4f2148014b7b7bf09208ca4c22d7e6b24d8"
+      },
+      {
+        "path": "tools/phase2_dataset/generate_training_readiness_report.py",
+        "size_bytes": 8043,
+        "sha256": "c0164fd6a8aeede8f8cd9d38a2010fb399b5455945627170b59c323b7257ca22"
+      },
+      {
+        "path": "tools/phase2_dataset/generate_visual_audit_pdf.py",
+        "size_bytes": 24020,
+        "sha256": "f76791bd7ace5798e850ffdea1e234c657ac4f45ec022e0878de525e64a7f5fb"
+      },
+      {
+        "path": "tools/phase2_dataset/inspect_catalog.py",
+        "size_bytes": 1187,
+        "sha256": "713b7b2f3f0214544e996e2612ec134b756713fc4c188ee6827bea5c87f60e63"
+      },
+      {
+        "path": "tools/phase2_dataset/inspect_features.py",
+        "size_bytes": 482,
+        "sha256": "eefaa515497c417585ff10f58052d128f75944739c556ceecc7c8a86129746da"
+      },
+      {
+        "path": "tools/phase2_dataset/list_raw_dems.py",
+        "size_bytes": 280,
+        "sha256": "d6e630c680ef537b39ec5f33af9d764e8fe7a865388d258661e87ad31dc249bb"
+      },
+      {
+        "path": "tools/phase2_dataset/step1_2_3_build_contracts.py",
+        "size_bytes": 11628,
+        "sha256": "6aac31f8a05c0027cc6e24752b8095bed30677e7fbf26c22948eb7372cd994cc"
+      },
+      {
+        "path": "tools/phase2_dataset/step4_5_inventory_and_splits.py",
+        "size_bytes": 16919,
+        "sha256": "a73c19dbfff37d848685fef6e29a7dffd008c4ddc147e16d507730257a0e4bc8"
+      },
+      {
+        "path": "tools/phase2_dataset/step6_7_8_jump_and_movement.py",
+        "size_bytes": 12038,
+        "sha256": "18ccfd0003e6cfff75848a81dd159a4b158c32fcdae0a1f26dde37d6628e983a"
+      },
+      {
+        "path": "tools/phase2_dataset/step9_to_18_build_datasets.py",
+        "size_bytes": 26754,
+        "sha256": "81aa57a2c2e34aa785aeab67a5ccdca498247c5f39f322c5f9f9997b60e05b25"
+      },
+      {
+        "path": "tools/phase2_dataset/test_npz_audit.py",
+        "size_bytes": 873,
+        "sha256": "b1a2227da99be37268fedc2813b536f311ed4133964745a9177f1a878c31c8cf"
+      },
+      {
+        "path": "tools/phase2_dataset/test_resets2.py",
+        "size_bytes": 527,
+        "sha256": "8c9cf62588305d644e6751d2419b5e11285c169fda42c488c1a6398ab9cb84d7"
+      },
+      {
+        "path": "tools/phase2_dataset/test_rounds.py",
+        "size_bytes": 732,
+        "sha256": "2eeb1e206d9069d277ee514948c2278b4351f333a43e5da1491a755c04097ac7"
+      },
+      {
+        "path": "tools/phase2_dataset/test_scan.py",
+        "size_bytes": 716,
+        "sha256": "77d8afc65e88f2e6f2ec6187686bada009a939effda964b26f012278c8e4150b"
+      }
+    ],
+    "tools/phase3a_training": [
+      {
+        "path": "tools/phase3a_training/audit_errors_and_episodes.py",
+        "size_bytes": 10629,
+        "sha256": "cc6c490e62129f301b7b20b40f1704e9bac7b9b7f9b5d968a20d6f7744db7342"
+      },
+      {
+        "path": "tools/phase3a_training/build_and_evaluate_challenge_set.py",
+        "size_bytes": 9793,
+        "sha256": "ca64c29ff78464b3e73acbba82de6d3d9d128f68321dc81eb336e76c5c22fde6"
+      },
+      {
+        "path": "tools/phase3a_training/build_challenge_v2.py",
+        "size_bytes": 8227,
+        "sha256": "7f9b194ccd160592af34fad44c64474c5d3e232889a0ccea80fcbcaa7b542b8b"
+      },
+      {
+        "path": "tools/phase3a_training/data_utils.py",
+        "size_bytes": 18406,
+        "sha256": "d15c234e3a2ce73fe01663293b60a8a53166d73e8caf40254b36eef2e4ec8e45"
+      },
+      {
+        "path": "tools/phase3a_training/dry_run.py",
+        "size_bytes": 8701,
+        "sha256": "df7893fee3c1b875230b012974334548a9aa482285f4699b2ffbe225601f4c54"
+      },
+      {
+        "path": "tools/phase3a_training/evaluate.py",
+        "size_bytes": 18885,
+        "sha256": "6fd694c99645e84ee203ec70f5a3d9286d32c20fd49705923f5583a0f24e7c24"
+      },
+      {
+        "path": "tools/phase3a_training/evaluate_positioning_v1_canonical.py",
+        "size_bytes": 8503,
+        "sha256": "1751469a8a43619e9d7c309fa79abf49f3d518efd5d173b99f13f8372fe1bf93"
+      },
+      {
+        "path": "tools/phase3a_training/extract_objective_save_events.py",
+        "size_bytes": 37398,
+        "sha256": "3e501fd3d287576b077b09dcf213e2343776ccfe50b08cc348903d0871115fb2"
+      },
+      {
+        "path": "tools/phase3a_training/finetune_state_head.py",
+        "size_bytes": 39378,
+        "sha256": "e4747dff9458f33ad328b2e53fbcd0a58612307689627fa34dbae3e109371700"
+      },
+      {
+        "path": "tools/phase3a_training/freeze_inputs_and_env.py",
+        "size_bytes": 5149,
+        "sha256": "3e3bc22e7febefbaaacb71ac107e68be851fdb9dcd2b1fcec6b69f26059569c0"
+      },
+      {
+        "path": "tools/phase3a_training/generate_canonical_confusion_pdf.py",
+        "size_bytes": 8417,
+        "sha256": "226d349e0e93e6f3042bdefa4796285f8a74c057eebf153b2c019ebd37c3cc88"
+      },
+      {
+        "path": "tools/phase3a_training/generate_canonical_learning_curves.py",
+        "size_bytes": 10750,
+        "sha256": "8cf84415ad98ae4ae2e6c6a590e25c0e103c7716c94f99363e7be0dce1c101f8"
+      },
+      {
+        "path": "tools/phase3a_training/generate_canonical_rare_state_report.py",
+        "size_bytes": 4851,
+        "sha256": "90a97cb5ea00127dd4c4bfdb2d9949bc9d9303cc2e41abe467cde6b357ee8647"
+      },
+      {
+        "path": "tools/phase3a_training/generate_objective_save_visual_audit.py",
+        "size_bytes": 11694,
+        "sha256": "9e0356caa309eee08394dd0dbeffb518b54dd48b559624da9a4dc540d5148cb0"
+      },
+      {
+        "path": "tools/phase3a_training/generate_visual_reports.py",
+        "size_bytes": 19295,
+        "sha256": "6474eaf00c0fa6a98b8eb3a8abad6b70aac17c712aa6008413b90e0d9d2059a4"
+      },
+      {
+        "path": "tools/phase3a_training/positioning_model.py",
+        "size_bytes": 10158,
+        "sha256": "d98b6e4526a18a32a31702f88825899c950189a4243d365fb25cab0064371e9b"
+      },
+      {
+        "path": "tools/phase3a_training/reconcile_ablation_and_calibration.py",
+        "size_bytes": 22884,
+        "sha256": "69613759f0b944bcc1a31f85617da10ed826b5d65d2150d401b6066b4114da66"
+      },
+      {
+        "path": "tools/phase3a_training/run_target_leakage_audit.py",
+        "size_bytes": 10602,
+        "sha256": "8889d5106967d2077ac3ac130c0e10d458ea8f302ed146062018aa567151fe53"
+      },
+      {
+        "path": "tools/phase3a_training/train_full.py",
+        "size_bytes": 14893,
+        "sha256": "ef9c32d386346dca33fda0b8ff274b2efab09585e53c95405de08481ac02b0d9"
+      },
+      {
+        "path": "tools/phase3a_training/train_pilot.py",
+        "size_bytes": 12982,
+        "sha256": "e6deb0374f4a5bd278bc8d023c69bd6075176cdc2ca9e04a143c2560c02867d6"
+      },
+      {
+        "path": "tools/phase3a_training/validate_spot_and_sector_canonical.py",
+        "size_bytes": 6889,
+        "sha256": "af7428643f88d8eacb3d433cb2ce97498bdb6935f2dccc1225bc7442ce6debf5"
+      }
+    ],
+    "tools/mlmove_pipeline": [
+      {
+        "path": "tools/mlmove_pipeline/audit_and_catalog_mirage.py",
+        "size_bytes": 26454,
+        "sha256": "6b7bab72abea3e82d20ee7c94904d63410c3c771b9c1e458563cce75d1fed1f2"
+      },
+      {
+        "path": "tools/mlmove_pipeline/build_complete_automated_spots_catalog.py",
+        "size_bytes": 26706,
+        "sha256": "0373d2c6c2fca63469902ef05a24720526bf8a587b1874e00c666998678ca545"
+      },
+      {
+        "path": "tools/mlmove_pipeline/build_rich_tactical_database.py",
+        "size_bytes": 81753,
+        "sha256": "af24f27eac9a65a3d74f8f5dd43c2b4dba616ec86dbf470291335512d242990a"
+      },
+      {
+        "path": "tools/mlmove_pipeline/capture_all_16_screenshots.py",
+        "size_bytes": 6121,
+        "sha256": "071b31d0b61d6072519fe5e3d33eca1be93d66bd0fb5576c5f0042e72c182aff"
+      },
+      {
+        "path": "tools/mlmove_pipeline/capture_all_53_spots.py",
+        "size_bytes": 6184,
+        "sha256": "5932dc564733ebcc48f3109b41e784ebdca0e29a33f55bbd3b50f2295de0420a"
+      },
+      {
+        "path": "tools/mlmove_pipeline/check_conf_summary.py",
+        "size_bytes": 250,
+        "sha256": "79f788dac9624a77a0a1e874ee49a3e38d0029c11259d166b276d066831023ff"
+      },
+      {
+        "path": "tools/mlmove_pipeline/check_diff.py",
+        "size_bytes": 611,
+        "sha256": "58956edf0c9a9d97eab9ccb4315179264c833ebfe0b88c209a0ccbce52a9a212"
+      },
+      {
+        "path": "tools/mlmove_pipeline/check_diff_center.py",
+        "size_bytes": 761,
+        "sha256": "4a49544fd97689ebb797991af762fa246d4aa7b5d3686e56d08e09ee52519917"
+      },
+      {
+        "path": "tools/mlmove_pipeline/check_extrema.py",
+        "size_bytes": 191,
+        "sha256": "620c5b8a60bc8dc217ca6ffa44bdfbd3c2782768b2693f96a8080f9e3a329176"
+      },
+      {
+        "path": "tools/mlmove_pipeline/check_tga.py",
+        "size_bytes": 448,
+        "sha256": "26d5f3794676e9c7bc1de22cff6677fb32c7acdfde16cad5f01c652afa017d28"
+      },
+      {
+        "path": "tools/mlmove_pipeline/compare_catalog_vs_live.py",
+        "size_bytes": 1964,
+        "sha256": "52dcd6c2ed4ed0a1aa6cf58df8725ad1fbd8266f8dca09c25c5e6721657dfd9d"
+      },
+      {
+        "path": "tools/mlmove_pipeline/compile_enriched_catalog.py",
+        "size_bytes": 2158,
+        "sha256": "ded2718b79b86a96a6ac41895294122087da87df6f6719528f371566c0709e76"
+      },
+      {
+        "path": "tools/mlmove_pipeline/contract_spec.py",
+        "size_bytes": 8111,
+        "sha256": "1587cd31a4744e70246ab9fd59869a01da58d6eecf31661f6a485f3c919a4664"
+      },
+      {
+        "path": "tools/mlmove_pipeline/create_interactive_reviewer.py",
+        "size_bytes": 27117,
+        "sha256": "7fb39b19a8464074a825ed2219da1a74d0a3b06b2225ff5d6746d0077ac851a4"
+      },
+      {
+        "path": "tools/mlmove_pipeline/cs2_vconsole_bridge.py",
+        "size_bytes": 7223,
+        "sha256": "a4e1cc004edd61efca96936d480091acdf8540d8a319114263b4c356c6cab851"
+      },
+      {
+        "path": "tools/mlmove_pipeline/demo_collector.py",
+        "size_bytes": 10888,
+        "sha256": "fdf303b56533fb305a1db943a68273a317c49e33bc32d41b9231774aa3aaa80e"
+      },
+      {
+        "path": "tools/mlmove_pipeline/dump_fase17_prompt.py",
+        "size_bytes": 649,
+        "sha256": "9d24eba86eb8615264daa8f4887a7270aa9f0aab7d9dc24e23b072a8d6765abc"
+      },
+      {
+        "path": "tools/mlmove_pipeline/dump_fase17_prompt_full.py",
+        "size_bytes": 669,
+        "sha256": "b62896d91327eda8b3295128f704f459cfab501509220b489bfefe3995a2de19"
+      },
+      {
+        "path": "tools/mlmove_pipeline/dump_inventory.py",
+        "size_bytes": 438,
+        "sha256": "4da9a13128a0b52c7c653a1e64993ddcea803be85961647d2efc026f8838141d"
+      },
+      {
+        "path": "tools/mlmove_pipeline/ensure_16_files.py",
+        "size_bytes": 515,
+        "sha256": "2d1d655d27b9222fca2eb2046563411b2eb5c09fd127278dd9143dff34b09749"
+      },
+      {
+        "path": "tools/mlmove_pipeline/extract_16hz_tensors.py",
+        "size_bytes": 13417,
+        "sha256": "7ee913baf023d078eafe7c0bb28cd6e86607a9392c34d080f2702cd9cebffee2"
+      },
+      {
+        "path": "tools/mlmove_pipeline/fix_pipeline.py",
+        "size_bytes": 3108,
+        "sha256": "9cb1825dd1adb1a4b2dc6215299646622532219e77bb7762983033f034097fbd"
+      },
+      {
+        "path": "tools/mlmove_pipeline/fix_syntax.py",
+        "size_bytes": 449,
+        "sha256": "0e96714a1a26cead50ee600fe95b748b9ba132c1c04a435a9117d2fe6a0af066"
+      },
+      {
+        "path": "tools/mlmove_pipeline/fix_typo.py",
+        "size_bytes": 430,
+        "sha256": "8f81e4bf2f18f62e07030e92316c046955cc37d39e5deedfb0ab191b87b940d1"
+      },
+      {
+        "path": "tools/mlmove_pipeline/generate_all_45_spots_guide.py",
+        "size_bytes": 17470,
+        "sha256": "c41211e433e49335a276bc0cd3503c75f92c946043522386a8d3bd3fe2d64f00"
+      },
+      {
+        "path": "tools/mlmove_pipeline/generate_bootstrap_dataset.py",
+        "size_bytes": 11121,
+        "sha256": "f426f26d72ad04ce14ead0ba8bb6d7597f20e384913747860702c3c60ca5d3be"
+      },
+      {
+        "path": "tools/mlmove_pipeline/generate_confidence_report.py",
+        "size_bytes": 3011,
+        "sha256": "ed20c3f16213a7bab51b52cbc874e01568330e88906d605d391d05015c549314"
+      },
+      {
+        "path": "tools/mlmove_pipeline/generate_homologation_pdf.py",
+        "size_bytes": 31100,
+        "sha256": "0892213d94cc830c8ceb8702f1ab09065af59b29d10b31b656ad7eb916362ae4"
+      },
+      {
+        "path": "tools/mlmove_pipeline/generate_spot_recording_field_guide_pdf.py",
+        "size_bytes": 15139,
+        "sha256": "6abd262014f822e61f0ce67a719fafe0ca6f3118507b43212e700dfd5c6bf464"
+      },
+      {
+        "path": "tools/mlmove_pipeline/generate_tactical_spot_images.py",
+        "size_bytes": 26603,
+        "sha256": "c3af663f2d51fbd2aaf8f278b7c397cd3296c9ccdde17c39ba24507650a55fb0"
+      },
+      {
+        "path": "tools/mlmove_pipeline/generate_visual_report.py",
+        "size_bytes": 5709,
+        "sha256": "b30fc1f85947df3a87bba06f7ae2d06f0ff30b517816fef5f3669013b7b202a2"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_all_spots_meta.py",
+        "size_bytes": 817,
+        "sha256": "b79879ddd882b8c1383e707511a1133ad6bff3b282c50b6d6732efd896f1d1f6"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_chokepoints.py",
+        "size_bytes": 473,
+        "sha256": "99116dc249e881e0eb4d3a1238e42313363eba0659cd623ccf3a321dd359f3a6"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_de_mirage_spots.py",
+        "size_bytes": 361,
+        "sha256": "1bebd5d9aa1e7cded70a9ce68a9a79b33b39c6b8db193d2f9b036c0b6ffeca17"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_fase15_audit.py",
+        "size_bytes": 578,
+        "sha256": "b91010e048ddf20c0e6be3304482567d50bccf387ee14b6a3880d5d989f75c61"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_live_recordings.py",
+        "size_bytes": 761,
+        "sha256": "feecc8fa37bf14b5e50492ed20001c528c32e5ec7536adfc15f70a3ad85d0452"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_observed_spots.py",
+        "size_bytes": 351,
+        "sha256": "c3ac33bc80d9332f7b589fcbb3394502c1776fb9a6d52a6b54ba3f51a8f44fbf"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_prompt.py",
+        "size_bytes": 631,
+        "sha256": "24035867b630ac100f2ec518b856912744a5a07ecfbf01421b5058baef42d5bb"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_rcon.py",
+        "size_bytes": 118,
+        "sha256": "e03a7caf661c03a3c7559777f6551ffe89102304f60b5b69134bc639b75f9110"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_rcon_shots.py",
+        "size_bytes": 122,
+        "sha256": "500cae60b8103f8ed4486f1c4cffb85cacec5bf6c2ae42b9a7e9cc7c7c3bf78b"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_requested_spots.py",
+        "size_bytes": 621,
+        "sha256": "18c3c3ceba85061e20087f166b83882771e0662a5719fccd7d34a0bb8b9ab0dd"
+      },
+      {
+        "path": "tools/mlmove_pipeline/inspect_saved_pngs.py",
+        "size_bytes": 301,
+        "sha256": "33d2abf0421ed33ab92fe3b8e53265aa7520e115d667db7d3711e6c2cb3339a9"
+      },
+      {
+        "path": "tools/mlmove_pipeline/list_all_45_spots.py",
+        "size_bytes": 344,
+        "sha256": "88ca419593ed74490fe5169b02f33684e2aa0026b69be78a7997354e5277114c"
+      },
+      {
+        "path": "tools/mlmove_pipeline/minerar_e_treinar.bat",
+        "size_bytes": 2438,
+        "sha256": "405770dc3e0aaf568cca898f53b5b5a466d589d06ba2d23272ab79891842fb21"
+      },
+      {
+        "path": "tools/mlmove_pipeline/model_mlmove.py",
+        "size_bytes": 6371,
+        "sha256": "cf2f92f4d4224e673939910cdcf6f3415f00d6710abdee27b2bbe64e41208477"
+      },
+      {
+        "path": "tools/mlmove_pipeline/overnight_massive_worker.py",
+        "size_bytes": 16735,
+        "sha256": "688cfc98e1c5bf06865fd89368778406d1e12d3430f01d8427f9ed273dbd9256"
+      },
+      {
+        "path": "tools/mlmove_pipeline/patch_catalog_and_capture.py",
+        "size_bytes": 1811,
+        "sha256": "42d6b5991f5e028c2d78fb960c29ce1ab341499ef3bcc719df91baa10305cd11"
+      },
+      {
+        "path": "tools/mlmove_pipeline/patch_cover.py",
+        "size_bytes": 1201,
+        "sha256": "cb62242d68a475f909ff7385cedb06d54e8ecb0d8919694408a090a2a9b9abd7"
+      },
+      {
+        "path": "tools/mlmove_pipeline/patch_extract.py",
+        "size_bytes": 7709,
+        "sha256": "def1e4c3eab5bc9d2cbd33729c376e6fab9419e0fbb6d7ab2bd300e9fec25d3f"
+      },
+      {
+        "path": "tools/mlmove_pipeline/patch_extract2.py",
+        "size_bytes": 1718,
+        "sha256": "2b4a35a79741c684d62a0587f5c2fc57e9d9548f8fd301033d280225b8f7b614"
+      },
+      {
+        "path": "tools/mlmove_pipeline/patch_fast_dataset.py",
+        "size_bytes": 3133,
+        "sha256": "179acb6a948786bfbc1bc35cd7627a2fdd0c670a328cf99f6a678c42194ba118"
+      },
+      {
+        "path": "tools/mlmove_pipeline/patch_np.py",
+        "size_bytes": 671,
+        "sha256": "4d26ddbe6ac033267b908c155290ed259467005f50f538ad4b3bc5d5dd28c16b"
+      },
+      {
+        "path": "tools/mlmove_pipeline/patch_pdf_dual_panel.py",
+        "size_bytes": 6076,
+        "sha256": "9ce051ddf847cc3a5dc2fb92b1cc95c17090e0eb40299ac1af7fa1412ff76aca"
+      },
+      {
+        "path": "tools/mlmove_pipeline/patch_spot06.py",
+        "size_bytes": 2292,
+        "sha256": "c17d6e1f0ba4f818b15d79ded063ab0d1b519df290756eb51329be7396ff0132"
+      },
+      {
+        "path": "tools/mlmove_pipeline/patch_train.py",
+        "size_bytes": 4748,
+        "sha256": "50898a860a898b7aa814467e690b082d8d1378b92e77d5cb1b4f964b77ad46f6"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase15_generate_proposal_doc.py",
+        "size_bytes": 7346,
+        "sha256": "94ca180cc948bb985a9c9a86e0cfbf0383ad4ed35be8ce2d8a4bb13de9ba18a2"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase15_jump_audit.py",
+        "size_bytes": 13861,
+        "sha256": "345c7081963ec33731755cb289d494f534ad84e61eb08e2f414354fc6b73a2b2"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase15_spatial_audit.py",
+        "size_bytes": 31082,
+        "sha256": "aae97dbdffcf6efab070ae8bb532a1618dd0661cc4ff3e18bb56f376c42bcd99"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase161_audit_and_aggregate.py",
+        "size_bytes": 36264,
+        "sha256": "79e3bdf6c45f92042e5182e5ba2a9c38138acf41e18a2aad03045dbae4e9dbd5"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase162_analyze_normal_match.py",
+        "size_bytes": 7914,
+        "sha256": "c2ec70e4b2e1df55bc7bd06ab04b3e2cc841bdbed8cdafcdb3424e6474874437"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase162_generate_all_reports.py",
+        "size_bytes": 27327,
+        "sha256": "382f24beb44467b062bdc4c25ecb66f31826a06bd877c4f951b17d196073e134"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase163_reconcile_and_report.py",
+        "size_bytes": 31072,
+        "sha256": "4fb7e57dcfad063089236a26b0b5e9caf795d70a3c8959239d78873efe1e7b82"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase16_apply_changes.py",
+        "size_bytes": 6243,
+        "sha256": "dcf9937b4779dab816e49ff9bc7d90a7f147fb42ce0b783b5a666c7718efc541"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase16_manual_review.py",
+        "size_bytes": 14807,
+        "sha256": "97300a78a888206f51f3fb75a0372946cfe33cc66bb68b135f5ae639bf348868"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase16_runtime_validation.py",
+        "size_bytes": 16419,
+        "sha256": "b0ceeda1707d103edd958f4c735e530aab9b359327036d76006aff911e5d92b6"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase16_static_tests.py",
+        "size_bytes": 11225,
+        "sha256": "8ee0806c2ee4006a2847f40e6d9b3e83205d7ef67e0672ada85b41d9c572a763"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase17_audit_chokepoints.py",
+        "size_bytes": 9805,
+        "sha256": "d41e758071cd886f24b6b5603a3b49fa53df57c1de7bd53c63a41503b842901b"
+      },
+      {
+        "path": "tools/mlmove_pipeline/phase17_normalize_spots_schema.py",
+        "size_bytes": 14482,
+        "sha256": "c5ec2b97e8a6a663a4d910dcf1b25b38ce1f4e2840038e8381e9e626c099a97c"
+      },
+      {
+        "path": "tools/mlmove_pipeline/print_insufficient_coords.py",
+        "size_bytes": 368,
+        "sha256": "1257d5892cf61c003c84bc27fca9400a6d5cf82650e2d1d27509b2b13a1e629d"
+      },
+      {
+        "path": "tools/mlmove_pipeline/query_market_clusters.py",
+        "size_bytes": 420,
+        "sha256": "99e3c9c48285f68d399ca3851d3a12f5ac4cf8b993972603491052574d3bb22a"
+      },
+      {
+        "path": "tools/mlmove_pipeline/read_capture_tail.py",
+        "size_bytes": 168,
+        "sha256": "ed5226cad026e47159257bd5ea8aec9a06a974b661f88d5b4a8c50b9522d8916"
+      },
+      {
+        "path": "tools/mlmove_pipeline/README.md",
+        "size_bytes": 1774,
+        "sha256": "b4fe07fd84af007b281fb34a8d0e45a849d2d9357e329f148020d0d41dc35143"
+      },
+      {
+        "path": "tools/mlmove_pipeline/real_demo_miner.py",
+        "size_bytes": 9151,
+        "sha256": "5f710aaccf5d87314a99fe495ef7fb57ba4d9f59b2d92a4f6a71893caea819ed"
+      },
+      {
+        "path": "tools/mlmove_pipeline/recapture_fixed_spots.py",
+        "size_bytes": 4230,
+        "sha256": "a28e3d5219e541770710d05ccf53985ada2156026545746310d04da9b17d4d7b"
+      },
+      {
+        "path": "tools/mlmove_pipeline/recovered_capture.py",
+        "size_bytes": 6456,
+        "sha256": "5c9f5ec4a297000a62c5879938f4863c152749cfd05025fff4fe4b6e0effee9d"
+      },
+      {
+        "path": "tools/mlmove_pipeline/recovered_capture_21368.py",
+        "size_bytes": 6167,
+        "sha256": "550803f2fc0928f1f3de5b472abc4d8b6ade95f2398442bef9c36bfd8babac02"
+      },
+      {
+        "path": "tools/mlmove_pipeline/requirements.txt",
+        "size_bytes": 257,
+        "sha256": "e8a7ac42f552925b4f922d0175fcd0b932fd3f91f1a9b85033b6dddbb3010442"
+      },
+      {
+        "path": "tools/mlmove_pipeline/run_capture_16_fast.py",
+        "size_bytes": 3044,
+        "sha256": "ec231f000a10b83c88ede56fad77532f6d3d6960abb8f1a5957e16403d9fcbda"
+      },
+      {
+        "path": "tools/mlmove_pipeline/run_mining_and_training_loop.py",
+        "size_bytes": 15946,
+        "sha256": "e3d22c0609f12104b85c9676aa05b7ea7dc14611e10a48925e40144ca285245e"
+      },
+      {
+        "path": "tools/mlmove_pipeline/serve_pdf_mobile.py",
+        "size_bytes": 7491,
+        "sha256": "3df6aedc185c360f1b4aff27d6d4f5c53fa4f296fff2bea6ae8cb2b61fb958ea"
+      },
+      {
+        "path": "tools/mlmove_pipeline/source_rcon.py",
+        "size_bytes": 1512,
+        "sha256": "3c433cebe67d1362307a8e8646f1c2b0fee2bb866adf4a48a93868d148c61ff3"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_4_key_spots.py",
+        "size_bytes": 3103,
+        "sha256": "c91a412c99d99f09b4209d68f47e89f6bea553e752122e45904094686c1d6281"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_clipboard_grab.py",
+        "size_bytes": 90,
+        "sha256": "c33a78d531be44c1f66c418a1770ba56cac6ce8ecb361f4cd64d184d15308a80"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_condebug.py",
+        "size_bytes": 941,
+        "sha256": "7cbb595f4430e2c2bfdf9de4fea257398ce3184efcd71a84deab5355f496cba8"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_cs2_client.py",
+        "size_bytes": 733,
+        "sha256": "80224607327f7099540e01ecc712a4c1ba1a089373ca724f3d3a5fdcf0897fb0"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_cs2_condebug.py",
+        "size_bytes": 1021,
+        "sha256": "dcef9c800724dbdc44f3433c9ce04d1dc51e1ac24b326c1e393747eb1dc9c78a"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_cs2_render_capture.py",
+        "size_bytes": 1924,
+        "sha256": "3bee48c0a80d1cd78e968018e456c3d74ec81a2cd6e5fdb23dfe90563e6ebbb5"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_demirage_cfg.py",
+        "size_bytes": 1208,
+        "sha256": "188ea4242855d8ebdf9ee1abb71ee755e059d8bfec6187a42de49de372668722"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_f10.py",
+        "size_bytes": 2110,
+        "sha256": "ce029a58aeafd53d3de4c58c25446fbfeff62240c60e9ecebaba88e7a11e72f8"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_f8_capture.py",
+        "size_bytes": 2514,
+        "sha256": "ffad4598c5e1a5565302bb134a827819f8a74c4bb6b2ef26072484bbc69b011b"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_httplistener.py",
+        "size_bytes": 218,
+        "sha256": "c6aae8c40220ee148c3d3cef7145f0406c6804ad327e584a2c277b1f033c2d9f"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_imagegrab.py",
+        "size_bytes": 187,
+        "sha256": "273948071a5a2d8d2fa1932296abc787f50d5c82e357dc9dd29585d7a1366047"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_jointeam.py",
+        "size_bytes": 1195,
+        "sha256": "f79fe82be398d04d4dc4438eeb59fc9d85c08ad95dc676bc44620fa353f6db00"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_multi.py",
+        "size_bytes": 919,
+        "sha256": "3b6d8cef5f1679588aeda54fd54dc543a517f865b1bc507862438a3558b8359a"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_native_screenshot.py",
+        "size_bytes": 1216,
+        "sha256": "02799a66af29ddecca6fd9443c1c4f16f88e2081b4d6133feba32a184116ef64"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_rcon_shots.py",
+        "size_bytes": 1549,
+        "sha256": "c2a99af27fca890225bd16529ba21f7e4360499936ee14f9b6b52055aaec82e7"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_real_capture.py",
+        "size_bytes": 5622,
+        "sha256": "69f6c66319cc3e2f17f9d83cb2350d6005ce6c8e7aba51e2d6a7d1ba3bb06ba2"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_shot1.py",
+        "size_bytes": 1527,
+        "sha256": "fcf8702c1172d046195481511f8ef6b11fa73840550770cde4b4462fb56d87d1"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_spawn_and_shot.py",
+        "size_bytes": 2991,
+        "sha256": "171ea37a8c1c0e72ab0634d50194988502b3b3a4d2a9579c653a04cede53b1a2"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_van_roof.py",
+        "size_bytes": 1910,
+        "sha256": "6882d764bb6d6eb5fdb4f96f2102b5b3ca71fd3f5b1cc12249573e3314c8db93"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_van_z.py",
+        "size_bytes": 1947,
+        "sha256": "c41a6f770bc71a633402fc49ebfa4a97bee11eb31323abd1f1f567dfed0473c9"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_vcon_shots.py",
+        "size_bytes": 4543,
+        "sha256": "fa4fc67e95b9c2d8a04d1d551abcf73afcda0657728b2a40daa1f09fa5c6c43b"
+      },
+      {
+        "path": "tools/mlmove_pipeline/test_window_capture.py",
+        "size_bytes": 1672,
+        "sha256": "7bca756fdf213560b56ef7a755176d648a5704644bb1708b07fc8e4d6d97828a"
+      },
+      {
+        "path": "tools/mlmove_pipeline/train_and_export_onnx.py",
+        "size_bytes": 16547,
+        "sha256": "5e9a733a375a65940cdae40b3cef4c67299c666429d7b27589064cf9a7974b5c"
+      },
+      {
+        "path": "tools/mlmove_pipeline/treinar_lote_demos.bat",
+        "size_bytes": 613,
+        "sha256": "780b6f4903a590f18dfc29b2d1a408a078202d43ce58632ac2e01a69ea5cf850"
+      },
+      {
+        "path": "tools/mlmove_pipeline/update_capture_manifest.py",
+        "size_bytes": 3148,
+        "sha256": "f35cc91073776a4f485b7df0e573d57cd810927bdd65e7b9fccff564244c5804"
+      },
+      {
+        "path": "tools/mlmove_pipeline/update_spot53_yaw90.py",
+        "size_bytes": 1571,
+        "sha256": "eb16558661391014bfb227a8361cfcb726052c7c3c3cda312ce4d9435dffa20d"
+      },
+      {
+        "path": "tools/mlmove_pipeline/validate_e2e_onnx.py",
+        "size_bytes": 4332,
+        "sha256": "446f1a17ac23131eb58cd362bbcc675d2d142b4d34bff8feefc85a7559c2c242"
+      },
+      {
+        "path": "tools/mlmove_pipeline/verify_checklist_coords.py",
+        "size_bytes": 1639,
+        "sha256": "91c3b552856ab9b7052942f205f2af267c17d9c1f53d76254eabc13bff473194"
+      },
+      {
+        "path": "tools/mlmove_pipeline/verify_key_spots.py",
+        "size_bytes": 539,
+        "sha256": "e786303f465f45e9a010f7b01aaff6c557aaa8cddee4d2007b1897bf87264c8e"
+      }
+    ]
+  }
+}

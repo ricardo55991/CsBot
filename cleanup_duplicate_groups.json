@@ -1,0 +1,1786 @@
+{
+  "schema": "csbot.cleanup_duplicate_groups.v1",
+  "total_duplicate_groups": 118,
+  "groups": [
+    {
+      "sha256": "826d66b72207437fa533e2a4bfcd7ce67ebc7150459fa2af3c670b3602880ecd",
+      "file_count": 2,
+      "files": [
+        [
+          "npz_window_batch_audit.json",
+          591332
+        ],
+        [
+          "training_runs/positioning_v1/npz_window_batch_audit.json",
+          591332
+        ]
+      ]
+    },
+    {
+      "sha256": "9d5b950294442272fe6be227764d4bda4b745b68c60715ca3da80f5b97fd4285",
+      "file_count": 2,
+      "files": [
+        [
+          "temporal_dataloader_metrics.json",
+          2959
+        ],
+        [
+          "training_runs/positioning_v1/temporal_dataloader_metrics.json",
+          2959
+        ]
+      ]
+    },
+    {
+      "sha256": "eef7b598b2f20e61128a119ae09546435cf81adaf0f8a89865329bc590523f01",
+      "file_count": 2,
+      "files": [
+        [
+          ".agents/skills/csbot-dataset-forensics/SKILL.md",
+          3938
+        ],
+        [
+          ".agents/teamwork/data_provenance_auditor_1/skills/csbot-dataset-forensics/SKILL.md",
+          3938
+        ]
+      ]
+    },
+    {
+      "sha256": "9ca0d163b82ce97e2884e55cf65981d6d249ada823d2bebd3794ac1c3d45e0fb",
+      "file_count": 2,
+      "files": [
+        [
+          ".agents/skills/csbot-math-logic-auditor/SKILL.md",
+          4363
+        ],
+        [
+          ".agents/teamwork/math_stat_auditor_2a_int_1/SKILL_math_logic_auditor.md",
+          4363
+        ]
+      ]
+    },
+    {
+      "sha256": "5fb7f048956ee0a924b4b3ca83290c94c24f0bad6a562b8b99d5d143b70c94cc",
+      "file_count": 2,
+      "files": [
+        [
+          ".agents/skills/csbot-phase-gate/SKILL.md",
+          3712
+        ],
+        [
+          ".agents/teamwork/math_stat_auditor_2a_int_1/SKILL_phase_gate.md",
+          3712
+        ]
+      ]
+    },
+    {
+      "sha256": "bcb1aa25d913644258b045f94d2ce45f26d2415bfedccb5675bdb8f5b4d14d45",
+      "file_count": 2,
+      "files": [
+        [
+          ".agents/teamwork/csharp_suite_auditor_2a_int_1/git_status_after.txt",
+          8084
+        ],
+        [
+          ".agents/teamwork/csharp_suite_auditor_2a_int_1/git_status_before.txt",
+          8084
+        ]
+      ]
+    },
+    {
+      "sha256": "d85c0391f618807309353ec94ea81ae02ddc397a8e1b2b9b54ab335d4ea40ed3",
+      "file_count": 2,
+      "files": [
+        [
+          "artifacts/full_training_label_distribution.json",
+          14127
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/full_training_label_distribution.json",
+          14127
+        ]
+      ]
+    },
+    {
+      "sha256": "f23fa027c96713e2c173e3b21b18d48a2cf099c2981db83ccbdaccebcc1b6e46",
+      "file_count": 2,
+      "files": [
+        [
+          "artifacts/full_training_preflight.json",
+          3750
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/full_training_preflight.json",
+          3750
+        ]
+      ]
+    },
+    {
+      "sha256": "921d09698d81ca5607199f9c36aa5b6f3fb573fcc82e3ccd4714019c4e2462da",
+      "file_count": 2,
+      "files": [
+        [
+          "artifacts/pilot_representativeness.json",
+          2074
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/pilot_representativeness.json",
+          2074
+        ]
+      ]
+    },
+    {
+      "sha256": "1de235f831087f8b477bf1e09183ebcc15574c8406ea3068495ce949d6eb530b",
+      "file_count": 2,
+      "files": [
+        [
+          "artifacts/split_sequence_reconciliation.json",
+          3339
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/split_sequence_reconciliation.json",
+          3339
+        ]
+      ]
+    },
+    {
+      "sha256": "6345c62f662c5704d246f4230e95b450a5e8a4c407093fc34e7c88dacd98a823",
+      "file_count": 2,
+      "files": [
+        [
+          "artifacts/split_sequence_reconciliation.md",
+          2999
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/split_sequence_reconciliation.md",
+          2999
+        ]
+      ]
+    },
+    {
+      "sha256": "ab219795e792070da94ae81eca750b94cd3cdeffbc9fc6cc6ce6ca6f70a5d2a7",
+      "file_count": 2,
+      "files": [
+        [
+          "artifacts/spot_ranking_denominator_audit.json",
+          1182
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/spot_ranking_denominator_audit.json",
+          1182
+        ]
+      ]
+    },
+    {
+      "sha256": "a1aa95308b7787e364252ed9378a8c929ad35ad4b0332440c95dbf9a25dfd4ea",
+      "file_count": 2,
+      "files": [
+        [
+          "artifacts/spot_ranking_metrics_corrected.json",
+          953
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/spot_ranking_metrics_corrected.json",
+          953
+        ]
+      ]
+    },
+    {
+      "sha256": "91b5aa1f636b6fd23752c2305584790f99c7860c025dfc73046f25a489eb33ca",
+      "file_count": 2,
+      "files": [
+        [
+          "artifacts/temporal_overlap_audit.json",
+          2495
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/temporal_overlap_audit.json",
+          2495
+        ]
+      ]
+    },
+    {
+      "sha256": "cd82297d82ff7dc0a721dbee74f853fc61758edd5e24ad209bef0d4006086412",
+      "file_count": 2,
+      "files": [
+        [
+          "artifacts/validation_coverage_report.md",
+          3398
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/validation_coverage_report.md",
+          3398
+        ]
+      ]
+    },
+    {
+      "sha256": "7eee715b047c9f156beaefc2778be15e3919086042f170756d8411cf0cbb2ec7",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/aim_profile_distribution_v2.json",
+          5287
+        ],
+        [
+          "datasets/mirage_v2/reports/aim_profile_distribution_v2.json",
+          5287
+        ]
+      ]
+    },
+    {
+      "sha256": "d8c31e078f7d7a9648fb525f7d8cfc489332b1143a55c354da2dcda1505a318e",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/aim_profile_provenance_audit.json",
+          109450
+        ],
+        [
+          "datasets/mirage_v2/reports/aim_profile_provenance_audit.json",
+          109450
+        ]
+      ]
+    },
+    {
+      "sha256": "f089bb0365392e4ca7bfccdccf849afe7e7cd95d73278dc2d5eef37898b4c969",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/aim_profile_provenance_audit.md",
+          1662
+        ],
+        [
+          "datasets/mirage_v2/reports/aim_profile_provenance_audit.md",
+          1662
+        ]
+      ]
+    },
+    {
+      "sha256": "8a11677b91baf081e76f80af5d77e5e69f2e476fb30ea5b21a595b31cc10cd8c",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/aim_profile_provenance_v2.json",
+          103236
+        ],
+        [
+          "datasets/mirage_v2/reports/aim_profile_provenance_v2.json",
+          103236
+        ]
+      ]
+    },
+    {
+      "sha256": "1a1afc4e9ee923b539b2ca6faaa502e1ebe90fa35b5e7862771709ae01c53c11",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/aim_profile_training_eligibility_v2.json",
+          71847
+        ],
+        [
+          "datasets/mirage_v2/reports/aim_profile_training_eligibility_v2.json",
+          71847
+        ]
+      ]
+    },
+    {
+      "sha256": "4aea7ad66584995e87bb0fd8e09a29d44d67d54cdaa31126db83cd946d940023",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/baseline_jump_metrics.json",
+          753
+        ],
+        [
+          "datasets/mirage_v2/reports/baseline_jump_metrics.json",
+          753
+        ]
+      ]
+    },
+    {
+      "sha256": "3ea149d4f1dc68930381bc66c087cd764950b2b6c68fec4a2f5e60d7af29ea4b",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/baseline_movement_metrics.json",
+          1057
+        ],
+        [
+          "datasets/mirage_v2/reports/baseline_movement_metrics.json",
+          1057
+        ]
+      ]
+    },
+    {
+      "sha256": "28c754405555a11333ff314339b07d991c4755326bd350444d00651a22e18ad6",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/baseline_positioning_metrics.json",
+          1175
+        ],
+        [
+          "datasets/mirage_v2/reports/baseline_positioning_metrics.json",
+          1175
+        ]
+      ]
+    },
+    {
+      "sha256": "cfea85ba17e979e74442597888b3dd183782769ec7a9948115a9590fc9b64538",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/bombsite_distribution_v2.json",
+          359
+        ],
+        [
+          "datasets/mirage_v2/reports/bombsite_distribution_v2.json",
+          359
+        ]
+      ]
+    },
+    {
+      "sha256": "2b908397c0f1275d913c9d31acae212c903b14a13081de6b8b802b4d9e4f6692",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/catalog_hash_reconciliation.json",
+          3269
+        ],
+        [
+          "datasets/mirage_v2/contracts/catalog_hash_reconciliation.json",
+          3269
+        ]
+      ]
+    },
+    {
+      "sha256": "d72fd68df68cd805d770fb340f712d4773bad3996e9ac0133a11f9022a3327f3",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/clearance_waypoint_distribution_v2.json",
+          1100
+        ],
+        [
+          "datasets/mirage_v2/reports/clearance_waypoint_distribution_v2.json",
+          1100
+        ]
+      ]
+    },
+    {
+      "sha256": "3465a972bb562f74ca067a63b78bfe2b468d7065acdd4c32b60d6a49ce6d9227",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/corpus_reconciliation_v2.json",
+          2405
+        ],
+        [
+          "datasets/mirage_v2/reports/corpus_reconciliation_v2.json",
+          2405
+        ]
+      ]
+    },
+    {
+      "sha256": "9a84ac0c6907aa3ce245e07bd2a34ebd218599c50f615e43909c808f4845f89d",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/corpus_reconciliation_v2.md",
+          3148
+        ],
+        [
+          "datasets/mirage_v2/reports/corpus_reconciliation_v2.md",
+          3148
+        ]
+      ]
+    },
+    {
+      "sha256": "9e791cc972f6355f1d7ebc14a4113edd4961674637da22fb56fc50fb412ac3cb",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/dataloader_validation_report.md",
+          2428
+        ],
+        [
+          "datasets/mirage_v2/reports/dataloader_validation_report.md",
+          2428
+        ]
+      ]
+    },
+    {
+      "sha256": "b38e4dc5b660585ecb5f1938f58898a5dbfbc3244e38400671a5caeab7820a37",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/dataset_manifest_v2.json",
+          2684
+        ],
+        [
+          "datasets/mirage_v2/manifests/dataset_manifest_v2.json",
+          2684
+        ]
+      ]
+    },
+    {
+      "sha256": "ded6fa1fa7774aa0fc8751b6ae135594594b0d2b2b8ab902e671da7744ad9a2c",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/dataset_visual_audit_v2.pdf",
+          35016
+        ],
+        [
+          "datasets/mirage_v2/reports/dataset_visual_audit_v2.pdf",
+          35016
+        ]
+      ]
+    },
+    {
+      "sha256": "c9fd9e5eebb99846cdd0db4fe52ed80da6c4bae9cd97e55d39026f7795728aa6",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/dataset_visual_audit_v2_forensic.pdf",
+          10522
+        ],
+        [
+          "datasets/mirage_v2/reports/dataset_visual_audit_v2_forensic.pdf",
+          10522
+        ]
+      ]
+    },
+    {
+      "sha256": "59ba12b90e161b2e4e9fca9a650c3b41079ade719631a35db03bc785ecd13e9e",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/economy_distribution_v2.json",
+          423
+        ],
+        [
+          "datasets/mirage_v2/reports/economy_distribution_v2.json",
+          423
+        ]
+      ]
+    },
+    {
+      "sha256": "aacdf300f0a3fde17823c60ecdc5a54fe93e1b65bb2b7f7c52eaf35616addb50",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/fake_provenance_v2.json",
+          6375
+        ],
+        [
+          "datasets/mirage_v2/reports/fake_provenance_v2.json",
+          6375
+        ]
+      ]
+    },
+    {
+      "sha256": "9d6da08aed40cb5b2e4de597b74aaf6deca02ca812759a54a82c00a4d2dd00e7",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/fase_2_1_final_report.md",
+          14929
+        ],
+        [
+          "datasets/mirage_v2/reports/fase_2_1_final_report.md",
+          14929
+        ]
+      ]
+    },
+    {
+      "sha256": "0b9f005886b9cc89e493cbc9377dedec468a12fdb2ec513ef4bb8de7aab874a9",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/fase_2_2_final_report.md",
+          9035
+        ],
+        [
+          "datasets/mirage_v2/reports/fase_2_2_final_report.md",
+          9035
+        ]
+      ]
+    },
+    {
+      "sha256": "495c5319ea9e6e8f1bca4bd21409b307400034479eb85fc8c210f86d25e929ac",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/fase_2_final_report.md",
+          11305
+        ],
+        [
+          "datasets/mirage_v2/reports/fase_2_final_report.md",
+          11305
+        ]
+      ]
+    },
+    {
+      "sha256": "1cf62f93ee3e33c75de32c9599d41f949272bb7c425057e4fcd31ac5f5ff4d97",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/jump_episode_distribution_v2.json",
+          1005
+        ],
+        [
+          "datasets/mirage_v2/reports/jump_episode_distribution_v2.json",
+          1005
+        ]
+      ]
+    },
+    {
+      "sha256": "82020706cf89178f6958d9d919adb7453525a1ef05ebe4ceffe42e51d05ee639",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/jump_label_forensic_audit.json",
+          1506
+        ],
+        [
+          "datasets/mirage_v2/reports/jump_label_forensic_audit.json",
+          1506
+        ]
+      ]
+    },
+    {
+      "sha256": "06c1753641928b7da324cd14c82dc8ccd43200e9677b5de68812352d4c272f2e",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/jump_label_forensic_audit.md",
+          1964
+        ],
+        [
+          "datasets/mirage_v2/reports/jump_label_forensic_audit.md",
+          1964
+        ]
+      ]
+    },
+    {
+      "sha256": "7e2f3d8acbeae23669e1ca6f764791d5fa1b71a1bd718eb06631ffb362337a2b",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/movement_sequences_v2_manifest.json",
+          629
+        ],
+        [
+          "datasets/mirage_v2/movement/movement_sequences_v2/movement_sequences_v2_manifest.json",
+          629
+        ]
+      ]
+    },
+    {
+      "sha256": "9a660b2339ec8ed4679dc8623e2521318aad48802bca4c08c3c23241ab009225",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/parquet_materialization_audit.json",
+          11038
+        ],
+        [
+          "datasets/mirage_v2/reports/parquet_materialization_audit.json",
+          11038
+        ]
+      ]
+    },
+    {
+      "sha256": "396cce111edf8be50904ea985dd45bb066cf81ae1cdb208e0936c2d71adb14b4",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/parquet_materialization_audit.md",
+          2544
+        ],
+        [
+          "datasets/mirage_v2/reports/parquet_materialization_audit.md",
+          2544
+        ]
+      ]
+    },
+    {
+      "sha256": "e5f8ab93acd6a9cd487b4f98632ffe7a58234ae9fa80881c0b1b8ee58294b05b",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/parquet_physical_schema_audit.json",
+          22002
+        ],
+        [
+          "datasets/mirage_v2/reports/parquet_physical_schema_audit.json",
+          22002
+        ]
+      ]
+    },
+    {
+      "sha256": "936ecc28482b61ae53cda036e94b0d6bdce6024e55f18badcea8bc0efd070ffa",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/parquet_size_reconciliation.md",
+          4301
+        ],
+        [
+          "datasets/mirage_v2/reports/parquet_size_reconciliation.md",
+          4301
+        ]
+      ]
+    },
+    {
+      "sha256": "0b7af0a54879026b1906d71ff13882c49d325cf78af855f79e35076039cf08d0",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/phase2_invariant_traceability_matrix.md",
+          8212
+        ],
+        [
+          "datasets/mirage_v2/reports/phase2_invariant_traceability_matrix.md",
+          8212
+        ]
+      ]
+    },
+    {
+      "sha256": "bd8fa018d87e0725509fb74cb8e4ce6ae441e32d51b0cb103947236c72331f3c",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/plan_stage_distribution_v2.json",
+          916
+        ],
+        [
+          "datasets/mirage_v2/reports/plan_stage_distribution_v2.json",
+          916
+        ]
+      ]
+    },
+    {
+      "sha256": "b70af499ad5225b29faf25e0eef5b8815a1eb258dfeeb09a940723e2dea3b6a1",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/positioning_head_distribution_v1.json",
+          20499
+        ],
+        [
+          "datasets/mirage_v2/reports/positioning_head_distribution_v1.json",
+          20499
+        ]
+      ]
+    },
+    {
+      "sha256": "b553aee9c90128e99a6ca0f5aa41403d4d6e115c48a5f4c3edb3aad5326c820b",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/positioning_multitask_contract_v1.json",
+          4762
+        ],
+        [
+          "datasets/mirage_v2/contracts/positioning_multitask_contract_v1.json",
+          4762
+        ]
+      ]
+    },
+    {
+      "sha256": "cdcee9a92db1554138a84c399c19dceafe99742f3b7e0ddac097666afbecab5b",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/positioning_sequences_v1_manifest.json",
+          383
+        ],
+        [
+          "datasets/mirage_v2/positioning/positioning_sequences_v1/positioning_sequences_v1_manifest.json",
+          383
+        ]
+      ]
+    },
+    {
+      "sha256": "106648c7c8fbba34e3d587da3ac5d7adbc94d8e71e8350a2675d9c2b4c7e2ec7",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/postplant_provenance_v2.json",
+          10941
+        ],
+        [
+          "datasets/mirage_v2/reports/postplant_provenance_v2.json",
+          10941
+        ]
+      ]
+    },
+    {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/rejected_sequences_v2.json",
+          2
+        ],
+        [
+          "datasets/mirage_v2/reports/rejected_sequences_v2.json",
+          2
+        ]
+      ]
+    },
+    {
+      "sha256": "d9775677e7945c39424f6681adb3bda1f38c182a9991fb4cac63e757deb583e4",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/rejected_sequences_v2_detailed.json",
+          1419
+        ],
+        [
+          "datasets/mirage_v2/reports/rejected_sequences_v2_detailed.json",
+          1419
+        ]
+      ]
+    },
+    {
+      "sha256": "fbc83e3020fa3a8a34edf343c207862f360e1453349accb6975f1954eb215ccd",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/retake_provenance_v2.json",
+          22153
+        ],
+        [
+          "datasets/mirage_v2/reports/retake_provenance_v2.json",
+          22153
+        ]
+      ]
+    },
+    {
+      "sha256": "eb38465edad084b021cc34dd73a8f544cf057abadd2986d2b9e94003df524060",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/role_distribution_v2.json",
+          1180
+        ],
+        [
+          "datasets/mirage_v2/reports/role_distribution_v2.json",
+          1180
+        ]
+      ]
+    },
+    {
+      "sha256": "ae6c4acaba78a76acf9a7b13c4dbae4bad7eb56585c3bb03de912b752af2aaf6",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/save_provenance_v2.json",
+          5609
+        ],
+        [
+          "datasets/mirage_v2/reports/save_provenance_v2.json",
+          5609
+        ]
+      ]
+    },
+    {
+      "sha256": "8ee508910eb2a6b20dab380f4dcd0f9440da7731312cb9cf51858bdf62228c18",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/sequence_filter_accounting_v2.json",
+          909
+        ],
+        [
+          "datasets/mirage_v2/reports/sequence_filter_accounting_v2.json",
+          909
+        ]
+      ]
+    },
+    {
+      "sha256": "3c9633049714a86d284098eaeeb111ee6d80f9e15616fa656a0d3377b7edcfdf",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/spot_distribution_v2.json",
+          4104
+        ],
+        [
+          "datasets/mirage_v2/reports/spot_distribution_v2.json",
+          4104
+        ]
+      ]
+    },
+    {
+      "sha256": "bf8fe83c80a5dd3bbcbff7d1a3a9dfcd46407696bdc9fb7111bcaefffbe60aa0",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/spot_mapping_coverage_v2.json",
+          36554
+        ],
+        [
+          "datasets/mirage_v2/reports/spot_mapping_coverage_v2.json",
+          36554
+        ]
+      ]
+    },
+    {
+      "sha256": "7ebfee745e4e967243d85a8cd4ae0cab0f7a068729204f7ddc83ab06b8afb23b",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/spot_mapping_coverage_v2.md",
+          2366
+        ],
+        [
+          "datasets/mirage_v2/reports/spot_mapping_coverage_v2.md",
+          2366
+        ]
+      ]
+    },
+    {
+      "sha256": "91e0501a110869206ec0b86449bb913aaf32655a6933606bf9044560f1a2ca59",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/tactic_distribution_v2.json",
+          603
+        ],
+        [
+          "datasets/mirage_v2/reports/tactic_distribution_v2.json",
+          603
+        ]
+      ]
+    },
+    {
+      "sha256": "afb50dcdfb13bd98b313805d43176e4e8e74ffe714002d3ddba8915dbb50872a",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/temporal_window_forensic_report.md",
+          2443
+        ],
+        [
+          "datasets/mirage_v2/reports/temporal_window_forensic_report.md",
+          2443
+        ]
+      ]
+    },
+    {
+      "sha256": "01eb68c77ea7e49d56de6af0a655d54000e2a98a3828be4c62723589c81df103",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/temporal_window_forensic_sample.json",
+          159516
+        ],
+        [
+          "datasets/mirage_v2/reports/temporal_window_forensic_sample.json",
+          159516
+        ]
+      ]
+    },
+    {
+      "sha256": "3383fc73a61a0025e08f24bcefd58105bcaf139043f94219bbd11547afd21a05",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/test_recent_meta_v2.json",
+          1312
+        ],
+        [
+          "datasets/mirage_v2/splits/test_recent_meta_v2.json",
+          1312
+        ]
+      ]
+    },
+    {
+      "sha256": "34a4e975ad63db011182847849695526ec1af7ed0187d94bae13e454b987472f",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/test_split_v2.json",
+          5219
+        ],
+        [
+          "datasets/mirage_v2/splits/test_split_v2.json",
+          5219
+        ]
+      ]
+    },
+    {
+      "sha256": "67d9f58778a51c3600ef7d6dec9df647020f379240587ab8d0457eea9784e658",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/test_unseen_events_v2.json",
+          1154
+        ],
+        [
+          "datasets/mirage_v2/splits/test_unseen_events_v2.json",
+          1154
+        ]
+      ]
+    },
+    {
+      "sha256": "25bcac012d5e9fd823b7b2be90e5edade6910af85a1a2f3d024c99a5621e1bf3",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/test_unseen_players_v2.json",
+          920
+        ],
+        [
+          "datasets/mirage_v2/splits/test_unseen_players_v2.json",
+          920
+        ]
+      ]
+    },
+    {
+      "sha256": "9d28f0c08a510a98cda1fd5180dfe296bbc3984a00143ccecd86eb3852592484",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/test_unseen_teams_v2.json",
+          772
+        ],
+        [
+          "datasets/mirage_v2/splits/test_unseen_teams_v2.json",
+          772
+        ]
+      ]
+    },
+    {
+      "sha256": "be23524c1b65cd051e8475ac55697aa646e282cdc7764e3a159accc3bd266fbb",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/training_readiness_report.md",
+          7514
+        ],
+        [
+          "datasets/mirage_v2/reports/training_readiness_report.md",
+          7514
+        ]
+      ]
+    },
+    {
+      "sha256": "80f9b2ef15447f79e836c4062927fd7f978c33ca3d334fde2ab9f779f7b943a1",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/train_split_v2.json",
+          23380
+        ],
+        [
+          "datasets/mirage_v2/splits/train_split_v2.json",
+          23380
+        ]
+      ]
+    },
+    {
+      "sha256": "e043055110cc6792997164b766f16d0ea11ac8ed78ca4c38462deb3898cb3ea3",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/unmapped_cluster_coverage_analysis.md",
+          4247
+        ],
+        [
+          "datasets/mirage_v2/reports/unmapped_cluster_coverage_analysis.md",
+          4247
+        ]
+      ]
+    },
+    {
+      "sha256": "2be7b5063d972bc7e3c00706ec9ec1385ac5f59e8c63b42d41026849021a1216",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/validation_split_v2.json",
+          5071
+        ],
+        [
+          "datasets/mirage_v2/splits/validation_split_v2.json",
+          5071
+        ]
+      ]
+    },
+    {
+      "sha256": "5cd5f385054708a8ceef56a4097847fbaf785071d19e13a2b759e456d17721dc",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/visual_audit_sample_index.json",
+          144592
+        ],
+        [
+          "datasets/mirage_v2/reports/visual_audit_sample_index.json",
+          144592
+        ]
+      ]
+    },
+    {
+      "sha256": "492e5b55fa4cd5969d237c78986998af6384e947169f825f59daa708ef7aecec",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/weapon_distribution_v2.json",
+          595
+        ],
+        [
+          "datasets/mirage_v2/reports/weapon_distribution_v2.json",
+          595
+        ]
+      ]
+    },
+    {
+      "sha256": "85e0fcb6bcd01c2cbbb32da9c048167bf236796e138f136b063cadbe80fe7385",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/contracts/label_contract_v2.json",
+          5862
+        ],
+        [
+          "datasets/mirage_v2/positioning_v2_full_temporal/label_contract_v2.json",
+          5862
+        ]
+      ]
+    },
+    {
+      "sha256": "e3c152ccc9ddf762086d1d37f5f716fd94d90997edcf30d127be26cdc056d332",
+      "file_count": 2,
+      "files": [
+        [
+          "datasets/mirage_v2/positioning/canonical_test_set_manifest.json",
+          1123
+        ],
+        [
+          "training_runs/positioning_v1/canonical_test_set_manifest.json",
+          1123
+        ]
+      ]
+    },
+    {
+      "sha256": "6a8efd3dda3cf902759d622e0eab26fb0db293fb9ca803b031ad5a7a61c1634f",
+      "file_count": 2,
+      "files": [
+        [
+          "docs/fase_1_5/mirage_spot_manual_review.json",
+          14097
+        ],
+        [
+          "docs/fase_1_6/mirage_spot_manual_review.json",
+          14097
+        ]
+      ]
+    },
+    {
+      "sha256": "d968e441446b2b095013934f4c83842ee6faac1f3e671d9c11ce61c847b4603a",
+      "file_count": 2,
+      "files": [
+        [
+          "docs/fase_1_6/mirage_profile_v1_vs_v2_report.md",
+          19257
+        ],
+        [
+          "docs/fase_1_6/spot_test_v1_vs_v2_verified.md",
+          19257
+        ]
+      ]
+    },
+    {
+      "sha256": "a5ca1546d8648b0df7a969131c487ed74d5bdfe553618c1db04f3daf32a9b811",
+      "file_count": 2,
+      "files": [
+        [
+          "docs/fase_1_7/catalogo_completo_spots_mirage_v3.pdf",
+          30259061
+        ],
+        [
+          "docs/fase_1_7/catalogo_mirage_50_spots_source2_final.pdf",
+          30259061
+        ]
+      ]
+    },
+    {
+      "sha256": "edd771812db5175b32a78e309fb550ec52375bf100aec4a80d2a26f07630f190",
+      "file_count": 4,
+      "files": [
+        [
+          "graphify-out/.graphify_analysis.json",
+          28663
+        ],
+        [
+          "graphify-out/2026-10-19/.graphify_analysis.json",
+          28663
+        ],
+        [
+          "graphify-out/2026-10-20/.graphify_analysis.json",
+          28663
+        ],
+        [
+          "graphify-out/2026-10-21/.graphify_analysis.json",
+          28663
+        ]
+      ]
+    },
+    {
+      "sha256": "9010e059094fbc6633dc52cdcf4018075e28fa7d8004e20a340b53a7fa063b69",
+      "file_count": 2,
+      "files": [
+        [
+          "graphify-out/.graphify_labels.json",
+          2025
+        ],
+        [
+          "graphify-out/2026-10-21/.graphify_labels.json",
+          2025
+        ]
+      ]
+    },
+    {
+      "sha256": "6a4ac800556912a3e51519f27d54c7d1089087d9ffa0961ac22b05bbc4764d59",
+      "file_count": 4,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/04a403c9910a5f94abe4f8cc3181f9c30856dc4060e2a545de3d1852725c6451.json",
+          987
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/2a1ff6b4e370c93ee587f861f513f83b56a365018eb56876ec98c994b77844f4.json",
+          987
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/b15b338e8089055940bcbaae6149266236b623000e0104b6a199fa3a10373a1f.json",
+          987
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/cecc05ce09a1146ed1468b944459b41e157f9cd2abf27dfe04c0a91aad34b366.json",
+          987
+        ]
+      ]
+    },
+    {
+      "sha256": "96462a4586d750d449629a975b585353771ff7d60f4729918dc7a2c6b545b433",
+      "file_count": 3,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/178b9c3de7862d4b61217ffab38ddb5a15693892a122801aca10ac2055f36e46.json",
+          47443
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/5a03aada73c812e711a21bf6511a57fb4a16ac99f0d9499fd774eb598ec9ea7c.json",
+          47443
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/b3013be7f5659f9a533dc530edee69ff5e4be73f7552a4dd6958e928bf0d268e.json",
+          47443
+        ]
+      ]
+    },
+    {
+      "sha256": "26277ed29ac9b789af6f0ca75455704f7bd657099070530cccffa79ba60d3823",
+      "file_count": 2,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/190c84168607e1ac171d9e726bc5d4775f00d70585375f32b9af95ea4c5a0755.json",
+          32356
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/8fdb1729b3d3f924c8b21bdcfabd023d40c10e924745e89b2210673842641558.json",
+          32356
+        ]
+      ]
+    },
+    {
+      "sha256": "d959053469cb5a2aa1182183b8ced31506a04b3e0284fc8b46d292455d535119",
+      "file_count": 2,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/1a35125959e2556733c78f72008d1ab21b3ce1a6982d10fa2a0cfb4c790d7f1f.json",
+          21067
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/ce3d74cfac473d32a049fd48bc7da56fdca36239d7297adff043aae55d034f7a.json",
+          21067
+        ]
+      ]
+    },
+    {
+      "sha256": "c67a8c0c4f48afdc21cc002aaab3689a43a626d5b276e1f26adb2b0655ef70ce",
+      "file_count": 2,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/200c8488a0c1fd4be8a0aa8f25615419384926974e3e18d79bdf155da3824243.json",
+          171446
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/851c892c462a7b59cb1543f2b9a201f038f67ffad8252ef4ef64999bf7029eff.json",
+          171446
+        ]
+      ]
+    },
+    {
+      "sha256": "92afd81a75e404c5e3b1293c5e70eefb4ddd244dfa68098009eb4675ecb279fb",
+      "file_count": 2,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/221f58573a1a72bf6f976ed5ae1f17bf647b4962107296c14bd3769214e11194.json",
+          208
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/6078b747724c3065129b55a84a01d8ecf1402c3f0daff79047f0e7cc910e6851.json",
+          208
+        ]
+      ]
+    },
+    {
+      "sha256": "01ce484022bdb6a587e9cd8af08ae6f707567095b41ce91d4edc8c5f803ebb78",
+      "file_count": 3,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/26ec39d13df9ad94f58c3c5f9052040d25d5004d6f6db5ab44ba1ddb83b7c4b2.json",
+          19226
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/3b7a73c1246c23e5da3dd7760a0ed14bba1d211b4a4b297eb55dff1518e1f461.json",
+          19226
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/b862addea455776f27da1dd0f2fed70061d5e4d5affd51b32dae0f8fb799fee2.json",
+          19226
+        ]
+      ]
+    },
+    {
+      "sha256": "dca9934ac9e23071e7e783c23012c88dab1fba38ab77bad890d979258bcd948f",
+      "file_count": 2,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/551d05b92ac3b503f6753bed1791625cf770d98ba95b2c138d705dfb9ab7b024.json",
+          41242
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/e51ab8543914c6655249ee76ff61dd19f7986b6703ef5ab24a4b4d22599e52d5.json",
+          41242
+        ]
+      ]
+    },
+    {
+      "sha256": "99f1c308d4554a1c82227a086647416f5cd20294eed5bf522daea333193f18bd",
+      "file_count": 2,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/69651cc3c9fcab210f89ca08ab30fa777a597b5a55a961e4c7ad1f49cbd26885.json",
+          94532
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/bd39bc5aebe8a6c146f5bf09876d27b508cffdb4b8fbe1a362d6527235112043.json",
+          94532
+        ]
+      ]
+    },
+    {
+      "sha256": "d52e4c56a50c74c4e0659ec33c96fc1a6918b52c7345e204460c5fde197d7f51",
+      "file_count": 2,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/77d586738657dec70c94689cdc69bba920e5a7e724a89a503240226425997058.json",
+          202
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/fae77965ea9381945cc7747952d978a43de2b3693ccef1ae21ea61b2ac465260.json",
+          202
+        ]
+      ]
+    },
+    {
+      "sha256": "3beb9ed01790049cdaac5e406829927a5b78febcc5d990f6ee05960d5cc7847c",
+      "file_count": 3,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/917cc728a78ab67536df4f0f8c89237654b670f0d256a2a5ed98675bd27c918c.json",
+          205
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/9e2fa86dd32df52c3f04a48d2ebe3fd5d7a97d82626e6908522ffb0ec03b9b6d.json",
+          205
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/fe2ccaa51de8ac714409f74785cd4e60952dd166277894920d6ae9a743fca1b1.json",
+          205
+        ]
+      ]
+    },
+    {
+      "sha256": "55590196202a75ba4570de86762ffafdd4f79443e4533e99dd07e1a99eb88f2e",
+      "file_count": 3,
+      "files": [
+        [
+          "graphify-out/cache/ast/v0.9.38/b35a78090327fc1393d852bdc8fa48cc60e70f70953c83a0019ba5cbe1373187.json",
+          10174
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/c8a936cf08d06329c4c1dd2ab4b23371296abaf74e8a5de74e04343d5b18e7e3.json",
+          10174
+        ],
+        [
+          "graphify-out/cache/ast/v0.9.38/ea8e4d97311f1ed046bf57d3ee520f554343210e51f78007c42e626b336ec50f.json",
+          10174
+        ]
+      ]
+    },
+    {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/clean_copied.py",
+          0
+        ],
+        [
+          "scratch/hotfix_requirements.txt",
+          0
+        ]
+      ]
+    },
+    {
+      "sha256": "d0e63ff829bd35b641a165faf47d43a943f60b15c0db1c9d48f53f6d527726bb",
+      "file_count": 3,
+      "files": [
+        [
+          "scratch/found_c4tracker_14775.json",
+          735
+        ],
+        [
+          "scratch/found_c4_14775.json",
+          735
+        ],
+        [
+          "scratch/found_driver_14775.json",
+          735
+        ]
+      ]
+    },
+    {
+      "sha256": "49963ec42a2ffa22c789273f4f9cf1887851efa26a562618f054ab5a0435dae2",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/found_c4tracker_15553.json",
+          2026
+        ],
+        [
+          "scratch/found_c4_15553.json",
+          2026
+        ]
+      ]
+    },
+    {
+      "sha256": "1421b3e96e43697af7dfb1c28d8ca3fa360c00c3a8ad519de2df190f34c95377",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/found_c4_14781.json",
+          17573
+        ],
+        [
+          "scratch/found_driver_14781.json",
+          17573
+        ]
+      ]
+    },
+    {
+      "sha256": "bde3d6423008ff684c25886eb7a46a56539b77499bd9156cff073aefd6a8c146",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/found_driver_13009.json",
+          12425
+        ],
+        [
+          "scratch/found_recovery_13009.json",
+          12425
+        ]
+      ]
+    },
+    {
+      "sha256": "0a8562e21c38c36f47daf16c7da0ccb056adaedb55c09a65a1a8ba5674b348b9",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/found_missing_1244.json",
+          9405
+        ],
+        [
+          "scratch/found_usage_1244.json",
+          9405
+        ]
+      ]
+    },
+    {
+      "sha256": "c2b0c628d3fce36b9acf4ff754ca49fc9bae7868fdd0517afcdcb41e23823865",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/midround_adapt_13371.json",
+          45053
+        ],
+        [
+          "scratch/midround_initial_13371.json",
+          45053
+        ]
+      ]
+    },
+    {
+      "sha256": "338dc3a3319a67e8b68867ce1ca0774c6d2bf51ee0965e72d79dcde8ea245d95",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/midround_adapt_13469.json",
+          1267
+        ],
+        [
+          "scratch/midround_initial_13469.json",
+          1267
+        ]
+      ]
+    },
+    {
+      "sha256": "151c7e712e00893b0689d7fd1abfff4fda6c9335149d36c18c25916150f59235",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/midround_adapt_13473.json",
+          7610
+        ],
+        [
+          "scratch/midround_initial_13473.json",
+          7610
+        ]
+      ]
+    },
+    {
+      "sha256": "c4c738123f8bc4c2da7f054af6a2d1224edda08a086cb039d4832dac9426214a",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/midround_adapt_14057.json",
+          146
+        ],
+        [
+          "scratch/midround_initial_14057.json",
+          146
+        ]
+      ]
+    },
+    {
+      "sha256": "63efeca4f267d74c03e4974db6ad27c00ecdb871442527812e62cc3e062868c0",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/midround_adapt_14059.json",
+          10622
+        ],
+        [
+          "scratch/midround_edit_14059.json",
+          10622
+        ]
+      ]
+    },
+    {
+      "sha256": "e31487a1573f35a2d42839f4faf0306695062b7e16664cfb7bd4d21d3e05ed48",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/midround_edit_14209.json",
+          509
+        ],
+        [
+          "scratch/midround_patch_14209.json",
+          509
+        ]
+      ]
+    },
+    {
+      "sha256": "8fee215cd7ff14539f4a537ebdf07b332339aa1497da1cc189d14179b4ceb8d3",
+      "file_count": 2,
+      "files": [
+        [
+          "scratch/midround_edit_14795.json",
+          1602
+        ],
+        [
+          "scratch/midround_patch_14795.json",
+          1602
+        ]
+      ]
+    },
+    {
+      "sha256": "208bb22c53a460a48ddcc6ebe2be8bb0d2f93b829fcd62f6ef99b05cda943ced",
+      "file_count": 2,
+      "files": [
+        [
+          "src/CsBotManager/bin/Debug/net10.0/CsBotManager.deps.json",
+          5106
+        ],
+        [
+          "src/CsBotManager/bin/Release/net10.0/CsBotManager.deps.json",
+          5106
+        ]
+      ]
+    },
+    {
+      "sha256": "aefd3d113faf5861d7eeca463d74e59ec990b67a654fec3f381f4b303d03fb0e",
+      "file_count": 5,
+      "files": [
+        [
+          "src/CsBotManager/bin/Debug/net10.0/MapProfiles/de_dust2.json",
+          5908
+        ],
+        [
+          "src/CsBotManager/bin/Release/net10.0/MapProfiles/de_dust2.json",
+          5908
+        ],
+        [
+          "src/CsBotManager/MapProfiles/de_dust2.json",
+          5908
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Debug/net10.0/MapProfiles/de_dust2.json",
+          5908
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Release/net10.0/MapProfiles/de_dust2.json",
+          5908
+        ]
+      ]
+    },
+    {
+      "sha256": "b6e5cf6653960c0d50439ca2c5a4996f19ac1474e912ade1e5056668990770a2",
+      "file_count": 5,
+      "files": [
+        [
+          "src/CsBotManager/bin/Debug/net10.0/MapProfiles/de_inferno.json",
+          4452
+        ],
+        [
+          "src/CsBotManager/bin/Release/net10.0/MapProfiles/de_inferno.json",
+          4452
+        ],
+        [
+          "src/CsBotManager/MapProfiles/de_inferno.json",
+          4452
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Debug/net10.0/MapProfiles/de_inferno.json",
+          4452
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Release/net10.0/MapProfiles/de_inferno.json",
+          4452
+        ]
+      ]
+    },
+    {
+      "sha256": "7f36eff885dead88d1c868dc65340dbf47f9f38e1b5b06575ca185eccda4aed8",
+      "file_count": 5,
+      "files": [
+        [
+          "src/CsBotManager/bin/Debug/net10.0/MapProfiles/de_mirage.json",
+          44679
+        ],
+        [
+          "src/CsBotManager/bin/Release/net10.0/MapProfiles/de_mirage.json",
+          44679
+        ],
+        [
+          "src/CsBotManager/MapProfiles/de_mirage.json",
+          44679
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Debug/net10.0/MapProfiles/de_mirage.json",
+          44679
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Release/net10.0/MapProfiles/de_mirage.json",
+          44679
+        ]
+      ]
+    },
+    {
+      "sha256": "67948fa39f7d195ab3f44230fb675c773b788d93b3e76b21a78a37283db4ed1b",
+      "file_count": 5,
+      "files": [
+        [
+          "src/CsBotManager/bin/Debug/net10.0/MapProfiles/backups/de_mirage.v1_backup.json",
+          24546
+        ],
+        [
+          "src/CsBotManager/bin/Release/net10.0/MapProfiles/backups/de_mirage.v1_backup.json",
+          24546
+        ],
+        [
+          "src/CsBotManager/MapProfiles/backups/de_mirage.v1_backup.json",
+          24546
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Debug/net10.0/MapProfiles/backups/de_mirage.v1_backup.json",
+          24546
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Release/net10.0/MapProfiles/backups/de_mirage.v1_backup.json",
+          24546
+        ]
+      ]
+    },
+    {
+      "sha256": "25710e892ff653c9cd4220deb766c6c03312427b6b0a8d51c388f886eccebc07",
+      "file_count": 5,
+      "files": [
+        [
+          "src/CsBotManager/bin/Debug/net10.0/MapProfiles/backups/de_mirage_pre_v3_2.json",
+          24576
+        ],
+        [
+          "src/CsBotManager/bin/Release/net10.0/MapProfiles/backups/de_mirage_pre_v3_2.json",
+          24576
+        ],
+        [
+          "src/CsBotManager/MapProfiles/backups/de_mirage_pre_v3_2.json",
+          24576
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Debug/net10.0/MapProfiles/backups/de_mirage_pre_v3_2.json",
+          24576
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Release/net10.0/MapProfiles/backups/de_mirage_pre_v3_2.json",
+          24576
+        ]
+      ]
+    },
+    {
+      "sha256": "4283473b584c7e87592c3b4c1a2eafe0cd068f59259dc5146214ea2fad6f9ecc",
+      "file_count": 2,
+      "files": [
+        [
+          "src/CsBotManager/obj/Debug/net10.0/CsBotManager.csproj.AssemblyReference.cache",
+          51621
+        ],
+        [
+          "src/CsBotManager/obj/Release/net10.0/CsBotManager.csproj.AssemblyReference.cache",
+          51621
+        ]
+      ]
+    },
+    {
+      "sha256": "adfc1717aafd54a86264381134c94df8c8b85da13f31bd39b089da3b66a8d8f8",
+      "file_count": 4,
+      "files": [
+        [
+          "src/CsBotManager/obj/Debug/net10.0/CsBotManager.sourcelink.json",
+          169
+        ],
+        [
+          "src/CsBotManager/obj/Release/net10.0/CsBotManager.sourcelink.json",
+          169
+        ],
+        [
+          "tests/CsBotManager.Tests/obj/Debug/net10.0/CsBotManager.Tests.sourcelink.json",
+          169
+        ],
+        [
+          "tests/CsBotManager.Tests/obj/Release/net10.0/CsBotManager.Tests.sourcelink.json",
+          169
+        ]
+      ]
+    },
+    {
+      "sha256": "c1b5d37e5ef3dd90f40e57ca5be35527cb50a23e885d43d19f0bf124071d4d60",
+      "file_count": 2,
+      "files": [
+        [
+          "tests/CsBotManager.Tests/bin/Debug/net10.0/CsBotManager.Tests.deps.json",
+          38225
+        ],
+        [
+          "tests/CsBotManager.Tests/bin/Release/net10.0/CsBotManager.Tests.deps.json",
+          38225
+        ]
+      ]
+    },
+    {
+      "sha256": "d7718b20c28f056c6372f9b8716483b1d652d05310b44d37e10c14978c1562db",
+      "file_count": 4,
+      "files": [
+        [
+          "training_runs/positioning_v1/input_snapshot.json",
+          1276
+        ],
+        [
+          "training_runs/positioning_v1/seed_42026/input_snapshot.json",
+          1276
+        ],
+        [
+          "training_runs/positioning_v1/seed_42027/input_snapshot.json",
+          1276
+        ],
+        [
+          "training_runs/positioning_v1/seed_42028/input_snapshot.json",
+          1276
+        ]
+      ]
+    },
+    {
+      "sha256": "8ab2a7c4a573d65a39c497a21ea8df400c9618f16756e40d3b2d481919346210",
+      "file_count": 4,
+      "files": [
+        [
+          "training_runs/positioning_v2_real_temporal/full_training/class_weights.json",
+          2228
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/full_training/seed_42026/class_weights.json",
+          2228
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/full_training/seed_42027/class_weights.json",
+          2228
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/full_training/seed_42028/class_weights.json",
+          2228
+        ]
+      ]
+    },
+    {
+      "sha256": "35e0421c7ccf9836615eef1d29d9c6ebbb4a823077373b8afab072d25599297d",
+      "file_count": 4,
+      "files": [
+        [
+          "training_runs/positioning_v2_real_temporal/full_training/input_snapshot.json",
+          4335
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/full_training/seed_42026/input_snapshot.json",
+          4335
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/full_training/seed_42027/input_snapshot.json",
+          4335
+        ],
+        [
+          "training_runs/positioning_v2_real_temporal/full_training/seed_42028/input_snapshot.json",
+          4335
+        ]
+      ]
+    }
+  ]
+}

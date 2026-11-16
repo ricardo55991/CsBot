@@ -262,6 +262,9 @@ public class MicroMoveEngine : IMicroMovePredictor, IDisposable
     public CsBotManagerPlugin? Plugin { get; set; }
     public BotSystemConfig Config { get; set; } = BotSystemConfig.Default;
     public MovementArbitrator? Arbitrator { get; set; }
+    public RoundLifecycleManager? Lifecycle { get; set; }
+    public Func<int, bool>? IsSlotProtectedFromOverride { get; set; }
+    public long CurrentInternalRoundId => Lifecycle?.CurrentInternalRoundId ?? 0L;
 
     private readonly Dictionary<(int Slot, string ChokepointName), float> _hotzoneEntryTimes = new();
     private readonly Dictionary<(int Slot, string ChokepointName), float> _hotzoneCooldowns = new();
@@ -982,6 +985,12 @@ public class MicroMoveEngine : IMicroMovePredictor, IDisposable
 
             var pawn = bot.PlayerPawn.Value;
             if (pawn == null || pawn.AbsOrigin == null) continue;
+            if (IsSlotProtectedFromOverride?.Invoke(slot) == true && !(pawn.Bot?.IsEnemyVisible ?? false))
+            {
+                traj.IsOverrideActive = false;
+                traj.SuggestedGoalOverride = null;
+                continue;
+            }
             bool isDefusing = false;
             try { isDefusing = pawn.IsDefusing; } catch { }
             if (isDefusing) continue;
@@ -1205,6 +1214,12 @@ public class MicroMoveEngine : IMicroMovePredictor, IDisposable
 
             var traj = trajectories.GetOrAdd(bot.Slot, s => new MicroMoveTrajectory { Slot = s });
             traj.SuggestedGoalOverride = null;
+
+            if (IsSlotProtectedFromOverride?.Invoke(bot.Slot) == true && !csBot.IsEnemyVisible)
+            {
+                traj.IsOverrideActive = false;
+                continue;
+            }
 
             if (traj.IsOverrideActive &&
                 traj.ActiveBehaviorTag == "CounterStrafe" &&

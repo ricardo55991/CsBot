@@ -1,0 +1,188 @@
+﻿ M scripts/check_env.ps1
+ M src/CsBotManager/BotLocomotionDriver.cs
+ M src/CsBotManager/CsBotManagerPlugin.cs
+ M src/CsBotManager/CtDefenseController.cs
+ M src/CsBotManager/EconomyManager.cs
+ M src/CsBotManager/JumpExecutionGate.cs
+ M src/CsBotManager/MapPlayableBounds.cs
+ M src/CsBotManager/MapProfileManager.cs
+ M src/CsBotManager/MapProfiles/de_mirage.json
+ M src/CsBotManager/MicroMoveEngine.cs
+ M src/CsBotManager/MidRoundAdapter.cs
+ M src/CsBotManager/Models.cs
+ M src/CsBotManager/MovementArbitrator.cs
+ M src/CsBotManager/VoiceCommandBridge.cs
+ M start_cs2_ai_server.bat
+ M tests/CsBotManager.Tests/CsBotManager.Tests.csproj
+ M tests/CsBotManager.Tests/V4_2_5_PrecisionTests.cs
+ M tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs
+ M tests/CsBotManager.Tests/V4_3_UtilityAiIglTests.cs
+?? .agents/
+?? AGENTS.md
+?? abrir_radar.bat
+?? antigravity_capability_matrix.md
+?? antigravity_customization_paths.json
+?? antigravity_environment_inventory.md
+?? architecture_graph_inventory.md
+?? artifacts/
+?? authoritative_state_map.json
+?? blast_radius_index.json
+?? canonical_temporal_dataloader_report.md
+?? datasets/
+?? deliverable_evidence.json
+?? detected_violations.json
+?? docs/TREINAMENTO_TRANSFORMERS_POR_MAPA.md
+?? docs/fase_1_5/
+?? docs/fase_1_6/
+?? docs/fase_1_7/
+?? docs/spot_recording/
+?? false_positives.json
+?? governance_patch_1_1_diff.md
+?? governance_patch_1_1_false_positive_report.md
+?? governance_patch_1_1_redteam_report.md
+?? governance_patch_1_1_test_report.md
+?? governance_red_team_report.md
+?? hooks_config.json
+?? hooks_false_positive_report.md
+?? hooks_inventory.md
+?? hooks_rollback_guide.md
+?? hooks_test_report.md
+?? iniciar_gravador_spots.bat
+?? math_logic_audit_report.json
+?? missed_violations.json
+?? models/
+?? npz_window_batch_audit.json
+?? phase_2_1_prompt.txt
+?? phase_2_1_prompt_full.txt
+?? phase_gate_out/
+?? pre3a3_checkpoint_decision.md
+?? pre3a3_npz_batch_comparison.json
+?? pre3a3_npz_batch_comparison.md
+?? runtime_validation_report.json
+?? scripts_test_report.md
+?? skeptic_audit_report.json
+?? skill_dry_run_report.md
+?? skills_inventory.md
+?? skills_trigger_matrix.md
+?? skills_validation_report.md
+?? src/CsBotManager/GameplaySpotTelemetryTracker.cs
+?? src/CsBotManager/LiveRadarTelemetryService.cs
+?? src/CsBotManager/MapProfiles/backups/
+?? src/CsBotManager/SpotRecordingController.cs
+?? src/CsBotManager/SpotTestRunner.cs
+?? src/arsenal_web/
+?? subagents_governance_report.md
+?? temp_user_prompt.txt
+?? temporal_dataloader_metrics.json
+?? tests/CsBotManager.Tests/Phase17SemanticAndJumpTests.cs
+?? tests/CsBotManager.Tests/Phase2DatasetInvariantsTests.cs
+?? tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs
+?? tests/CsBotManager.Tests/Phase2TrainingInputsTests.cs
+?? tests/CsBotManager.Tests/V4_2_9_MirageV2ProfileTests.cs
+?? tests/test_governance_patch_1_1.py
+?? tests/test_movement_contract_v2.py
+?? tests/test_phase2_2_training_inputs.py
+?? tests/test_phase2_mirage_dataset_invariants.py
+?? tests/test_phase2a_intermediate_domain.py
+?? tests/test_phase3a3_b_milestone1_dataloader.py
+?? tests/test_phase3a3_b_milestone2a_training.py
+?? tests/test_phase3a3_b_milestone2b1_full_index.py
+?? tests/test_phase3a3_b_milestone2b2_label_patch.py
+?? tests/test_phase3a3_b_milestone2b3_full_training.py
+?? tests/test_phase3a3_b_milestone2b_preflight.py
+?? tests/test_phase3a_1_forensic_reconciliation.py
+?? tests/test_phase3a_2_objective_save_enrichment.py
+?? tests/test_phase3a_positioning_training.py
+?? tools/intermediate_demo_acquisition/
+?? tools/mlmove_pipeline/audit_and_catalog_mirage.py
+?? tools/mlmove_pipeline/build_complete_automated_spots_catalog.py
+?? tools/mlmove_pipeline/build_rich_tactical_database.py
+?? tools/mlmove_pipeline/capture_all_16_screenshots.py
+?? tools/mlmove_pipeline/capture_all_53_spots.py
+?? tools/mlmove_pipeline/check_conf_summary.py
+?? tools/mlmove_pipeline/check_diff.py
+?? tools/mlmove_pipeline/check_diff_center.py
+?? tools/mlmove_pipeline/check_extrema.py
+?? tools/mlmove_pipeline/check_tga.py
+?? tools/mlmove_pipeline/compare_catalog_vs_live.py
+?? tools/mlmove_pipeline/compile_enriched_catalog.py
+?? tools/mlmove_pipeline/create_interactive_reviewer.py
+?? tools/mlmove_pipeline/cs2_vconsole_bridge.py
+?? tools/mlmove_pipeline/dump_fase17_prompt.py
+?? tools/mlmove_pipeline/dump_fase17_prompt_full.py
+?? tools/mlmove_pipeline/dump_inventory.py
+?? tools/mlmove_pipeline/ensure_16_files.py
+?? tools/mlmove_pipeline/generate_all_45_spots_guide.py
+?? tools/mlmove_pipeline/generate_confidence_report.py
+?? tools/mlmove_pipeline/generate_homologation_pdf.py
+?? tools/mlmove_pipeline/generate_spot_recording_field_guide_pdf.py
+?? tools/mlmove_pipeline/generate_tactical_spot_images.py
+?? tools/mlmove_pipeline/generate_visual_report.py
+?? tools/mlmove_pipeline/inspect_all_spots_meta.py
+?? tools/mlmove_pipeline/inspect_chokepoints.py
+?? tools/mlmove_pipeline/inspect_de_mirage_spots.py
+?? tools/mlmove_pipeline/inspect_fase15_audit.py
+?? tools/mlmove_pipeline/inspect_live_recordings.py
+?? tools/mlmove_pipeline/inspect_observed_spots.py
+?? tools/mlmove_pipeline/inspect_prompt.py
+?? tools/mlmove_pipeline/inspect_rcon.py
+?? tools/mlmove_pipeline/inspect_rcon_shots.py
+?? tools/mlmove_pipeline/inspect_requested_spots.py
+?? tools/mlmove_pipeline/inspect_saved_pngs.py
+?? tools/mlmove_pipeline/list_all_45_spots.py
+?? tools/mlmove_pipeline/patch_catalog_and_capture.py
+?? tools/mlmove_pipeline/patch_cover.py
+?? tools/mlmove_pipeline/patch_pdf_dual_panel.py
+?? tools/mlmove_pipeline/patch_spot06.py
+?? tools/mlmove_pipeline/phase15_generate_proposal_doc.py
+?? tools/mlmove_pipeline/phase15_jump_audit.py
+?? tools/mlmove_pipeline/phase15_spatial_audit.py
+?? tools/mlmove_pipeline/phase161_audit_and_aggregate.py
+?? tools/mlmove_pipeline/phase162_analyze_normal_match.py
+?? tools/mlmove_pipeline/phase162_generate_all_reports.py
+?? tools/mlmove_pipeline/phase163_reconcile_and_report.py
+?? tools/mlmove_pipeline/phase16_apply_changes.py
+?? tools/mlmove_pipeline/phase16_manual_review.py
+?? tools/mlmove_pipeline/phase16_runtime_validation.py
+?? tools/mlmove_pipeline/phase16_static_tests.py
+?? tools/mlmove_pipeline/phase17_audit_chokepoints.py
+?? tools/mlmove_pipeline/phase17_normalize_spots_schema.py
+?? tools/mlmove_pipeline/print_insufficient_coords.py
+?? tools/mlmove_pipeline/query_market_clusters.py
+?? tools/mlmove_pipeline/read_capture_tail.py
+?? tools/mlmove_pipeline/recapture_fixed_spots.py
+?? tools/mlmove_pipeline/recovered_capture.py
+?? tools/mlmove_pipeline/recovered_capture_21368.py
+?? tools/mlmove_pipeline/run_capture_16_fast.py
+?? tools/mlmove_pipeline/serve_pdf_mobile.py
+?? tools/mlmove_pipeline/source_rcon.py
+?? tools/mlmove_pipeline/test_4_key_spots.py
+?? tools/mlmove_pipeline/test_clipboard_grab.py
+?? tools/mlmove_pipeline/test_condebug.py
+?? tools/mlmove_pipeline/test_cs2_client.py
+?? tools/mlmove_pipeline/test_cs2_condebug.py
+?? tools/mlmove_pipeline/test_cs2_render_capture.py
+?? tools/mlmove_pipeline/test_demirage_cfg.py
+?? tools/mlmove_pipeline/test_f10.py
+?? tools/mlmove_pipeline/test_f8_capture.py
+?? tools/mlmove_pipeline/test_httplistener.py
+?? tools/mlmove_pipeline/test_imagegrab.py
+?? tools/mlmove_pipeline/test_jointeam.py
+?? tools/mlmove_pipeline/test_multi.py
+?? tools/mlmove_pipeline/test_native_screenshot.py
+?? tools/mlmove_pipeline/test_rcon_shots.py
+?? tools/mlmove_pipeline/test_real_capture.py
+?? tools/mlmove_pipeline/test_shot1.py
+?? tools/mlmove_pipeline/test_spawn_and_shot.py
+?? tools/mlmove_pipeline/test_van_roof.py
+?? tools/mlmove_pipeline/test_van_z.py
+?? tools/mlmove_pipeline/test_vcon_shots.py
+?? tools/mlmove_pipeline/test_window_capture.py
+?? tools/mlmove_pipeline/update_capture_manifest.py
+?? tools/mlmove_pipeline/update_spot53_yaw90.py
+?? tools/mlmove_pipeline/verify_checklist_coords.py
+?? tools/mlmove_pipeline/verify_key_spots.py
+?? tools/phase2_dataset/
+?? tools/phase3a_training/
+?? training_runs/
+?? uncovered_high_risk_nodes.md

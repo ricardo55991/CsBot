@@ -1,0 +1,144 @@
+{
+  "contract_version": "2.1.0",
+  "map_scope": "de_mirage",
+  "sampling_rate_hz": 16,
+  "step_interval_ms": 62.5,
+  "design_principles": [
+    "Separacao estrita entre Movimento Longitudinal, Movimento Lateral, Modificadores de Postura, Evento de Salto (JumpPress) e Estado Fisico.",
+    "Dois eixos ortogonais independentes (LongitudinalMovement e LateralMovement) preservam diagonais legitimas (Forward+Left, Forward+Right, Backward+Left, Backward+Right) e Stop (Neutral+Neutral).",
+    "Airborne e Falling sao Estados Fisicos de entrada/contexto (somente leitura), NUNCA rotulos de acao JumpPress.",
+    "BunnyHop e detectado na mineracao, marcado como BunnyHopExcluded e proibido no dataset e no runtime C#.",
+    "JumpPress e emitido como pulso binario independente dos eixos de movimento, com duracao de 1 unico tick mediante validacao deterministica no C# (JumpGate)."
+  ],
+  "action_decomposition": {
+    "LongitudinalMovement": {
+      "type": "categorical_discrete_head",
+      "classes": [
+        {
+          "id": 0,
+          "name": "Backward",
+          "engine_intent": "IN_BACK",
+          "description": "Recuo longitudinal em relacao ao vetor frontal da mira (cos(theta_rel) <= -0.3827)."
+        },
+        {
+          "id": 1,
+          "name": "Neutral",
+          "engine_intent": "NONE",
+          "description": "Sem aceleracao longitudinal no eixo frontal/traseiro."
+        },
+        {
+          "id": 2,
+          "name": "Forward",
+          "engine_intent": "IN_FORWARD",
+          "description": "Avanco longitudinal alinhado ao vetor frontal da mira (cos(theta_rel) >= 0.3827)."
+        }
+      ]
+    },
+    "LateralMovement": {
+      "type": "categorical_discrete_head",
+      "classes": [
+        {
+          "id": 0,
+          "name": "Left",
+          "engine_intent": "IN_MOVELEFT",
+          "description": "Strafe lateral para a esquerda relativo ao yaw da mira (sin(theta_rel) >= 0.3827)."
+        },
+        {
+          "id": 1,
+          "name": "Neutral",
+          "engine_intent": "NONE",
+          "description": "Sem aceleracao lateral no eixo esquerdo/direito."
+        },
+        {
+          "id": 2,
+          "name": "Right",
+          "engine_intent": "IN_MOVERIGHT",
+          "description": "Strafe lateral para a direita relativo ao yaw da mira (sin(theta_rel) <= -0.3827)."
+        }
+      ]
+    },
+    "Modifiers": {
+      "type": "multi_binary",
+      "flags": [
+        {
+          "bit": 0,
+          "name": "Shift",
+          "engine_button": "IN_SPEED",
+          "condition_in_demo": "is_walking == true OR (18.0 <= speed_2d < 140.0 AND duck_amount <= 0.45)",
+          "description": "Andar silencioso sem emitir footstep audivel (< 135 u/s)."
+        },
+        {
+          "bit": 1,
+          "name": "Duck",
+          "engine_button": "IN_DUCK",
+          "condition_in_demo": "duck_amount > 0.45",
+          "description": "Agachado para spray control, cobertura baixa ou passagem sob obstaculo."
+        }
+      ]
+    },
+    "Event": {
+      "name": "JumpPress",
+      "type": "binary_impulse_event",
+      "engine_button": "IN_JUMP",
+      "executable_bunny_hop": false,
+      "independent_from_movement_axes": true,
+      "ground_truth_detection_rule_16hz": {
+        "require_previous_grounded_or_low_vz": "vz[t-1] <= 60.0 AND vz[t-1] >= -40.0",
+        "require_takeoff_impulse": "vz[t] >= 120.0 AND vz[t] < 600.0 AND (vz[t] - vz[t-1]) >= 100.0",
+        "require_ballistic_gravity_decay": "-85.0 <= (vz[t+1] - vz[t]) <= -20.0",
+        "require_spatial_continuity": "distance_3d(pos[t], pos[t-1]) <= 60.0",
+        "exclude_chained_bunny_hop": "if vz[t-1] < -40.0 or time_since_last_jump_onset < 1.25s -> mark BunnyHopExcluded and set JumpPress = 0"
+      },
+      "csharp_runtime_jump_gate": {
+        "probability_threshold": 0.85,
+        "pulse_duration_ticks": 1,
+        "min_cooldown_seconds": 1.25,
+        "require_grounded_pawn": true,
+        "block_when_planting_or_defusing": true,
+        "block_when_scoped_awp_holding": true,
+        "block_when_in_passive_hold_spot": true,
+        "require_obstacle_or_traversal_context": true
+      }
+    },
+    "PhysicalState": {
+      "type": "input_context_feature_only",
+      "never_used_as_jump_label": true,
+      "states": [
+        {
+          "id": 0,
+          "name": "Grounded",
+          "rule_16hz": "abs(vz[t]) <= 40.0 AND NOT Landing",
+          "description": "Jogador apoiado no solo com precisao normal de movimento."
+        },
+        {
+          "id": 1,
+          "name": "Airborne",
+          "rule_16hz": "vz[t] > 40.0",
+          "description": "Fase ascendente do salto apos o impulso inicial (JumpPress = 0 nos frames subsequentes)."
+        },
+        {
+          "id": 2,
+          "name": "Falling",
+          "rule_16hz": "vz[t] < -40.0",
+          "description": "Queda de desnivel (Palacio, Janela, Varanda) ou fase descendente de salto (JumpPress = 0)."
+        },
+        {
+          "id": 3,
+          "name": "Landing",
+          "rule_16hz": "abs(vz[t]) <= 40.0 AND vz[t-1] < -40.0",
+          "description": "Frame de impacto/aterrissagem no solo; bloqueia novo salto para impedir BunnyHop."
+        }
+      ]
+    }
+  },
+  "formal_specification_tests": [
+    "ForwardLeftIsRepresentable",
+    "ForwardRightIsRepresentable",
+    "BackwardLeftIsRepresentable",
+    "BackwardRightIsRepresentable",
+    "StopIsNeutralNeutral",
+    "JumpPressIsIndependentFromMovementAxes",
+    "AirborneIsNeverJumpPress",
+    "BunnyHopIsNeverExecutable"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0.0",
+  "phase_id": "GOVERNANCE-PATCH-1-1",
+  "verdict": "PASS",
+  "canonical_verdict": "CSBOT_GOVERNANCE_PATCH_1_1_PASS",
+  "checkpoint_provenance_decision": "B: CHECKPOINT_TRAINED_WITH_SYNTHETIC_HISTORY",
+  "generated_at_utc": "2026-11-07T21:53:28Z",
+  "execution_mode": "CANONICAL",
+  "data_nature": "REAL",
+  "auditor": {
+    "role": "Success Auditor (teamwork_auditor)",
+    "working_directory": ".agents/teamwork/success_auditor_1",
+    "status": "APPROVED_BY_AUDITOR"
+  },
+  "summary": {
+    "total_requirements": 6,
+    "requirements_passed": 6,
+    "requirements_conditional": 0,
+    "requirements_failed": 0,
+    "total_evidences": 20,
+    "valid_evidences": 20,
+    "invalid_evidences": 0,
+    "critical_missed_violations": 0,
+    "critical_false_positives": 0,
+    "pytest_governance_pass_rate": "27/27 (100.0%)",
+    "redteam_pass_rate": "12/12 (100.0%)"
+  },
+  "requirements_summary": [
+    {
+      "requirement_id": "REQ-R1-GOVERNANCE-PATCH-1-1",
+      "status": "PASS",
+      "detail": "FP-01, FP-02, FP-03, MISS-S1-02, MISS-S4-01, MISS-S3-01 resolvidos. 27/27 testes unitários/e2e e 12/12 Red Team aprovados."
+    },
+    {
+      "requirement_id": "REQ-R2-TEMPORAL-GRAPHIFY-MAPPING",
+      "status": "PASS",
+      "detail": "Mapeamento Graphify de histórico temporal somente leitura concluído. Fluxo mapeado e ausência de carga de NPZ no treino comprovada."
+    },
+    {
+      "requirement_id": "REQ-R3-DETERMINISTIC-BATCH-COMPARISON",
+      "status": "PASS",
+      "detail": "200 amostras comparadas sob seed 42026. ExactMatchRate 0.00%, SyntheticWindowRate 100.00%, variâncias e deslocamentos reconciliados."
+    },
+    {
+      "requirement_id": "REQ-R4-CHECKPOINT-PROVENANCE-DECISION",
+      "status": "PASS",
+      "detail": "Decisão canônica B: CHECKPOINT_TRAINED_WITH_SYNTHETIC_HISTORY emitida formalmente. Checkpoints preservados sem deleção."
+    },
+    {
+      "requirement_id": "REQ-R5-GOVERNANCE-SKILLS-AND-ISOLATION",
+      "status": "PASS",
+      "detail": "Skill csbot-math-logic-auditor disponibilizada e testada. Isolamento estrito de papéis preservado. 0 alterações em C# runtime ou modelos."
+    },
+    {
+      "requirement_id": "REQ-GOV-08-NO-AUTOMATIC-PHASE-ADVANCE",
+      "status": "PASS",
+      "detail": "Bloqueio ativo aguardando autorização humana explícita antes de qualquer avanço de fase ou retreino."
+    }
+  ],
+  "artifacts": {
+    "phase_input_snapshot": ".agents/audit/phase_input_snapshot.json",
+    "phase_requirement_matrix": ".agents/audit/phase_requirement_matrix.md",
+    "phase_evidence_matrix": ".agents/audit/phase_evidence_matrix.json",
+    "phase_gate_report_md": ".agents/audit/phase_gate_report.md",
+    "deliverable_evidence_json": "deliverable_evidence.json"
+  },
+  "governance_lock": {
+    "rule": "08-no-automatic-phase-advance",
+    "status": "LOCKED",
+    "human_authorization_required": true,
+    "next_phase": "PHASE-3A.3-PREPARATION (BLOCKED_UNTIL_HUMAN_APPROVAL)"
+  }
+}

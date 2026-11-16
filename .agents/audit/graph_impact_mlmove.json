@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T17:47:20.194012+00:00",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "graph_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+  "graph_exists": true,
+  "dry_run": false,
+  "data_nature": "INFERRED",
+  "workspace_files_nature": "REAL",
+  "verdict": "PASS",
+  "required_attributes": [
+    "entry_points",
+    "writers",
+    "readers",
+    "authoritative_state",
+    "fallbacks",
+    "caches",
+    "side_effects",
+    "telemetry",
+    "tests",
+    "blast_radius"
+  ],
+  "total_flows_analyzed": 1,
+  "flows": {
+    "mlmove": {
+      "flow_name": "Custom Target: mlmove",
+      "data_nature": "INFERRED",
+      "entry_points": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/MatchTelemetryLogger.cs",
+        "src/CsBotManager/MicroMoveEngine.cs"
+      ],
+      "writers": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/MatchTelemetryLogger.cs",
+        "src/CsBotManager/MicroMoveEngine.cs"
+      ],
+      "readers": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/MatchTelemetryLogger.cs",
+        "src/CsBotManager/MicroMoveEngine.cs"
+      ],
+      "authoritative_state": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/MatchTelemetryLogger.cs",
+        "src/CsBotManager/MicroMoveEngine.cs"
+      ],
+      "fallbacks": [
+        "INFERRED: verificar política de fallback nos controladores relacionados"
+      ],
+      "caches": [
+        "INFERRED: verificar caches por tick/round nos serviços relacionados"
+      ],
+      "side_effects": [
+        "INFERRED: mutações de estado associadas a 'mlmove'"
+      ],
+      "telemetry": [
+        "src/CsBotManager/GameplaySpotTelemetryTracker.cs",
+        "src/CsBotManager/LiveRadarTelemetryService.cs"
+      ],
+      "tests": [
+        "tests/CsBotManager.Tests/"
+      ],
+      "blast_radius": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/MatchTelemetryLogger.cs",
+        "src/CsBotManager/MicroMoveEngine.cs"
+      ],
+      "workspace_verification": {
+        "data_nature": "REAL",
+        "matched_source_files_count": 3,
+        "matched_source_files": [
+          {
+            "file": "src/CsBotManager/CsBotManagerPlugin.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+            "exists": true,
+            "matched_keywords": [
+              "mlmove"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MatchTelemetryLogger.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MatchTelemetryLogger.cs",
+            "exists": true,
+            "matched_keywords": [
+              "mlmove"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MicroMoveEngine.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+            "exists": true,
+            "matched_keywords": [
+              "mlmove"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "matched_test_files_count": 0,
+        "matched_test_files": [],
+        "graphify": {
+          "graph_json_present": true,
+          "graph_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+          "graph_sha256": "7a09693f1f6568803fa7f2ae7a0286cbe38c09f3900d08b96c6538f4eaa264f0",
+          "total_graph_nodes": 2627,
+          "matched_nodes_count": 361,
+          "sample_matched_nodes": [
+            "tools_mlmove_pipeline_contract_spec_py_ndarray",
+            "tools_mlmove_pipeline_demo_collector_py_path",
+            "tools_mlmove_pipeline_extract_16hz_tensors_py_path",
+            "tools_mlmove_pipeline_extract_16hz_tensors_py_ndarray",
+            "tools_mlmove_pipeline_generate_bootstrap_dataset_py_ndarray",
+            "tools_mlmove_pipeline_model_mlmove_py_tensor",
+            "tools_mlmove_pipeline_train_and_export_onnx_py_tensor",
+            "tools_mlmove_pipeline_train_and_export_onnx_py_path",
+            "tools_mlmove_pipeline_validate_e2e_onnx_py_ndarray",
+            "src_csbotmanager_csbotmanagerplugin_csbotmanager_csbotmanagerplugin_commandmlmovestatus",
+            "tools_mlmove_pipeline_audit_and_catalog_mirage",
+            "tools_mlmove_pipeline_audit_and_catalog_mirage_audit_raw_demos_places",
+            "tools_mlmove_pipeline_audit_and_catalog_mirage_py_path",
+            "tools_mlmove_pipeline_audit_and_catalog_mirage_py_any",
+            "tools_mlmove_pipeline_audit_and_catalog_mirage_audit_444_npz_dataset"
+          ]
+        }
+      },
+      "all_10_attributes_present": true,
+      "missing_attributes": []
+    }
+  }
+}

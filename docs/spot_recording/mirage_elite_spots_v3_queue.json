@@ -1,0 +1,496 @@
+{
+  "session_name": "mirage_elite_spots_v3",
+  "map": "de_mirage",
+  "version": "3.0.0",
+  "description": "Fila guiada de 10 spots para captura física e calibração humana no CS2",
+  "spots": [
+    {
+      "queue_index": 1,
+      "spot_id": "ct_b_van_anchor",
+      "requested_position_role": "CT B - Van Anchor",
+      "target_name": "Van B (Posição Principal)",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "B",
+      "usage": "Hold",
+      "allowed_roles": ["AWPer", "Anchor", "Rotator"],
+      "recommended_stance": "Crouching",
+      "categories": ["STANDARD", "ANCHOR", "ANTI_RUSH"],
+      "objective": "Marcar prioritariamente o fundo do Tapete (Apartments) usando o chassi da Van como cover.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "ApartmentsDeep",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Fundo do Tapete (foco inicial)",
+          "trigger": "None"
+        },
+        {
+          "aim_profile_id": "ApartmentsExit",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Soleira e saída imediata dos TRs",
+          "trigger": "ApartmentsPressure"
+        },
+        {
+          "aim_profile_id": "BombEntry",
+          "is_primary": false,
+          "priority": 3,
+          "description": "Centro do Bomb B após queda dos TRs",
+          "trigger": "EnemyEnteredSite"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "ShortSupport",
+          "is_primary": false,
+          "priority": 4,
+          "description": "Suporte rápido ao L/Catwalk",
+          "trigger": "CatwalkContact"
+        }
+      ],
+      "questions_for_user": [
+        "A posição está sobre a Van, atrás ou ao lado?",
+        "A visão da saída do Tapete está limpa sem colisão visual com a lataria?",
+        "O recuo para trás da Van é fluido?"
+      ],
+      "validation_requirements": [
+        "Posição fisicamente alcançável sem pulo artificial",
+        "Trace de mira no ApartmentsDeep maior que 400 unidades",
+        "Estar dentro do setor Bombsite B"
+      ]
+    },
+    {
+      "queue_index": 2,
+      "spot_id": "tr_staging_a_ramp_safe",
+      "requested_position_role": "TR A - Rampa Staging Seguro",
+      "target_name": "Caverna da Rampa A (Staging Seguro)",
+      "team_side": "TR",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Staging",
+      "allowed_roles": ["EntryFragger", "AWPer", "Rotator", "Anchor"],
+      "recommended_stance": "Standing",
+      "categories": ["STANDARD", "ENTRY", "SUPPORT"],
+      "objective": "Agrupamento seguro na caverna da Rampa aguardando smokes de Cabecinha e CT.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "RampExit",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Saída da Rampa / Tetris",
+          "trigger": "None"
+        },
+        {
+          "aim_profile_id": "Tetris",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Checagem do topo do Tetris",
+          "trigger": "ExecuteSignal"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "StairsOrJungleInfo",
+          "is_primary": false,
+          "priority": 3,
+          "description": "Linha de visão para Jungle/Stairs na abertura",
+          "trigger": "AEntrySupport"
+        }
+      ],
+      "questions_for_user": [
+        "O bot fica protegido de visadas de Ticket/Cabine?",
+        "O bot não está colado demais na parede da caverna?",
+        "A saída para Tetris permite corrida fluida?"
+      ],
+      "validation_requirements": [
+        "Não mirar para parede próxima (< 128 unidades)",
+        "Nível Z consistente com o declive da rampa (-170 a -180)"
+      ]
+    },
+    {
+      "queue_index": 3,
+      "spot_id": "ct_a_jungle_connector_hold",
+      "requested_position_role": "CT A/Mid - Jungle Marcando Connector",
+      "target_name": "Jungle (Controle do Conector)",
+      "team_side": "CT",
+      "sector": "Jungle",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": ["AWPer", "Rotator", "Anchor"],
+      "recommended_stance": "Standing",
+      "categories": ["STANDARD", "SUPPORT", "CROSS_FIRE"],
+      "objective": "Posição em Jungle controlando a passagem e saída do Conector para o Bombsite A.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "ConnectorExit",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Boca inferior do Conector",
+          "trigger": "None"
+        },
+        {
+          "aim_profile_id": "MidToConnector",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Subida do Conector vinda do Meio",
+          "trigger": "MidPressure"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "AEntrySupport",
+          "is_primary": false,
+          "priority": 3,
+          "description": "Suporte ao plant de A cruzando com Cabecinha",
+          "trigger": "SiteContact"
+        }
+      ],
+      "questions_for_user": [
+        "Esta posição é Jungle Support ou Retake Connector?",
+        "O cover com a parede da Jungle oferece recuo seguro para a Janela?"
+      ],
+      "validation_requirements": [
+        "Posicionado estritamente dentro da Jungle (não no Connector)",
+        "Distância para a boca do Connector entre 300 e 600 unidades"
+      ]
+    },
+    {
+      "queue_index": 4,
+      "spot_id": "ct_b_bench_deep",
+      "requested_position_role": "CT B - Forest / Banco Deep",
+      "target_name": "Atrás do Forest (Banco B)",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "B",
+      "usage": "Hold",
+      "allowed_roles": ["Anchor", "AWPer"],
+      "recommended_stance": "Crouching",
+      "categories": ["STANDARD", "ANCHOR", "ONE_AND_DONE"],
+      "objective": "Segurar as descidas e pulos dos Terroristas que saem do Tapete e vigiar o L (Arco).",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "ApartmentsDrop",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Ponto de queda dos TRs saindo do Tapete",
+          "trigger": "None"
+        },
+        {
+          "aim_profile_id": "ApartmentsExit",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Soleira dos Apartamentos",
+          "trigger": "ApartmentsPressure"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "ShortArch",
+          "is_primary": false,
+          "priority": 3,
+          "description": "Cruzamento do L / Catwalk",
+          "trigger": "CatwalkContact"
+        },
+        {
+          "aim_profile_id": "MarketSupport",
+          "is_primary": false,
+          "priority": 4,
+          "description": "Apoio à Porta do Mercado",
+          "trigger": "MarketPressure"
+        }
+      ],
+      "questions_for_user": [
+        "O jogador está atrás do Banco/Floreira ou colado na parede do Mercado?",
+        "A prioridade é a queda do Tapete ou o avanço pelo L?"
+      ],
+      "validation_requirements": [
+        "Estar dentro da área do Forest/Banco (B)",
+        "Nível Z nivelado com o solo de B (-160.0)"
+      ]
+    },
+    {
+      "queue_index": 5,
+      "spot_id": "ct_b_market_window",
+      "requested_position_role": "CT B - Janela do Mercado (Cozinha)",
+      "target_name": "Janela do Mercado (Interior)",
+      "team_side": "CT",
+      "sector": "Bombsite B",
+      "associated_bombsite": "B",
+      "usage": "Hold",
+      "allowed_roles": ["AWPer", "Rotator"],
+      "recommended_stance": "Standing",
+      "categories": ["STANDARD", "AWP", "RETAKE"],
+      "objective": "Posição estritamente dentro do Mercado marcando a saída do Tapete com recuo rápido.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "ApartmentsExit",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Boca dos Apartamentos",
+          "trigger": "None"
+        },
+        {
+          "aim_profile_id": "Van",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Travessia da Van",
+          "trigger": "SiteContact"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "BombEntry",
+          "is_primary": false,
+          "priority": 3,
+          "description": "Plant Default B",
+          "trigger": "BombPlanted"
+        }
+      ],
+      "questions_for_user": [
+        "O jogador está perfeitamente dentro do Mercado?",
+        "A bancada da janela oferece cover de headshot?",
+        "O recuo para trás das prateleiras é livre de travamentos?"
+      ],
+      "validation_requirements": [
+        "Coordenadas dentro do volume 3D do Mercado",
+        "Trace passa através da janela aberta em direção ao bomb"
+      ]
+    },
+    {
+      "queue_index": 6,
+      "spot_id": "ct_mid_connector_headshot",
+      "requested_position_role": "CT Mid - Conector (Degrau Headshot)",
+      "target_name": "Conector / Ligação (Degrau Headshot)",
+      "team_side": "CT",
+      "sector": "Mid",
+      "associated_bombsite": "Mid",
+      "usage": "Hold",
+      "allowed_roles": ["AWPer", "Rotator"],
+      "recommended_stance": "Crouching",
+      "categories": ["STANDARD", "SUPPORT", "CROSS_FIRE"],
+      "objective": "Degrau do Conector controlando Top Mid e entrada do Rato com checagem temporária da Cabecinha.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "TopMid",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Top Mid e Caixas do Meio",
+          "trigger": "None"
+        },
+        {
+          "aim_profile_id": "Rato",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Saída do Underpass (Rato)",
+          "trigger": "UnderpassContact"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "StairsInfo",
+          "is_primary": false,
+          "priority": 3,
+          "description": "Checagem rápida da Cabecinha/A",
+          "trigger": "PalacePressure"
+        }
+      ],
+      "questions_for_user": [
+        "A mira principal está para o Top Mid e não para o Conector?",
+        "A altura Z corresponde exatamente ao degrau superior?"
+      ],
+      "validation_requirements": [
+        "Trace principal mira em direção ao Top Mid (Yaw entre -40° e -65°)",
+        "Nível Z em -168.0"
+      ]
+    },
+    {
+      "queue_index": 7,
+      "spot_id": "ct_a_jungle_support",
+      "requested_position_role": "CT A - Jungle Suporte Central",
+      "target_name": "Jungle Central (Suporte de Bomb A)",
+      "team_side": "CT",
+      "sector": "Jungle",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": ["Anchor", "Rotator", "AWPer"],
+      "recommended_stance": "Standing",
+      "categories": ["STANDARD", "SUPPORT"],
+      "objective": "Posição física no coração da Jungle, com ângulo cruzado na Rampa e Palácio.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "PalaceExit",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Saída e sacada do Palácio",
+          "trigger": "None"
+        },
+        {
+          "aim_profile_id": "RampCross",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Cruzamento da Rampa para o Bomb",
+          "trigger": "RampPressure"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "ConnectorWatch",
+          "is_primary": false,
+          "priority": 3,
+          "description": "Vigilância de retaguarda do Conector",
+          "trigger": "MidFlankWarning"
+        }
+      ],
+      "questions_for_user": [
+        "O bot está fisicamente na Jungle e não na Janela?",
+        "O ângulo com a Cabecinha forma um crossfire perfeito?"
+      ],
+      "validation_requirements": [
+        "Setor = Jungle",
+        "Distinto e separado de qualquer spot de Janela"
+      ]
+    },
+    {
+      "queue_index": 8,
+      "spot_id": "ct_a_stairs_palace_hold",
+      "requested_position_role": "CT A - Cabecinha / Stairs",
+      "target_name": "Degraus da Cabecinha (Stairs A)",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": ["Anchor", "Rotator"],
+      "recommended_stance": "Crouching",
+      "categories": ["STANDARD", "ANCHOR", "CROSS_FIRE"],
+      "objective": "Usar as caixas dos degraus como proteção para cabeça, marcando saída do Palácio e Rampa.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "PalaceDrop",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Saída e descida do Palácio",
+          "trigger": "None"
+        },
+        {
+          "aim_profile_id": "RampExit",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Saída da Caverna/Rampa",
+          "trigger": "RampPressure"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "ConnectorInfo",
+          "is_primary": false,
+          "priority": 3,
+          "description": "Checagem breve do Conector",
+          "trigger": "MidPressure"
+        }
+      ],
+      "questions_for_user": [
+        "A mira está apontando para o Palácio e não para a parede?",
+        "O jogador está agachado no degrau superior?"
+      ],
+      "validation_requirements": [
+        "Trace principal em direção ao Palácio (Yaw positivo entre 70° e 100°)",
+        "Nível Z em -160.0"
+      ]
+    },
+    {
+      "queue_index": 9,
+      "spot_id": "ct_a_tetris_hold",
+      "requested_position_role": "CT A - Areia / Tetris",
+      "target_name": "Areia / Tetris (Posição Ativa)",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": ["Anchor", "EntryFragger"],
+      "recommended_stance": "Standing",
+      "categories": ["ADVANCED", "ANCHOR", "ACTIVE_CONTEST"],
+      "objective": "Controle físico na Areia/Tetris para contestar saída da Rampa e descida do Palácio.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "PalaceDrop",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Sacada do Palácio",
+          "trigger": "None"
+        },
+        {
+          "aim_profile_id": "RampExit",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Saída da Caverna A",
+          "trigger": "RampPressure"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "DefaultA",
+          "is_primary": false,
+          "priority": 3,
+          "description": "Cruzamento para o plant padrão",
+          "trigger": "EnemyEnteredSite"
+        }
+      ],
+      "questions_for_user": [
+        "O jogador está sobre as caixas (topo) ou no chão da areia?",
+        "A posição é acessível naturalmente pelo NavMesh?"
+      ],
+      "validation_requirements": [
+        "Distância até a Caixa do Tetris menor que 100 unidades",
+        "Diferente e separado do Sanduíche"
+      ]
+    },
+    {
+      "queue_index": 10,
+      "spot_id": "ct_a_sandwich_hold",
+      "requested_position_role": "CT A - Sanduíche",
+      "target_name": "Sanduíche (Vão entre Tetris e Cabecinha)",
+      "team_side": "CT",
+      "sector": "Bombsite A",
+      "associated_bombsite": "A",
+      "usage": "Hold",
+      "allowed_roles": ["Anchor", "Rotator"],
+      "recommended_stance": "Crouching",
+      "categories": ["STANDARD", "ANCHOR", "ONE_AND_DONE"],
+      "objective": "Vão estreito do Sanduíche protegido por caixas à frente e escada atrás.",
+      "required_aim_profiles": [
+        {
+          "aim_profile_id": "PalaceDrop",
+          "is_primary": true,
+          "priority": 1,
+          "description": "Descida do Palácio",
+          "trigger": "None"
+        },
+        {
+          "aim_profile_id": "RampExit",
+          "is_primary": false,
+          "priority": 2,
+          "description": "Saída da Caverna/Rampa",
+          "trigger": "RampPressure"
+        }
+      ],
+      "optional_aim_profiles": [
+        {
+          "aim_profile_id": "SiteEntry",
+          "is_primary": false,
+          "priority": 3,
+          "description": "Entrada imediata no bomb",
+          "trigger": "EnemyEnteredSite"
+        }
+      ],
+      "questions_for_user": [
+        "O bot fica protegido de disparos vindos do Palácio enquanto olha a Rampa?",
+        "A movimentação permite recuar para trás da Cabecinha?"
+      ],
+      "validation_requirements": [
+        "Posicionado no chão firme no vão do Sanduíche (Z = -168.0)",
+        "Diferente e separado do Tetris e da Cabecinha"
+      ]
+    }
+  ]
+}

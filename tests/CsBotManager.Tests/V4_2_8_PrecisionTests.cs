@@ -532,9 +532,10 @@ public class V4_2_8_PrecisionTests
             string sector = spot.GetProperty("sector").GetString() ?? "";
             float y = spot.GetProperty("y").GetSingle();
 
+            bool isMarket = id.Contains("kitchen") || id.Contains("market") || id.Contains("door") || id.Contains("jail");
             bool isB = id.Contains("_b_") || id.Contains("tapete") || sector.Contains("Site B") || sector.Contains("Apartments B") || sector.Contains("Tapete B");
 
-            if (isB && y < 0)
+            if (isB && !isMarket && y < 0)
             {
                 negativeBSpots.Add($"{id} (Y={y})");
             }

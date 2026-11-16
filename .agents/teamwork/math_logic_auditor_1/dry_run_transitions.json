@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T21:35:44.351251+00:00",
+  "dry_run": true,
+  "data_nature": "SIMULATED",
+  "verdict": "CONDITIONAL",
+  "violations_count": 0,
+  "violations": [],
+  "details": {
+    "total_transitions_evaluated": 120,
+    "valid_transitions_count": 120,
+    "illegal_transitions_count": 0,
+    "timing_violations_count": 0,
+    "fsm_graph_compliance": true,
+    "dry_run_simulation": true,
+    "simulated_states": [
+      "SPAWN",
+      "NAVIGATE",
+      "HOLD_ANGLE",
+      "SEARCH",
+      "ENGAGE_COMBAT",
+      "PLANT_C4",
+      "DEFUSE_C4",
+      "RETAKE",
+      "POST_ROUND"
+    ]
+  }
+}

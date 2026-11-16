@@ -1,0 +1,40 @@
+{
+  "schema": "csbot.workspace_mcp_inventory.v1",
+  "governance_version": "1.2.0-lean",
+  "evaluated_at_utc": "2026-11-09T03:00:00Z",
+  "workspace": "c:/Users/ricar/OneDrive/Documentos/Dev/CsBot",
+  "mcps": [
+    {
+      "name": "sequential-thinking",
+      "scope": "workspace_and_global",
+      "enabled": true,
+      "tool_count": 1,
+      "tools": ["sequentialthinking"],
+      "relevant_to_csbot": true,
+      "evaluation": "Ferramenta de decomposicao logica e raciocinio estruturado para problemas matematicos, forenses ou de planejamento complexo. Possui sobreposicao parcial com o thinking nativo do modelo, mas agrega valor em refatoracoes criticas.",
+      "action": "KEEP_ENABLED",
+      "rationale": "Mantido ativo sem desativacao automatica conforme item 6 das diretrizes do usuario; uso recomendado exclusivamente em tarefas complexas de Tier 3 e 4.",
+      "rollback": "Nao aplicavel (mantido ativo)"
+    },
+    {
+      "name": "godot-mcp-toolkit",
+      "scope": "workspace_isolated",
+      "enabled": false,
+      "tool_count": 26,
+      "tools": [
+        "scene_get_tree", "scene_create_node", "scene_delete_node", "scene_create",
+        "node_get_property", "node_set_property", "node_get_property_list", "node_set_script",
+        "control_set_layout", "node_call_method", "script_read", "script_write",
+        "script_edit", "script_check", "editor_save_scene", "scene_open",
+        "project_get_settings", "editor_get_console", "project_set_setting", "folder_create",
+        "game_start", "game_stop", "runtime_screenshot", "debugger_get_log",
+        "input_simulate", "runtime_get_script_vars"
+      ],
+      "relevant_to_csbot": false,
+      "evaluation": "Servidor MCP voltado para a engine Godot no projeto externo 'Vaelun'. O CsBot utiliza motor Source 2 / CS2 em C# .NET 10.0 e PyTorch. Suas 26 ferramentas ocupam espaco significativo de schema de ferramentas no cabeçalho do contexto sem nenhuma utilizacao no CsBot.",
+      "action": "DISABLE_IN_CSBOT_WORKSPACE_ONLY",
+      "rationale": "Desativado exclusivamente para o workspace CsBot. A configuracao global em C:\\Users\\ricar\\.gemini\\antigravity\\mcp_config.json e o projeto Vaelun sao 100% preservados.",
+      "rollback": "Para reativar no workspace CsBot, basta reverter o flag enabled para true neste inventario ou carregar o schema em .gemini/antigravity."
+    }
+  ]
+}

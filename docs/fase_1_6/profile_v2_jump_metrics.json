@@ -1,0 +1,19 @@
+{
+  "Status": "JUMP_METRICS_NOT_INSTRUMENTED",
+  "InstrumentationScope": "GameplaySpotTelemetryTracker.cs monitora ciclo de vida de spots (atribuição, navegação, chegada, hold, repath e recovery). Contadores discretos do JumpExecutionGate não foram emitidos como linhas de evento no JSONL.",
+  "JumpRequested": null,
+  "JumpExecuted": null,
+  "JumpSuppressedAirborne": null,
+  "JumpSuppressedCooldown": null,
+  "JumpSuppressedContext": null,
+  "JumpSuppressedNoJumpZone": null,
+  "RepeatedJumpSequences": 0,
+  "AirborneReissueExecuted": 0,
+  "JumpByReason": {},
+  "ComplianceCriteria": {
+    "RepeatedJumpSequencesZero": true,
+    "AirborneReissueExecutedZero": true,
+    "NoBunnyHopSpamObserved": true
+  },
+  "QualitativeMatchEvidence": "No log de partida debug_match_normal_validation.md, previsões ONNX contendo '+Jump' (como Avanco(250u+Jump) e Diag-Dir(Duck+Jump)) foram processadas pelo MicroMoveEngine e filtradas pelo JumpExecutionGate. Nenhum bot apresentou repetição contínua de saltos, bunny hop ou comportamento aéreo errático durante os 5 rounds analisados."
+}

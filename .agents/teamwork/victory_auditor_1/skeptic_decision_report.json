@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T22:17:03.147069+00:00",
+  "report_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\pre3a3_checkpoint_decision.md",
+  "report_sha256": "0d02d3d1efb3c5655b3a0134ccc57ee6034a5c86c069eae36c91b26046845772",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "dry_run": false,
+  "data_nature": "REAL",
+  "verdict": "FAIL",
+  "total_vectors_checked": 12,
+  "total_violations": 2,
+  "triggered_vectors": [
+    "hardcoded_report_claims",
+    "percentage_100_without_denominator"
+  ],
+  "vectors": {
+    "conflicting_numbers": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "unbacked_metrics": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "zero_support_numeric_metrics": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "incompatible_confusion_matrix": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "divergent_or_truncated_hashes": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "hardcoded_report_claims": {
+      "status": "FAIL",
+      "violation_count": 1,
+      "findings": [
+        {
+          "line": 36,
+          "token": "todo",
+          "detail": "Marcador de texto hardcoded/incompleto 'todo' encontrado no relatório."
+        }
+      ]
+    },
+    "templated_data_unlabeled": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "missing_declared_files": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "undiscovered_tests": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "test_set_used_in_tuning": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "percentage_100_without_denominator": {
+      "status": "FAIL",
+      "violation_count": 1,
+      "findings": [
+        {
+          "line": 131,
+          "content": "| `candidate_mask` | `[B, 53]` | `torch.bool` | `SYNTHETIC` | 100% dos 53 bits habilitados como `True` | N/A |",
+          "detail": "Afirmação de '100%' sem denominador explícito (N/N) na mesma linha."
+        }
+      ]
+    },
+    "unauthorized_human_approval_claim": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    }
+  }
+}

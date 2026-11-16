@@ -99,12 +99,66 @@ public class MapProfileManager
         MatchTelemetryLogger.SafePrintToConsole($"[MapProfileManager] Perfil genérico universal ativado para '{cleanMap}' ({fallbackSpots.Count} spots).");
     }
 
+    public static readonly Dictionary<string, string> LegacySpotAliases = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["ct_a_ticket_passive"] = "ct_retake_a_ticket_hold_ramp",
+        ["ct_mid_window_deep_awp"] = "mid_window_right_deep",
+        ["ct_b_van_peek"] = "b_van_behind_apps_hold",
+        ["ct_b_site_default_crouch"] = "b_site_default_plant_box",
+        ["ct_b_bench_deep"] = "b_forest_bench_hold_apps",
+        ["ct_mid_window_crouch"] = "mid_window_left_awp",
+        ["ct_a_firebox_oneanddone"] = "a_firebox_ninja_hold",
+        ["ct_a_ninja_hide"] = "a_shadow_under_palace",
+        ["ct_a_triple_jiggle"] = "a_triple_box_hold",
+        ["ct_a_stairs_cross"] = "ct_retake_a_stairs_clear_site",
+        ["ct_a_jungle_support"] = "ct_retake_a_jungle_entry_site",
+        ["ct_a_palace_close_poke"] = "a_palace_balcony_tr",
+        ["tr_staging_a_ramp"] = "tr_a_ramp_staging_wait",
+        ["tr_staging_palace_room"] = "a_palace_deep_room",
+        ["ct_retake_a_connector"] = "mid_connector_top_stairs",
+        ["ct_mid_connector_headshot"] = "mid_connector_top_stairs",
+        ["ct_b_market_door"] = "ct_retake_b_door_exit_straight",
+        ["ct_b_market_window"] = "ct_retake_b_market_window_site",
+        ["ct_b_short_corner"] = "b_short_pillar_hold_apps",
+        ["tr_exec_a_site_default"] = "a_default_plant_headshot",
+        ["tr_exec_a_triple_clear"] = "a_triple_box_hold",
+        ["tr_exec_a_stairs_clear"] = "a_default_plant_headshot",
+        ["tr_exec_mid_connector_push"] = "mid_connector_bottom",
+        ["tr_exec_b_site_plant"] = "b_site_default_plant_box",
+        ["tr_exec_b_van_clear"] = "b_van_behind_bomb_hold",
+        ["tr_exec_b_market_push"] = "tr_b_tapete_window_market_awp",
+        ["ct_retake_a_stairs"] = "ct_retake_a_stairs_clear_site",
+        ["ct_retake_a_jungle"] = "ct_retake_a_jungle_entry_site",
+        ["ct_retake_a_ticket"] = "ct_retake_a_ticket_hold_ramp",
+        ["ct_retake_a_defuse_cover"] = "a_default_plant_headshot",
+        ["ct_retake_b_market"] = "ct_retake_b_kitchen_entry",
+        ["ct_retake_b_short"] = "b_short_pillar_hold_apps",
+        ["ct_retake_b_entry"] = "ct_retake_b_kitchen_entry",
+        ["ct_retake_b_defuse_cover"] = "b_site_default_plant_box",
+        ["ct_retake_b_awp_cover"] = "b_forest_bench_hold_apps",
+        ["tr_staging_b_apartments_house"] = "tr_b_apps_house_staging",
+        ["tr_staging_b_apartments_kitchen"] = "tr_b_apps_kitchen_control",
+        ["tr_staging_top_mid_boxes"] = "mid_top_mid_boxes",
+        ["tr_staging_underpass_top"] = "mid_underground_sub",
+        ["ct_mid_short_catwalk"] = "mid_catwalk_short",
+        ["ct_mid_underpass_peek"] = "mid_underground_sub",
+        ["ct_jungle_safe"] = "ct_retake_a_jungle_entry_site",
+        ["tr_staging_t_roof"] = "mid_top_mid_boxes",
+        ["a_sandwich_hide_control"] = "a_sandwich_sand_pit_hold_ramp"
+    };
+
     public TacticalSpot? GetSpotById(string? id)
     {
         if (string.IsNullOrEmpty(id)) return null;
         lock (_profileLock)
         {
-            return _spotsById.TryGetValue(id, out var spot) ? spot : null;
+            if (_spotsById.TryGetValue(id, out var spot))
+                return spot;
+
+            if (LegacySpotAliases.TryGetValue(id, out var aliasId) && _spotsById.TryGetValue(aliasId, out var aliasSpot))
+                return aliasSpot;
+
+            return null;
         }
     }
 

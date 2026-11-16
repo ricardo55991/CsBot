@@ -1,0 +1,272 @@
+{
+  "schema": "csbot.deliverable_evidence.v1",
+  "governance_version": "1.2.0-lean",
+  "phase": "OPERATIONAL_OPTIMIZATION_AND_CLEANUP",
+  "generated_utc": "2026-11-09T03:05:00Z",
+  "verdict": "PASS",
+  "evidence_table": [
+    {
+      "relative_path": "AGENTS.md",
+      "size_bytes": 14965,
+      "sha256": "2e62b35e49e0fb9ccc11f1efc09952d6b9bc3b6481e327cc7637bc6fb196fe5e",
+      "classification": "REAL",
+      "role": "Diretrizes de governanca 1.2 Lean com regras 15 (Script First) e 16 (Terminal Cirurgico)"
+    },
+    {
+      "relative_path": ".agents/hooks.json",
+      "size_bytes": 1909,
+      "sha256": "551922ed4f56a7951c24619cf86328d4c1805e240ae35b53d4cb9fc7dc184223",
+      "classification": "REAL",
+      "role": "Configuracao otimizada de hooks por evento (PreToolUse, PostToolUse e Stop)"
+    },
+    {
+      "relative_path": ".agents/rules/15-analytics-script-first.md",
+      "size_bytes": 1338,
+      "sha256": "503c5c731f5eaec64459ddf25189ec513645594129a377088b4cb74991947f60",
+      "classification": "REAL",
+      "role": "Regra 15: Politica mandat\u00f3ria de Script First para analise volumosa de dados"
+    },
+    {
+      "relative_path": ".agents/rules/16-surgical-terminal-output.md",
+      "size_bytes": 945,
+      "sha256": "dae6c35d463d79a98c38c16a375f5c8a8732cc300e847f14b0e0fb4b7b35a195",
+      "classification": "REAL",
+      "role": "Regra 16: Politica mandat\u00f3ria de sa\u00eddas cir\u00fargicas de terminal"
+    },
+    {
+      "relative_path": "hook_event_matrix.json",
+      "size_bytes": 1742,
+      "sha256": "eaafddd3436a9d740ce868f1e3d4d66acf539925139c95779f3105edc00bace8",
+      "classification": "REAL",
+      "role": "Matriz formal de eventos, matchers e modos dos hooks"
+    },
+    {
+      "relative_path": "compact_policy.md",
+      "size_bytes": 3145,
+      "sha256": "598db98512bb73cdd390e79df4f54ada139109c0ae54e77505e072abcfddc032",
+      "classification": "REAL",
+      "role": "Politica e checklist de 7 itens para uso seguro e deterministico de /compact"
+    },
+    {
+      "relative_path": "workspace_mcp_inventory.json",
+      "size_bytes": 2368,
+      "sha256": "c2b52351093737b9fb3b1cec07f0e3e4bcf94aeb05dba07e46ddccf0990a26d9",
+      "classification": "REAL",
+      "role": "Inventario de MCPs com manutencao de sequential-thinking e isolamento de godot-mcp-toolkit"
+    },
+    {
+      "relative_path": "cleanup_reference_graph.json",
+      "size_bytes": 13489,
+      "sha256": "6dd513c3b26f1b4e94045a2c9dba0835723ceed39d274a5b7c8680da747b7ef7",
+      "classification": "REAL",
+      "role": "Grafo de referencias cruzadas entre evidencias, manifestos e relatorios can\u00f4nicos"
+    },
+    {
+      "relative_path": "cleanup_duplicate_groups.json",
+      "size_bytes": 48253,
+      "sha256": "2c9f6f54195c883b4f448f9d9bd73cb77f6bc5d8c343f3242eb3ffbc6952b044",
+      "classification": "REAL",
+      "role": "Recalculo formal de 118 grupos de duplicatas reais por hash SHA-256 e tamanho"
+    },
+    {
+      "relative_path": "cleanup_deletion_proposal.json",
+      "size_bytes": 7604,
+      "sha256": "a0a31db9b70a22e5850cc2ba486e7459b6de2af2199a54a3967848df6e561d43",
+      "classification": "REAL",
+      "role": "Proposta de limpeza e quarentena atestando zero exclusoes permanentes sem aval humano"
+    },
+    {
+      "relative_path": "archive_manifest.json",
+      "size_bytes": 266,
+      "sha256": "d703a9960949d0b8d9eb501f3ceb9e4867bb2e87f14f52450fffab68ee3cb0f8",
+      "classification": "REAL",
+      "role": "Manifesto do arquivo historico preservado in situ"
+    },
+    {
+      "relative_path": ".cleanup/quarantine_manifest.json",
+      "size_bytes": 7363,
+      "sha256": "ab8513682bf88de0c001a188162de785378167bb8c08a8d96790884e56bddc13",
+      "classification": "REAL",
+      "role": "Manifesto de quarentena com hashes e rollback commands determin\u00edsticos para 11 itens"
+    },
+    {
+      "relative_path": "operational_optimization_diff.md",
+      "size_bytes": 2034,
+      "sha256": "c82023bbb9570d214f7c4c0825bed7ae67bda52768c48e4c6c940b758f7522d2",
+      "classification": "REAL",
+      "role": "Diferencial das mudancas operacionais de hooks, MCP e regras"
+    },
+    {
+      "relative_path": "targeted_test_result.json",
+      "size_bytes": 1080,
+      "sha256": "02f52b185f549b483a57286a1f244ba94c5cb497f6b87fb7d97d66958c673836",
+      "classification": "REAL",
+      "role": "Resultado das suites direcionadas pytest (40/40 testes aprovados, 100%)"
+    },
+    {
+      "relative_path": "tests/test_operational_optimization.py",
+      "size_bytes": 5051,
+      "sha256": "9d783961b1576650406268af202f6848164ee399618becdba252cb764ed16255",
+      "classification": "REAL",
+      "role": "Suite de 10 testes automatizados da otimizacao operacional"
+    },
+    {
+      "relative_path": "tools/governance_lean/run_cleanup_analysis.py",
+      "size_bytes": 10309,
+      "sha256": "2d2603e91c34f019ca85ccfb06f8b3239ab0aab07b04a962a721283d46ae98d5",
+      "classification": "REAL",
+      "role": "Script deterministico de escaneamento, analise de referencias e quarentena"
+    },
+    {
+      "relative_path": "training_runs/intermediate_domain_study/source_feasibility_report.md",
+      "size_bytes": 65786,
+      "sha256": "44212016c003c3612821a7fdc73d4878eb2fff74041e6bd808c0d8ba3bb34bce",
+      "classification": "REAL",
+      "role": "Relatorio consolidado de viabilidade de fontes com matriz ponderada e correcoes epistemicas de buckets e hipoteses"
+    },
+    {
+      "relative_path": "datasets/mirage_domains/intermediate_competitive/acquisition_source_matrix.json",
+      "size_bytes": 41131,
+      "sha256": "9aa8e54d1d8b46a33b4a97a6b1d735eebde56b00af115b84b36d72af2b7057eb",
+      "classification": "REAL",
+      "role": "Matriz estruturada de 6 fontes e pontuacao ponderada com recomendacao HYBRID_ACQUISITION e rotulos de candidatos"
+    }
+  ],
+  "artifacts": {
+    "training_runs/intermediate_domain_study/faceit_downloads_api_application_draft.md": {
+      "sha256": "aa0b5f0313883925b2b580a900509fcf3ec25467ce6e14d7cbded97e72e498c5",
+      "size_bytes": 6194,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/intermediate_domain_study/faceit_downloads_api_application_draft.json": {
+      "sha256": "32d4f6fd25231ac440b64fd4799cc881524a1226cc72d9e295acd72a5a2cba00",
+      "size_bytes": 1322,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/intermediate_domain_study/gamersclub_research_packet.json": {
+      "sha256": "c41d3eaabd6e139a3d7541e91051b2089a0222f8d2f5dd19831c273554cefff7",
+      "size_bytes": 1508,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/intermediate_domain_study/valve_opt_in_guidelines.md": {
+      "sha256": "e5cf8902327255c8e8dcc26f511d2e89dd92f539c53a926505e0a0852191e9a2",
+      "size_bytes": 3050,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/intermediate_domain_study/valve_opt_in_submission_contract.json": {
+      "sha256": "9c0cb3df1d1f390ada15d397db440ae5fde1d86c847c456b18e65335a552d032",
+      "size_bytes": 1500,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/intermediate_domain_study/intermediate_pilot_sampling_plan.md": {
+      "sha256": "3b4168c4cec4df48f881ce4d3cb3ddeedf921cfd963dc90956d8de4ba530808d",
+      "size_bytes": 4269,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "datasets/mirage_domains/intermediate_competitive/intermediate_pilot_manifest_template.json": {
+      "sha256": "0651e54bdfae2735642d2507f103fca78a00156790f21238b0b2040e8f6c1266",
+      "size_bytes": 1674,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "tools/intermediate_demo_acquisition/ingest_opt_in_demo.py": {
+      "sha256": "dd3fa2e5215b41a0339401d11d1b171d727b7da184f564ac3092a4d59641eab2",
+      "size_bytes": 5562,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "tools/intermediate_demo_acquisition/run_all_dry_runs.py": {
+      "sha256": "40f93002dec7ac1bde143fd0814bf16b6bf0b6246c0bff51c71beac0d214fd32",
+      "size_bytes": 2787,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/intermediate_domain_study/dry_run_validation_report.json": {
+      "sha256": "18e9fa905734b988734d03754cf7a9c8567f829d42d79a046b2e9d3dd9ff9897",
+      "size_bytes": 4297,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/intermediate_domain_study/intermediate_study_closure.json": {
+      "sha256": "5b18c15aa823ac86586f87bfa0f6677d109760c64080c5d7347f7d6e49bcbdf1",
+      "size_bytes": 1903,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/professional_resume_decision.json": {
+      "sha256": "954ecd3b4d6ee213050040509e052b20084d9694fcebffa823f80c2128c986a7",
+      "size_bytes": 2822,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/professional_spot_coverage_summary.json": {
+      "sha256": "7299af4333d97991dd7458336b389137561eb8411e29a293810a62f5619f69b9",
+      "size_bytes": 21342,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/next_milestone_recommendation.md": {
+      "sha256": "c831b5d101a5739a1dbeccf0a5432215ac007be1204a2f8b7587bce65cf23c93",
+      "size_bytes": 4613,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/input_snapshot.json": {
+      "sha256": "7e0652444561be5b60ba1ab035250930af9c82191d0edcea8a6efc33a450df44",
+      "size_bytes": 5722,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/class_support.json": {
+      "sha256": "a67bec04b816d1642e266ec924fc5ac153e6acaa5029f1a0f621966d5bac8588",
+      "size_bytes": 12682,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/experiment_a_metrics.json": {
+      "sha256": "99dd64225f397a8718373d9ccb8bf301790c1a486a0d550e0db6ec5503999913",
+      "size_bytes": 4863,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/experiment_b_metrics.json": {
+      "sha256": "162543f808b374c90ea8a4bcde188f26eb27064eec166e0ef08757acc7b750fb",
+      "size_bytes": 4892,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/experiment_c_metrics.json": {
+      "sha256": "48ca5ab15830b541c51eba63a3cd79eed39d09fc24d588986e07ce2da2023da3",
+      "size_bytes": 4906,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/threshold_calibration.json": {
+      "sha256": "3ff967c5aff3d84b004b2717beb5e2f94fd0a377fe81daa03f11ed5f43e42095",
+      "size_bytes": 4135,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/experiment_comparison.json": {
+      "sha256": "c0cb6bf4b838254c09fddc7f7975c99e0dda7f531af90498f0ebc75fb3f79f20",
+      "size_bytes": 2339,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/preservation_check.json": {
+      "sha256": "48129d8c0c18f47f45358fb19619433d5aa5ea5b4b12ef026bae900f851ac61d",
+      "size_bytes": 614,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/selected_patch_checkpoint.pt": {
+      "sha256": "e0a1c5d5d9727e4986d647fb3fcd2a164de269642c078c850c6667bb55fd9e03",
+      "size_bytes": 6356596,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/test_result.json": {
+      "sha256": "648fd5735f20790ae8ff5f44c88ed977610d57e63f06ffc3648fe94cd38dbfc8",
+      "size_bytes": 901,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/findings.json": {
+      "sha256": "d30557829fb6ef358fdf7dfa471897222cc606a11ac5e63dc5a69d6ccfb93059",
+      "size_bytes": 1837,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "training_runs/positioning_v2_real_temporal/rare_class_patch_v1/rare_class_patch_final_report.md": {
+      "sha256": "e18f4191a872a8a8dd030a6a24bcf541692540e04c35b0a20af064049439f922",
+      "size_bytes": 9416,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    },
+    "tests/test_rare_class_patch.py": {
+      "sha256": "bd5c8d5f66516d93da55d5e877612bdef4d7a0e5d78e1a89d824a136bc05f4e9",
+      "size_bytes": 6065,
+      "status": "MATERIALIZED_AND_VERIFIED"
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "csbot.artifact_digest_index.v1",
+  "governance_version": "1.2.0-lean",
+  "updated_at_utc": "2026-11-09T02:35:00Z",
+  "description": "Indice de cache de resumos e metadados de artefatos baseado em hash SHA-256 e tamanho de arquivo. Se o hash nao mudar, o digest e reutilizado sem releitura de bytes fisicos.",
+  "digests": {
+    "C:\\Users\\ricar\\AppData\\Local\\Temp\\pytest-of-ricar\\pytest-79\\test_11_UnchangedHashReusesDig0\\sample_doc.md": {
+      "relative_path": "C:/Users/ricar/AppData/Local/Temp/pytest-of-ricar/pytest-79/test_11_UnchangedHashReusesDig0/sample_doc.md",
+      "sha256": "6496a8500993f07c301c46df04d9ccd81e94368ed1b374ad1c677c816e3153a2",
+      "file_size": 44,
+      "last_modified": 1794192015.1037624,
+      "summary": "Resumo de teste",
+      "key_sections": [],
+      "schema": null,
+      "producer": "test_author",
+      "safe_for_reuse": true
+    },
+    "C:\\Users\\ricar\\AppData\\Local\\Temp\\pytest-of-ricar\\pytest-79\\test_12_ChangedHashInvalidates0\\mutated_doc.md": {
+      "relative_path": "C:/Users/ricar/AppData/Local/Temp/pytest-of-ricar/pytest-79/test_12_ChangedHashInvalidates0/mutated_doc.md",
+      "sha256": "41ac68e2256f241112965d2776c9fdd3250d7153cbadaf814dd74c8416e93f40",
+      "file_size": 43,
+      "last_modified": 1794192015.1270816,
+      "summary": "V2",
+      "key_sections": [],
+      "schema": null,
+      "producer": "main_agent",
+      "safe_for_reuse": true
+    },
+    "C:\\Users\\ricar\\AppData\\Local\\Temp\\pytest-of-ricar\\pytest-80\\test_11_UnchangedHashReusesDig0\\sample_doc.md": {
+      "relative_path": "C:/Users/ricar/AppData/Local/Temp/pytest-of-ricar/pytest-80/test_11_UnchangedHashReusesDig0/sample_doc.md",
+      "sha256": "6496a8500993f07c301c46df04d9ccd81e94368ed1b374ad1c677c816e3153a2",
+      "file_size": 44,
+      "last_modified": 1794193428.3721242,
+      "summary": "Resumo de teste",
+      "key_sections": [],
+      "schema": null,
+      "producer": "test_author",
+      "safe_for_reuse": true
+    },
+    "C:\\Users\\ricar\\AppData\\Local\\Temp\\pytest-of-ricar\\pytest-80\\test_12_ChangedHashInvalidates0\\mutated_doc.md": {
+      "relative_path": "C:/Users/ricar/AppData/Local/Temp/pytest-of-ricar/pytest-80/test_12_ChangedHashInvalidates0/mutated_doc.md",
+      "sha256": "41ac68e2256f241112965d2776c9fdd3250d7153cbadaf814dd74c8416e93f40",
+      "file_size": 43,
+      "last_modified": 1794193428.3845627,
+      "summary": "V2",
+      "key_sections": [],
+      "schema": null,
+      "producer": "main_agent",
+      "safe_for_reuse": true
+    },
+    "C:\\Users\\ricar\\AppData\\Local\\Temp\\pytest-of-ricar\\pytest-81\\test_11_UnchangedHashReusesDig0\\sample_doc.md": {
+      "relative_path": "C:/Users/ricar/AppData/Local/Temp/pytest-of-ricar/pytest-81/test_11_UnchangedHashReusesDig0/sample_doc.md",
+      "sha256": "6496a8500993f07c301c46df04d9ccd81e94368ed1b374ad1c677c816e3153a2",
+      "file_size": 44,
+      "last_modified": 1794194301.526617,
+      "summary": "Resumo de teste",
+      "key_sections": [],
+      "schema": null,
+      "producer": "test_author",
+      "safe_for_reuse": true
+    },
+    "C:\\Users\\ricar\\AppData\\Local\\Temp\\pytest-of-ricar\\pytest-81\\test_12_ChangedHashInvalidates0\\mutated_doc.md": {
+      "relative_path": "C:/Users/ricar/AppData/Local/Temp/pytest-of-ricar/pytest-81/test_12_ChangedHashInvalidates0/mutated_doc.md",
+      "sha256": "41ac68e2256f241112965d2776c9fdd3250d7153cbadaf814dd74c8416e93f40",
+      "file_size": 43,
+      "last_modified": 1794194301.53861,
+      "summary": "V2",
+      "key_sections": [],
+      "schema": null,
+      "producer": "main_agent",
+      "safe_for_reuse": true
+    },
+    "C:\\Users\\ricar\\AppData\\Local\\Temp\\pytest-of-ricar\\pytest-82\\test_11_UnchangedHashReusesDig0\\sample_doc.md": {
+      "relative_path": "C:/Users/ricar/AppData/Local/Temp/pytest-of-ricar/pytest-82/test_11_UnchangedHashReusesDig0/sample_doc.md",
+      "sha256": "6496a8500993f07c301c46df04d9ccd81e94368ed1b374ad1c677c816e3153a2",
+      "file_size": 44,
+      "last_modified": 1794194802.0179741,
+      "summary": "Resumo de teste",
+      "key_sections": [],
+      "schema": null,
+      "producer": "test_author",
+      "safe_for_reuse": true
+    },
+    "C:\\Users\\ricar\\AppData\\Local\\Temp\\pytest-of-ricar\\pytest-82\\test_12_ChangedHashInvalidates0\\mutated_doc.md": {
+      "relative_path": "C:/Users/ricar/AppData/Local/Temp/pytest-of-ricar/pytest-82/test_12_ChangedHashInvalidates0/mutated_doc.md",
+      "sha256": "41ac68e2256f241112965d2776c9fdd3250d7153cbadaf814dd74c8416e93f40",
+      "file_size": 43,
+      "last_modified": 1794194802.0301874,
+      "summary": "V2",
+      "key_sections": [],
+      "schema": null,
+      "producer": "main_agent",
+      "safe_for_reuse": true
+    },
+    "C:\\Users\\ricar\\AppData\\Local\\Temp\\pytest-of-ricar\\pytest-83\\test_11_UnchangedHashReusesDig0\\sample_doc.md": {
+      "relative_path": "C:/Users/ricar/AppData/Local/Temp/pytest-of-ricar/pytest-83/test_11_UnchangedHashReusesDig0/sample_doc.md",
+      "sha256": "6496a8500993f07c301c46df04d9ccd81e94368ed1b374ad1c677c816e3153a2",
+      "file_size": 44,
+      "last_modified": 1794196102.6741927,
+      "summary": "Resumo de teste",
+      "key_sections": [],
+      "schema": null,
+      "producer": "test_author",
+      "safe_for_reuse": true
+    },
+    "C:\\Users\\ricar\\AppData\\Local\\Temp\\pytest-of-ricar\\pytest-83\\test_12_ChangedHashInvalidates0\\mutated_doc.md": {
+      "relative_path": "C:/Users/ricar/AppData/Local/Temp/pytest-of-ricar/pytest-83/test_12_ChangedHashInvalidates0/mutated_doc.md",
+      "sha256": "41ac68e2256f241112965d2776c9fdd3250d7153cbadaf814dd74c8416e93f40",
+      "file_size": 43,
+      "last_modified": 1794196102.6895301,
+      "summary": "V2",
+      "key_sections": [],
+      "schema": null,
+      "producer": "main_agent",
+      "safe_for_reuse": true
+    }
+  }
+}

@@ -75,7 +75,7 @@ public class CtDefenseController
             }
         }
 
-        // Se houver 2 defensores no Bomb B: cria Fogo Cruzado Tapete x L/Mercado
+        // Se houver 2 defensores no Bomb B: cria Fogo Cruzado Tapete x L/Mercado cravados no site
         if (bBots.Count >= 2)
         {
             var bot1 = bBots[0];
@@ -85,15 +85,17 @@ public class CtDefenseController
 
             if (role1 != null && plan.BotOrders.TryGetValue(RoleManager.GetOrderKey(role1.Value), out var order1))
             {
-                order1.StagingSpotId = "ct_b_van_peek"; // Marca saída do Tapete
-                order1.Stance = EngagementStance.JIGGLE_INFO;
+                order1.StagingSpotId = "b_van_behind_apps_hold"; // Spot 06: Marca saída dos apartamentos/tapete cravado
+                order1.Stance = EngagementStance.PASSIVE_HOLD;
+                order1.HoldSiteLocked = true;
             }
             if (role2 != null && plan.BotOrders.TryGetValue(RoleManager.GetOrderKey(role2.Value), out var order2))
             {
-                order2.StagingSpotId = "ct_b_short_corner"; // Marca L e cruza com a Van
+                order2.StagingSpotId = "b_short_pillar_hold_apps"; // Spot 01: Marca L/Short cruzando com a Van
                 order2.Stance = EngagementStance.PASSIVE_HOLD;
+                order2.HoldSiteLocked = true;
             }
-            Server.PrintToConsole($"[CtDefenseController] Crossfire B armado: {bot1.PlayerName} (Van/Tapete) x {bot2.PlayerName} (Short/L).");
+            Server.PrintToConsole($"[CtDefenseController] Crossfire B armado e cravado: {bot1.PlayerName} (Van/Tapete #06) x {bot2.PlayerName} (Short/Pilar #01).");
         }
 
         // Se houver 2 defensores no Bomb A: cria Fogo Cruzado Degrau x Firebox
@@ -155,6 +157,15 @@ public class CtDefenseController
                 var spot = _mapProfileManager.GetSpotById(aggressiveSpotId);
                 if (spot != null)
                 {
+                    if (_locomotionDriver.IsOpeningCanaryActiveSlot?.Invoke(entryBot.Slot) == true)
+                    {
+                        int rnd = _locomotionDriver.GetCurrentRoundId?.Invoke() ?? 1;
+                        if (_locomotionDriver.LeaseManager == null || !_locomotionDriver.LeaseManager.AllowCompetingWriter(rnd, entryBot.Slot, Server.TickCount, "CtDefenseController.DuoPlay", $"NavigateToSpot:{aggressiveSpotId}"))
+                        {
+                            return;
+                        }
+                    }
+
                     _locomotionDriver.NavigateToSpot(entryBot, spot, hurry: true, EngagementStance.ONE_AND_DONE);
 
                     var role = _roleManager.GetBotRole(entryBot);
@@ -469,6 +480,15 @@ public class CtDefenseController
         EngagementStance stance,
         string reason)
     {
+        if (_locomotionDriver.IsOpeningCanaryActiveSlot?.Invoke(bot.Slot) == true)
+        {
+            int rnd = _locomotionDriver.GetCurrentRoundId?.Invoke() ?? 1;
+            if (_locomotionDriver.LeaseManager == null || !_locomotionDriver.LeaseManager.AllowCompetingWriter(rnd, bot.Slot, Server.TickCount, "CtDefenseController.UpdateBotOrderSpot", $"Spot:{newSpot.Id}"))
+            {
+                return;
+            }
+        }
+
         var role = _roleManager.GetBotRole(bot) ?? BotRole.Rotator;
         if (plan.TryGetOrderForBot(bot.Slot, role, out var order))
         {

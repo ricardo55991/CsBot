@@ -10,6 +10,7 @@ namespace CsBotManager;
 public class MidRoundAdapter
 {
     public Func<int, CsTeam?>? PlayerTeamResolver { get; set; }
+    public List<ActiveAdaptationRecord> ActiveAdaptations { get; } = new();
 
     public static float CalculateDistanceToBomb(float botX, float botY, float botZ, float bombX, float bombY, float bombZ)
     {
@@ -25,9 +26,10 @@ public class MidRoundAdapter
         {
             "weapon_awp" or "awp" => 4750,
             "weapon_ak47" or "ak47" or "ak" => 2700,
-            "weapon_m4a1_silencer" or "m4a1_silencer" or "m4a1" => 2900,
+            "weapon_m4a1_silencer" or "weapon_m4a1" or "m4a1_silencer" or "m4a1" => 2900,
             "weapon_m4a4" or "m4a4" or "m4" => 3100,
             "weapon_deagle" or "deagle" => 700,
+            "weapon_glock" or "glock" or "weapon_usp_silencer" or "usp" or "weapon_hkp2000" => 200,
             _ => 500
         };
     }
@@ -36,6 +38,65 @@ public class MidRoundAdapter
     {
         if (roundNumber == 12 || roundNumber == 24) return false;
         return true;
+    }
+
+    public static TeamSaveDecision EvaluateSaveDecision(
+        CsTeam team,
+        int aliveTeamCount,
+        int aliveEnemyCount,
+        bool bombPlanted,
+        float bombTimeRemaining,
+        MatchRoundContext roundContext,
+        List<CCSPlayerController> teamBots,
+        int? deterministicSeed = null)
+    {
+        if (roundContext.IsFinalRoundOfHalf || roundContext.IsFinalRoundOfRegulation)
+        {
+            return new TeamSaveDecision(
+                team,
+                false,
+                aliveTeamCount,
+                aliveEnemyCount,
+                bombPlanted,
+                bombTimeRemaining,
+                Array.Empty<BotSaveDecision>(),
+                "ROUND_FINAL_PROIBIDO_SALVAR");
+        }
+
+        bool shouldSave = aliveTeamCount == 1 && aliveEnemyCount >= 4;
+        return new TeamSaveDecision(
+            team,
+            shouldSave,
+            aliveTeamCount,
+            aliveEnemyCount,
+            bombPlanted,
+            bombTimeRemaining,
+            Array.Empty<BotSaveDecision>(),
+            shouldSave ? "DESVANTAGEM_SEVERA" : "CONTINUAR_LUTA");
+    }
+
+    public string DeterminePlantedBombsite(float x, float y, float z)
+    {
+        if (_mapProfileManager != null)
+        {
+            var zoneA = _mapProfileManager.GetPlantZone("A");
+            var zoneB = _mapProfileManager.GetPlantZone("B");
+            if (zoneA != null && zoneB != null)
+            {
+                return zoneA.Distance2DSquared(x, y) <= zoneB.Distance2DSquared(x, y) ? "A" : "B";
+            }
+        }
+        return y > 0f ? "B" : "A";
+    }
+
+    public void CloseAllActiveAdaptations(AdaptationDisposition disposition, TacticalPlan? plan = null)
+    {
+        foreach (var adp in ActiveAdaptations)
+        {
+            adp.IsClosed = true;
+            adp.Disposition = disposition;
+        }
+        ActiveAdaptations.Clear();
     }
 
     public void HandlePlayerDeath(
@@ -60,6 +121,19 @@ public class MidRoundAdapter
         // V4.2.5 compatibility overload
     }
 
+    public void HandlePlayerDeath(
+        CCSPlayerController? victim,
+        CCSPlayerController? killer,
+        List<CCSPlayerController> victimTeamBots,
+        CsTeam victimTeam,
+        CsTeam killerTeam,
+        TacticalPlan? plan,
+        string? contactSector = null)
+    {
+        if (victimTeam == CsTeam.None || killerTeam == CsTeam.None)
+            return;
+    }
+
     public ActiveAdaptationRecord StartTacticalAdaptation(
         TacticalPlan plan,
         TacticalAdaptationReason reason,
@@ -67,8 +141,28 @@ public class MidRoundAdapter
         float duration,
         string description,
         CsTeam ownerTeam = CsTeam.None,
-        string targetSite = "")
+        string targetSite = "",
+        int sourceEntrySlot = -1,
+        string utilityEvidence = "")
     {
+        CsTeam resolvedOwner = ownerTeam != CsTeam.None ? ownerTeam : plan.Team;
+        if (resolvedOwner == CsTeam.None)
+        {
+            return null!;
+        }
+
+        if (PlayerTeamResolver != null && affectedSlots != null)
+        {
+            foreach (int slot in affectedSlots)
+            {
+                var slotTeam = PlayerTeamResolver(slot);
+                if (slotTeam.HasValue && slotTeam.Value != resolvedOwner)
+                {
+                    return null!;
+                }
+            }
+        }
+
         int prevRev = plan.TacticRevision;
         plan.TacticRevision++;
         var rec = new ActiveAdaptationRecord
@@ -79,10 +173,14 @@ public class MidRoundAdapter
             PreviousRevision = prevRev,
             FinalRevision = plan.TacticRevision,
             NewOrdersDescription = description,
-            AffectedSlots = affectedSlots,
-            OwnerTeam = ownerTeam != CsTeam.None ? ownerTeam : plan.Team,
-            TargetSite = targetSite
+            AffectedSlots = affectedSlots ?? new List<int>(),
+            OwnerTeam = resolvedOwner,
+            TargetSite = targetSite,
+            InternalRoundId = 1,
+            SourceEntrySlot = sourceEntrySlot,
+            UtilityEvidence = utilityEvidence
         };
+        ActiveAdaptations.Add(rec);
         return rec;
     }
 

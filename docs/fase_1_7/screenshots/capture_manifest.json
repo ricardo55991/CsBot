@@ -1,0 +1,214 @@
+{
+  "1": {
+    "id": "b_short_pillar_hold_apps",
+    "status": "MISSING"
+  },
+  "2": {
+    "id": "b_short_pillar_bomb_control",
+    "status": "MISSING"
+  },
+  "3": {
+    "id": "b_forest_bench_hold_apps",
+    "status": "MISSING"
+  },
+  "4": {
+    "id": "b_forest_bench_bomb_site",
+    "status": "MISSING"
+  },
+  "5": {
+    "id": "b_van_behind_bomb_hold",
+    "status": "MISSING"
+  },
+  "6": {
+    "id": "b_van_behind_apps_hold",
+    "status": "MISSING"
+  },
+  "7": {
+    "id": "b_site_default_plant_box",
+    "status": "MISSING"
+  },
+  "8": {
+    "id": "ct_retake_b_kitchen_entry",
+    "status": "MISSING"
+  },
+  "9": {
+    "id": "ct_retake_b_market_window_site",
+    "status": "MISSING"
+  },
+  "10": {
+    "id": "ct_retake_b_market_window_tapete",
+    "status": "MISSING"
+  },
+  "11": {
+    "id": "ct_retake_b_door_exit_straight",
+    "status": "MISSING"
+  },
+  "12": {
+    "id": "ct_retake_b_door_exit_close_left",
+    "status": "MISSING"
+  },
+  "13": {
+    "id": "ct_retake_b_door_exit_right_short",
+    "status": "MISSING"
+  },
+  "14": {
+    "id": "tr_b_tapete_window_market_awp",
+    "status": "MISSING"
+  },
+  "15": {
+    "id": "tr_b_tapete_window_bomb_curve",
+    "status": "MISSING"
+  },
+  "16": {
+    "id": "tr_b_forest_hold_short",
+    "status": "MISSING"
+  },
+  "17": {
+    "id": "tr_b_forest_hold_market",
+    "status": "MISSING"
+  },
+  "18": {
+    "id": "ct_retake_a_market_to_ctspawn",
+    "status": "MISSING"
+  },
+  "19": {
+    "id": "ct_retake_a_vents_entry_jungle",
+    "status": "MISSING"
+  },
+  "20": {
+    "id": "ct_retake_a_mid_clear_under_window",
+    "status": "MISSING"
+  },
+  "21": {
+    "id": "ct_retake_a_jungle_entry_site",
+    "status": "MISSING"
+  },
+  "22": {
+    "id": "ct_retake_a_jungle_entry_stairs",
+    "status": "MISSING"
+  },
+  "23": {
+    "id": "ct_retake_a_stairs_clear_site",
+    "status": "MISSING"
+  },
+  "24": {
+    "id": "ct_retake_a_ticket_hold_ramp",
+    "status": "MISSING"
+  },
+  "25": {
+    "id": "ct_retake_a_ramp_clear_site",
+    "status": "MISSING"
+  },
+  "26": {
+    "id": "ct_retake_a_ramp_clear_sandwich",
+    "status": "MISSING"
+  },
+  "27": {
+    "id": "ct_retake_a_ramp_clear_tetris",
+    "status": "MISSING"
+  },
+  "28": {
+    "id": "a_firebox_ninja_hold",
+    "status": "MISSING"
+  },
+  "29": {
+    "id": "a_triple_box_hold",
+    "status": "MISSING"
+  },
+  "30": {
+    "id": "a_palace_balcony_tr",
+    "status": "MISSING"
+  },
+  "31": {
+    "id": "a_palace_deep_room",
+    "status": "MISSING"
+  },
+  "32": {
+    "id": "a_shadow_under_palace",
+    "status": "MISSING"
+  },
+  "33": {
+    "id": "mid_window_right_deep",
+    "status": "MISSING"
+  },
+  "34": {
+    "id": "mid_connector_top_stairs",
+    "status": "MISSING"
+  },
+  "35": {
+    "id": "mid_connector_bottom",
+    "status": "MISSING"
+  },
+  "36": {
+    "id": "mid_top_mid_boxes",
+    "status": "MISSING"
+  },
+  "37": {
+    "id": "mid_underground_sub",
+    "status": "MISSING"
+  },
+  "38": {
+    "id": "mid_catwalk_short",
+    "status": "MISSING"
+  },
+  "39": {
+    "id": "tr_b_apps_house_staging",
+    "status": "MISSING"
+  },
+  "40": {
+    "id": "tr_b_apps_kitchen_control",
+    "status": "MISSING"
+  },
+  "41": {
+    "id": "ct_b_edward_under_apps",
+    "status": "MISSING"
+  },
+  "42": {
+    "id": "ct_b_empty_pillar_jail",
+    "status": "MISSING"
+  },
+  "43": {
+    "id": "ct_b_short_arch_hold_mid",
+    "status": "MISSING"
+  },
+  "44": {
+    "id": "mid_window_left_awp",
+    "status": "MISSING"
+  },
+  "45": {
+    "id": "mid_chair_delpan_hold",
+    "status": "MISSING"
+  },
+  "46": {
+    "id": "mid_ladder_room_control",
+    "status": "MISSING"
+  },
+  "47": {
+    "id": "a_tetris_top_control",
+    "status": "MISSING"
+  },
+  "48": {
+    "id": "a_tetris_corner_ramp_palace",
+    "status": "MISSING"
+  },
+  "49": {
+    "id": "a_default_plant_headshot",
+    "status": "MISSING"
+  },
+  "50": {
+    "id": "tr_a_ramp_staging_wait",
+    "status": "MISSING"
+  },
+  "51": {
+    "id": "ct_retake_a_ramp_hold_sand_pit",
+    "status": "MISSING"
+  },
+  "52": {
+    "id": "mid_connector_top_hold_underpass",
+    "status": "MISSING"
+  },
+  "53": {
+    "id": "ct_a_sand_pit_under_palace_hold_caverna",
+    "status": "MISSING"
+  }
+}

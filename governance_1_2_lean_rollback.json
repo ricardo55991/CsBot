@@ -1,0 +1,31 @@
+{
+  "schema": "csbot.governance_rollback.v1",
+  "rollback_target_version": "1.1.0-full",
+  "current_version": "1.2.0-lean",
+  "generated_utc": "2026-11-09T02:41:00Z",
+  "files_changed": [
+    "AGENTS.md",
+    ".agents/rules/07-independent-validation.md",
+    ".agents/rules/10-single-agent-first.md",
+    ".agents/rules/11-no-nested-subagents.md",
+    ".agents/rules/12-no-redundant-file-reads.md",
+    ".agents/rules/13-smart-testing.md",
+    ".agents/rules/14-lean-reporting.md",
+    ".agents/hooks/hook_mode.json",
+    ".agents/hooks/common_hook_utils.py",
+    ".agents/hooks/update_artifact_digest.py",
+    ".agents/contracts/evidence_packet_v1.schema.json",
+    ".agents/contracts/test_impact_matrix.json",
+    ".agents/cache/artifact_digest_index.json",
+    ".agents/audit/execution_efficiency.json",
+    "tests/test_governance_1_2_lean.py"
+  ],
+  "product_files_touched": [],
+  "product_files_touched_count": 0,
+  "rollback_procedure": [
+    "git checkout HEAD -- AGENTS.md .agents/rules/07-independent-validation.md .agents/hooks/hook_mode.json .agents/hooks/common_hook_utils.py",
+    "Remove-Item -Force .agents/rules/10-*.md, .agents/rules/11-*.md, .agents/rules/12-*.md, .agents/rules/13-*.md, .agents/rules/14-*.md",
+    "Remove-Item -Force .agents/contracts/evidence_packet_v1.schema.json, .agents/contracts/test_impact_matrix.json",
+    "Remove-Item -Force .agents/hooks/update_artifact_digest.py, tests/test_governance_1_2_lean.py"
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0.0",
+  "verdict": "PASS",
+  "total_passed": 12,
+  "total_tests": 12,
+  "results": [
+    {
+      "test_id": "RT01_unlabeled_synthetic_rejected",
+      "name": "Padrão 1: np.linspace apresentado como REAL gera FAIL",
+      "passed": true,
+      "details": "{\n  \"schema_version\": \"1.0.0\",\n  \"verdict\": \"FAIL\",\n  \"total_files_checked\": 1,\n  \"total_failures\": 1,\n  \"total_warnings\": 0,\n  \"results\": [\n    {\n      \"declared_path\": \"C:\\\\Users\\\\ricar\\\\AppData\\\\Local\\\\Temp\\\\tmp4d853nx5\\\\synth.npz\",\n      \"is_relative\": false,\n      \"declared_nature\": \"REAL\",\n      \"exists\": true,\n      \"size_bytes\": 406,\n      \"sha256\": \"840c268710ce6ce6d03ec1ad817f564bb1552e2f57339297320cf45b707929e3\",\n      \"actual_rows\": 32,\n      \"row_count_match\": null,\n      \"hash_match\": null,\n      \"findings\": [\n        \"Dado sintético/linear detectado na feature 'self_history' (LINEAR_INTERPOLATION_DETECTED) mas não rotulado ou apresentado como REAL.\"\n      ],\n      \"warnings\": [],\n      \"status\": \"FAIL\",\n      \"npz_keys\": [\n        \"self_history\"\n      ]\n    }\n  ]\n}"
+    },
+    {
+      "test_id": "RT01b_labeled_synthetic_generates_warning",
+      "name": "Padrão 1: np.linspace rotulado como SYNTHETIC gera WARNING_REQUIRES_PROVENANCE_REVIEW",
+      "passed": true,
+      "details": "{\n  \"schema_version\": \"1.0.0\",\n  \"verdict\": \"WARNING_REQUIRES_PROVENANCE_REVIEW\",\n  \"total_files_checked\": 1,\n  \"total_failures\": 0,\n  \"total_warnings\": 1,\n  \"results\": [\n    {\n      \"declared_path\": \"C:\\\\Users\\\\ricar\\\\AppData\\\\Local\\\\Temp\\\\tmp4d853nx5\\\\synth.npz\",\n      \"is_relative\": false,\n      \"declared_nature\": \"SYNTHETIC\",\n      \"exists\": true,\n      \"size_bytes\": 406,\n      \"sha256\": \"840c268710ce6ce6d03ec1ad817f564bb1552e2f57339297320cf45b707929e3\",\n      \"actual_rows\": 32,\n      \"row_count_match\": null,\n      \"hash_match\": null,\n      \"findings\": [],\n      \"warnings\": [\n        {\n          \"status\": \"WARNING_REQUIRES_PROVENANCE_REVIEW\",\n          \"detail\": \"Padrão regular detectado na feature 'self_history' (LINEAR_INTERPOLATION_DETECTED), devidamente rotulado como SYNTHETIC.\",\n          \"pattern_info\": {\n            \"feature\": \"self_history\",\n            \"pattern\": \"LINEAR_INTERPOLATION_DETECTED\",\n            \"step\": 0.032258063554763794,\n            \"diff_std\": 2.073074334418834e-08,\n            \"sample_head\": [\n              0.0,\n              0.032258063554763794,\n              0.06451612710952759,\n              0.09677419066429138,\n              0.12903225421905518\n            ]\n          }\n        }\n      ],\n      \"status\": \"PASS\",\n      \"npz_keys\": [\n        \"self_history\"\n      ]\n    }\n  ]\n}"
+    },
+    {
+      "test_id": "RT02_zero_support_numeric_rejected",
+      "name": "Padrão 2: Support=0 com 0.0% numérico gera FAIL na auditoria cética",
+      "passed": true,
+      "details": {
+        "status": "FAIL",
+        "violation_count": 1,
+        "findings": [
+          {
+            "line": 3,
+            "content": "| OBJECTIVE | 0 | 0.0% |",
+            "detail": "Classe com support=0 exibindo métrica numérica na coluna 'Recall': '0.0%' (violação da regra 03-zero-support-is-na)."
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "RT03_test_split_in_training_denied",
+      "name": "Padrão 3: Uso de Test em comando de treino é bloqueado pelo pre-training-gate",
+      "passed": true,
+      "details": {
+        "decision": "deny",
+        "reason": "BLOQUEIO [pre-training-gate]: ExecuÃ§Ã£o de treinamento bloqueada por falha nos prÃ©-requisitos de governanÃ§a. Motivo: Argumento de linha de comando contamina o conjunto Test no treinamento/tuning: '--val-split test'. | Manifesto de prontidÃ£o 'input_snapshot.json' ausente em '<USER_HOME>\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\input_snapshot.json'. AÃ§Ã£o corretiva: 1) Gere '.agents/audit/input_snapshot.json' antes de treinar; 2) Garanta split_leakage=0, tests='green', dry_run='pass', dataset_hashes (SHA-256 64 hex), catalog_hash (64 hex), checkpoint_policy definida e no_test_tuning=true; 3) Nunca utilize o split 'test' em tuning_split ou checkpoint_selection_split."
+      }
+    },
+    {
+      "test_id": "RT03b_canonical_test_eval_authorized",
+      "name": "Padrão 3b: Test split autorizado quando mode=FINAL_EVALUATION e checkpoints frozen",
+      "passed": true,
+      "details": {
+        "decision": "allow",
+        "reason": "Comando nÃ£o inicia execuÃ§Ã£o de treinamento de modelo."
+      }
+    },
+    {
+      "test_id": "RT04_unauthorized_human_claim_rejected",
+      "name": "Padrão 4: Alegação de inspeção manual sem homologação humana gera FAIL",
+      "passed": true,
+      "details": {
+        "status": "FAIL",
+        "violation_count": 1,
+        "findings": [
+          {
+            "line": 2,
+            "seal": "inspeção manual",
+            "content": "Os spots foram validados com inspeção manual in-game pelo time.",
+            "detail": "Alegação de validação humana não autorizada 'inspeção manual' em relatório automatizado sem credencial humana (violação da regra 05-human-review-integrity)."
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "RT05_hardcoded_claims_rejected",
+      "name": "Padrão 5: Relatórios com tokens hardcoded [TBD] geram FAIL",
+      "passed": true,
+      "details": {
+        "status": "FAIL",
+        "violation_count": 1,
+        "findings": [
+          {
+            "line": 2,
+            "token": "TBD",
+            "detail": "Marcador de texto hardcoded/incompleto 'TBD' encontrado no relatório."
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "RT06_truncated_hash_rejected",
+      "name": "Padrão 6: Hash SHA-256 truncado com elipse gera FAIL",
+      "passed": true,
+      "details": {
+        "status": "FAIL",
+        "violation_count": 1,
+        "findings": [
+          {
+            "line": 2,
+            "candidate_hash": "7f36eff885de...",
+            "detail": "Hash SHA-256 incompleto (15 chars; exigido 64 chars hexadecimais)."
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "RT07_phantom_dataset_rejected",
+      "name": "Padrão 7: Dataset declarado não existente no disco gera FAIL",
+      "passed": true,
+      "details": "{\n  \"schema_version\": \"1.0.0\",\n  \"verdict\": \"FAIL\",\n  \"total_files_checked\": 1,\n  \"total_failures\": 1,\n  \"total_warnings\": 0,\n  \"results\": [\n    {\n      \"declared_path\": \"datasets/phantom_split.npz\",\n      \"is_relative\": true,\n      \"declared_nature\": \"REAL\",\n      \"exists\": false,\n      \"size_bytes\": 0,\n      \"sha256\": null,\n      \"actual_rows\": null,\n      \"row_count_match\": null,\n      \"hash_match\": null,\n      \"findings\": [\n        \"Arquivo físico não materializado no disco: 'C:\\\\Users\\\\ricar\\\\OneDrive\\\\Documentos\\\\Dev\\\\CsBot\\\\datasets\\\\phantom_split.npz'.\"\n      ],\n      \"warnings\": [],\n      \"status\": \"FAIL\"\n    }\n  ]\n}"
+    },
+    {
+      "test_id": "RT08_implementer_isolated_from_audit",
+      "name": "Padrão 8: Implementer isolado de relatórios de auditoria e matriz de risco presente",
+      "passed": true,
+      "details": [
+        "*audit*.md",
+        "*audit*.json",
+        "*skeptic*.json",
+        "*validation_report*.md",
+        "phase_gate_report.md",
+        "deliverable_evidence.json"
+      ]
+    },
+    {
+      "test_id": "RT09_no_automatic_advance_enforced",
+      "name": "Padrão 9: Regra 08 exige término imediato de ferramentas e aprovação humana",
+      "passed": true,
+      "details": "Regra 08 verificada."
+    },
+    {
+      "test_id": "RT10_hooks_audit_only_mode",
+      "name": "Execução dos 5 Hooks em audit-only mode sem bloqueio",
+      "passed": true,
+      "details": "Todos os 5 hooks executados em audit-only retornaram allow/code 0."
+    }
+  ]
+}

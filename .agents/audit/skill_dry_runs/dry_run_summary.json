@@ -1,0 +1,112 @@
+[
+  {
+    "skill": "csbot-phase-gate",
+    "script": "run_phase_gate.py",
+    "sha256": "0069c286ab7ff357b17f4f63d3fb507112a5121e2cba063cff4321ccd4838134",
+    "size_bytes": 17712,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-phase-gate\\scripts\\run_phase_gate.py --phase-id GOV-DRYRUN --output-dir c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\phase_gate --dry-run",
+    "exit_code": 0,
+    "duration_ms": 150.65,
+    "stdout_preview": "{\n  \"phase_id\": \"GOV-DRYRUN\",\n  \"verdict\": \"CONDITIONAL\",\n  \"dry_run\": true,\n  \"data_nature\": \"SIMULATED\",\n  \"artifacts\": {\n    \"phase_input_snapshot\": \"C:\\\\Users\\\\ricar\\\\OneDrive\\\\Documentos\\\\Dev\\\\CsBot\\\\.agents\\\\audit\\\\skill_dry_runs\\\\phase_gate\\\\p"
+  },
+  {
+    "skill": "csbot-report-skeptic",
+    "script": "audit_executive_report.py",
+    "sha256": "b316b8a2eea5e243c0683192088078b715dda53e618beb66e8dd0349b2a74f62",
+    "size_bytes": 20425,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-report-skeptic\\scripts\\audit_executive_report.py --output-json c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\skeptic_audit.json --dry-run",
+    "exit_code": 0,
+    "duration_ms": 152.35,
+    "stdout_preview": "{\n  \"schema_version\": \"1.0.0\",\n  \"generated_at_utc\": \"2026-11-07T16:47:03.039921+00:00\",\n  \"report_path\": \"SIMULATED_DRY_RUN_SAMPLE\",\n  \"report_sha256\": null,\n  \"workspace_root\": \"C:\\\\Users\\\\ricar\\\\OneDrive\\\\Documentos\\\\Dev\\\\CsBot\",\n  \"dry_run\": true"
+  },
+  {
+    "skill": "csbot-dataset-forensics",
+    "script": "check_split_leakage.py",
+    "sha256": "d29305f8852538ea826182295ed90d7b01ce5731df5be9383b5ec67cb5c16929",
+    "size_bytes": 23101,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-dataset-forensics\\scripts\\check_split_leakage.py --output-json c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\leakage.json --dry-run",
+    "exit_code": 0,
+    "duration_ms": 144.38,
+    "stdout_preview": "{\n  \"script\": \"check_split_leakage.py\",\n  \"mode\": \"DRY_RUN\",\n  \"data_nature\": \"SIMULATED\",\n  \"governance_rules\": [\n    \"01-evidence-before-claims\",\n    \"02-no-test-contamination\",\n    \"03-zero-support-is-na\",\n    \"04-synthetic-data-labeling\"\n  ],\n  \""
+  },
+  {
+    "skill": "csbot-dataset-forensics",
+    "script": "reconcile_dataset_counts.py",
+    "sha256": "b7ffd2a9063fd1368578cbb10930c4428ad9a09d73e857a5291f4aa90926a687",
+    "size_bytes": 22563,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-dataset-forensics\\scripts\\reconcile_dataset_counts.py --output-json c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\reconcile.json --dry-run",
+    "exit_code": 0,
+    "duration_ms": 142.07,
+    "stdout_preview": "{\n  \"script\": \"reconcile_dataset_counts.py\",\n  \"mode\": \"DRY_RUN\",\n  \"data_nature\": \"SIMULATED\",\n  \"governance_rules\": [\n    \"01-evidence-before-claims\",\n    \"04-synthetic-data-labeling\"\n  ],\n  \"tracked_metrics\": [\n    \"source_file_count\",\n    \"accept"
+  },
+  {
+    "skill": "csbot-dataset-forensics",
+    "script": "audit_parquet_rows.py",
+    "sha256": "59f92900b70f35a5f7155021933d1a3ab42dfc6faf433e808657e371c34393b5",
+    "size_bytes": 16800,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-dataset-forensics\\scripts\\audit_parquet_rows.py --output-json c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\parquet_audit.json --dry-run",
+    "exit_code": 0,
+    "duration_ms": 140.96,
+    "stdout_preview": "{\n  \"script\": \"audit_parquet_rows.py\",\n  \"mode\": \"DRY_RUN\",\n  \"data_nature\": \"SIMULATED\",\n  \"governance_rules\": [\n    \"01-evidence-before-claims\",\n    \"04-synthetic-data-labeling\"\n  ],\n  \"required_columns\": [\n    \"demo_id\",\n    \"round_id\",\n    \"tick\""
+  },
+  {
+    "skill": "csbot-dataset-forensics",
+    "script": "verify_sample_provenance.py",
+    "sha256": "e6da72636731064ba84004a11f0d86198c417dd3c1e26a55081e4e28cf5b57b8",
+    "size_bytes": 14104,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-dataset-forensics\\scripts\\verify_sample_provenance.py --output-json c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\provenance.json --dry-run",
+    "exit_code": 0,
+    "duration_ms": 142.04,
+    "stdout_preview": "{\n  \"script\": \"verify_sample_provenance.py\",\n  \"mode\": \"DRY_RUN\",\n  \"data_nature\": \"SIMULATED\",\n  \"governance_rules\": [\n    \"01-evidence-before-claims\",\n    \"04-synthetic-data-labeling\",\n    \"05-human-review-integrity\"\n  ],\n  \"required_provenance_fie"
+  },
+  {
+    "skill": "csbot-dataset-forensics",
+    "script": "detect_templated_outputs.py",
+    "sha256": "2069a7bd7fb10b73a2434347e3e0bd331432aa4ab06fed192a6ab6c643247663",
+    "size_bytes": 16194,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-dataset-forensics\\scripts\\detect_templated_outputs.py --output-json c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\templated.json --dry-run",
+    "exit_code": 0,
+    "duration_ms": 156.4,
+    "stdout_preview": "{\n  \"script\": \"detect_templated_outputs.py\",\n  \"mode\": \"DRY_RUN\",\n  \"data_nature\": \"SIMULATED\",\n  \"governance_rules\": [\n    \"01-evidence-before-claims\",\n    \"04-synthetic-data-labeling\"\n  ],\n  \"templated_detected\": false,\n  \"verdict\": \"CONDITIONAL\",\n"
+  },
+  {
+    "skill": "csbot-dataset-forensics",
+    "script": "audit_label_support.py",
+    "sha256": "2f4c90954d3055ace527d2400bd995fc2cf4339bfe05a2421efceafe8b921feb",
+    "size_bytes": 20171,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-dataset-forensics\\scripts\\audit_label_support.py --output-json c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\label_support.json --dry-run",
+    "exit_code": 0,
+    "duration_ms": 140.47,
+    "stdout_preview": "{\n  \"script\": \"audit_label_support.py\",\n  \"mode\": \"DRY_RUN\",\n  \"data_nature\": \"SIMULATED\",\n  \"governance_rules\": [\n    \"01-evidence-before-claims\",\n    \"02-no-test-contamination\",\n    \"03-zero-support-is-na\",\n    \"04-synthetic-data-labeling\"\n  ],\n  \""
+  },
+  {
+    "skill": "csbot-model-validator",
+    "script": "validate_model_canonical.py",
+    "sha256": "723e32394f7e81fd51e518801f1e541312936cfb3c3e84f91f9bd197a6b1242a",
+    "size_bytes": 18658,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-model-validator\\scripts\\validate_model_canonical.py --output-dir c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\model_eval --dry-run",
+    "exit_code": 0,
+    "duration_ms": 154.02,
+    "stdout_preview": "{\n  \"schema_version\": \"1.0.0\",\n  \"generated_at_utc\": \"2026-11-07T16:47:04.062268+00:00\",\n  \"split_name\": \"test\",\n  \"dry_run\": true,\n  \"data_nature\": \"SIMULATED\",\n  \"verdict\": \"CONDITIONAL\",\n  \"checkpoint\": {\n    \"provided\": false,\n    \"exists\": false"
+  },
+  {
+    "skill": "csbot-runtime-validation",
+    "script": "verify_runtime_session.py",
+    "sha256": "fa0623a5552a7ab6f39c4e7633f8f33f0bf6b5832b3cf28cd5e71784e3c71106",
+    "size_bytes": 9749,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-runtime-validation\\scripts\\verify_runtime_session.py --output-json c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\runtime_val.json --dry-run",
+    "exit_code": 0,
+    "duration_ms": 261.17,
+    "stdout_preview": "{\n  \"schema_version\": \"1.0.0\",\n  \"generated_at_utc\": \"2026-11-07T16:47:04.327684+00:00\",\n  \"workspace_root\": \"C:\\\\Users\\\\ricar\\\\OneDrive\\\\Documentos\\\\Dev\\\\CsBot\",\n  \"session_dir\": null,\n  \"dry_run\": true,\n  \"data_nature\": \"SIMULATED\",\n  \"simulation_p"
+  },
+  {
+    "skill": "csbot-graph-impact",
+    "script": "analyze_graph_impact.py",
+    "sha256": "8f618ab32766d196495683ac551674a71cf0689c047b46a058d4616542f3aa7b",
+    "size_bytes": 23792,
+    "command": "python c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\skills\\csbot-graph-impact\\scripts\\analyze_graph_impact.py --output-json c:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\graph_impact.json --dry-run",
+    "exit_code": 0,
+    "duration_ms": 1007.61,
+    "stdout_preview": "{\n  \"schema_version\": \"1.0.0\",\n  \"generated_at_utc\": \"2026-11-07T16:47:05.323897+00:00\",\n  \"workspace_root\": \"C:\\\\Users\\\\ricar\\\\OneDrive\\\\Documentos\\\\Dev\\\\CsBot\",\n  \"graph_path\": \"C:\\\\Users\\\\ricar\\\\OneDrive\\\\Documentos\\\\Dev\\\\CsBot\\\\graphify-out\\\\grap"
+  }
+]

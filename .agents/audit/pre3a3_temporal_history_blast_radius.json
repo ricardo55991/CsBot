@@ -1,0 +1,263 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T21:05:00Z",
+  "audit_phase": "Pre-Phase-3A.3 / Requirement R2",
+  "validator": "Graph Analyst (Explorer 2)",
+  "validation_method": "AGENT_REVIEWED",
+  "verdict": "CHECKPOINT_TRAINED_WITH_SYNTHETIC_HISTORY",
+  "data_nature": "INFERRED",
+  "workspace_files_nature": "REAL",
+  "target_flow": "NPZ -> DataLoader -> self_history -> teammate_history -> PositioningTransformerV1.forward -> checkpoint",
+  "graph_impact_dimensions": {
+    "entry_points": [
+      "tools/phase3a_training/train_full.py:run_full_training (L302-L378)",
+      "tools/phase3a_training/train_full.py:train_single_seed (L62-L300)",
+      "tools/phase3a_training/evaluate_positioning_v1_canonical.py:run_canonical_inference (L47-L222)",
+      "tools/phase3a_training/finetune_state_head.py:main (L362-L610)",
+      "tools/phase3a_training/dry_run.py:main (L30-L202)"
+    ],
+    "writers": [
+      "tools/phase2_dataset/step9_to_18_build_datasets.py:build_datasets_and_reports (L22-L519; grava apenas current_pos [x,y,z] em Parquet, sem janela temporal)",
+      "tools/phase3a_training/data_utils.py:load_and_preprocess_shard (L191-L309; sintetiza self_history com np.linspace e teammate_history com offsets)",
+      "tools/phase2_dataset/dataloaders.py:PositioningDatasetV1.__getitem__ (L66-L109; sintetiza self_history estático e teammate_history zerado)",
+      "tools/phase3a_training/train_full.py:train_single_seed (L62-L300; otimiza pesos do PositioningTransformerV1 via AdamW)",
+      "tools/phase3a_training/train_full.py:run_full_training (L302-L378; copia melhor checkpoint para models/positioning/de_mirage_positioning_v1.pt)"
+    ],
+    "readers": [
+      "tools/phase3a_training/positioning_model.py:PositioningTransformerV1.forward (L136-L206; consome history e teammates sintetizados)",
+      "tools/phase3a_training/positioning_model.py:PositioningMultitaskLoss.forward (L228-L280; calcula loss sobre as 5 cabeças)",
+      "tools/phase3a_training/evaluate_positioning_v1_canonical.py:run_canonical_inference (L47-L222; avalia modelo no Test Set Canônico)",
+      "tools/phase3a_training/finetune_state_head.py (L362-L610; fine-tuning e avaliação de ablação)",
+      "tools/phase3a_training/reconcile_ablation_and_calibration.py (L115-L350; calibração ECE e temperature scaling)",
+      "src/CsBotManager/CsBotManagerPlugin.cs (futuro reader em runtime C#, ainda não integrado com ONNX)"
+    ],
+    "authoritative_state": [
+      "models/positioning/de_mirage_positioning_v1.pt:model_state_dict (pesos neurais mestre aprendidos a partir de drift sintético)",
+      "training_runs/positioning_v1/seed_42027/best_checkpoint.pt:model_state_dict (checkpoint de origem da seed vencedora 42027)",
+      "datasets/mirage_v2/positioning/positioning_sequences_v1/shard_*.parquet (fonte das coordenadas current_pos e targets supervisionados)"
+    ],
+    "fallbacks": [
+      "tools/phase3a_training/positioning_model.py:PositioningTransformerV1.forward (L159-L165; fallback para zeros em team_idx, role_idx e stage_idx caso sejam None)",
+      "tools/phase3a_training/positioning_model.py:PositioningTransformerV1.forward (L190-L197; masked_fill(-1e9) para candidate_spot_mask)",
+      "src/CsBotManager/MapProfileManager.cs (fallback de runtime C# para spots táticos de de_mirage.json quando inferência não está ativa)"
+    ],
+    "caches": [
+      "tools/phase3a_training/data_utils.py:InMemoryPositioningDataset (cache em memória RAM dos tensores completos carregados dos shards Parquet)",
+      "models/positioning/de_mirage_positioning_v1.pt (checkpoint persistido no disco)"
+    ],
+    "side_effects": [
+      "As camadas do Transformer (Linear player_proj, Linear teammate_proj, LayerNorm, MultiheadAttention) convergiram aprendendo representações condicionadas a uma inclinação artificial fixa (drift linear np.linspace(-0.01, 0.0, 32) no eixo X e companheiros estáticos paralelos)",
+      "Incompatibilidade com dados de inferência de runtime CS2 real caso um buffer temporal físico com velocidades e acelerações reais seja fornecido ao modelo sem retreinamento",
+      "Métricas oficiais de F1, Top-1 Spot e MRR reportadas nos relatórios da Fase 3A foram obtidas sobre histórico sintético e não refletem generalização temporal sobre partidas reais"
+    ],
+    "telemetry": [
+      "training_runs/positioning_v1/seed_*/metrics_train.jsonl (métricas de treino registradas por época)",
+      "training_runs/positioning_v1/seed_*/metrics_validation.jsonl (métricas de validação registradas por época)",
+      "training_runs/positioning_v1/seed_*/training_log.txt (logs textuais completos da execução de treino)",
+      "training_runs/positioning_v1/best_model_selection.json (telemetria comparativa entre as 3 seeds)"
+    ],
+    "tests": [
+      "tests/test_phase3a_positioning_training.py",
+      "tests/test_phase3a_1_forensic_reconciliation.py",
+      "tests/test_phase3a_2_objective_save_enrichment.py"
+    ],
+    "blast_radius": [
+      "models/positioning/de_mirage_positioning_v1.pt",
+      "training_runs/positioning_v1/seed_42026/best_checkpoint.pt",
+      "training_runs/positioning_v1/seed_42026/last_checkpoint.pt",
+      "training_runs/positioning_v1/seed_42027/best_checkpoint.pt",
+      "training_runs/positioning_v1/seed_42027/last_checkpoint.pt",
+      "training_runs/positioning_v1/seed_42028/best_checkpoint.pt",
+      "training_runs/positioning_v1/seed_42028/last_checkpoint.pt",
+      "training_runs/positioning_v1/experiment_a_state_head_only/checkpoint_experiment_a.pt",
+      "training_runs/positioning_v1/experiment_b_partial_finetune/checkpoint_experiment_b.pt",
+      "tools/phase3a_training/data_utils.py",
+      "tools/phase3a_training/train_full.py",
+      "tools/phase3a_training/evaluate_positioning_v1_canonical.py",
+      "tools/phase3a_training/finetune_state_head.py",
+      "tools/phase3a_training/dry_run.py",
+      "tools/phase2_dataset/dataloaders.py",
+      "tools/phase2_dataset/step9_to_18_build_datasets.py",
+      "datasets/mirage_v2/parquet_physical_schema_audit.json",
+      "datasets/mirage_v2/dataloader_validation_report.md",
+      "datasets/mirage_v2/reports/dataloader_validation_report.md"
+    ]
+  },
+  "temporal_investigation_details": {
+    "npz_extraction": {
+      "source_npz_directory": "F:\\CS2_MLMove_Pipeline\\extracted_tensors\\de_mirage",
+      "total_npz_files_on_disk": 444,
+      "tensor_key_features": "X",
+      "tensor_key_targets": "Y",
+      "tensor_sample_shape": "(12730, 10, 18)",
+      "tensor_sample_dtype": "float32",
+      "loading_function_in_pipeline": "tools/phase2_dataset/step9_to_18_build_datasets.py:build_datasets_and_reports (L108-L115)",
+      "loading_code_snippet": "with np.load(fpath) as data: X = data['X']; Y = data['Y']",
+      "data_saved_to_parquet": "Apenas current_pos: [round(cur_x, 1), round(cur_y, 1), round(cur_z, 1)] no frame f_idx (L268). Os 32 frames históricos anteriores do tensor X NUNCA foram persistidos em Parquet.",
+      "presence_in_phase3a_training": "NENHUMA carga de NPZ ocorre em tools/phase3a_training/train_full.py ou data_utils.py."
+    },
+    "window_construction": {
+      "training_window_function": "tools/phase3a_training/data_utils.py:load_and_preprocess_shard (L191-L309)",
+      "self_history_synthesis_lines": "L218-L228",
+      "teammates_synthesis_lines": "L230-L238",
+      "audited_fase22_window_function": "tools/phase2_dataset/dataloaders.py:PositioningDatasetV1.__getitem__ (L66-L109)",
+      "fictitious_forensic_script": "tools/phase2_dataset/forensic_step4_temporal_windows.py:main (L53-L78; gerou ticks sintéticos via base_tick = round_idx * 1920 + 320)"
+    },
+    "np_linspace_investigation": {
+      "training_callsite": {
+        "file": "tools/phase3a_training/data_utils.py",
+        "line": 226,
+        "function": "load_and_preprocess_shard",
+        "code": "step_drift = np.linspace(-0.01, 0.0, 32, dtype=np.float32).reshape(1, 32, 1)",
+        "application_line": 227,
+        "application_code": "history_arr[:, :, 0] += step_drift[:, :, 0]",
+        "classification": "UNLABELED_SYNTHETIC_INPUT",
+        "reaches_training_loss": true,
+        "reaches_validation_loss": true,
+        "reaches_test_evaluation": true
+      },
+      "other_repo_callsites": [
+        {
+          "file": "tools/phase3a_training/reconcile_ablation_and_calibration.py",
+          "line": 37,
+          "function": "compute_ece",
+          "code": "bins = np.linspace(0.0, 1.0, num_bins + 1)",
+          "classification": "LEGITIMATE_INTERPOLATION",
+          "purpose": "Binning para cálculo de Expected Calibration Error",
+          "reaches_model_input": false
+        },
+        {
+          "file": "tools/phase3a_training/reconcile_ablation_and_calibration.py",
+          "line": 71,
+          "function": "compute_adaptive_ece",
+          "code": "quantiles = np.linspace(0, 100, num_bins + 1)",
+          "classification": "LEGITIMATE_INTERPOLATION",
+          "purpose": "Quantiles para Adaptive ECE",
+          "reaches_model_input": false
+        },
+        {
+          "file": "tools/phase3a_training/reconcile_ablation_and_calibration.py",
+          "line": 324,
+          "function": "main",
+          "code": "t_candidates = np.linspace(0.5, 3.0, 51)",
+          "classification": "LEGITIMATE_INTERPOLATION",
+          "purpose": "Grid search para Temperature Scaling",
+          "reaches_model_input": false
+        },
+        {
+          "file": "tools/phase3a_training/evaluate.py",
+          "line": 287,
+          "function": "plot_calibration_curve",
+          "code": "bins = np.linspace(0.0, 1.0, 11)",
+          "classification": "REPORT_ONLY",
+          "purpose": "Intervalos para diagrama de calibração",
+          "reaches_model_input": false
+        },
+        {
+          "file": "tools/phase3a_training/finetune_state_head.py",
+          "line": 325,
+          "function": "expected_calibration_error",
+          "code": "bin_boundaries = torch.linspace(0, 1, n_bins + 1)",
+          "classification": "LEGITIMATE_INTERPOLATION",
+          "purpose": "Fronteiras de bins para ECE em PyTorch",
+          "reaches_model_input": false
+        }
+      ]
+    },
+    "input_tensors_contract": {
+      "history": {
+        "shape": "[B, 32, 18]",
+        "dtype": "torch.float32",
+        "data_nature": "TEMPLATED_AND_SYNTHETIC",
+        "feature_composition": {
+          "feature_0_x": "cur_pos_x / 3000.0 + np.linspace(-0.01, 0.0, 32)",
+          "feature_1_y": "cur_pos_y / 3000.0 (estatico nos 32 timesteps)",
+          "feature_2_z": "cur_pos_z / 3000.0 (estatico nos 32 timesteps)",
+          "feature_3_health": "1.0 (estatico nos 32 timesteps)",
+          "feature_4_is_alive": "1.0 (estatico nos 32 timesteps)",
+          "features_5_to_17": "0.0 (totalmente zeradas nos 32 timesteps)"
+        },
+        "temporal_variance": "Zero em Y, Z, Health, IsAlive e features 5..17; artificial constante em X gerada por np.linspace"
+      },
+      "teammates": {
+        "shape": "[B, 32, 4, 18]",
+        "dtype": "torch.float32",
+        "data_nature": "SYNTHETIC",
+        "feature_composition": {
+          "feature_0_x": "(cur_pos_x / 3000.0) + (i + 1) * 0.05",
+          "feature_1_y": "(cur_pos_y / 3000.0) - (i + 1) * 0.05",
+          "feature_2_z": "cur_pos_z / 3000.0",
+          "feature_3_health": "1.0",
+          "feature_4_is_alive": "1.0",
+          "features_5_to_17": "0.0"
+        },
+        "temporal_variance": "Zero absoluto ao longo dos 32 passos de tempo para cada um dos 4 companheiros"
+      },
+      "candidate_mask": {
+        "shape": "[B, 53]",
+        "dtype": "torch.bool",
+        "value": "Todos os 53 bits True (np.ones((n, 53), dtype=bool))"
+      },
+      "team_idx": {
+        "shape": "[B]",
+        "dtype": "torch.int64",
+        "values": "0 (CT), 1 (TR), 2 (ANY)"
+      },
+      "role_idx": {
+        "shape": "[B]",
+        "dtype": "torch.int64",
+        "values": "0 a 9 conforme ROLE_MAP"
+      },
+      "stage_idx": {
+        "shape": "[B]",
+        "dtype": "torch.int64",
+        "values": "0 a 5 conforme STAGE_MAP"
+      }
+    },
+    "dataloader_discrepancy": {
+      "phase22_audited_dataloader": {
+        "class": "tools/phase2_dataset/dataloaders.py:PositioningDatasetV1",
+        "data_loading": "Por item individual em __getitem__ sobre Pandas DataFrame",
+        "history_construction": "history[:, 0..2] = cur_pos / 3000.0, health=1.0, is_alive=1.0. Zero variancia temporal, sem np.linspace.",
+        "teammates_construction": "np.zeros((32, 4, 18), dtype=np.float32) (100% zerado)",
+        "categorical_context": "Nenhum tensor de team_idx, role_idx ou stage_idx retornado",
+        "targets_provided": "Apenas 3 cabeças: positioning_state, next_sector, candidate_spot_idx (+ spot_loss_mask)"
+      },
+      "phase3a_actual_training_dataloader": {
+        "class": "tools/phase3a_training/data_utils.py:InMemoryPositioningDataset",
+        "data_loading": "Pré-carregamento vetorizado em memória RAM por create_dataset_from_shards",
+        "history_construction": "history_arr[:, :, 0..2] = cur_pos / 3000.0 + np.linspace(-0.01, 0.0, 32) no eixo X",
+        "teammates_construction": "teammates_arr[:, :, i, :] preenchido com offsets artificiais (i+1)*0.05",
+        "categorical_context": "team_idx, role_idx, stage_idx incluidos",
+        "targets_provided": "5 cabeças completas: positioning_state, next_sector, candidate_spot_idx, transition, exit_trigger (+ spot_loss_mask)"
+      }
+    },
+    "split_path_uniformity": {
+      "train_split": "create_dataset_from_shards -> load_and_preprocess_shard (sintético)",
+      "validation_split": "create_dataset_from_shards -> load_and_preprocess_shard (sintético)",
+      "test_split": "evaluate_positioning_v1_canonical.py -> load_and_preprocess_shard (sintético)",
+      "challenge_split": "build_and_evaluate_challenge_set.py -> load_and_preprocess_shard (sintético)",
+      "conclusion": "UNIFORM_ACROSS_ALL_SPLITS: Nenhum split utilizou dados temporais reais dos arquivos NPZ."
+    }
+  },
+  "verified_artifact_hashes": {
+    "tools/phase2_dataset/step9_to_18_build_datasets.py": "81aa57a2c2e34aa785aeab67a5ccdca498247c5f39f322c5f9f9997b60e05b25",
+    "tools/phase2_dataset/dataloaders.py": "921836c8a9c4590f91a2ed3aa8da090a4470878bb8f6e66a8dc25997d198183d",
+    "tools/phase2_dataset/forensic_step4_temporal_windows.py": "c553f1df4837f5d950d1febd266a0f5bd7504be2a09089ea64f2c3f315b84136",
+    "tools/phase3a_training/data_utils.py": "d15c234e3a2ce73fe01663293b60a8a53166d73e8caf40254b36eef2e4ec8e45",
+    "tools/phase3a_training/positioning_model.py": "d98b6e4526a18a32a31702f88825899c950189a4243d365fb25cab0064371e9b",
+    "tools/phase3a_training/train_full.py": "ef9c32d386346dca33fda0b8ff274b2efab09585e53c95405de08481ac02b0d9",
+    "tools/phase3a_training/evaluate_positioning_v1_canonical.py": "1751469a8a43619e9d7c309fa79abf49f3d518efd5d173b99f13f8372fe1bf93",
+    "tools/phase3a_training/finetune_state_head.py": "e4747dff9458f33ad328b2e53fbcd0a58612307689627fa34dbae3e109371700",
+    "tools/phase3a_training/dry_run.py": "df7893fee3c1b875230b012974334548a9aa482285f4699b2ffbe225601f4c54",
+    "models/positioning/de_mirage_positioning_v1.pt": "e4b505a2a082bd348ca63b242e6daace869c4faf7168c42e9c7fe89106bf05f0",
+    "training_runs/positioning_v1/seed_42026/best_checkpoint.pt": "d7dc58ef216935d5c8202b3e4395ef5c0a80c790984a9758612031a17aaf79d0",
+    "training_runs/positioning_v1/seed_42027/best_checkpoint.pt": "e4b505a2a082bd348ca63b242e6daace869c4faf7168c42e9c7fe89106bf05f0",
+    "training_runs/positioning_v1/seed_42028/best_checkpoint.pt": "af99069189952aef0fe2a9070d328dd2179b131b046501036b4bfb0c590c779e",
+    "datasets/mirage_v2/parquet_physical_schema_audit.json": "e5f8ab93acd6a9cd487b4f98632ffe7a58234ae9fa80881c0b1b8ee58294b05b",
+    "datasets/mirage_v2/dataloader_validation_report.md": "9e791cc972f6355f1d7ebc14a4113edd4961674637da22fb56fc50fb412ac3cb",
+    "datasets/mirage_v2/positioning/positioning_sequences_v1/shard_000.parquet": "7d387973188f257ec20d38a291d68d7cf50d1d4fa3d773d38076023e8fb50d43",
+    "datasets/mirage_v2/positioning/canonical_test_set.parquet": "3a6de89c3ba5a91b2f494f37dbcc7a76ef366639262d2f991fc7f1f95aa60eb4",
+    "graphify-out/graph.json": "7a09693f1f6568803fa7f2ae7a0286cbe38c09f3900d08b96c6538f4eaa264f0"
+  }
+}

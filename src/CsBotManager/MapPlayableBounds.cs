@@ -20,7 +20,7 @@ public sealed class MapPlayableBounds
     public float MaxPlayableX { get; init; } = 2400f;
     public float MinPlayableY { get; init; } = -2700f;
     public float MaxPlayableY { get; init; } = 2400f;
-    public float MinPlayableZ { get; init; } = -280f;
+    public float MinPlayableZ { get; init; } = -350f; // Permite o Underpass / Subsolo da de_mirage (Z=-320f)
     public float MaxPlayableZ { get; init; } = 400f;
 
     private static readonly Dictionary<string, MapPlayableBounds> KnownMapBounds = new(StringComparer.OrdinalIgnoreCase)
@@ -38,7 +38,7 @@ public sealed class MapPlayableBounds
             MaxPlayableX = 2400f,
             MinPlayableY = -2700f,
             MaxPlayableY = 2400f,
-            MinPlayableZ = -280f,
+            MinPlayableZ = -350f, // Underpass Z = -320f
             MaxPlayableZ = 400f
         },
         ["de_dust2"] = new MapPlayableBounds

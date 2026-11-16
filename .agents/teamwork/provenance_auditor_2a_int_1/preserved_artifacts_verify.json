@@ -1,0 +1,72 @@
+{
+ "marker_path": "training_runs/positioning_v2_real_temporal/PAUSED_FOR_INTERMEDIATE_DOMAIN_ACQUISITION_STUDY.json",
+ "marker_bytes": 37114,
+ "marker_sha256": "465f4cb93e41cbc50fb86a8fb9e2544b901633e8d0282ee0a31fe9db9813efad",
+ "marker_bytes_match": true,
+ "marker_sha_match": true,
+ "inventory_entries": 95,
+ "total_artifacts_enumerated_declared": 95,
+ "total_bytes_declared": 212960002,
+ "total_bytes_rechecked": 212960002,
+ "matches": 95,
+ "ratio": "(95/95)",
+ "divergences": [],
+ "all_match": true,
+ "verification_status_declared": {
+  "inventory_artifacts_validated": 95,
+  "required_artifacts_present": 20,
+  "required_artifacts_missing": 0,
+  "temporal_shards_present": 6,
+  "label_sidecars_present": 6,
+  "sha256_format_violations": 0,
+  "mtime_stability_check": "PASS",
+  "validated_by": "AGENT_REVIEWED"
+ },
+ "artifact_class_counts_declared": {
+  "CONTRACT_OR_FROZEN_CONFIG": 8,
+  "EVIDENCE_OR_REPORT_JSON": 3,
+  "FORENSIC_AUDIT_JSON": 6,
+  "JSON_METADATA": 24,
+  "MANIFEST_OR_SNAPSHOT": 11,
+  "MARKDOWN_REPORT": 1,
+  "MODEL_CHECKPOINT_PYTORCH": 7,
+  "PARQUET_SHARD_OR_SIDECAR": 12,
+  "PLAIN_TEXT_LOG": 3,
+  "SHA256_SIDECAR": 1,
+  "TRAINING_ARTIFACT_JSON": 13,
+  "TRAINING_METRICS_JSONL": 6
+ },
+ "hashing_method": "Python hashlib.sha256 aplicado por streaming sobre open(path, 'rb') em blocos de 1 MiB (memória constante), executado por scratch/hash_preserved_artifacts.py; enumeração por os.walk recursivo e Path.iterdir na raiz do repositório. Os nomes dos artefatos sensíveis não são passados em linha de comando (compatibilidade com o hook protect-sensitive-files). Verificação de não-modificação: st_mtime_ns de cada arquivo comparado antes e depois da leitura — resultado PASS (nenhum mtime alterado).",
+ "sample_rows": [
+  {
+   "path": "datasets/mirage_v2/canonical_temporal_splits_v1.json",
+   "exists": true,
+   "size_match": true,
+   "hash_match": true
+  },
+  {
+   "path": "datasets/mirage_v2/contracts/aim_profiles_v1.json",
+   "exists": true,
+   "size_match": true,
+   "hash_match": true
+  },
+  {
+   "path": "datasets/mirage_v2/contracts/catalog_hash_reconciliation.json",
+   "exists": true,
+   "size_match": true,
+   "hash_match": true
+  },
+  {
+   "path": "datasets/mirage_v2/contracts/label_contract_v2.json",
+   "exists": true,
+   "size_match": true,
+   "hash_match": true
+  },
+  {
+   "path": "datasets/mirage_v2/contracts/mirage_spot_catalog_v3.json",
+   "exists": true,
+   "size_match": true,
+   "hash_match": true
+  }
+ ]
+}

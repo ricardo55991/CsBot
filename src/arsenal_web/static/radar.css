@@ -1,0 +1,616 @@
+/* ==============================================================================
+   CsBot Tactical Radar & Operations Center (Dark Command Center Style)
+   ============================================================================== */
+
+:root {
+    --bg-darkest: #07090d;
+    --bg-darker: #0d1117;
+    --bg-card: #131922;
+    --bg-card-hover: #182230;
+    --border-color: #202b3a;
+    --border-highlight: #00e5ff33;
+
+    --text-primary: #f0f6fc;
+    --text-secondary: #8b949e;
+    --text-muted: #586069;
+
+    --accent-cyan: #00e5ff;
+    --accent-green: #00ff66;
+    --accent-gold: #ffd700;
+    --accent-red: #ff3344;
+    --accent-orange: #ffa500;
+    --accent-purple: #b388ff;
+
+    --team-ct: #388bfd;
+    --team-tr: #f0883e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-darkest);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    user-select: none;
+}
+
+.radar-app {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* ==============================================================================
+   1. Coluna Esquerda: 55% Radar 2D Viewport (Enquadramento Perfeito 1:1)
+   ============================================================================== */
+.radar-viewport {
+    flex: 0 0 55%;
+    max-width: 55%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(circle at center, #101722 0%, var(--bg-darkest) 100%);
+    position: relative;
+    border-right: 1px solid var(--border-color);
+}
+
+.radar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: rgba(13, 17, 23, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 10;
+}
+
+.map-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: var(--accent-cyan);
+}
+
+.pulse-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-cyan);
+    animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 15px var(--accent-cyan); }
+    100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.sub-badge {
+    background: rgba(0, 229, 255, 0.12);
+    border: 1px solid var(--border-highlight);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.radar-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.toggle-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.toggle-control input {
+    cursor: pointer;
+    accent-color: var(--accent-cyan);
+}
+
+.btn-icon {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-icon:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+.canvas-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 10px;
+    overflow: hidden;
+}
+
+#radarCanvas {
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(0, 229, 255, 0.15);
+    background: #000;
+}
+
+/* Alerta Flutuante C4 */
+.c4-banner {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 20px;
+    background: rgba(26, 12, 14, 0.92);
+    border: 1px solid var(--accent-red);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(255, 51, 68, 0.35);
+    backdrop-filter: blur(10px);
+    z-index: 20;
+    transition: opacity 0.3s;
+}
+
+.c4-banner.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.c4-icon {
+    font-size: 26px;
+    animation: flash 1s infinite alternate;
+}
+
+@keyframes flash {
+    0% { transform: scale(1); filter: brightness(1); }
+    100% { transform: scale(1.15); filter: brightness(1.6); }
+}
+
+.c4-title {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--accent-red);
+    letter-spacing: 0.5px;
+}
+
+.c4-timer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.c4-defuse-bar {
+    width: 180px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.c4-defuse-bar.hidden {
+    display: none;
+}
+
+.defuse-progress {
+    height: 100%;
+    width: 0%;
+    background: var(--accent-cyan);
+    transition: width 0.1s linear;
+}
+
+/* ==============================================================================
+   2. Coluna Direita: 45% Central de Operações Táticas (TOC - Broadcast Pro)
+   ============================================================================== */
+.toc-sidebar {
+    flex: 0 0 45%;
+    max-width: 45%;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--bg-darker);
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 14px;
+}
+
+.toc-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 14px;
+}
+
+.card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Placar e Economia */
+.score-board {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.team-score {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.team-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.team-score.ct .team-name { color: var(--team-ct); }
+.team-score.tr .team-name { color: var(--team-tr); }
+
+.score-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.score-vs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.round-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.phase-badge {
+    background: rgba(0, 229, 255, 0.12);
+    border: 1px solid var(--border-highlight);
+    color: var(--accent-cyan);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.economy-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.econ-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(0, 255, 102, 0.15);
+    color: var(--accent-green);
+    border: 1px solid rgba(0, 255, 102, 0.3);
+}
+
+.econ-cash {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Card Tática */
+.tactic-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 6px;
+    line-height: 1.3;
+}
+
+.tactic-summary {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.tactic-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.meta-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+}
+
+.meta-pill.timer {
+    background: rgba(0, 229, 255, 0.15);
+    color: var(--accent-cyan);
+    border: 1px solid var(--border-highlight);
+}
+
+.alerts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.alert-item {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent-orange);
+    background: rgba(255, 165, 0, 0.1);
+    border-left: 3px solid var(--accent-orange);
+    padding: 3px 8px;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Card de Voz */
+.voice-card {
+    background: linear-gradient(145deg, #131922 0%, #16202c 100%);
+    border: 1px solid var(--border-highlight);
+}
+
+.voice-cmd {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.voice-cmd i {
+    color: var(--text-muted);
+}
+
+.voice-action {
+    font-size: 11px;
+    color: var(--accent-cyan);
+    line-height: 1.3;
+}
+
+/* Roster / Bots */
+.roster-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.section-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.roster-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+
+.roster-list {
+    flex: 1;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    align-content: start;
+    padding-right: 2px;
+}
+
+.roster-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 6px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: background 0.2s;
+}
+
+.roster-card.is-human {
+    grid-column: span 2;
+    border-color: var(--accent-gold);
+    background: rgba(255, 215, 0, 0.05);
+}
+
+.roster-card.dead {
+    opacity: 0.45;
+    filter: grayscale(0.8);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-identity {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.role-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+.role-badge.awp { background: rgba(179, 136, 255, 0.2); color: var(--accent-purple); border: 1px solid var(--accent-purple); }
+.role-badge.entry { background: rgba(255, 51, 68, 0.2); color: var(--accent-red); border: 1px solid var(--accent-red); }
+.role-badge.rotator { background: rgba(0, 229, 255, 0.2); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+.role-badge.anchor { background: rgba(0, 255, 102, 0.2); color: var(--accent-green); border: 1px solid var(--accent-green); }
+.role-badge.human { background: rgba(255, 215, 0, 0.25); color: var(--accent-gold); border: 1px solid var(--accent-gold); }
+
+.player-name {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.weapon-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.card-mid {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hp-bar-bg {
+    flex: 1;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.hp-bar-fill {
+    height: 100%;
+    background: var(--accent-green);
+    border-radius: 3px;
+    transition: width 0.2s;
+}
+
+.hp-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    width: 28px;
+    text-align: right;
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.spot-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.stance-pill {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.stance-pill.passivo { color: #88c0d0; }
+.stance-pill.jiggle { color: var(--accent-gold); }
+.stance-pill.poke { color: var(--accent-red); }
+.stance-pill.oneanddone { color: var(--accent-orange); }
+
+/* Ações Rápidas */
+.action-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 10px;
+}
+
+.btn-action {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-card);
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-action:hover {
+    filter: brightness(1.2);
+    transform: translateY(-1px);
+}
+
+.btn-action.execute { background: rgba(0, 229, 255, 0.15); border-color: var(--accent-cyan); color: var(--accent-cyan); }
+.btn-action.rotate { background: rgba(255, 215, 0, 0.15); border-color: var(--accent-gold); color: var(--accent-gold); }
+.btn-action.flash { background: rgba(255, 165, 0, 0.15); border-color: var(--accent-orange); color: var(--accent-orange); }
+.btn-action.pause { background: rgba(255, 51, 68, 0.15); border-color: var(--accent-red); color: var(--accent-red); }
+
+/* Scrollbar refinada */
+.toc-sidebar::-webkit-scrollbar,
+.roster-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-sidebar::-webkit-scrollbar-thumb,
+.roster-list::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}

@@ -1,0 +1,5654 @@
+{
+  "generated_at": "2026-11-04 16:29:59",
+  "map_profile_file": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapProfiles\\de_mirage.json",
+  "spots": 45,
+  "classification_counts": {
+    "WRONG_SECTOR": 19,
+    "VALID": 7,
+    "SMALL_ADJUSTMENT": 12,
+    "INSUFFICIENT_EVIDENCE": 6,
+    "WRONG_HEIGHT": 1
+  },
+  "method": {
+    "place_model": "kNN k=30 sobre 420739 amostras last_place_name (8 .dem), metrica dx^2+dy^2+(2dz)^2",
+    "walkability": "proxy empirico: 99617 voxels 16x16x32u ocupados por pes de jogadores vivos; NAO e projecao em NavMesh",
+    "hold_events": "69320 eventos (v2d<35.0, >= 1.5s, raio<= 64.0u); 446 descartados por deriva",
+    "clusters": "picos de densidade (celula 24.0u, faixa Z 56.0u, min 60), atribuicao <= 120.0u com dz*2",
+    "role_filter": "somente AWP (feature arma); papeis reais ausentes nas npz (role_code sintetico)",
+    "phase_filter": "tempo desde o reset do round (freeze removido); bomb_planted ausente nas npz"
+  },
+  "clusters": [
+    {
+      "cluster_id": 6,
+      "centroid": [
+        -1025.0,
+        -742.4,
+        -263.5
+      ],
+      "medoid": [
+        -1038.9,
+        -728.5,
+        -264.0
+      ],
+      "valve_place": "Middle",
+      "place_purity": 1.0,
+      "sample_count": 977,
+      "unique_demos": 347,
+      "unique_player_instances": 665,
+      "unique_team_names": 238,
+      "median_dwell_s": 2.62,
+      "ct_ratio": 0.121,
+      "tr_ratio": 0.879,
+      "awp_ratio": 0.097,
+      "phase_ratio": {
+        "early_le20s": 0.429,
+        "mid_20_55s": 0.521,
+        "late_gt55s": 0.05
+      },
+      "spread_std2d_u": 62.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.72
+    },
+    {
+      "cluster_id": 83,
+      "centroid": [
+        412.9,
+        -672.4,
+        -162.1
+      ],
+      "medoid": [
+        397.0,
+        -679.0,
+        -165.2
+      ],
+      "valve_place": "TopofMid",
+      "place_purity": 1.0,
+      "sample_count": 1260,
+      "unique_demos": 343,
+      "unique_player_instances": 585,
+      "unique_team_names": 227,
+      "median_dwell_s": 2.56,
+      "ct_ratio": 0.002,
+      "tr_ratio": 0.998,
+      "awp_ratio": 0.048,
+      "phase_ratio": {
+        "early_le20s": 0.574,
+        "mid_20_55s": 0.413,
+        "late_gt55s": 0.013
+      },
+      "spread_std2d_u": 84.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.66
+    },
+    {
+      "cluster_id": 50,
+      "centroid": [
+        -1015.4,
+        -2477.1,
+        -168.0
+      ],
+      "medoid": [
+        -1011.5,
+        -2479.9,
+        -168.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.6,
+      "sample_count": 1414,
+      "unique_demos": 342,
+      "unique_player_instances": 516,
+      "unique_team_names": 241,
+      "median_dwell_s": 3.94,
+      "ct_ratio": 0.996,
+      "tr_ratio": 0.004,
+      "awp_ratio": 0.837,
+      "phase_ratio": {
+        "early_le20s": 0.581,
+        "mid_20_55s": 0.341,
+        "late_gt55s": 0.079
+      },
+      "spread_std2d_u": 57.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.816
+    },
+    {
+      "cluster_id": 70,
+      "centroid": [
+        -288.7,
+        -2162.7,
+        -173.4
+      ],
+      "medoid": [
+        -289.8,
+        -2161.5,
+        -173.9
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 1287,
+      "unique_demos": 339,
+      "unique_player_instances": 646,
+      "unique_team_names": 231,
+      "median_dwell_s": 3.25,
+      "ct_ratio": 0.808,
+      "tr_ratio": 0.192,
+      "awp_ratio": 0.065,
+      "phase_ratio": {
+        "early_le20s": 0.511,
+        "mid_20_55s": 0.392,
+        "late_gt55s": 0.096
+      },
+      "spread_std2d_u": 46.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.807
+    },
+    {
+      "cluster_id": 174,
+      "centroid": [
+        176.7,
+        -194.8,
+        -151.9
+      ],
+      "medoid": [
+        176.4,
+        -206.6,
+        -152.0
+      ],
+      "valve_place": "TopofMid",
+      "place_purity": 1.0,
+      "sample_count": 890,
+      "unique_demos": 338,
+      "unique_player_instances": 583,
+      "unique_team_names": 233,
+      "median_dwell_s": 2.69,
+      "ct_ratio": 0.002,
+      "tr_ratio": 0.998,
+      "awp_ratio": 0.139,
+      "phase_ratio": {
+        "early_le20s": 0.757,
+        "mid_20_55s": 0.231,
+        "late_gt55s": 0.011
+      },
+      "spread_std2d_u": 38.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.798
+    },
+    {
+      "cluster_id": 284,
+      "centroid": [
+        268.1,
+        -2340.8,
+        -40.0
+      ],
+      "medoid": [
+        288.1,
+        -2373.4,
+        -40.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 1076,
+      "unique_demos": 328,
+      "unique_player_instances": 570,
+      "unique_team_names": 234,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.056,
+      "tr_ratio": 0.944,
+      "awp_ratio": 0.134,
+      "phase_ratio": {
+        "early_le20s": 0.527,
+        "mid_20_55s": 0.375,
+        "late_gt55s": 0.098
+      },
+      "spread_std2d_u": 66.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.718
+    },
+    {
+      "cluster_id": 82,
+      "centroid": [
+        319.2,
+        -1670.7,
+        -179.1
+      ],
+      "medoid": [
+        321.1,
+        -1708.1,
+        -176.0
+      ],
+      "valve_place": "TRamp",
+      "place_purity": 1.0,
+      "sample_count": 910,
+      "unique_demos": 322,
+      "unique_player_instances": 572,
+      "unique_team_names": 230,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.079,
+      "tr_ratio": 0.921,
+      "awp_ratio": 0.13,
+      "phase_ratio": {
+        "early_le20s": 0.584,
+        "mid_20_55s": 0.329,
+        "late_gt55s": 0.088
+      },
+      "spread_std2d_u": 55.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.752
+    },
+    {
+      "cluster_id": 17,
+      "centroid": [
+        586.1,
+        -1483.9,
+        -259.5
+      ],
+      "medoid": [
+        571.4,
+        -1496.6,
+        -259.0
+      ],
+      "valve_place": "PalaceAlley",
+      "place_purity": 1.0,
+      "sample_count": 894,
+      "unique_demos": 321,
+      "unique_player_instances": 547,
+      "unique_team_names": 234,
+      "median_dwell_s": 2.94,
+      "ct_ratio": 0.013,
+      "tr_ratio": 0.987,
+      "awp_ratio": 0.181,
+      "phase_ratio": {
+        "early_le20s": 0.739,
+        "mid_20_55s": 0.229,
+        "late_gt55s": 0.031
+      },
+      "spread_std2d_u": 60.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.744
+    },
+    {
+      "cluster_id": 54,
+      "centroid": [
+        -845.2,
+        -2264.0,
+        -174.5
+      ],
+      "medoid": [
+        -842.5,
+        -2253.7,
+        -174.8
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 0.57,
+      "sample_count": 1041,
+      "unique_demos": 321,
+      "unique_player_instances": 512,
+      "unique_team_names": 222,
+      "median_dwell_s": 3.0,
+      "ct_ratio": 0.864,
+      "tr_ratio": 0.136,
+      "awp_ratio": 0.588,
+      "phase_ratio": {
+        "early_le20s": 0.556,
+        "mid_20_55s": 0.357,
+        "late_gt55s": 0.086
+      },
+      "spread_std2d_u": 57.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.758
+    },
+    {
+      "cluster_id": 63,
+      "centroid": [
+        -531.1,
+        -1288.8,
+        -164.1
+      ],
+      "medoid": [
+        -497.8,
+        -1309.0,
+        -160.0
+      ],
+      "valve_place": "Stairs",
+      "place_purity": 1.0,
+      "sample_count": 916,
+      "unique_demos": 320,
+      "unique_player_instances": 529,
+      "unique_team_names": 229,
+      "median_dwell_s": 2.5,
+      "ct_ratio": 0.901,
+      "tr_ratio": 0.099,
+      "awp_ratio": 0.14,
+      "phase_ratio": {
+        "early_le20s": 0.455,
+        "mid_20_55s": 0.45,
+        "late_gt55s": 0.095
+      },
+      "spread_std2d_u": 59.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.72
+    },
+    {
+      "cluster_id": 62,
+      "centroid": [
+        -525.6,
+        -1010.5,
+        -168.5
+      ],
+      "medoid": [
+        -520.0,
+        -984.0,
+        -168.0
+      ],
+      "valve_place": "Connector",
+      "place_purity": 1.0,
+      "sample_count": 848,
+      "unique_demos": 316,
+      "unique_player_instances": 502,
+      "unique_team_names": 227,
+      "median_dwell_s": 3.44,
+      "ct_ratio": 0.914,
+      "tr_ratio": 0.086,
+      "awp_ratio": 0.21,
+      "phase_ratio": {
+        "early_le20s": 0.587,
+        "mid_20_55s": 0.363,
+        "late_gt55s": 0.05
+      },
+      "spread_std2d_u": 45.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.823
+    },
+    {
+      "cluster_id": 111,
+      "centroid": [
+        -2185.8,
+        706.7,
+        -109.5
+      ],
+      "medoid": [
+        -2191.6,
+        712.6,
+        -101.8
+      ],
+      "valve_place": "Truck",
+      "place_purity": 1.0,
+      "sample_count": 1009,
+      "unique_demos": 304,
+      "unique_player_instances": 461,
+      "unique_team_names": 220,
+      "median_dwell_s": 3.56,
+      "ct_ratio": 0.99,
+      "tr_ratio": 0.01,
+      "awp_ratio": 0.27,
+      "phase_ratio": {
+        "early_le20s": 0.608,
+        "mid_20_55s": 0.338,
+        "late_gt55s": 0.055
+      },
+      "spread_std2d_u": 36.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.859
+    },
+    {
+      "cluster_id": 57,
+      "centroid": [
+        -793.6,
+        -1329.7,
+        -167.9
+      ],
+      "medoid": [
+        -790.7,
+        -1321.4,
+        -168.0
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 0.53,
+      "sample_count": 759,
+      "unique_demos": 301,
+      "unique_player_instances": 459,
+      "unique_team_names": 232,
+      "median_dwell_s": 2.38,
+      "ct_ratio": 0.941,
+      "tr_ratio": 0.059,
+      "awp_ratio": 0.424,
+      "phase_ratio": {
+        "early_le20s": 0.586,
+        "mid_20_55s": 0.361,
+        "late_gt55s": 0.053
+      },
+      "spread_std2d_u": 59.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.712
+    },
+    {
+      "cluster_id": 283,
+      "centroid": [
+        137.5,
+        -1927.4,
+        -35.1
+      ],
+      "medoid": [
+        151.3,
+        -1914.3,
+        -40.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 0.8,
+      "sample_count": 902,
+      "unique_demos": 300,
+      "unique_player_instances": 433,
+      "unique_team_names": 216,
+      "median_dwell_s": 3.0,
+      "ct_ratio": 0.951,
+      "tr_ratio": 0.049,
+      "awp_ratio": 0.006,
+      "phase_ratio": {
+        "early_le20s": 0.698,
+        "mid_20_55s": 0.265,
+        "late_gt55s": 0.037
+      },
+      "spread_std2d_u": 35.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.828
+    },
+    {
+      "cluster_id": 190,
+      "centroid": [
+        814.5,
+        -1567.1,
+        -109.0
+      ],
+      "medoid": [
+        814.9,
+        -1549.0,
+        -109.0
+      ],
+      "valve_place": "PalaceAlley",
+      "place_purity": 1.0,
+      "sample_count": 626,
+      "unique_demos": 298,
+      "unique_player_instances": 433,
+      "unique_team_names": 224,
+      "median_dwell_s": 4.88,
+      "ct_ratio": 0.014,
+      "tr_ratio": 0.986,
+      "awp_ratio": 0.021,
+      "phase_ratio": {
+        "early_le20s": 0.807,
+        "mid_20_55s": 0.171,
+        "late_gt55s": 0.022
+      },
+      "spread_std2d_u": 47.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.852
+    },
+    {
+      "cluster_id": 282,
+      "centroid": [
+        39.9,
+        -2311.4,
+        -40.0
+      ],
+      "medoid": [
+        23.7,
+        -2307.2,
+        -40.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 860,
+      "unique_demos": 296,
+      "unique_player_instances": 480,
+      "unique_team_names": 229,
+      "median_dwell_s": 2.62,
+      "ct_ratio": 0.142,
+      "tr_ratio": 0.858,
+      "awp_ratio": 0.141,
+      "phase_ratio": {
+        "early_le20s": 0.545,
+        "mid_20_55s": 0.352,
+        "late_gt55s": 0.102
+      },
+      "spread_std2d_u": 60.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.724
+    },
+    {
+      "cluster_id": 211,
+      "centroid": [
+        -885.9,
+        573.6,
+        -79.5
+      ],
+      "medoid": [
+        -886.6,
+        583.7,
+        -81.7
+      ],
+      "valve_place": "BackAlley",
+      "place_purity": 1.0,
+      "sample_count": 1010,
+      "unique_demos": 294,
+      "unique_player_instances": 543,
+      "unique_team_names": 218,
+      "median_dwell_s": 2.69,
+      "ct_ratio": 0.004,
+      "tr_ratio": 0.996,
+      "awp_ratio": 0.103,
+      "phase_ratio": {
+        "early_le20s": 0.71,
+        "mid_20_55s": 0.271,
+        "late_gt55s": 0.019
+      },
+      "spread_std2d_u": 63.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.719
+    },
+    {
+      "cluster_id": 207,
+      "centroid": [
+        -1137.6,
+        569.3,
+        -80.0
+      ],
+      "medoid": [
+        -1154.2,
+        569.4,
+        -80.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 924,
+      "unique_demos": 286,
+      "unique_player_instances": 503,
+      "unique_team_names": 222,
+      "median_dwell_s": 2.5,
+      "ct_ratio": 0.013,
+      "tr_ratio": 0.987,
+      "awp_ratio": 0.107,
+      "phase_ratio": {
+        "early_le20s": 0.46,
+        "mid_20_55s": 0.459,
+        "late_gt55s": 0.081
+      },
+      "spread_std2d_u": 67.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.694
+    },
+    {
+      "cluster_id": 41,
+      "centroid": [
+        -1275.8,
+        -971.7,
+        -168.0
+      ],
+      "medoid": [
+        -1279.6,
+        -967.9,
+        -168.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.87,
+      "sample_count": 734,
+      "unique_demos": 280,
+      "unique_player_instances": 400,
+      "unique_team_names": 207,
+      "median_dwell_s": 2.62,
+      "ct_ratio": 0.995,
+      "tr_ratio": 0.005,
+      "awp_ratio": 0.29,
+      "phase_ratio": {
+        "early_le20s": 0.46,
+        "mid_20_55s": 0.5,
+        "late_gt55s": 0.04
+      },
+      "spread_std2d_u": 50.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.756
+    },
+    {
+      "cluster_id": 45,
+      "centroid": [
+        -1159.1,
+        -488.0,
+        -166.4
+      ],
+      "medoid": [
+        -1139.4,
+        -462.3,
+        -168.0
+      ],
+      "valve_place": "SnipersNest",
+      "place_purity": 0.6,
+      "sample_count": 678,
+      "unique_demos": 279,
+      "unique_player_instances": 418,
+      "unique_team_names": 220,
+      "median_dwell_s": 3.06,
+      "ct_ratio": 0.881,
+      "tr_ratio": 0.119,
+      "awp_ratio": 0.1,
+      "phase_ratio": {
+        "early_le20s": 0.611,
+        "mid_20_55s": 0.339,
+        "late_gt55s": 0.05
+      },
+      "spread_std2d_u": 67.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.731
+    },
+    {
+      "cluster_id": 52,
+      "centroid": [
+        -996.1,
+        284.1,
+        -165.5
+      ],
+      "medoid": [
+        -983.5,
+        289.8,
+        -166.7
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 1.0,
+      "sample_count": 758,
+      "unique_demos": 278,
+      "unique_player_instances": 398,
+      "unique_team_names": 202,
+      "median_dwell_s": 3.06,
+      "ct_ratio": 0.967,
+      "tr_ratio": 0.033,
+      "awp_ratio": 0.433,
+      "phase_ratio": {
+        "early_le20s": 0.512,
+        "mid_20_55s": 0.43,
+        "late_gt55s": 0.058
+      },
+      "spread_std2d_u": 57.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.762
+    },
+    {
+      "cluster_id": 0,
+      "centroid": [
+        -971.9,
+        -246.2,
+        -365.3
+      ],
+      "medoid": [
+        -948.0,
+        -265.1,
+        -364.0
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 1.0,
+      "sample_count": 706,
+      "unique_demos": 275,
+      "unique_player_instances": 412,
+      "unique_team_names": 209,
+      "median_dwell_s": 2.62,
+      "ct_ratio": 0.116,
+      "tr_ratio": 0.884,
+      "awp_ratio": 0.054,
+      "phase_ratio": {
+        "early_le20s": 0.585,
+        "mid_20_55s": 0.387,
+        "late_gt55s": 0.028
+      },
+      "spread_std2d_u": 66.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.705
+    },
+    {
+      "cluster_id": 15,
+      "centroid": [
+        414.1,
+        346.2,
+        -253.9
+      ],
+      "medoid": [
+        410.4,
+        351.0,
+        -252.0
+      ],
+      "valve_place": "SideAlley",
+      "place_purity": 1.0,
+      "sample_count": 704,
+      "unique_demos": 275,
+      "unique_player_instances": 402,
+      "unique_team_names": 207,
+      "median_dwell_s": 2.94,
+      "ct_ratio": 0.001,
+      "tr_ratio": 0.999,
+      "awp_ratio": 0.222,
+      "phase_ratio": {
+        "early_le20s": 0.912,
+        "mid_20_55s": 0.084,
+        "late_gt55s": 0.004
+      },
+      "spread_std2d_u": 49.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.778
+    },
+    {
+      "cluster_id": 205,
+      "centroid": [
+        -1482.7,
+        701.5,
+        -48.2
+      ],
+      "medoid": [
+        -1472.0,
+        664.1,
+        -48.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 706,
+      "unique_demos": 275,
+      "unique_player_instances": 454,
+      "unique_team_names": 221,
+      "median_dwell_s": 3.25,
+      "ct_ratio": 0.11,
+      "tr_ratio": 0.89,
+      "awp_ratio": 0.167,
+      "phase_ratio": {
+        "early_le20s": 0.455,
+        "mid_20_55s": 0.412,
+        "late_gt55s": 0.133
+      },
+      "spread_std2d_u": 67.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.743
+    },
+    {
+      "cluster_id": 61,
+      "centroid": [
+        -719.4,
+        -2126.5,
+        -179.8
+      ],
+      "medoid": [
+        -710.8,
+        -2129.6,
+        -180.0
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 777,
+      "unique_demos": 274,
+      "unique_player_instances": 412,
+      "unique_team_names": 206,
+      "median_dwell_s": 2.75,
+      "ct_ratio": 0.974,
+      "tr_ratio": 0.026,
+      "awp_ratio": 0.328,
+      "phase_ratio": {
+        "early_le20s": 0.709,
+        "mid_20_55s": 0.224,
+        "late_gt55s": 0.067
+      },
+      "spread_std2d_u": 44.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.783
+    },
+    {
+      "cluster_id": 68,
+      "centroid": [
+        -291.6,
+        -1510.4,
+        -164.2
+      ],
+      "medoid": [
+        -264.0,
+        -1504.0,
+        -164.0
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 905,
+      "unique_demos": 274,
+      "unique_player_instances": 418,
+      "unique_team_names": 227,
+      "median_dwell_s": 4.44,
+      "ct_ratio": 0.802,
+      "tr_ratio": 0.198,
+      "awp_ratio": 0.015,
+      "phase_ratio": {
+        "early_le20s": 0.597,
+        "mid_20_55s": 0.31,
+        "late_gt55s": 0.093
+      },
+      "spread_std2d_u": 44.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.862
+    },
+    {
+      "cluster_id": 221,
+      "centroid": [
+        -181.9,
+        565.6,
+        -72.5
+      ],
+      "medoid": [
+        -161.2,
+        575.9,
+        -69.8
+      ],
+      "valve_place": "BackAlley",
+      "place_purity": 1.0,
+      "sample_count": 610,
+      "unique_demos": 270,
+      "unique_player_instances": 378,
+      "unique_team_names": 214,
+      "median_dwell_s": 3.56,
+      "ct_ratio": 0.016,
+      "tr_ratio": 0.984,
+      "awp_ratio": 0.116,
+      "phase_ratio": {
+        "early_le20s": 0.703,
+        "mid_20_55s": 0.259,
+        "late_gt55s": 0.038
+      },
+      "spread_std2d_u": 49.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.819
+    },
+    {
+      "cluster_id": 75,
+      "centroid": [
+        131.7,
+        -1934.2,
+        -167.5
+      ],
+      "medoid": [
+        151.9,
+        -1914.1,
+        -168.0
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 779,
+      "unique_demos": 263,
+      "unique_player_instances": 368,
+      "unique_team_names": 201,
+      "median_dwell_s": 3.0,
+      "ct_ratio": 0.904,
+      "tr_ratio": 0.096,
+      "awp_ratio": 0.014,
+      "phase_ratio": {
+        "early_le20s": 0.481,
+        "mid_20_55s": 0.395,
+        "late_gt55s": 0.123
+      },
+      "spread_std2d_u": 49.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.784
+    },
+    {
+      "cluster_id": 85,
+      "centroid": [
+        428.5,
+        -95.1,
+        -170.6
+      ],
+      "medoid": [
+        399.7,
+        -84.1,
+        -174.7
+      ],
+      "valve_place": "TopofMid",
+      "place_purity": 1.0,
+      "sample_count": 574,
+      "unique_demos": 258,
+      "unique_player_instances": 362,
+      "unique_team_names": 207,
+      "median_dwell_s": 2.94,
+      "ct_ratio": 0.019,
+      "tr_ratio": 0.981,
+      "awp_ratio": 0.608,
+      "phase_ratio": {
+        "early_le20s": 0.667,
+        "mid_20_55s": 0.312,
+        "late_gt55s": 0.021
+      },
+      "spread_std2d_u": 69.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.716
+    },
+    {
+      "cluster_id": 153,
+      "centroid": [
+        -737.9,
+        -14.2,
+        -144.0
+      ],
+      "medoid": [
+        -737.1,
+        -21.0,
+        -144.0
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 0.8,
+      "sample_count": 641,
+      "unique_demos": 257,
+      "unique_player_instances": 338,
+      "unique_team_names": 209,
+      "median_dwell_s": 3.25,
+      "ct_ratio": 0.977,
+      "tr_ratio": 0.023,
+      "awp_ratio": 0.066,
+      "phase_ratio": {
+        "early_le20s": 0.546,
+        "mid_20_55s": 0.404,
+        "late_gt55s": 0.05
+      },
+      "spread_std2d_u": 22.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.884
+    },
+    {
+      "cluster_id": 286,
+      "centroid": [
+        605.9,
+        -2194.8,
+        -40.0
+      ],
+      "medoid": [
+        581.3,
+        -2224.0,
+        -40.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 552,
+      "unique_demos": 248,
+      "unique_player_instances": 331,
+      "unique_team_names": 202,
+      "median_dwell_s": 3.06,
+      "ct_ratio": 0.014,
+      "tr_ratio": 0.986,
+      "awp_ratio": 0.025,
+      "phase_ratio": {
+        "early_le20s": 0.594,
+        "mid_20_55s": 0.37,
+        "late_gt55s": 0.036
+      },
+      "spread_std2d_u": 62.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.748
+    },
+    {
+      "cluster_id": 40,
+      "centroid": [
+        -1274.7,
+        -1171.1,
+        -167.9
+      ],
+      "medoid": [
+        -1299.0,
+        -1160.9,
+        -168.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.7,
+      "sample_count": 546,
+      "unique_demos": 239,
+      "unique_player_instances": 336,
+      "unique_team_names": 207,
+      "median_dwell_s": 2.84,
+      "ct_ratio": 0.824,
+      "tr_ratio": 0.176,
+      "awp_ratio": 0.505,
+      "phase_ratio": {
+        "early_le20s": 0.44,
+        "mid_20_55s": 0.421,
+        "late_gt55s": 0.139
+      },
+      "spread_std2d_u": 63.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.729
+    },
+    {
+      "cluster_id": 76,
+      "centroid": [
+        151.2,
+        -1681.9,
+        -168.4
+      ],
+      "medoid": [
+        164.0,
+        -1691.8,
+        -168.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 0.7,
+      "sample_count": 574,
+      "unique_demos": 238,
+      "unique_player_instances": 364,
+      "unique_team_names": 198,
+      "median_dwell_s": 3.06,
+      "ct_ratio": 0.557,
+      "tr_ratio": 0.443,
+      "awp_ratio": 0.456,
+      "phase_ratio": {
+        "early_le20s": 0.53,
+        "mid_20_55s": 0.312,
+        "late_gt55s": 0.159
+      },
+      "spread_std2d_u": 60.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.753
+    },
+    {
+      "cluster_id": 14,
+      "centroid": [
+        210.7,
+        245.2,
+        -256.0
+      ],
+      "medoid": [
+        209.4,
+        243.7,
+        -256.0
+      ],
+      "valve_place": "SideAlley",
+      "place_purity": 1.0,
+      "sample_count": 538,
+      "unique_demos": 237,
+      "unique_player_instances": 331,
+      "unique_team_names": 202,
+      "median_dwell_s": 3.0,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.015,
+      "phase_ratio": {
+        "early_le20s": 0.9,
+        "mid_20_55s": 0.093,
+        "late_gt55s": 0.007
+      },
+      "spread_std2d_u": 36.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.822
+    },
+    {
+      "cluster_id": 53,
+      "centroid": [
+        -894.1,
+        80.9,
+        -167.1
+      ],
+      "medoid": [
+        -906.4,
+        78.5,
+        -166.0
+      ],
+      "valve_place": "Catwalk",
+      "place_purity": 0.83,
+      "sample_count": 387,
+      "unique_demos": 232,
+      "unique_player_instances": 307,
+      "unique_team_names": 204,
+      "median_dwell_s": 2.69,
+      "ct_ratio": 0.907,
+      "tr_ratio": 0.093,
+      "awp_ratio": 0.196,
+      "phase_ratio": {
+        "early_le20s": 0.589,
+        "mid_20_55s": 0.349,
+        "late_gt55s": 0.062
+      },
+      "spread_std2d_u": 51.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.757
+    },
+    {
+      "cluster_id": 1,
+      "centroid": [
+        -930.7,
+        394.9,
+        -366.2
+      ],
+      "medoid": [
+        -937.5,
+        364.1,
+        -368.0
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 1.0,
+      "sample_count": 492,
+      "unique_demos": 230,
+      "unique_player_instances": 328,
+      "unique_team_names": 189,
+      "median_dwell_s": 2.5,
+      "ct_ratio": 0.03,
+      "tr_ratio": 0.97,
+      "awp_ratio": 0.079,
+      "phase_ratio": {
+        "early_le20s": 0.772,
+        "mid_20_55s": 0.197,
+        "late_gt55s": 0.03
+      },
+      "spread_std2d_u": 68.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.692
+    },
+    {
+      "cluster_id": 7,
+      "centroid": [
+        -994.9,
+        -409.8,
+        -267.9
+      ],
+      "medoid": [
+        -961.5,
+        -393.2,
+        -264.0
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 1.0,
+      "sample_count": 495,
+      "unique_demos": 230,
+      "unique_player_instances": 344,
+      "unique_team_names": 195,
+      "median_dwell_s": 3.12,
+      "ct_ratio": 0.267,
+      "tr_ratio": 0.733,
+      "awp_ratio": 0.046,
+      "phase_ratio": {
+        "early_le20s": 0.56,
+        "mid_20_55s": 0.396,
+        "late_gt55s": 0.044
+      },
+      "spread_std2d_u": 68.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.731
+    },
+    {
+      "cluster_id": 56,
+      "centroid": [
+        -792.1,
+        275.2,
+        -165.0
+      ],
+      "medoid": [
+        -760.0,
+        289.1,
+        -164.0
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 1.0,
+      "sample_count": 511,
+      "unique_demos": 230,
+      "unique_player_instances": 287,
+      "unique_team_names": 193,
+      "median_dwell_s": 2.75,
+      "ct_ratio": 0.965,
+      "tr_ratio": 0.035,
+      "awp_ratio": 0.28,
+      "phase_ratio": {
+        "early_le20s": 0.431,
+        "mid_20_55s": 0.405,
+        "late_gt55s": 0.164
+      },
+      "spread_std2d_u": 67.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.712
+    },
+    {
+      "cluster_id": 84,
+      "centroid": [
+        411.4,
+        -1463.2,
+        -179.0
+      ],
+      "medoid": [
+        412.5,
+        -1455.6,
+        -176.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 0.7,
+      "sample_count": 491,
+      "unique_demos": 221,
+      "unique_player_instances": 297,
+      "unique_team_names": 202,
+      "median_dwell_s": 2.75,
+      "ct_ratio": 0.415,
+      "tr_ratio": 0.585,
+      "awp_ratio": 0.45,
+      "phase_ratio": {
+        "early_le20s": 0.454,
+        "mid_20_55s": 0.428,
+        "late_gt55s": 0.118
+      },
+      "spread_std2d_u": 62.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.726
+    },
+    {
+      "cluster_id": 197,
+      "centroid": [
+        -2092.8,
+        816.7,
+        -63.2
+      ],
+      "medoid": [
+        -2081.0,
+        816.1,
+        -44.0
+      ],
+      "valve_place": "Truck",
+      "place_purity": 0.9,
+      "sample_count": 555,
+      "unique_demos": 221,
+      "unique_player_instances": 292,
+      "unique_team_names": 195,
+      "median_dwell_s": 3.5,
+      "ct_ratio": 0.98,
+      "tr_ratio": 0.02,
+      "awp_ratio": 0.382,
+      "phase_ratio": {
+        "early_le20s": 0.688,
+        "mid_20_55s": 0.283,
+        "late_gt55s": 0.029
+      },
+      "spread_std2d_u": 45.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.826
+    },
+    {
+      "cluster_id": 19,
+      "centroid": [
+        865.9,
+        -1065.6,
+        -255.4
+      ],
+      "medoid": [
+        867.3,
+        -1042.7,
+        -252.0
+      ],
+      "valve_place": "PalaceAlley",
+      "place_purity": 1.0,
+      "sample_count": 436,
+      "unique_demos": 220,
+      "unique_player_instances": 306,
+      "unique_team_names": 187,
+      "median_dwell_s": 3.0,
+      "ct_ratio": 0.014,
+      "tr_ratio": 0.986,
+      "awp_ratio": 0.163,
+      "phase_ratio": {
+        "early_le20s": 0.667,
+        "mid_20_55s": 0.278,
+        "late_gt55s": 0.055
+      },
+      "spread_std2d_u": 63.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.74
+    },
+    {
+      "cluster_id": 59,
+      "centroid": [
+        -801.4,
+        -915.9,
+        -168.0
+      ],
+      "medoid": [
+        -801.5,
+        -916.9,
+        -168.0
+      ],
+      "valve_place": "Middle",
+      "place_purity": 0.83,
+      "sample_count": 410,
+      "unique_demos": 219,
+      "unique_player_instances": 283,
+      "unique_team_names": 190,
+      "median_dwell_s": 2.88,
+      "ct_ratio": 0.844,
+      "tr_ratio": 0.156,
+      "awp_ratio": 0.563,
+      "phase_ratio": {
+        "early_le20s": 0.668,
+        "mid_20_55s": 0.266,
+        "late_gt55s": 0.066
+      },
+      "spread_std2d_u": 45.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.788
+    },
+    {
+      "cluster_id": 64,
+      "centroid": [
+        -542.6,
+        -353.6,
+        -167.0
+      ],
+      "medoid": [
+        -549.3,
+        -347.0,
+        -167.9
+      ],
+      "valve_place": "Catwalk",
+      "place_purity": 0.87,
+      "sample_count": 421,
+      "unique_demos": 217,
+      "unique_player_instances": 279,
+      "unique_team_names": 192,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.026,
+      "tr_ratio": 0.974,
+      "awp_ratio": 0.729,
+      "phase_ratio": {
+        "early_le20s": 0.337,
+        "mid_20_55s": 0.556,
+        "late_gt55s": 0.107
+      },
+      "spread_std2d_u": 53.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.76
+    },
+    {
+      "cluster_id": 280,
+      "centroid": [
+        -853.4,
+        -2539.6,
+        -35.8
+      ],
+      "medoid": [
+        -840.1,
+        -2542.2,
+        -36.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.93,
+      "sample_count": 599,
+      "unique_demos": 214,
+      "unique_player_instances": 257,
+      "unique_team_names": 189,
+      "median_dwell_s": 2.69,
+      "ct_ratio": 0.988,
+      "tr_ratio": 0.012,
+      "awp_ratio": 0.833,
+      "phase_ratio": {
+        "early_le20s": 0.319,
+        "mid_20_55s": 0.604,
+        "late_gt55s": 0.077
+      },
+      "spread_std2d_u": 35.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.807
+    },
+    {
+      "cluster_id": 30,
+      "centroid": [
+        -2017.0,
+        -596.3,
+        -168.0
+      ],
+      "medoid": [
+        -2017.4,
+        -599.8,
+        -168.0
+      ],
+      "valve_place": "Shop",
+      "place_purity": 1.0,
+      "sample_count": 503,
+      "unique_demos": 212,
+      "unique_player_instances": 255,
+      "unique_team_names": 206,
+      "median_dwell_s": 3.88,
+      "ct_ratio": 0.996,
+      "tr_ratio": 0.004,
+      "awp_ratio": 0.901,
+      "phase_ratio": {
+        "early_le20s": 0.606,
+        "mid_20_55s": 0.284,
+        "late_gt55s": 0.109
+      },
+      "spread_std2d_u": 51.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.831
+    },
+    {
+      "cluster_id": 191,
+      "centroid": [
+        859.2,
+        -1248.6,
+        -108.9
+      ],
+      "medoid": [
+        873.0,
+        -1251.8,
+        -109.0
+      ],
+      "valve_place": "PalaceAlley",
+      "place_purity": 1.0,
+      "sample_count": 511,
+      "unique_demos": 209,
+      "unique_player_instances": 290,
+      "unique_team_names": 183,
+      "median_dwell_s": 2.56,
+      "ct_ratio": 0.023,
+      "tr_ratio": 0.977,
+      "awp_ratio": 0.041,
+      "phase_ratio": {
+        "early_le20s": 0.73,
+        "mid_20_55s": 0.25,
+        "late_gt55s": 0.02
+      },
+      "spread_std2d_u": 46.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.766
+    },
+    {
+      "cluster_id": 193,
+      "centroid": [
+        1013.1,
+        -1210.1,
+        -109.0
+      ],
+      "medoid": [
+        1004.0,
+        -1210.4,
+        -109.0
+      ],
+      "valve_place": "PalaceAlley",
+      "place_purity": 1.0,
+      "sample_count": 398,
+      "unique_demos": 207,
+      "unique_player_instances": 288,
+      "unique_team_names": 167,
+      "median_dwell_s": 5.5,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.008,
+      "phase_ratio": {
+        "early_le20s": 0.696,
+        "mid_20_55s": 0.281,
+        "late_gt55s": 0.023
+      },
+      "spread_std2d_u": 20.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.937
+    },
+    {
+      "cluster_id": 49,
+      "centroid": [
+        -1025.8,
+        -105.1,
+        -167.9
+      ],
+      "medoid": [
+        -1015.0,
+        -87.3,
+        -168.0
+      ],
+      "valve_place": "Ladder",
+      "place_purity": 0.67,
+      "sample_count": 447,
+      "unique_demos": 206,
+      "unique_player_instances": 285,
+      "unique_team_names": 184,
+      "median_dwell_s": 3.38,
+      "ct_ratio": 0.72,
+      "tr_ratio": 0.28,
+      "awp_ratio": 0.391,
+      "phase_ratio": {
+        "early_le20s": 0.582,
+        "mid_20_55s": 0.327,
+        "late_gt55s": 0.092
+      },
+      "spread_std2d_u": 65.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.757
+    },
+    {
+      "cluster_id": 285,
+      "centroid": [
+        407.7,
+        -2157.5,
+        -40.0
+      ],
+      "medoid": [
+        400.6,
+        -2128.0,
+        -40.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 430,
+      "unique_demos": 205,
+      "unique_player_instances": 277,
+      "unique_team_names": 188,
+      "median_dwell_s": 3.12,
+      "ct_ratio": 0.065,
+      "tr_ratio": 0.935,
+      "awp_ratio": 0.035,
+      "phase_ratio": {
+        "early_le20s": 0.684,
+        "mid_20_55s": 0.272,
+        "late_gt55s": 0.044
+      },
+      "spread_std2d_u": 65.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.741
+    },
+    {
+      "cluster_id": 47,
+      "centroid": [
+        -1082.4,
+        -2301.5,
+        -170.1
+      ],
+      "medoid": [
+        -1072.6,
+        -2326.9,
+        -168.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 1.0,
+      "sample_count": 401,
+      "unique_demos": 203,
+      "unique_player_instances": 258,
+      "unique_team_names": 185,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.925,
+      "tr_ratio": 0.075,
+      "awp_ratio": 0.549,
+      "phase_ratio": {
+        "early_le20s": 0.379,
+        "mid_20_55s": 0.436,
+        "late_gt55s": 0.185
+      },
+      "spread_std2d_u": 69.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.708
+    },
+    {
+      "cluster_id": 31,
+      "centroid": [
+        -2003.4,
+        424.5,
+        -159.9
+      ],
+      "medoid": [
+        -1987.8,
+        431.4,
+        -160.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 342,
+      "unique_demos": 202,
+      "unique_player_instances": 279,
+      "unique_team_names": 187,
+      "median_dwell_s": 3.0,
+      "ct_ratio": 0.36,
+      "tr_ratio": 0.64,
+      "awp_ratio": 0.056,
+      "phase_ratio": {
+        "early_le20s": 0.468,
+        "mid_20_55s": 0.351,
+        "late_gt55s": 0.181
+      },
+      "spread_std2d_u": 51.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.778
+    },
+    {
+      "cluster_id": 81,
+      "centroid": [
+        170.9,
+        8.5,
+        -191.9
+      ],
+      "medoid": [
+        160.4,
+        -5.6,
+        -187.6
+      ],
+      "valve_place": "TopofMid",
+      "place_purity": 1.0,
+      "sample_count": 331,
+      "unique_demos": 197,
+      "unique_player_instances": 249,
+      "unique_team_names": 187,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.027,
+      "tr_ratio": 0.973,
+      "awp_ratio": 0.033,
+      "phase_ratio": {
+        "early_le20s": 0.795,
+        "mid_20_55s": 0.196,
+        "late_gt55s": 0.009
+      },
+      "spread_std2d_u": 37.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.81
+    },
+    {
+      "cluster_id": 25,
+      "centroid": [
+        -2502.9,
+        261.2,
+        -167.9
+      ],
+      "medoid": [
+        -2494.8,
+        266.4,
+        -168.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 409,
+      "unique_demos": 194,
+      "unique_player_instances": 256,
+      "unique_team_names": 183,
+      "median_dwell_s": 3.12,
+      "ct_ratio": 0.841,
+      "tr_ratio": 0.159,
+      "awp_ratio": 0.086,
+      "phase_ratio": {
+        "early_le20s": 0.372,
+        "mid_20_55s": 0.389,
+        "late_gt55s": 0.24
+      },
+      "spread_std2d_u": 41.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.816
+    },
+    {
+      "cluster_id": 16,
+      "centroid": [
+        438.9,
+        -1670.8,
+        -231.2
+      ],
+      "medoid": [
+        438.4,
+        -1679.8,
+        -231.1
+      ],
+      "valve_place": "TRamp",
+      "place_purity": 1.0,
+      "sample_count": 380,
+      "unique_demos": 193,
+      "unique_player_instances": 268,
+      "unique_team_names": 190,
+      "median_dwell_s": 2.69,
+      "ct_ratio": 0.203,
+      "tr_ratio": 0.797,
+      "awp_ratio": 0.308,
+      "phase_ratio": {
+        "early_le20s": 0.492,
+        "mid_20_55s": 0.361,
+        "late_gt55s": 0.147
+      },
+      "spread_std2d_u": 61.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.726
+    },
+    {
+      "cluster_id": 9,
+      "centroid": [
+        -646.8,
+        -896.8,
+        -236.3
+      ],
+      "medoid": [
+        -640.2,
+        -894.3,
+        -236.8
+      ],
+      "valve_place": "Middle",
+      "place_purity": 0.6,
+      "sample_count": 285,
+      "unique_demos": 192,
+      "unique_player_instances": 240,
+      "unique_team_names": 186,
+      "median_dwell_s": 2.5,
+      "ct_ratio": 0.512,
+      "tr_ratio": 0.488,
+      "awp_ratio": 0.302,
+      "phase_ratio": {
+        "early_le20s": 0.449,
+        "mid_20_55s": 0.375,
+        "late_gt55s": 0.175
+      },
+      "spread_std2d_u": 61.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.714
+    },
+    {
+      "cluster_id": 69,
+      "centroid": [
+        -326.0,
+        -924.3,
+        -166.1
+      ],
+      "medoid": [
+        -319.3,
+        -926.0,
+        -166.0
+      ],
+      "valve_place": "Middle",
+      "place_purity": 1.0,
+      "sample_count": 384,
+      "unique_demos": 188,
+      "unique_player_instances": 238,
+      "unique_team_names": 192,
+      "median_dwell_s": 3.19,
+      "ct_ratio": 0.039,
+      "tr_ratio": 0.961,
+      "awp_ratio": 0.367,
+      "phase_ratio": {
+        "early_le20s": 0.529,
+        "mid_20_55s": 0.438,
+        "late_gt55s": 0.034
+      },
+      "spread_std2d_u": 36.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.837
+    },
+    {
+      "cluster_id": 204,
+      "centroid": [
+        -1742.4,
+        827.7,
+        -44.9
+      ],
+      "medoid": [
+        -1741.0,
+        829.4,
+        -48.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 424,
+      "unique_demos": 186,
+      "unique_player_instances": 250,
+      "unique_team_names": 174,
+      "median_dwell_s": 3.34,
+      "ct_ratio": 0.856,
+      "tr_ratio": 0.144,
+      "awp_ratio": 0.712,
+      "phase_ratio": {
+        "early_le20s": 0.542,
+        "mid_20_55s": 0.392,
+        "late_gt55s": 0.066
+      },
+      "spread_std2d_u": 54.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.789
+    },
+    {
+      "cluster_id": 231,
+      "centroid": [
+        151.9,
+        -2064.4,
+        -40.0
+      ],
+      "medoid": [
+        152.0,
+        -2071.9,
+        -40.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 470,
+      "unique_demos": 185,
+      "unique_player_instances": 239,
+      "unique_team_names": 167,
+      "median_dwell_s": 4.16,
+      "ct_ratio": 0.989,
+      "tr_ratio": 0.011,
+      "awp_ratio": 0.0,
+      "phase_ratio": {
+        "early_le20s": 0.67,
+        "mid_20_55s": 0.311,
+        "late_gt55s": 0.019
+      },
+      "spread_std2d_u": 12.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.961
+    },
+    {
+      "cluster_id": 18,
+      "centroid": [
+        731.1,
+        -1655.5,
+        -256.2
+      ],
+      "medoid": [
+        740.9,
+        -1649.1,
+        -257.2
+      ],
+      "valve_place": "PalaceAlley",
+      "place_purity": 1.0,
+      "sample_count": 410,
+      "unique_demos": 183,
+      "unique_player_instances": 223,
+      "unique_team_names": 182,
+      "median_dwell_s": 3.31,
+      "ct_ratio": 0.056,
+      "tr_ratio": 0.944,
+      "awp_ratio": 0.663,
+      "phase_ratio": {
+        "early_le20s": 0.732,
+        "mid_20_55s": 0.224,
+        "late_gt55s": 0.044
+      },
+      "spread_std2d_u": 51.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.796
+    },
+    {
+      "cluster_id": 29,
+      "centroid": [
+        -2096.4,
+        633.1,
+        -152.3
+      ],
+      "medoid": [
+        -2114.0,
+        653.5,
+        -146.7
+      ],
+      "valve_place": "Truck",
+      "place_purity": 1.0,
+      "sample_count": 289,
+      "unique_demos": 179,
+      "unique_player_instances": 225,
+      "unique_team_names": 170,
+      "median_dwell_s": 2.69,
+      "ct_ratio": 0.941,
+      "tr_ratio": 0.059,
+      "awp_ratio": 0.055,
+      "phase_ratio": {
+        "early_le20s": 0.491,
+        "mid_20_55s": 0.388,
+        "late_gt55s": 0.121
+      },
+      "spread_std2d_u": 52.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.755
+    },
+    {
+      "cluster_id": 43,
+      "centroid": [
+        -1201.4,
+        -1513.9,
+        -155.2
+      ],
+      "medoid": [
+        -1216.0,
+        -1527.0,
+        -153.4
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.6,
+      "sample_count": 333,
+      "unique_demos": 179,
+      "unique_player_instances": 221,
+      "unique_team_names": 170,
+      "median_dwell_s": 2.75,
+      "ct_ratio": 0.907,
+      "tr_ratio": 0.093,
+      "awp_ratio": 0.114,
+      "phase_ratio": {
+        "early_le20s": 0.402,
+        "mid_20_55s": 0.438,
+        "late_gt55s": 0.159
+      },
+      "spread_std2d_u": 55.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.748
+    },
+    {
+      "cluster_id": 281,
+      "centroid": [
+        -496.9,
+        -1602.4,
+        -39.8
+      ],
+      "medoid": [
+        -504.7,
+        -1615.2,
+        -40.0
+      ],
+      "valve_place": "Stairs",
+      "place_purity": 1.0,
+      "sample_count": 308,
+      "unique_demos": 178,
+      "unique_player_instances": 212,
+      "unique_team_names": 168,
+      "median_dwell_s": 3.03,
+      "ct_ratio": 0.951,
+      "tr_ratio": 0.049,
+      "awp_ratio": 0.828,
+      "phase_ratio": {
+        "early_le20s": 0.89,
+        "mid_20_55s": 0.107,
+        "late_gt55s": 0.003
+      },
+      "spread_std2d_u": 50.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.782
+    },
+    {
+      "cluster_id": 32,
+      "centroid": [
+        -1909.6,
+        -9.1,
+        -166.5
+      ],
+      "medoid": [
+        -1912.8,
+        5.1,
+        -168.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 368,
+      "unique_demos": 177,
+      "unique_player_instances": 210,
+      "unique_team_names": 170,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.992,
+      "tr_ratio": 0.008,
+      "awp_ratio": 0.261,
+      "phase_ratio": {
+        "early_le20s": 0.481,
+        "mid_20_55s": 0.413,
+        "late_gt55s": 0.106
+      },
+      "spread_std2d_u": 68.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.713
+    },
+    {
+      "cluster_id": 58,
+      "centroid": [
+        -796.7,
+        -1220.0,
+        -168.0
+      ],
+      "medoid": [
+        -802.4,
+        -1221.3,
+        -168.0
+      ],
+      "valve_place": "Connector",
+      "place_purity": 1.0,
+      "sample_count": 333,
+      "unique_demos": 177,
+      "unique_player_instances": 226,
+      "unique_team_names": 165,
+      "median_dwell_s": 2.5,
+      "ct_ratio": 0.453,
+      "tr_ratio": 0.547,
+      "awp_ratio": 0.207,
+      "phase_ratio": {
+        "early_le20s": 0.336,
+        "mid_20_55s": 0.523,
+        "late_gt55s": 0.141
+      },
+      "spread_std2d_u": 28.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.817
+    },
+    {
+      "cluster_id": 77,
+      "centroid": [
+        146.5,
+        -935.7,
+        -166.8
+      ],
+      "medoid": [
+        146.0,
+        -935.8,
+        -166.9
+      ],
+      "valve_place": "TopofMid",
+      "place_purity": 1.0,
+      "sample_count": 339,
+      "unique_demos": 176,
+      "unique_player_instances": 218,
+      "unique_team_names": 177,
+      "median_dwell_s": 3.88,
+      "ct_ratio": 0.009,
+      "tr_ratio": 0.991,
+      "awp_ratio": 0.021,
+      "phase_ratio": {
+        "early_le20s": 0.823,
+        "mid_20_55s": 0.165,
+        "late_gt55s": 0.012
+      },
+      "spread_std2d_u": 2.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.983
+    },
+    {
+      "cluster_id": 51,
+      "centroid": [
+        -1000.2,
+        -1316.7,
+        -158.8
+      ],
+      "medoid": [
+        -992.1,
+        -1304.9,
+        -155.6
+      ],
+      "valve_place": "Jungle",
+      "place_purity": 1.0,
+      "sample_count": 276,
+      "unique_demos": 175,
+      "unique_player_instances": 218,
+      "unique_team_names": 176,
+      "median_dwell_s": 2.59,
+      "ct_ratio": 0.902,
+      "tr_ratio": 0.098,
+      "awp_ratio": 0.268,
+      "phase_ratio": {
+        "early_le20s": 0.42,
+        "mid_20_55s": 0.373,
+        "late_gt55s": 0.207
+      },
+      "spread_std2d_u": 34.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.804
+    },
+    {
+      "cluster_id": 39,
+      "centroid": [
+        -1279.2,
+        484.8,
+        -163.9
+      ],
+      "medoid": [
+        -1258.4,
+        504.6,
+        -163.4
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 0.57,
+      "sample_count": 347,
+      "unique_demos": 170,
+      "unique_player_instances": 199,
+      "unique_team_names": 173,
+      "median_dwell_s": 2.56,
+      "ct_ratio": 0.893,
+      "tr_ratio": 0.107,
+      "awp_ratio": 0.052,
+      "phase_ratio": {
+        "early_le20s": 0.47,
+        "mid_20_55s": 0.392,
+        "late_gt55s": 0.138
+      },
+      "spread_std2d_u": 67.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.7
+    },
+    {
+      "cluster_id": 44,
+      "centroid": [
+        -1174.5,
+        -747.7,
+        -168.0
+      ],
+      "medoid": [
+        -1175.8,
+        -732.5,
+        -168.0
+      ],
+      "valve_place": "SnipersNest",
+      "place_purity": 1.0,
+      "sample_count": 273,
+      "unique_demos": 168,
+      "unique_player_instances": 203,
+      "unique_team_names": 181,
+      "median_dwell_s": 2.44,
+      "ct_ratio": 0.989,
+      "tr_ratio": 0.011,
+      "awp_ratio": 0.363,
+      "phase_ratio": {
+        "early_le20s": 0.788,
+        "mid_20_55s": 0.172,
+        "late_gt55s": 0.04
+      },
+      "spread_std2d_u": 40.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.777
+    },
+    {
+      "cluster_id": 26,
+      "centroid": [
+        -2346.1,
+        101.0,
+        -164.9
+      ],
+      "medoid": [
+        -2353.0,
+        103.2,
+        -168.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 357,
+      "unique_demos": 166,
+      "unique_player_instances": 201,
+      "unique_team_names": 176,
+      "median_dwell_s": 3.69,
+      "ct_ratio": 0.98,
+      "tr_ratio": 0.02,
+      "awp_ratio": 0.644,
+      "phase_ratio": {
+        "early_le20s": 0.367,
+        "mid_20_55s": 0.437,
+        "late_gt55s": 0.196
+      },
+      "spread_std2d_u": 43.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.844
+    },
+    {
+      "cluster_id": 27,
+      "centroid": [
+        -2281.4,
+        385.7,
+        -166.8
+      ],
+      "medoid": [
+        -2270.7,
+        378.8,
+        -168.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 333,
+      "unique_demos": 166,
+      "unique_player_instances": 214,
+      "unique_team_names": 165,
+      "median_dwell_s": 2.88,
+      "ct_ratio": 0.898,
+      "tr_ratio": 0.102,
+      "awp_ratio": 0.444,
+      "phase_ratio": {
+        "early_le20s": 0.345,
+        "mid_20_55s": 0.432,
+        "late_gt55s": 0.222
+      },
+      "spread_std2d_u": 57.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.75
+    },
+    {
+      "cluster_id": 8,
+      "centroid": [
+        -759.5,
+        -812.2,
+        -253.8
+      ],
+      "medoid": [
+        -777.0,
+        -789.0,
+        -264.0
+      ],
+      "valve_place": "Middle",
+      "place_purity": 1.0,
+      "sample_count": 245,
+      "unique_demos": 160,
+      "unique_player_instances": 203,
+      "unique_team_names": 172,
+      "median_dwell_s": 2.38,
+      "ct_ratio": 0.224,
+      "tr_ratio": 0.776,
+      "awp_ratio": 0.057,
+      "phase_ratio": {
+        "early_le20s": 0.429,
+        "mid_20_55s": 0.469,
+        "late_gt55s": 0.102
+      },
+      "spread_std2d_u": 60.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.708
+    },
+    {
+      "cluster_id": 78,
+      "centroid": [
+        184.5,
+        -928.1,
+        -160.8
+      ],
+      "medoid": [
+        185.7,
+        -931.4,
+        -159.7
+      ],
+      "valve_place": "TopofMid",
+      "place_purity": 1.0,
+      "sample_count": 259,
+      "unique_demos": 160,
+      "unique_player_instances": 183,
+      "unique_team_names": 168,
+      "median_dwell_s": 4.75,
+      "ct_ratio": 0.015,
+      "tr_ratio": 0.985,
+      "awp_ratio": 0.699,
+      "phase_ratio": {
+        "early_le20s": 0.788,
+        "mid_20_55s": 0.193,
+        "late_gt55s": 0.019
+      },
+      "spread_std2d_u": 18.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.941
+    },
+    {
+      "cluster_id": 20,
+      "centroid": [
+        1058.2,
+        -1021.0,
+        -257.5
+      ],
+      "medoid": [
+        1087.9,
+        -1016.1,
+        -257.9
+      ],
+      "valve_place": "PalaceAlley",
+      "place_purity": 1.0,
+      "sample_count": 226,
+      "unique_demos": 157,
+      "unique_player_instances": 184,
+      "unique_team_names": 158,
+      "median_dwell_s": 3.66,
+      "ct_ratio": 0.009,
+      "tr_ratio": 0.991,
+      "awp_ratio": 0.04,
+      "phase_ratio": {
+        "early_le20s": 0.695,
+        "mid_20_55s": 0.265,
+        "late_gt55s": 0.04
+      },
+      "spread_std2d_u": 53.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.81
+    },
+    {
+      "cluster_id": 246,
+      "centroid": [
+        -2022.3,
+        849.9,
+        -42.5
+      ],
+      "medoid": [
+        -2025.0,
+        850.0,
+        -48.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 319,
+      "unique_demos": 157,
+      "unique_player_instances": 172,
+      "unique_team_names": 162,
+      "median_dwell_s": 4.38,
+      "ct_ratio": 0.997,
+      "tr_ratio": 0.003,
+      "awp_ratio": 0.003,
+      "phase_ratio": {
+        "early_le20s": 0.508,
+        "mid_20_55s": 0.382,
+        "late_gt55s": 0.11
+      },
+      "spread_std2d_u": 7.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.978
+    },
+    {
+      "cluster_id": 55,
+      "centroid": [
+        -870.4,
+        -257.5,
+        -166.6
+      ],
+      "medoid": [
+        -872.3,
+        -243.2,
+        -167.5
+      ],
+      "valve_place": "Catwalk",
+      "place_purity": 0.83,
+      "sample_count": 303,
+      "unique_demos": 155,
+      "unique_player_instances": 196,
+      "unique_team_names": 171,
+      "median_dwell_s": 2.56,
+      "ct_ratio": 0.802,
+      "tr_ratio": 0.198,
+      "awp_ratio": 0.729,
+      "phase_ratio": {
+        "early_le20s": 0.677,
+        "mid_20_55s": 0.254,
+        "late_gt55s": 0.069
+      },
+      "spread_std2d_u": 68.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.698
+    },
+    {
+      "cluster_id": 250,
+      "centroid": [
+        -1954.5,
+        849.9,
+        -24.0
+      ],
+      "medoid": [
+        -1952.0,
+        850.0,
+        -24.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 335,
+      "unique_demos": 152,
+      "unique_player_instances": 172,
+      "unique_team_names": 159,
+      "median_dwell_s": 5.0,
+      "ct_ratio": 0.982,
+      "tr_ratio": 0.018,
+      "awp_ratio": 0.003,
+      "phase_ratio": {
+        "early_le20s": 0.519,
+        "mid_20_55s": 0.406,
+        "late_gt55s": 0.075
+      },
+      "spread_std2d_u": 7.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.976
+    },
+    {
+      "cluster_id": 67,
+      "centroid": [
+        -429.8,
+        -2332.1,
+        -167.1
+      ],
+      "medoid": [
+        -439.8,
+        -2337.7,
+        -168.0
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 290,
+      "unique_demos": 151,
+      "unique_player_instances": 186,
+      "unique_team_names": 163,
+      "median_dwell_s": 2.88,
+      "ct_ratio": 0.99,
+      "tr_ratio": 0.01,
+      "awp_ratio": 0.438,
+      "phase_ratio": {
+        "early_le20s": 0.434,
+        "mid_20_55s": 0.438,
+        "late_gt55s": 0.128
+      },
+      "spread_std2d_u": 66.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.722
+    },
+    {
+      "cluster_id": 10,
+      "centroid": [
+        -483.7,
+        -788.9,
+        -256.6
+      ],
+      "medoid": [
+        -484.9,
+        -788.9,
+        -255.8
+      ],
+      "valve_place": "Middle",
+      "place_purity": 1.0,
+      "sample_count": 262,
+      "unique_demos": 150,
+      "unique_player_instances": 194,
+      "unique_team_names": 157,
+      "median_dwell_s": 2.31,
+      "ct_ratio": 0.031,
+      "tr_ratio": 0.969,
+      "awp_ratio": 0.019,
+      "phase_ratio": {
+        "early_le20s": 0.439,
+        "mid_20_55s": 0.496,
+        "late_gt55s": 0.065
+      },
+      "spread_std2d_u": 45.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.753
+    },
+    {
+      "cluster_id": 206,
+      "centroid": [
+        -1143.0,
+        -345.0,
+        -55.9
+      ],
+      "medoid": [
+        -1137.5,
+        -341.6,
+        -56.0
+      ],
+      "valve_place": "Ladder",
+      "place_purity": 1.0,
+      "sample_count": 327,
+      "unique_demos": 150,
+      "unique_player_instances": 176,
+      "unique_team_names": 153,
+      "median_dwell_s": 2.31,
+      "ct_ratio": 0.917,
+      "tr_ratio": 0.083,
+      "awp_ratio": 0.021,
+      "phase_ratio": {
+        "early_le20s": 0.443,
+        "mid_20_55s": 0.514,
+        "late_gt55s": 0.043
+      },
+      "spread_std2d_u": 41.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.766
+    },
+    {
+      "cluster_id": 86,
+      "centroid": [
+        1406.5,
+        41.5,
+        -167.2
+      ],
+      "medoid": [
+        1422.9,
+        36.5,
+        -168.0
+      ],
+      "valve_place": "TSpawn",
+      "place_purity": 1.0,
+      "sample_count": 230,
+      "unique_demos": 149,
+      "unique_player_instances": 181,
+      "unique_team_names": 149,
+      "median_dwell_s": 2.47,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.057,
+      "phase_ratio": {
+        "early_le20s": 0.57,
+        "mid_20_55s": 0.422,
+        "late_gt55s": 0.009
+      },
+      "spread_std2d_u": 41.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.772
+    },
+    {
+      "cluster_id": 71,
+      "centroid": [
+        -263.0,
+        -2398.7,
+        -164.1
+      ],
+      "medoid": [
+        -284.2,
+        -2399.9,
+        -164.0
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 237,
+      "unique_demos": 146,
+      "unique_player_instances": 177,
+      "unique_team_names": 161,
+      "median_dwell_s": 10.19,
+      "ct_ratio": 0.835,
+      "tr_ratio": 0.165,
+      "awp_ratio": 0.017,
+      "phase_ratio": {
+        "early_le20s": 0.523,
+        "mid_20_55s": 0.338,
+        "late_gt55s": 0.139
+      },
+      "spread_std2d_u": 49.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.831
+    },
+    {
+      "cluster_id": 21,
+      "centroid": [
+        1235.0,
+        -1146.0,
+        -248.2
+      ],
+      "medoid": [
+        1240.0,
+        -1159.9,
+        -246.4
+      ],
+      "valve_place": "TSpawn",
+      "place_purity": 0.8,
+      "sample_count": 249,
+      "unique_demos": 142,
+      "unique_player_instances": 169,
+      "unique_team_names": 145,
+      "median_dwell_s": 4.44,
+      "ct_ratio": 0.008,
+      "tr_ratio": 0.992,
+      "awp_ratio": 0.012,
+      "phase_ratio": {
+        "early_le20s": 0.602,
+        "mid_20_55s": 0.369,
+        "late_gt55s": 0.028
+      },
+      "spread_std2d_u": 26.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.89
+    },
+    {
+      "cluster_id": 208,
+      "centroid": [
+        -1103.9,
+        -238.8,
+        -57.5
+      ],
+      "medoid": [
+        -1092.4,
+        -215.9,
+        -60.0
+      ],
+      "valve_place": "Ladder",
+      "place_purity": 1.0,
+      "sample_count": 258,
+      "unique_demos": 142,
+      "unique_player_instances": 168,
+      "unique_team_names": 160,
+      "median_dwell_s": 2.44,
+      "ct_ratio": 0.605,
+      "tr_ratio": 0.395,
+      "awp_ratio": 0.097,
+      "phase_ratio": {
+        "early_le20s": 0.438,
+        "mid_20_55s": 0.438,
+        "late_gt55s": 0.124
+      },
+      "spread_std2d_u": 50.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.718
+    },
+    {
+      "cluster_id": 24,
+      "centroid": [
+        -2599.7,
+        530.1,
+        -160.9
+      ],
+      "medoid": [
+        -2600.0,
+        535.6,
+        -160.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 300,
+      "unique_demos": 140,
+      "unique_player_instances": 155,
+      "unique_team_names": 147,
+      "median_dwell_s": 4.97,
+      "ct_ratio": 0.987,
+      "tr_ratio": 0.013,
+      "awp_ratio": 0.003,
+      "phase_ratio": {
+        "early_le20s": 0.407,
+        "mid_20_55s": 0.497,
+        "late_gt55s": 0.097
+      },
+      "spread_std2d_u": 19.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.905
+    },
+    {
+      "cluster_id": 118,
+      "centroid": [
+        -1244.1,
+        -755.2,
+        -128.9
+      ],
+      "medoid": [
+        -1247.9,
+        -759.9,
+        -129.0
+      ],
+      "valve_place": "SnipersNest",
+      "place_purity": 1.0,
+      "sample_count": 193,
+      "unique_demos": 138,
+      "unique_player_instances": 165,
+      "unique_team_names": 157,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.596,
+      "tr_ratio": 0.404,
+      "awp_ratio": 0.15,
+      "phase_ratio": {
+        "early_le20s": 0.575,
+        "mid_20_55s": 0.378,
+        "late_gt55s": 0.047
+      },
+      "spread_std2d_u": 9.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.856
+    },
+    {
+      "cluster_id": 46,
+      "centroid": [
+        -1113.6,
+        -776.9,
+        -173.3
+      ],
+      "medoid": [
+        -1121.5,
+        -793.3,
+        -168.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.73,
+      "sample_count": 242,
+      "unique_demos": 137,
+      "unique_player_instances": 172,
+      "unique_team_names": 154,
+      "median_dwell_s": 3.06,
+      "ct_ratio": 0.769,
+      "tr_ratio": 0.231,
+      "awp_ratio": 0.033,
+      "phase_ratio": {
+        "early_le20s": 0.57,
+        "mid_20_55s": 0.401,
+        "late_gt55s": 0.029
+      },
+      "spread_std2d_u": 64.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.697
+    },
+    {
+      "cluster_id": 161,
+      "centroid": [
+        -409.9,
+        418.3,
+        -103.1
+      ],
+      "medoid": [
+        -410.3,
+        415.2,
+        -102.8
+      ],
+      "valve_place": "BackAlley",
+      "place_purity": 0.93,
+      "sample_count": 267,
+      "unique_demos": 137,
+      "unique_player_instances": 168,
+      "unique_team_names": 155,
+      "median_dwell_s": 2.94,
+      "ct_ratio": 0.034,
+      "tr_ratio": 0.966,
+      "awp_ratio": 0.228,
+      "phase_ratio": {
+        "early_le20s": 0.528,
+        "mid_20_55s": 0.431,
+        "late_gt55s": 0.041
+      },
+      "spread_std2d_u": 50.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.732
+    },
+    {
+      "cluster_id": 162,
+      "centroid": [
+        -162.1,
+        876.5,
+        -135.3
+      ],
+      "medoid": [
+        -160.0,
+        888.0,
+        -135.3
+      ],
+      "valve_place": "BackAlley",
+      "place_purity": 1.0,
+      "sample_count": 217,
+      "unique_demos": 137,
+      "unique_player_instances": 159,
+      "unique_team_names": 146,
+      "median_dwell_s": 4.31,
+      "ct_ratio": 0.005,
+      "tr_ratio": 0.995,
+      "awp_ratio": 0.065,
+      "phase_ratio": {
+        "early_le20s": 0.668,
+        "mid_20_55s": 0.272,
+        "late_gt55s": 0.06
+      },
+      "spread_std2d_u": 34.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.848
+    },
+    {
+      "cluster_id": 73,
+      "centroid": [
+        -42.4,
+        -1443.3,
+        -167.4
+      ],
+      "medoid": [
+        -30.4,
+        -1418.3,
+        -168.0
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 241,
+      "unique_demos": 132,
+      "unique_player_instances": 158,
+      "unique_team_names": 146,
+      "median_dwell_s": 2.5,
+      "ct_ratio": 0.651,
+      "tr_ratio": 0.349,
+      "awp_ratio": 0.066,
+      "phase_ratio": {
+        "early_le20s": 0.344,
+        "mid_20_55s": 0.49,
+        "late_gt55s": 0.166
+      },
+      "spread_std2d_u": 42.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.714
+    },
+    {
+      "cluster_id": 33,
+      "centroid": [
+        -1923.4,
+        305.4,
+        -160.0
+      ],
+      "medoid": [
+        -1927.1,
+        319.3,
+        -160.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 270,
+      "unique_demos": 127,
+      "unique_player_instances": 156,
+      "unique_team_names": 145,
+      "median_dwell_s": 2.53,
+      "ct_ratio": 0.793,
+      "tr_ratio": 0.207,
+      "awp_ratio": 0.022,
+      "phase_ratio": {
+        "early_le20s": 0.411,
+        "mid_20_55s": 0.474,
+        "late_gt55s": 0.115
+      },
+      "spread_std2d_u": 42.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.7
+    },
+    {
+      "cluster_id": 48,
+      "centroid": [
+        -1024.3,
+        -1522.2,
+        -163.8
+      ],
+      "medoid": [
+        -1016.2,
+        -1527.6,
+        -163.8
+      ],
+      "valve_place": "Jungle",
+      "place_purity": 1.0,
+      "sample_count": 210,
+      "unique_demos": 125,
+      "unique_player_instances": 147,
+      "unique_team_names": 148,
+      "median_dwell_s": 2.31,
+      "ct_ratio": 0.871,
+      "tr_ratio": 0.129,
+      "awp_ratio": 0.071,
+      "phase_ratio": {
+        "early_le20s": 0.352,
+        "mid_20_55s": 0.495,
+        "late_gt55s": 0.152
+      },
+      "spread_std2d_u": 45.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.67
+    },
+    {
+      "cluster_id": 248,
+      "centroid": [
+        -1955.6,
+        764.7,
+        -47.8
+      ],
+      "medoid": [
+        -1953.0,
+        788.1,
+        -48.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 227,
+      "unique_demos": 125,
+      "unique_player_instances": 146,
+      "unique_team_names": 141,
+      "median_dwell_s": 3.38,
+      "ct_ratio": 0.969,
+      "tr_ratio": 0.031,
+      "awp_ratio": 0.74,
+      "phase_ratio": {
+        "early_le20s": 0.687,
+        "mid_20_55s": 0.251,
+        "late_gt55s": 0.062
+      },
+      "spread_std2d_u": 44.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.739
+    },
+    {
+      "cluster_id": 270,
+      "centroid": [
+        -1529.7,
+        863.4,
+        -8.1
+      ],
+      "medoid": [
+        -1520.1,
+        864.0,
+        -8.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 199,
+      "unique_demos": 118,
+      "unique_player_instances": 130,
+      "unique_team_names": 148,
+      "median_dwell_s": 3.94,
+      "ct_ratio": 0.744,
+      "tr_ratio": 0.256,
+      "awp_ratio": 0.196,
+      "phase_ratio": {
+        "early_le20s": 0.432,
+        "mid_20_55s": 0.437,
+        "late_gt55s": 0.131
+      },
+      "spread_std2d_u": 12.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.852
+    },
+    {
+      "cluster_id": 144,
+      "centroid": [
+        -927.6,
+        -2512.3,
+        -103.4
+      ],
+      "medoid": [
+        -925.3,
+        -2518.6,
+        -105.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.93,
+      "sample_count": 191,
+      "unique_demos": 115,
+      "unique_player_instances": 125,
+      "unique_team_names": 125,
+      "median_dwell_s": 5.44,
+      "ct_ratio": 0.99,
+      "tr_ratio": 0.01,
+      "awp_ratio": 0.859,
+      "phase_ratio": {
+        "early_le20s": 0.665,
+        "mid_20_55s": 0.283,
+        "late_gt55s": 0.052
+      },
+      "spread_std2d_u": 25.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.805
+    },
+    {
+      "cluster_id": 187,
+      "centroid": [
+        518.0,
+        659.7,
+        -132.7
+      ],
+      "medoid": [
+        518.3,
+        664.7,
+        -136.0
+      ],
+      "valve_place": "House",
+      "place_purity": 0.93,
+      "sample_count": 197,
+      "unique_demos": 115,
+      "unique_player_instances": 135,
+      "unique_team_names": 138,
+      "median_dwell_s": 3.38,
+      "ct_ratio": 0.01,
+      "tr_ratio": 0.99,
+      "awp_ratio": 0.406,
+      "phase_ratio": {
+        "early_le20s": 0.792,
+        "mid_20_55s": 0.193,
+        "late_gt55s": 0.015
+      },
+      "spread_std2d_u": 48.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.694
+    },
+    {
+      "cluster_id": 38,
+      "centroid": [
+        -1416.4,
+        323.1,
+        -167.7
+      ],
+      "medoid": [
+        -1436.0,
+        356.0,
+        -167.7
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 165,
+      "unique_demos": 114,
+      "unique_player_instances": 128,
+      "unique_team_names": 126,
+      "median_dwell_s": 2.38,
+      "ct_ratio": 0.97,
+      "tr_ratio": 0.03,
+      "awp_ratio": 0.024,
+      "phase_ratio": {
+        "early_le20s": 0.794,
+        "mid_20_55s": 0.145,
+        "late_gt55s": 0.061
+      },
+      "spread_std2d_u": 56.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.603
+    },
+    {
+      "cluster_id": 80,
+      "centroid": [
+        189.1,
+        -77.1,
+        -172.5
+      ],
+      "medoid": [
+        178.8,
+        -80.9,
+        -171.4
+      ],
+      "valve_place": "TopofMid",
+      "place_purity": 1.0,
+      "sample_count": 167,
+      "unique_demos": 114,
+      "unique_player_instances": 131,
+      "unique_team_names": 138,
+      "median_dwell_s": 2.25,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.072,
+      "phase_ratio": {
+        "early_le20s": 0.796,
+        "mid_20_55s": 0.192,
+        "late_gt55s": 0.012
+      },
+      "spread_std2d_u": 34.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.664
+    },
+    {
+      "cluster_id": 65,
+      "centroid": [
+        -511.8,
+        -2011.9,
+        -179.7
+      ],
+      "medoid": [
+        -497.7,
+        -1999.1,
+        -180.0
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 153,
+      "unique_demos": 111,
+      "unique_player_instances": 137,
+      "unique_team_names": 141,
+      "median_dwell_s": 3.19,
+      "ct_ratio": 0.144,
+      "tr_ratio": 0.856,
+      "awp_ratio": 0.085,
+      "phase_ratio": {
+        "early_le20s": 0.438,
+        "mid_20_55s": 0.301,
+        "late_gt55s": 0.261
+      },
+      "spread_std2d_u": 62.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.624
+    },
+    {
+      "cluster_id": 243,
+      "centroid": [
+        -2340.7,
+        725.0,
+        -43.2
+      ],
+      "medoid": [
+        -2361.1,
+        733.1,
+        -39.7
+      ],
+      "valve_place": "Truck",
+      "place_purity": 1.0,
+      "sample_count": 195,
+      "unique_demos": 110,
+      "unique_player_instances": 124,
+      "unique_team_names": 126,
+      "median_dwell_s": 3.06,
+      "ct_ratio": 0.949,
+      "tr_ratio": 0.051,
+      "awp_ratio": 0.564,
+      "phase_ratio": {
+        "early_le20s": 0.569,
+        "mid_20_55s": 0.369,
+        "late_gt55s": 0.062
+      },
+      "spread_std2d_u": 56.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.631
+    },
+    {
+      "cluster_id": 66,
+      "centroid": [
+        -408.5,
+        -2032.4,
+        -179.5
+      ],
+      "medoid": [
+        -418.8,
+        -2010.5,
+        -180.0
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 140,
+      "unique_demos": 109,
+      "unique_player_instances": 124,
+      "unique_team_names": 126,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.407,
+      "tr_ratio": 0.593,
+      "awp_ratio": 0.043,
+      "phase_ratio": {
+        "early_le20s": 0.514,
+        "mid_20_55s": 0.314,
+        "late_gt55s": 0.171
+      },
+      "spread_std2d_u": 60.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.6
+    },
+    {
+      "cluster_id": 160,
+      "centroid": [
+        -496.5,
+        -1370.2,
+        -132.0
+      ],
+      "medoid": [
+        -496.1,
+        -1373.0,
+        -130.3
+      ],
+      "valve_place": "Stairs",
+      "place_purity": 0.67,
+      "sample_count": 174,
+      "unique_demos": 108,
+      "unique_player_instances": 131,
+      "unique_team_names": 124,
+      "median_dwell_s": 2.25,
+      "ct_ratio": 0.845,
+      "tr_ratio": 0.155,
+      "awp_ratio": 0.046,
+      "phase_ratio": {
+        "early_le20s": 0.316,
+        "mid_20_55s": 0.494,
+        "late_gt55s": 0.19
+      },
+      "spread_std2d_u": 12.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.711
+    },
+    {
+      "cluster_id": 220,
+      "centroid": [
+        -488.8,
+        650.7,
+        -77.4
+      ],
+      "medoid": [
+        -464.0,
+        654.0,
+        -72.0
+      ],
+      "valve_place": "BackAlley",
+      "place_purity": 1.0,
+      "sample_count": 150,
+      "unique_demos": 105,
+      "unique_player_instances": 123,
+      "unique_team_names": 130,
+      "median_dwell_s": 2.69,
+      "ct_ratio": 0.02,
+      "tr_ratio": 0.98,
+      "awp_ratio": 0.033,
+      "phase_ratio": {
+        "early_le20s": 0.74,
+        "mid_20_55s": 0.22,
+        "late_gt55s": 0.04
+      },
+      "spread_std2d_u": 73.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.538
+    },
+    {
+      "cluster_id": 264,
+      "centroid": [
+        -1573.8,
+        802.6,
+        -48.0
+      ],
+      "medoid": [
+        -1564.4,
+        799.9,
+        -48.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 137,
+      "unique_demos": 101,
+      "unique_player_instances": 110,
+      "unique_team_names": 133,
+      "median_dwell_s": 2.62,
+      "ct_ratio": 0.109,
+      "tr_ratio": 0.891,
+      "awp_ratio": 0.832,
+      "phase_ratio": {
+        "early_le20s": 0.387,
+        "mid_20_55s": 0.328,
+        "late_gt55s": 0.285
+      },
+      "spread_std2d_u": 32.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.648
+    },
+    {
+      "cluster_id": 3,
+      "centroid": [
+        -1425.2,
+        -2184.3,
+        -238.7
+      ],
+      "medoid": [
+        -1412.2,
+        -2188.3,
+        -236.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 1.0,
+      "sample_count": 171,
+      "unique_demos": 98,
+      "unique_player_instances": 115,
+      "unique_team_names": 118,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.953,
+      "tr_ratio": 0.047,
+      "awp_ratio": 0.579,
+      "phase_ratio": {
+        "early_le20s": 0.257,
+        "mid_20_55s": 0.38,
+        "late_gt55s": 0.363
+      },
+      "spread_std2d_u": 54.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.581
+    },
+    {
+      "cluster_id": 28,
+      "centroid": [
+        -2195.2,
+        2.0,
+        -166.9
+      ],
+      "medoid": [
+        -2197.5,
+        14.5,
+        -168.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 141,
+      "unique_demos": 97,
+      "unique_player_instances": 104,
+      "unique_team_names": 123,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.957,
+      "tr_ratio": 0.043,
+      "awp_ratio": 0.482,
+      "phase_ratio": {
+        "early_le20s": 0.312,
+        "mid_20_55s": 0.404,
+        "late_gt55s": 0.284
+      },
+      "spread_std2d_u": 54.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.58
+    },
+    {
+      "cluster_id": 110,
+      "centroid": [
+        -2341.3,
+        605.6,
+        -128.2
+      ],
+      "medoid": [
+        -2392.0,
+        596.0,
+        -128.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 145,
+      "unique_demos": 95,
+      "unique_player_instances": 100,
+      "unique_team_names": 117,
+      "median_dwell_s": 3.44,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.028,
+      "phase_ratio": {
+        "early_le20s": 0.476,
+        "mid_20_55s": 0.469,
+        "late_gt55s": 0.055
+      },
+      "spread_std2d_u": 63.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.583
+    },
+    {
+      "cluster_id": 121,
+      "centroid": [
+        -1186.8,
+        -874.8,
+        -143.8
+      ],
+      "medoid": [
+        -1206.1,
+        -856.1,
+        -130.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.77,
+      "sample_count": 118,
+      "unique_demos": 87,
+      "unique_player_instances": 96,
+      "unique_team_names": 101,
+      "median_dwell_s": 3.06,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.178,
+      "phase_ratio": {
+        "early_le20s": 0.466,
+        "mid_20_55s": 0.517,
+        "late_gt55s": 0.017
+      },
+      "spread_std2d_u": 42.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.6
+    },
+    {
+      "cluster_id": 219,
+      "centroid": [
+        -496.7,
+        -1435.7,
+        -80.2
+      ],
+      "medoid": [
+        -496.1,
+        -1435.3,
+        -80.5
+      ],
+      "valve_place": "Stairs",
+      "place_purity": 1.0,
+      "sample_count": 120,
+      "unique_demos": 87,
+      "unique_player_instances": 100,
+      "unique_team_names": 122,
+      "median_dwell_s": 2.19,
+      "ct_ratio": 0.867,
+      "tr_ratio": 0.133,
+      "awp_ratio": 0.108,
+      "phase_ratio": {
+        "early_le20s": 0.392,
+        "mid_20_55s": 0.442,
+        "late_gt55s": 0.167
+      },
+      "spread_std2d_u": 10.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.643
+    },
+    {
+      "cluster_id": 159,
+      "centroid": [
+        -496.4,
+        -1400.8,
+        -108.1
+      ],
+      "medoid": [
+        -496.3,
+        -1400.6,
+        -108.3
+      ],
+      "valve_place": "Stairs",
+      "place_purity": 0.57,
+      "sample_count": 129,
+      "unique_demos": 86,
+      "unique_player_instances": 98,
+      "unique_team_names": 121,
+      "median_dwell_s": 2.38,
+      "ct_ratio": 0.891,
+      "tr_ratio": 0.109,
+      "awp_ratio": 0.054,
+      "phase_ratio": {
+        "early_le20s": 0.341,
+        "mid_20_55s": 0.519,
+        "late_gt55s": 0.14
+      },
+      "spread_std2d_u": 8.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.657
+    },
+    {
+      "cluster_id": 167,
+      "centroid": [
+        141.7,
+        -1973.5,
+        -117.6
+      ],
+      "medoid": [
+        141.2,
+        -1973.9,
+        -112.8
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 0.67,
+      "sample_count": 112,
+      "unique_demos": 86,
+      "unique_player_instances": 93,
+      "unique_team_names": 109,
+      "median_dwell_s": 1.88,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.018,
+      "phase_ratio": {
+        "early_le20s": 0.688,
+        "mid_20_55s": 0.286,
+        "late_gt55s": 0.027
+      },
+      "spread_std2d_u": 6.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.635
+    },
+    {
+      "cluster_id": 279,
+      "centroid": [
+        -1029.3,
+        440.5,
+        -67.9
+      ],
+      "medoid": [
+        -1045.7,
+        441.7,
+        -80.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 159,
+      "unique_demos": 86,
+      "unique_player_instances": 101,
+      "unique_team_names": 111,
+      "median_dwell_s": 3.12,
+      "ct_ratio": 0.151,
+      "tr_ratio": 0.849,
+      "awp_ratio": 0.019,
+      "phase_ratio": {
+        "early_le20s": 0.591,
+        "mid_20_55s": 0.377,
+        "late_gt55s": 0.031
+      },
+      "spread_std2d_u": 39.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.609
+    },
+    {
+      "cluster_id": 237,
+      "centroid": [
+        179.5,
+        -220.9,
+        -87.0
+      ],
+      "medoid": [
+        177.9,
+        -224.3,
+        -79.9
+      ],
+      "valve_place": "TopofMid",
+      "place_purity": 1.0,
+      "sample_count": 125,
+      "unique_demos": 85,
+      "unique_player_instances": 97,
+      "unique_team_names": 114,
+      "median_dwell_s": 3.81,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.872,
+      "phase_ratio": {
+        "early_le20s": 0.968,
+        "mid_20_55s": 0.032,
+        "late_gt55s": 0.0
+      },
+      "spread_std2d_u": 22.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.7
+    },
+    {
+      "cluster_id": 42,
+      "centroid": [
+        -1201.9,
+        125.1,
+        -167.4
+      ],
+      "medoid": [
+        -1219.1,
+        107.6,
+        -166.7
+      ],
+      "valve_place": "Catwalk",
+      "place_purity": 0.63,
+      "sample_count": 147,
+      "unique_demos": 83,
+      "unique_player_instances": 94,
+      "unique_team_names": 110,
+      "median_dwell_s": 2.31,
+      "ct_ratio": 0.939,
+      "tr_ratio": 0.061,
+      "awp_ratio": 0.15,
+      "phase_ratio": {
+        "early_le20s": 0.429,
+        "mid_20_55s": 0.483,
+        "late_gt55s": 0.088
+      },
+      "spread_std2d_u": 63.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.473
+    },
+    {
+      "cluster_id": 74,
+      "centroid": [
+        43.9,
+        -1425.1,
+        -173.3
+      ],
+      "medoid": [
+        40.7,
+        -1422.5,
+        -173.6
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 0.83,
+      "sample_count": 141,
+      "unique_demos": 83,
+      "unique_player_instances": 94,
+      "unique_team_names": 109,
+      "median_dwell_s": 2.19,
+      "ct_ratio": 0.759,
+      "tr_ratio": 0.241,
+      "awp_ratio": 0.184,
+      "phase_ratio": {
+        "early_le20s": 0.355,
+        "mid_20_55s": 0.504,
+        "late_gt55s": 0.142
+      },
+      "spread_std2d_u": 38.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.544
+    },
+    {
+      "cluster_id": 34,
+      "centroid": [
+        -1681.4,
+        -717.5,
+        -168.0
+      ],
+      "medoid": [
+        -1711.6,
+        -760.9,
+        -168.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 1.0,
+      "sample_count": 115,
+      "unique_demos": 82,
+      "unique_player_instances": 91,
+      "unique_team_names": 110,
+      "median_dwell_s": 2.62,
+      "ct_ratio": 0.835,
+      "tr_ratio": 0.165,
+      "awp_ratio": 0.435,
+      "phase_ratio": {
+        "early_le20s": 0.487,
+        "mid_20_55s": 0.4,
+        "late_gt55s": 0.113
+      },
+      "spread_std2d_u": 67.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.476
+    },
+    {
+      "cluster_id": 266,
+      "centroid": [
+        -1607.8,
+        863.4,
+        -40.8
+      ],
+      "medoid": [
+        -1608.0,
+        864.0,
+        -48.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 130,
+      "unique_demos": 81,
+      "unique_player_instances": 89,
+      "unique_team_names": 112,
+      "median_dwell_s": 2.78,
+      "ct_ratio": 0.808,
+      "tr_ratio": 0.192,
+      "awp_ratio": 0.154,
+      "phase_ratio": {
+        "early_le20s": 0.446,
+        "mid_20_55s": 0.438,
+        "late_gt55s": 0.115
+      },
+      "spread_std2d_u": 19.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.634
+    },
+    {
+      "cluster_id": 2,
+      "centroid": [
+        -573.9,
+        -566.0,
+        -272.3
+      ],
+      "medoid": [
+        -568.9,
+        -551.7,
+        -274.0
+      ],
+      "valve_place": "Middle",
+      "place_purity": 1.0,
+      "sample_count": 113,
+      "unique_demos": 80,
+      "unique_player_instances": 90,
+      "unique_team_names": 105,
+      "median_dwell_s": 3.06,
+      "ct_ratio": 0.035,
+      "tr_ratio": 0.965,
+      "awp_ratio": 0.628,
+      "phase_ratio": {
+        "early_le20s": 0.336,
+        "mid_20_55s": 0.584,
+        "late_gt55s": 0.08
+      },
+      "spread_std2d_u": 59.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.523
+    },
+    {
+      "cluster_id": 120,
+      "centroid": [
+        -1246.8,
+        -689.4,
+        -166.0
+      ],
+      "medoid": [
+        -1248.0,
+        -704.9,
+        -168.0
+      ],
+      "valve_place": "SnipersNest",
+      "place_purity": 1.0,
+      "sample_count": 118,
+      "unique_demos": 79,
+      "unique_player_instances": 95,
+      "unique_team_names": 107,
+      "median_dwell_s": 2.84,
+      "ct_ratio": 0.314,
+      "tr_ratio": 0.686,
+      "awp_ratio": 0.059,
+      "phase_ratio": {
+        "early_le20s": 0.441,
+        "mid_20_55s": 0.424,
+        "late_gt55s": 0.136
+      },
+      "spread_std2d_u": 26.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.607
+    },
+    {
+      "cluster_id": 5,
+      "centroid": [
+        -1333.3,
+        -2371.7,
+        -209.1
+      ],
+      "medoid": [
+        -1317.4,
+        -2371.7,
+        -205.9
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 1.0,
+      "sample_count": 101,
+      "unique_demos": 78,
+      "unique_player_instances": 80,
+      "unique_team_names": 113,
+      "median_dwell_s": 2.94,
+      "ct_ratio": 0.99,
+      "tr_ratio": 0.01,
+      "awp_ratio": 0.901,
+      "phase_ratio": {
+        "early_le20s": 0.406,
+        "mid_20_55s": 0.396,
+        "late_gt55s": 0.198
+      },
+      "spread_std2d_u": 53.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.526
+    },
+    {
+      "cluster_id": 72,
+      "centroid": [
+        -183.8,
+        -2337.7,
+        -168.0
+      ],
+      "medoid": [
+        -203.0,
+        -2335.5,
+        -168.0
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 120,
+      "unique_demos": 76,
+      "unique_player_instances": 84,
+      "unique_team_names": 95,
+      "median_dwell_s": 3.62,
+      "ct_ratio": 0.417,
+      "tr_ratio": 0.583,
+      "awp_ratio": 0.025,
+      "phase_ratio": {
+        "early_le20s": 0.367,
+        "mid_20_55s": 0.383,
+        "late_gt55s": 0.25
+      },
+      "spread_std2d_u": 61.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.537
+    },
+    {
+      "cluster_id": 149,
+      "centroid": [
+        -830.8,
+        -8.6,
+        -167.7
+      ],
+      "medoid": [
+        -838.0,
+        -11.9,
+        -168.3
+      ],
+      "valve_place": "Catwalk",
+      "place_purity": 0.93,
+      "sample_count": 91,
+      "unique_demos": 76,
+      "unique_player_instances": 82,
+      "unique_team_names": 110,
+      "median_dwell_s": 2.62,
+      "ct_ratio": 0.648,
+      "tr_ratio": 0.352,
+      "awp_ratio": 0.462,
+      "phase_ratio": {
+        "early_le20s": 0.44,
+        "mid_20_55s": 0.352,
+        "late_gt55s": 0.209
+      },
+      "spread_std2d_u": 43.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.531
+    },
+    {
+      "cluster_id": 13,
+      "centroid": [
+        -232.7,
+        -546.1,
+        -241.5
+      ],
+      "medoid": [
+        -226.8,
+        -542.7,
+        -239.6
+      ],
+      "valve_place": "Middle",
+      "place_purity": 1.0,
+      "sample_count": 128,
+      "unique_demos": 74,
+      "unique_player_instances": 81,
+      "unique_team_names": 109,
+      "median_dwell_s": 2.78,
+      "ct_ratio": 0.789,
+      "tr_ratio": 0.211,
+      "awp_ratio": 0.016,
+      "phase_ratio": {
+        "early_le20s": 0.508,
+        "mid_20_55s": 0.461,
+        "late_gt55s": 0.031
+      },
+      "spread_std2d_u": 52.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.506
+    },
+    {
+      "cluster_id": 125,
+      "centroid": [
+        -1084.5,
+        -792.0,
+        -125.4
+      ],
+      "medoid": [
+        -1072.0,
+        -789.0,
+        -132.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 1.0,
+      "sample_count": 107,
+      "unique_demos": 74,
+      "unique_player_instances": 86,
+      "unique_team_names": 96,
+      "median_dwell_s": 5.81,
+      "ct_ratio": 0.215,
+      "tr_ratio": 0.785,
+      "awp_ratio": 0.009,
+      "phase_ratio": {
+        "early_le20s": 0.299,
+        "mid_20_55s": 0.589,
+        "late_gt55s": 0.112
+      },
+      "spread_std2d_u": 27.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.661
+    },
+    {
+      "cluster_id": 146,
+      "centroid": [
+        -805.6,
+        -1153.9,
+        -120.2
+      ],
+      "medoid": [
+        -808.0,
+        -1152.0,
+        -120.2
+      ],
+      "valve_place": "Connector",
+      "place_purity": 1.0,
+      "sample_count": 95,
+      "unique_demos": 72,
+      "unique_player_instances": 80,
+      "unique_team_names": 103,
+      "median_dwell_s": 3.12,
+      "ct_ratio": 0.632,
+      "tr_ratio": 0.368,
+      "awp_ratio": 0.189,
+      "phase_ratio": {
+        "early_le20s": 0.389,
+        "mid_20_55s": 0.379,
+        "late_gt55s": 0.232
+      },
+      "spread_std2d_u": 5.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.667
+    },
+    {
+      "cluster_id": 177,
+      "centroid": [
+        280.5,
+        -1711.1,
+        -122.1
+      ],
+      "medoid": [
+        280.1,
+        -1711.9,
+        -122.1
+      ],
+      "valve_place": "TRamp",
+      "place_purity": 0.87,
+      "sample_count": 105,
+      "unique_demos": 72,
+      "unique_player_instances": 79,
+      "unique_team_names": 92,
+      "median_dwell_s": 4.25,
+      "ct_ratio": 0.295,
+      "tr_ratio": 0.705,
+      "awp_ratio": 0.01,
+      "phase_ratio": {
+        "early_le20s": 0.714,
+        "mid_20_55s": 0.257,
+        "late_gt55s": 0.029
+      },
+      "spread_std2d_u": 2.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.731
+    },
+    {
+      "cluster_id": 88,
+      "centroid": [
+        -2486.2,
+        382.2,
+        -121.5
+      ],
+      "medoid": [
+        -2486.1,
+        382.0,
+        -119.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 95,
+      "unique_demos": 71,
+      "unique_player_instances": 75,
+      "unique_team_names": 97,
+      "median_dwell_s": 9.88,
+      "ct_ratio": 0.989,
+      "tr_ratio": 0.011,
+      "awp_ratio": 0.158,
+      "phase_ratio": {
+        "early_le20s": 0.547,
+        "mid_20_55s": 0.432,
+        "late_gt55s": 0.021
+      },
+      "spread_std2d_u": 8.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.71
+    },
+    {
+      "cluster_id": 123,
+      "centroid": [
+        -1203.8,
+        -731.6,
+        -129.0
+      ],
+      "medoid": [
+        -1203.6,
+        -731.8,
+        -129.0
+      ],
+      "valve_place": "SnipersNest",
+      "place_purity": 1.0,
+      "sample_count": 82,
+      "unique_demos": 70,
+      "unique_player_instances": 71,
+      "unique_team_names": 105,
+      "median_dwell_s": 2.47,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.756,
+      "phase_ratio": {
+        "early_le20s": 1.0,
+        "mid_20_55s": 0.0,
+        "late_gt55s": 0.0
+      },
+      "spread_std2d_u": 11.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.603
+    },
+    {
+      "cluster_id": 152,
+      "centroid": [
+        -750.6,
+        -7.3,
+        -153.7
+      ],
+      "medoid": [
+        -747.1,
+        -21.6,
+        -144.0
+      ],
+      "valve_place": "Catwalk",
+      "place_purity": 0.5,
+      "sample_count": 100,
+      "unique_demos": 70,
+      "unique_player_instances": 75,
+      "unique_team_names": 101,
+      "median_dwell_s": 2.44,
+      "ct_ratio": 0.93,
+      "tr_ratio": 0.07,
+      "awp_ratio": 0.19,
+      "phase_ratio": {
+        "early_le20s": 0.66,
+        "mid_20_55s": 0.26,
+        "late_gt55s": 0.08
+      },
+      "spread_std2d_u": 50.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.478
+    },
+    {
+      "cluster_id": 203,
+      "centroid": [
+        -1897.1,
+        422.8,
+        -89.9
+      ],
+      "medoid": [
+        -1897.0,
+        423.0,
+        -89.9
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 117,
+      "unique_demos": 70,
+      "unique_player_instances": 75,
+      "unique_team_names": 95,
+      "median_dwell_s": 8.81,
+      "ct_ratio": 0.932,
+      "tr_ratio": 0.068,
+      "awp_ratio": 0.0,
+      "phase_ratio": {
+        "early_le20s": 0.479,
+        "mid_20_55s": 0.393,
+        "late_gt55s": 0.128
+      },
+      "spread_std2d_u": 1.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.73
+    },
+    {
+      "cluster_id": 287,
+      "centroid": [
+        836.7,
+        -2375.1,
+        -40.0
+      ],
+      "medoid": [
+        832.0,
+        -2375.2,
+        -40.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 255,
+      "unique_demos": 69,
+      "unique_player_instances": 75,
+      "unique_team_names": 97,
+      "median_dwell_s": 2.75,
+      "ct_ratio": 0.008,
+      "tr_ratio": 0.992,
+      "awp_ratio": 0.0,
+      "phase_ratio": {
+        "early_le20s": 0.541,
+        "mid_20_55s": 0.427,
+        "late_gt55s": 0.031
+      },
+      "spread_std2d_u": 10.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.62
+    },
+    {
+      "cluster_id": 176,
+      "centroid": [
+        265.6,
+        -182.1,
+        -166.7
+      ],
+      "medoid": [
+        267.0,
+        -163.1,
+        -167.2
+      ],
+      "valve_place": "TopofMid",
+      "place_purity": 1.0,
+      "sample_count": 83,
+      "unique_demos": 67,
+      "unique_player_instances": 70,
+      "unique_team_names": 101,
+      "median_dwell_s": 2.38,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.602,
+      "phase_ratio": {
+        "early_le20s": 0.663,
+        "mid_20_55s": 0.301,
+        "late_gt55s": 0.036
+      },
+      "spread_std2d_u": 57.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.441
+    },
+    {
+      "cluster_id": 186,
+      "centroid": [
+        511.1,
+        601.0,
+        -129.6
+      ],
+      "medoid": [
+        513.0,
+        606.2,
+        -136.0
+      ],
+      "valve_place": "House",
+      "place_purity": 0.67,
+      "sample_count": 105,
+      "unique_demos": 67,
+      "unique_player_instances": 74,
+      "unique_team_names": 94,
+      "median_dwell_s": 3.5,
+      "ct_ratio": 0.048,
+      "tr_ratio": 0.952,
+      "awp_ratio": 0.619,
+      "phase_ratio": {
+        "early_le20s": 0.838,
+        "mid_20_55s": 0.152,
+        "late_gt55s": 0.01
+      },
+      "spread_std2d_u": 39.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.569
+    },
+    {
+      "cluster_id": 36,
+      "centroid": [
+        -1488.4,
+        -791.3,
+        -168.5
+      ],
+      "medoid": [
+        -1476.8,
+        -778.4,
+        -168.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 1.0,
+      "sample_count": 98,
+      "unique_demos": 65,
+      "unique_player_instances": 70,
+      "unique_team_names": 98,
+      "median_dwell_s": 2.81,
+      "ct_ratio": 0.959,
+      "tr_ratio": 0.041,
+      "awp_ratio": 0.592,
+      "phase_ratio": {
+        "early_le20s": 0.429,
+        "mid_20_55s": 0.367,
+        "late_gt55s": 0.204
+      },
+      "spread_std2d_u": 51.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.482
+    },
+    {
+      "cluster_id": 138,
+      "centroid": [
+        -1017.2,
+        -2232.2,
+        -112.6
+      ],
+      "medoid": [
+        -1017.0,
+        -2232.0,
+        -112.9
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.77,
+      "sample_count": 85,
+      "unique_demos": 63,
+      "unique_player_instances": 67,
+      "unique_team_names": 102,
+      "median_dwell_s": 5.19,
+      "ct_ratio": 0.788,
+      "tr_ratio": 0.212,
+      "awp_ratio": 0.024,
+      "phase_ratio": {
+        "early_le20s": 0.471,
+        "mid_20_55s": 0.353,
+        "late_gt55s": 0.176
+      },
+      "spread_std2d_u": 1.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.704
+    },
+    {
+      "cluster_id": 215,
+      "centroid": [
+        -536.0,
+        -1445.5,
+        -72.4
+      ],
+      "medoid": [
+        -533.8,
+        -1446.4,
+        -71.7
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 0.53,
+      "sample_count": 88,
+      "unique_demos": 63,
+      "unique_player_instances": 69,
+      "unique_team_names": 87,
+      "median_dwell_s": 3.53,
+      "ct_ratio": 0.977,
+      "tr_ratio": 0.023,
+      "awp_ratio": 0.409,
+      "phase_ratio": {
+        "early_le20s": 0.636,
+        "mid_20_55s": 0.33,
+        "late_gt55s": 0.034
+      },
+      "spread_std2d_u": 9.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.652
+    },
+    {
+      "cluster_id": 164,
+      "centroid": [
+        16.1,
+        -1768.0,
+        -110.5
+      ],
+      "medoid": [
+        32.5,
+        -1759.0,
+        -111.1
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 158,
+      "unique_demos": 62,
+      "unique_player_instances": 71,
+      "unique_team_names": 98,
+      "median_dwell_s": 3.0,
+      "ct_ratio": 0.911,
+      "tr_ratio": 0.089,
+      "awp_ratio": 0.063,
+      "phase_ratio": {
+        "early_le20s": 0.43,
+        "mid_20_55s": 0.475,
+        "late_gt55s": 0.095
+      },
+      "spread_std2d_u": 40.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.518
+    },
+    {
+      "cluster_id": 37,
+      "centroid": [
+        -1445.6,
+        134.3,
+        -165.2
+      ],
+      "medoid": [
+        -1428.3,
+        116.8,
+        -164.2
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 100,
+      "unique_demos": 59,
+      "unique_player_instances": 64,
+      "unique_team_names": 83,
+      "median_dwell_s": 2.88,
+      "ct_ratio": 0.98,
+      "tr_ratio": 0.02,
+      "awp_ratio": 0.13,
+      "phase_ratio": {
+        "early_le20s": 0.46,
+        "mid_20_55s": 0.47,
+        "late_gt55s": 0.07
+      },
+      "spread_std2d_u": 62.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.431
+    },
+    {
+      "cluster_id": 112,
+      "centroid": [
+        -1765.1,
+        -565.3,
+        -134.1
+      ],
+      "medoid": [
+        -1756.8,
+        -560.2,
+        -128.0
+      ],
+      "valve_place": "Shop",
+      "place_purity": 1.0,
+      "sample_count": 78,
+      "unique_demos": 59,
+      "unique_player_instances": 62,
+      "unique_team_names": 89,
+      "median_dwell_s": 3.12,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.487,
+      "phase_ratio": {
+        "early_le20s": 0.321,
+        "mid_20_55s": 0.513,
+        "late_gt55s": 0.167
+      },
+      "spread_std2d_u": 24.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.567
+    },
+    {
+      "cluster_id": 222,
+      "centroid": [
+        -140.9,
+        -1436.4,
+        -70.5
+      ],
+      "medoid": [
+        -142.9,
+        -1418.2,
+        -72.2
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 1.0,
+      "sample_count": 79,
+      "unique_demos": 57,
+      "unique_player_instances": 64,
+      "unique_team_names": 78,
+      "median_dwell_s": 2.25,
+      "ct_ratio": 0.177,
+      "tr_ratio": 0.823,
+      "awp_ratio": 0.089,
+      "phase_ratio": {
+        "early_le20s": 0.367,
+        "mid_20_55s": 0.481,
+        "late_gt55s": 0.152
+      },
+      "spread_std2d_u": 28.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.492
+    },
+    {
+      "cluster_id": 240,
+      "centroid": [
+        1028.2,
+        -2134.1,
+        -57.6
+      ],
+      "medoid": [
+        1055.9,
+        -2124.0,
+        -72.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 96,
+      "unique_demos": 57,
+      "unique_player_instances": 61,
+      "unique_team_names": 94,
+      "median_dwell_s": 3.38,
+      "ct_ratio": 0.062,
+      "tr_ratio": 0.938,
+      "awp_ratio": 0.062,
+      "phase_ratio": {
+        "early_le20s": 0.802,
+        "mid_20_55s": 0.146,
+        "late_gt55s": 0.052
+      },
+      "spread_std2d_u": 38.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.531
+    },
+    {
+      "cluster_id": 276,
+      "centroid": [
+        -1117.4,
+        369.7,
+        -59.0
+      ],
+      "medoid": [
+        -1086.0,
+        361.0,
+        -40.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 0.6,
+      "sample_count": 75,
+      "unique_demos": 57,
+      "unique_player_instances": 60,
+      "unique_team_names": 79,
+      "median_dwell_s": 3.19,
+      "ct_ratio": 0.133,
+      "tr_ratio": 0.867,
+      "awp_ratio": 0.027,
+      "phase_ratio": {
+        "early_le20s": 0.907,
+        "mid_20_55s": 0.067,
+        "late_gt55s": 0.027
+      },
+      "spread_std2d_u": 36.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.526
+    },
+    {
+      "cluster_id": 209,
+      "centroid": [
+        -921.0,
+        -416.6,
+        -48.1
+      ],
+      "medoid": [
+        -921.9,
+        -384.7,
+        -48.1
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 1.0,
+      "sample_count": 90,
+      "unique_demos": 56,
+      "unique_player_instances": 60,
+      "unique_team_names": 80,
+      "median_dwell_s": 3.12,
+      "ct_ratio": 0.767,
+      "tr_ratio": 0.233,
+      "awp_ratio": 0.033,
+      "phase_ratio": {
+        "early_le20s": 0.511,
+        "mid_20_55s": 0.456,
+        "late_gt55s": 0.033
+      },
+      "spread_std2d_u": 54.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.461
+    },
+    {
+      "cluster_id": 114,
+      "centroid": [
+        -1738.0,
+        -575.6,
+        -136.7
+      ],
+      "medoid": [
+        -1744.2,
+        -569.5,
+        -128.0
+      ],
+      "valve_place": "Shop",
+      "place_purity": 1.0,
+      "sample_count": 73,
+      "unique_demos": 53,
+      "unique_player_instances": 56,
+      "unique_team_names": 86,
+      "median_dwell_s": 3.12,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.507,
+      "phase_ratio": {
+        "early_le20s": 0.247,
+        "mid_20_55s": 0.534,
+        "late_gt55s": 0.219
+      },
+      "spread_std2d_u": 25.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.544
+    },
+    {
+      "cluster_id": 127,
+      "centroid": [
+        -1088.4,
+        -693.4,
+        -134.3
+      ],
+      "medoid": [
+        -1093.2,
+        -683.9,
+        -135.0
+      ],
+      "valve_place": "Middle",
+      "place_purity": 0.9,
+      "sample_count": 65,
+      "unique_demos": 53,
+      "unique_player_instances": 56,
+      "unique_team_names": 79,
+      "median_dwell_s": 3.31,
+      "ct_ratio": 0.615,
+      "tr_ratio": 0.385,
+      "awp_ratio": 0.123,
+      "phase_ratio": {
+        "early_le20s": 0.4,
+        "mid_20_55s": 0.523,
+        "late_gt55s": 0.077
+      },
+      "spread_std2d_u": 34.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.527
+    },
+    {
+      "cluster_id": 255,
+      "centroid": [
+        -1855.1,
+        699.1,
+        -48.0
+      ],
+      "medoid": [
+        -1859.4,
+        692.6,
+        -48.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 65,
+      "unique_demos": 52,
+      "unique_player_instances": 56,
+      "unique_team_names": 78,
+      "median_dwell_s": 2.56,
+      "ct_ratio": 0.138,
+      "tr_ratio": 0.862,
+      "awp_ratio": 0.615,
+      "phase_ratio": {
+        "early_le20s": 0.446,
+        "mid_20_55s": 0.323,
+        "late_gt55s": 0.231
+      },
+      "spread_std2d_u": 29.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.492
+    },
+    {
+      "cluster_id": 229,
+      "centroid": [
+        143.2,
+        -1971.4,
+        -84.5
+      ],
+      "medoid": [
+        142.5,
+        -1972.3,
+        -86.5
+      ],
+      "valve_place": "BombsiteA",
+      "place_purity": 0.53,
+      "sample_count": 54,
+      "unique_demos": 50,
+      "unique_player_instances": 52,
+      "unique_team_names": 75,
+      "median_dwell_s": 1.75,
+      "ct_ratio": 0.981,
+      "tr_ratio": 0.019,
+      "awp_ratio": 0.0,
+      "phase_ratio": {
+        "early_le20s": 0.815,
+        "mid_20_55s": 0.167,
+        "late_gt55s": 0.019
+      },
+      "spread_std2d_u": 4.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.511
+    },
+    {
+      "cluster_id": 175,
+      "centroid": [
+        202.4,
+        -216.1,
+        -167.5
+      ],
+      "medoid": [
+        203.5,
+        -215.4,
+        -167.9
+      ],
+      "valve_place": "TopofMid",
+      "place_purity": 1.0,
+      "sample_count": 58,
+      "unique_demos": 48,
+      "unique_player_instances": 52,
+      "unique_team_names": 70,
+      "median_dwell_s": 2.44,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.362,
+      "phase_ratio": {
+        "early_le20s": 0.569,
+        "mid_20_55s": 0.397,
+        "late_gt55s": 0.034
+      },
+      "spread_std2d_u": 43.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.425
+    },
+    {
+      "cluster_id": 273,
+      "centroid": [
+        -1183.8,
+        534.9,
+        -36.0
+      ],
+      "medoid": [
+        -1184.0,
+        526.8,
+        -36.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 87,
+      "unique_demos": 47,
+      "unique_player_instances": 50,
+      "unique_team_names": 77,
+      "median_dwell_s": 3.12,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.0,
+      "phase_ratio": {
+        "early_le20s": 0.517,
+        "mid_20_55s": 0.483,
+        "late_gt55s": 0.0
+      },
+      "spread_std2d_u": 26.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.519
+    },
+    {
+      "cluster_id": 35,
+      "centroid": [
+        -1603.7,
+        613.7,
+        -167.9
+      ],
+      "medoid": [
+        -1613.3,
+        618.0,
+        -168.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 78,
+      "unique_demos": 46,
+      "unique_player_instances": 48,
+      "unique_team_names": 72,
+      "median_dwell_s": 4.09,
+      "ct_ratio": 0.987,
+      "tr_ratio": 0.013,
+      "awp_ratio": 0.064,
+      "phase_ratio": {
+        "early_le20s": 0.321,
+        "mid_20_55s": 0.474,
+        "late_gt55s": 0.205
+      },
+      "spread_std2d_u": 43.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.518
+    },
+    {
+      "cluster_id": 212,
+      "centroid": [
+        -900.5,
+        26.6,
+        -54.0
+      ],
+      "medoid": [
+        -909.6,
+        19.2,
+        -54.0
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 1.0,
+      "sample_count": 86,
+      "unique_demos": 46,
+      "unique_player_instances": 46,
+      "unique_team_names": 74,
+      "median_dwell_s": 2.47,
+      "ct_ratio": 0.919,
+      "tr_ratio": 0.081,
+      "awp_ratio": 0.07,
+      "phase_ratio": {
+        "early_le20s": 0.349,
+        "mid_20_55s": 0.43,
+        "late_gt55s": 0.221
+      },
+      "spread_std2d_u": 32.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.455
+    },
+    {
+      "cluster_id": 217,
+      "centroid": [
+        -518.8,
+        -1448.3,
+        -70.1
+      ],
+      "medoid": [
+        -526.5,
+        -1453.7,
+        -65.8
+      ],
+      "valve_place": "Stairs",
+      "place_purity": 0.83,
+      "sample_count": 46,
+      "unique_demos": 44,
+      "unique_player_instances": 44,
+      "unique_team_names": 74,
+      "median_dwell_s": 2.09,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.348,
+      "phase_ratio": {
+        "early_le20s": 0.696,
+        "mid_20_55s": 0.239,
+        "late_gt55s": 0.065
+      },
+      "spread_std2d_u": 13.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.486
+    },
+    {
+      "cluster_id": 214,
+      "centroid": [
+        -532.0,
+        -1471.9,
+        -54.8
+      ],
+      "medoid": [
+        -530.6,
+        -1463.1,
+        -58.3
+      ],
+      "valve_place": "Stairs",
+      "place_purity": 0.9,
+      "sample_count": 63,
+      "unique_demos": 43,
+      "unique_player_instances": 45,
+      "unique_team_names": 68,
+      "median_dwell_s": 2.19,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.206,
+      "phase_ratio": {
+        "early_le20s": 0.762,
+        "mid_20_55s": 0.222,
+        "late_gt55s": 0.016
+      },
+      "spread_std2d_u": 20.1,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.467
+    },
+    {
+      "cluster_id": 290,
+      "centroid": [
+        866.6,
+        -2207.1,
+        -40.0
+      ],
+      "medoid": [
+        843.5,
+        -2206.6,
+        -40.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 53,
+      "unique_demos": 42,
+      "unique_player_instances": 46,
+      "unique_team_names": 63,
+      "median_dwell_s": 3.25,
+      "ct_ratio": 0.17,
+      "tr_ratio": 0.83,
+      "awp_ratio": 0.547,
+      "phase_ratio": {
+        "early_le20s": 0.717,
+        "mid_20_55s": 0.189,
+        "late_gt55s": 0.094
+      },
+      "spread_std2d_u": 56.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.416
+    },
+    {
+      "cluster_id": 216,
+      "centroid": [
+        -518.4,
+        -1470.2,
+        -53.3
+      ],
+      "medoid": [
+        -519.3,
+        -1469.8,
+        -52.9
+      ],
+      "valve_place": "Stairs",
+      "place_purity": 1.0,
+      "sample_count": 48,
+      "unique_demos": 40,
+      "unique_player_instances": 40,
+      "unique_team_names": 72,
+      "median_dwell_s": 2.72,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.583,
+      "phase_ratio": {
+        "early_le20s": 0.646,
+        "mid_20_55s": 0.312,
+        "late_gt55s": 0.042
+      },
+      "spread_std2d_u": 10.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.521
+    },
+    {
+      "cluster_id": 148,
+      "centroid": [
+        -781.5,
+        -1157.1,
+        -120.2
+      ],
+      "medoid": [
+        -783.1,
+        -1153.9,
+        -120.2
+      ],
+      "valve_place": "Connector",
+      "place_purity": 1.0,
+      "sample_count": 44,
+      "unique_demos": 38,
+      "unique_player_instances": 39,
+      "unique_team_names": 63,
+      "median_dwell_s": 2.62,
+      "ct_ratio": 0.818,
+      "tr_ratio": 0.182,
+      "awp_ratio": 0.318,
+      "phase_ratio": {
+        "early_le20s": 0.432,
+        "mid_20_55s": 0.5,
+        "late_gt55s": 0.068
+      },
+      "spread_std2d_u": 8.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.514
+    },
+    {
+      "cluster_id": 244,
+      "centroid": [
+        -2008.6,
+        777.3,
+        -48.0
+      ],
+      "medoid": [
+        -2008.5,
+        796.6,
+        -48.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 50,
+      "unique_demos": 38,
+      "unique_player_instances": 41,
+      "unique_team_names": 59,
+      "median_dwell_s": 3.69,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.86,
+      "phase_ratio": {
+        "early_le20s": 0.76,
+        "mid_20_55s": 0.24,
+        "late_gt55s": 0.0
+      },
+      "spread_std2d_u": 40.7,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.48
+    },
+    {
+      "cluster_id": 4,
+      "centroid": [
+        -1372.4,
+        -2418.2,
+        -213.8
+      ],
+      "medoid": [
+        -1374.5,
+        -2427.5,
+        -213.7
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 1.0,
+      "sample_count": 45,
+      "unique_demos": 37,
+      "unique_player_instances": 38,
+      "unique_team_names": 63,
+      "median_dwell_s": 2.38,
+      "ct_ratio": 0.911,
+      "tr_ratio": 0.089,
+      "awp_ratio": 0.933,
+      "phase_ratio": {
+        "early_le20s": 0.444,
+        "mid_20_55s": 0.333,
+        "late_gt55s": 0.222
+      },
+      "spread_std2d_u": 53.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.356
+    },
+    {
+      "cluster_id": 277,
+      "centroid": [
+        -1092.0,
+        408.9,
+        -80.0
+      ],
+      "medoid": [
+        -1081.2,
+        396.4,
+        -80.0
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 0.83,
+      "sample_count": 54,
+      "unique_demos": 37,
+      "unique_player_instances": 40,
+      "unique_team_names": 60,
+      "median_dwell_s": 2.34,
+      "ct_ratio": 0.167,
+      "tr_ratio": 0.833,
+      "awp_ratio": 0.056,
+      "phase_ratio": {
+        "early_le20s": 0.407,
+        "mid_20_55s": 0.574,
+        "late_gt55s": 0.019
+      },
+      "spread_std2d_u": 35.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.408
+    },
+    {
+      "cluster_id": 192,
+      "centroid": [
+        1012.9,
+        -1249.9,
+        -109.0
+      ],
+      "medoid": [
+        1004.0,
+        -1253.9,
+        -109.0
+      ],
+      "valve_place": "PalaceAlley",
+      "place_purity": 1.0,
+      "sample_count": 43,
+      "unique_demos": 35,
+      "unique_player_instances": 35,
+      "unique_team_names": 51,
+      "median_dwell_s": 3.12,
+      "ct_ratio": 0.093,
+      "tr_ratio": 0.907,
+      "awp_ratio": 0.163,
+      "phase_ratio": {
+        "early_le20s": 0.442,
+        "mid_20_55s": 0.395,
+        "late_gt55s": 0.163
+      },
+      "spread_std2d_u": 57.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.381
+    },
+    {
+      "cluster_id": 291,
+      "centroid": [
+        859.4,
+        -2154.3,
+        -37.9
+      ],
+      "medoid": [
+        837.1,
+        -2169.2,
+        -40.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 60,
+      "unique_demos": 34,
+      "unique_player_instances": 37,
+      "unique_team_names": 58,
+      "median_dwell_s": 3.16,
+      "ct_ratio": 0.067,
+      "tr_ratio": 0.933,
+      "awp_ratio": 0.05,
+      "phase_ratio": {
+        "early_le20s": 0.617,
+        "mid_20_55s": 0.267,
+        "late_gt55s": 0.117
+      },
+      "spread_std2d_u": 44.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.423
+    },
+    {
+      "cluster_id": 119,
+      "centroid": [
+        -1237.5,
+        -730.8,
+        -129.0
+      ],
+      "medoid": [
+        -1236.7,
+        -731.7,
+        -129.0
+      ],
+      "valve_place": "SnipersNest",
+      "place_purity": 1.0,
+      "sample_count": 32,
+      "unique_demos": 31,
+      "unique_player_instances": 32,
+      "unique_team_names": 53,
+      "median_dwell_s": 1.88,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.219,
+      "phase_ratio": {
+        "early_le20s": 0.938,
+        "mid_20_55s": 0.062,
+        "late_gt55s": 0.0
+      },
+      "spread_std2d_u": 10.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.437
+    },
+    {
+      "cluster_id": 249,
+      "centroid": [
+        -1900.8,
+        834.1,
+        -19.2
+      ],
+      "medoid": [
+        -1872.0,
+        840.0,
+        -4.0
+      ],
+      "valve_place": "Apartments",
+      "place_purity": 1.0,
+      "sample_count": 33,
+      "unique_demos": 30,
+      "unique_player_instances": 30,
+      "unique_team_names": 50,
+      "median_dwell_s": 2.69,
+      "ct_ratio": 0.909,
+      "tr_ratio": 0.091,
+      "awp_ratio": 0.03,
+      "phase_ratio": {
+        "early_le20s": 0.485,
+        "mid_20_55s": 0.394,
+        "late_gt55s": 0.121
+      },
+      "spread_std2d_u": 39.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.394
+    },
+    {
+      "cluster_id": 116,
+      "centroid": [
+        -1267.2,
+        -858.0,
+        -127.3
+      ],
+      "medoid": [
+        -1248.0,
+        -856.0,
+        -130.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.9,
+      "sample_count": 43,
+      "unique_demos": 29,
+      "unique_player_instances": 33,
+      "unique_team_names": 49,
+      "median_dwell_s": 2.31,
+      "ct_ratio": 0.581,
+      "tr_ratio": 0.419,
+      "awp_ratio": 0.093,
+      "phase_ratio": {
+        "early_le20s": 0.465,
+        "mid_20_55s": 0.442,
+        "late_gt55s": 0.093
+      },
+      "spread_std2d_u": 44.9,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.351
+    },
+    {
+      "cluster_id": 11,
+      "centroid": [
+        -505.6,
+        -780.3,
+        -257.3
+      ],
+      "medoid": [
+        -507.4,
+        -779.4,
+        -256.4
+      ],
+      "valve_place": "Middle",
+      "place_purity": 1.0,
+      "sample_count": 30,
+      "unique_demos": 28,
+      "unique_player_instances": 28,
+      "unique_team_names": 49,
+      "median_dwell_s": 2.19,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.1,
+      "phase_ratio": {
+        "early_le20s": 0.467,
+        "mid_20_55s": 0.4,
+        "late_gt55s": 0.133
+      },
+      "spread_std2d_u": 66.3,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.273
+    },
+    {
+      "cluster_id": 117,
+      "centroid": [
+        -1238.1,
+        -882.0,
+        -130.0
+      ],
+      "medoid": [
+        -1236.2,
+        -885.4,
+        -130.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.83,
+      "sample_count": 42,
+      "unique_demos": 28,
+      "unique_player_instances": 30,
+      "unique_team_names": 44,
+      "median_dwell_s": 2.69,
+      "ct_ratio": 0.762,
+      "tr_ratio": 0.238,
+      "awp_ratio": 0.119,
+      "phase_ratio": {
+        "early_le20s": 0.405,
+        "mid_20_55s": 0.405,
+        "late_gt55s": 0.19
+      },
+      "spread_std2d_u": 22.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.441
+    },
+    {
+      "cluster_id": 126,
+      "centroid": [
+        -1086.7,
+        -776.8,
+        -124.1
+      ],
+      "medoid": [
+        -1071.9,
+        -773.3,
+        -132.0
+      ],
+      "valve_place": "CTSpawn",
+      "place_purity": 0.97,
+      "sample_count": 34,
+      "unique_demos": 28,
+      "unique_player_instances": 30,
+      "unique_team_names": 45,
+      "median_dwell_s": 4.69,
+      "ct_ratio": 0.265,
+      "tr_ratio": 0.735,
+      "awp_ratio": 0.0,
+      "phase_ratio": {
+        "early_le20s": 0.235,
+        "mid_20_55s": 0.647,
+        "late_gt55s": 0.118
+      },
+      "spread_std2d_u": 27.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.508
+    },
+    {
+      "cluster_id": 218,
+      "centroid": [
+        -497.5,
+        -1484.9,
+        -47.9
+      ],
+      "medoid": [
+        -496.2,
+        -1477.8,
+        -46.6
+      ],
+      "valve_place": "Stairs",
+      "place_purity": 1.0,
+      "sample_count": 34,
+      "unique_demos": 28,
+      "unique_player_instances": 29,
+      "unique_team_names": 48,
+      "median_dwell_s": 2.25,
+      "ct_ratio": 0.971,
+      "tr_ratio": 0.029,
+      "awp_ratio": 0.353,
+      "phase_ratio": {
+        "early_le20s": 0.706,
+        "mid_20_55s": 0.235,
+        "late_gt55s": 0.059
+      },
+      "spread_std2d_u": 21.2,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.418
+    },
+    {
+      "cluster_id": 109,
+      "centroid": [
+        -2369.5,
+        562.0,
+        -133.9
+      ],
+      "medoid": [
+        -2384.0,
+        565.5,
+        -126.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 32,
+      "unique_demos": 26,
+      "unique_player_instances": 26,
+      "unique_team_names": 46,
+      "median_dwell_s": 2.78,
+      "ct_ratio": 0.875,
+      "tr_ratio": 0.125,
+      "awp_ratio": 0.094,
+      "phase_ratio": {
+        "early_le20s": 0.5,
+        "mid_20_55s": 0.344,
+        "late_gt55s": 0.156
+      },
+      "spread_std2d_u": 42.6,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.377
+    },
+    {
+      "cluster_id": 163,
+      "centroid": [
+        -67.5,
+        839.5,
+        -136.0
+      ],
+      "medoid": [
+        -76.2,
+        871.8,
+        -136.0
+      ],
+      "valve_place": "House",
+      "place_purity": 1.0,
+      "sample_count": 36,
+      "unique_demos": 26,
+      "unique_player_instances": 27,
+      "unique_team_names": 37,
+      "median_dwell_s": 3.0,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.111,
+      "phase_ratio": {
+        "early_le20s": 0.667,
+        "mid_20_55s": 0.25,
+        "late_gt55s": 0.083
+      },
+      "spread_std2d_u": 50.0,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.368
+    },
+    {
+      "cluster_id": 288,
+      "centroid": [
+        837.7,
+        -2352.2,
+        -40.0
+      ],
+      "medoid": [
+        834.2,
+        -2352.1,
+        -40.0
+      ],
+      "valve_place": "PalaceInterior",
+      "place_purity": 1.0,
+      "sample_count": 32,
+      "unique_demos": 26,
+      "unique_player_instances": 26,
+      "unique_team_names": 42,
+      "median_dwell_s": 3.94,
+      "ct_ratio": 0.0,
+      "tr_ratio": 1.0,
+      "awp_ratio": 0.219,
+      "phase_ratio": {
+        "early_le20s": 0.719,
+        "mid_20_55s": 0.25,
+        "late_gt55s": 0.031
+      },
+      "spread_std2d_u": 12.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.544
+    },
+    {
+      "cluster_id": 194,
+      "centroid": [
+        -2382.9,
+        599.4,
+        -79.9
+      ],
+      "medoid": [
+        -2389.3,
+        600.0,
+        -79.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 35,
+      "unique_demos": 25,
+      "unique_player_instances": 25,
+      "unique_team_names": 45,
+      "median_dwell_s": 2.5,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.143,
+      "phase_ratio": {
+        "early_le20s": 0.486,
+        "mid_20_55s": 0.457,
+        "late_gt55s": 0.057
+      },
+      "spread_std2d_u": 19.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.429
+    },
+    {
+      "cluster_id": 145,
+      "centroid": [
+        -803.9,
+        -1190.3,
+        -120.3
+      ],
+      "medoid": [
+        -804.5,
+        -1194.2,
+        -120.2
+      ],
+      "valve_place": "Connector",
+      "place_purity": 1.0,
+      "sample_count": 32,
+      "unique_demos": 24,
+      "unique_player_instances": 26,
+      "unique_team_names": 41,
+      "median_dwell_s": 2.19,
+      "ct_ratio": 0.812,
+      "tr_ratio": 0.188,
+      "awp_ratio": 0.062,
+      "phase_ratio": {
+        "early_le20s": 0.438,
+        "mid_20_55s": 0.5,
+        "late_gt55s": 0.062
+      },
+      "spread_std2d_u": 10.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.433
+    },
+    {
+      "cluster_id": 99,
+      "centroid": [
+        -2406.6,
+        -86.3,
+        -112.0
+      ],
+      "medoid": [
+        -2402.4,
+        -86.7,
+        -112.0
+      ],
+      "valve_place": "BombsiteB",
+      "place_purity": 1.0,
+      "sample_count": 33,
+      "unique_demos": 23,
+      "unique_player_instances": 24,
+      "unique_team_names": 41,
+      "median_dwell_s": 4.38,
+      "ct_ratio": 0.97,
+      "tr_ratio": 0.03,
+      "awp_ratio": 0.0,
+      "phase_ratio": {
+        "early_le20s": 0.273,
+        "mid_20_55s": 0.667,
+        "late_gt55s": 0.061
+      },
+      "spread_std2d_u": 7.4,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.554
+    },
+    {
+      "cluster_id": 278,
+      "centroid": [
+        -1028.0,
+        375.6,
+        -24.4
+      ],
+      "medoid": [
+        -1024.8,
+        376.0,
+        -23.5
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 1.0,
+      "sample_count": 35,
+      "unique_demos": 23,
+      "unique_player_instances": 23,
+      "unique_team_names": 43,
+      "median_dwell_s": 2.94,
+      "ct_ratio": 0.743,
+      "tr_ratio": 0.257,
+      "awp_ratio": 0.029,
+      "phase_ratio": {
+        "early_le20s": 0.714,
+        "mid_20_55s": 0.171,
+        "late_gt55s": 0.114
+      },
+      "spread_std2d_u": 7.8,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.486
+    },
+    {
+      "cluster_id": 213,
+      "centroid": [
+        -845.6,
+        58.0,
+        -54.5
+      ],
+      "medoid": [
+        -847.8,
+        68.0,
+        -54.0
+      ],
+      "valve_place": "Underpass",
+      "place_purity": 1.0,
+      "sample_count": 33,
+      "unique_demos": 22,
+      "unique_player_instances": 22,
+      "unique_team_names": 32,
+      "median_dwell_s": 4.12,
+      "ct_ratio": 0.939,
+      "tr_ratio": 0.061,
+      "awp_ratio": 0.061,
+      "phase_ratio": {
+        "early_le20s": 0.545,
+        "mid_20_55s": 0.394,
+        "late_gt55s": 0.061
+      },
+      "spread_std2d_u": 26.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.49
+    },
+    {
+      "cluster_id": 210,
+      "centroid": [
+        -915.4,
+        -461.1,
+        -95.5
+      ],
+      "medoid": [
+        -903.9,
+        -459.9,
+        -94.0
+      ],
+      "valve_place": "Catwalk",
+      "place_purity": 0.77,
+      "sample_count": 30,
+      "unique_demos": 20,
+      "unique_player_instances": 20,
+      "unique_team_names": 35,
+      "median_dwell_s": 2.94,
+      "ct_ratio": 1.0,
+      "tr_ratio": 0.0,
+      "awp_ratio": 0.0,
+      "phase_ratio": {
+        "early_le20s": 0.567,
+        "mid_20_55s": 0.367,
+        "late_gt55s": 0.067
+      },
+      "spread_std2d_u": 25.5,
+      "movement_state": "HOLD (v2d<35u/s, permanencia>=1.5s)",
+      "medoid_empirically_walkable": true,
+      "cluster_confidence": 0.42
+    }
+  ]
+}

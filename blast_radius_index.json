@@ -1,0 +1,241 @@
+{
+  "schema_version": "1.0.0",
+  "project": "CsBot",
+  "generated_at_utc": "2026-11-07T18:11:00Z",
+  "data_nature": "REAL",
+  "inferred_edges_nature": "INFERRED",
+  "review_status": "AGENT_REVIEWED",
+  "graph_metrics": {
+    "graph_json_path": "graphify-out/graph.json",
+    "graph_json_sha256": "7a09693f1f6568803fa7f2ae7a0286cbe38c09f3900d08b96c6538f4eaa264f0",
+    "total_nodes": 2627,
+    "total_edges": 5533,
+    "extracted_edges": 5041,
+    "inferred_edges": 492,
+    "communities": 253,
+    "connected_components": 159,
+    "largest_component_nodes": 1515,
+    "directed_import_cycles": 0,
+    "undirected_cycle_basis_count": 3065,
+    "strict_orphan_nodes_degree_0": 96,
+    "weakly_connected_nodes_degree_le_1": 912
+  },
+  "god_nodes_top_15": [
+    {"rank": 1, "node_id": "src_csbotmanager_models_csbotmanager_tacticalplan", "label": "TacticalPlan", "degree": 96, "source_file": "src/CsBotManager/Models.cs", "community": 33},
+    {"rank": 2, "node_id": "src_csbotmanager_csbotmanagerplugin_csbotmanager_csbotmanagerplugin", "label": "CsBotManagerPlugin", "degree": 76, "source_file": "src/CsBotManager/CsBotManagerPlugin.cs", "community": 1},
+    {"rank": 3, "node_id": "src_csbotmanager_mapprofilemanager_csbotmanager_mapprofilemanager", "label": "MapProfileManager", "degree": 71, "source_file": "src/CsBotManager/MapProfileManager.cs", "community": 85},
+    {"rank": 4, "node_id": "src_csbotmanager_matchtelemetrylogger_csbotmanager_matchtelemetrylogger", "label": "MatchTelemetryLogger", "degree": 66, "source_file": "src/CsBotManager/MatchTelemetryLogger.cs", "community": 14},
+    {"rank": 5, "node_id": "src_csbotmanager_botlocomotiondriver_csbotmanager_botlocomotiondriver", "label": "BotLocomotionDriver", "degree": 65, "source_file": "src/CsBotManager/BotLocomotionDriver.cs", "community": 17},
+    {"rank": 6, "node_id": "src_csbotmanager_models", "label": "Models.cs", "degree": 54, "source_file": "src/CsBotManager/Models.cs", "community": 4},
+    {"rank": 7, "node_id": "csharp_namespace:8ba75c39628f7d8f", "label": "CsBotManager", "degree": 51, "source_file": "src/CsBotManager/BotLocomotionDriver.cs", "community": 58},
+    {"rank": 8, "node_id": "src_csbotmanager_micromoveengine_csbotmanager_micromoveengine", "label": "MicroMoveEngine", "degree": 47, "source_file": "src/CsBotManager/MicroMoveEngine.cs", "community": 50},
+    {"rank": 9, "node_id": "tests_test_phase2_mirage_dataset_invariants_testphase2miragedatasetinvariants", "label": "TestPhase2MirageDatasetInvariants", "degree": 42, "source_file": "tests/test_phase2_mirage_dataset_invariants.py", "community": 5},
+    {"rank": 10, "node_id": "src_csbotmanager_economymanager_csbotmanager_economymanager", "label": "EconomyManager", "degree": 41, "source_file": "src/CsBotManager/EconomyManager.cs", "community": 2},
+    {"rank": 11, "node_id": "src_csbotmanager_rolemanager_csbotmanager_rolemanager_getbotrole", "label": ".GetBotRole()", "degree": 40, "source_file": "src/CsBotManager/RoleManager.cs", "community": 24},
+    {"rank": 12, "node_id": "src_csbotmanager_rolemanager_csbotmanager_rolemanager", "label": "RoleManager", "degree": 39, "source_file": "src/CsBotManager/RoleManager.cs", "community": 7},
+    {"rank": 13, "node_id": "src_csbotmanager_movementexecutiontracker_csbotmanager_movementexecutiontracker", "label": "MovementExecutionTracker", "degree": 38, "source_file": "src/CsBotManager/MovementExecutionTracker.cs", "community": 19},
+    {"rank": 14, "node_id": "tests_csbotmanager_tests_v4_2_comprehensivetests_csbotmanager_tests_v4_2_comprehensivetests", "label": "V4_2_ComprehensiveTests", "degree": 35, "source_file": "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs", "community": 8},
+    {"rank": 15, "node_id": "src_arsenal_web_static_script", "label": "script.js", "degree": 34, "source_file": "src/arsenal_web/static/script.js", "community": 15}
+  ],
+  "flows_blast_radius": [
+    {
+      "flow_id": "positioning",
+      "flow_title": "Positioning Transformer: dataset -> dataloader -> checkpoint -> export futuro -> runtime futuro",
+      "audit_report_path": ".agents/audit/graph_impact_positioning.json",
+      "audit_report_bytes": 22575,
+      "audit_report_sha256": "155704e067df0e77f34be90073ec2216679954633e88e34cda7bf03b6cbf6a3f",
+      "risk_level": "CRITICAL",
+      "graph_matched_nodes_count": 292,
+      "src_files_impacted_count": 34,
+      "test_files_impacted_count": 20,
+      "primary_files": [
+        {"path": "tools/phase2_dataset/step1_2_3_build_contracts.py", "sha256": "6aac31f8a05c0027cc6e24752b8095bed30677e7fbf26c22948eb7372cd994cc"},
+        {"path": "tools/phase2_dataset/step4_5_inventory_and_splits.py", "sha256": "a73c19dbfff37d848685fef6e29a7dffd008c4ddc147e16d507730257a0e4bc8"},
+        {"path": "tools/phase2_dataset/step9_to_18_build_datasets.py", "sha256": "81aa57a2c2e34aa785aeab67a5ccdca498247c5f39f322c5f9f9997b60e05b25"},
+        {"path": "tools/phase2_dataset/dataloaders.py", "sha256": "921836c8a9c4590f91a2ed3aa8da090a4470878bb8f6e66a8dc25997d198183d"},
+        {"path": "tools/phase3a_training/data_utils.py", "sha256": "d15c234e3a2ce73fe01663293b60a8a53166d73e8caf40254b36eef2e4ec8e45"},
+        {"path": "tools/phase3a_training/positioning_model.py", "sha256": "d98b6e4526a18a32a31702f88825899c950189a4243d365fb25cab0064371e9b"},
+        {"path": "tools/phase3a_training/train_full.py", "sha256": "ef9c32d386346dca33fda0b8ff274b2efab09585e53c95405de08481ac02b0d9"},
+        {"path": "tools/phase3a_training/extract_objective_save_events.py", "sha256": "3e501fd3d287576b077b09dcf213e2343776ccfe50b08cc348903d0871115fb2"},
+        {"path": "tools/phase3a_training/finetune_state_head.py", "sha256": "e4747dff9458f33ad328b2e53fbcd0a58612307689627fa34dbae3e109371700"},
+        {"path": "tools/phase3a_training/evaluate_positioning_v1_canonical.py", "sha256": "1751469a8a43619e9d7c309fa79abf49f3d518efd5d173b99f13f8372fe1bf93"},
+        {"path": "src/CsBotManager/TacticalUtilityIglEngine.cs", "sha256": "1d51f4b0ab14dc43b0ba1a6d82b87fd23974a20c7ec7d77fe69733aa56a0c976"},
+        {"path": "src/CsBotManager/TacticalOrderMaterializer.cs", "sha256": "b26598660349bd1ba45959c2fbca09ffee76637885be6e3410185d269c57379d"},
+        {"path": "src/CsBotManager/MapProfileManager.cs", "sha256": "8bcf19cfe74d3071dbdbecd040714f86dfcc22f984779407e0a68e5b5bd08734"}
+      ],
+      "covered_tests": [
+        "tests/test_phase2_mirage_dataset_invariants.py",
+        "tests/test_phase2_2_training_inputs.py",
+        "tests/test_phase3a_positioning_training.py",
+        "tests/test_phase3a_1_forensic_reconciliation.py",
+        "tests/test_phase3a_2_objective_save_enrichment.py",
+        "tests/CsBotManager.Tests/Phase2DatasetInvariantsTests.cs",
+        "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs",
+        "tests/CsBotManager.Tests/Phase2TrainingInputsTests.cs"
+      ],
+      "uncovered_and_high_risk_nodes": [
+        "tools/phase3a_training/data_utils.py:load_and_preprocess_shard (L217-L238: sintetiza self_history e teammate_features por drift linear a partir da posicao estatica do shard)",
+        "tools/phase3a_training/data_utils.py:load_and_preprocess_shard (L253: candidate_spot_mask preenchido com np.ones((n, 53), dtype=bool))",
+        "PLANNED_FUTURE_NODE (INFERRED): Exportacao ONNX de PositioningTransformerV1 e integracao em C# ainda inexistentes"
+      ]
+    },
+    {
+      "flow_id": "mlmove",
+      "flow_title": "MLMove V1: ONNX -> inferencia -> MovementArbitrator -> usercmd",
+      "audit_report_path": ".agents/audit/graph_impact_mlmove.json",
+      "audit_report_bytes": 5097,
+      "audit_report_sha256": "1f8e1bc2adf83e5a6ac861528a4d06f9c48a907828aea60408a0accb715bfa6a",
+      "risk_level": "HIGH",
+      "graph_matched_nodes_count": 361,
+      "src_files_impacted_count": 3,
+      "test_files_impacted_count": 0,
+      "additional_transitively_impacted_tests_count": 7,
+      "primary_files": [
+        {"path": "tools/mlmove_pipeline/contract_spec.py", "sha256": "1587cd31a4744e70246ab9fd59869a01da58d6eecf31661f6a485f3c919a4664"},
+        {"path": "tools/mlmove_pipeline/model_mlmove.py", "sha256": "cf2f92f4d4224e673939910cdcf6f3415f00d6710abdee27b2bbe64e41208477"},
+        {"path": "tools/mlmove_pipeline/train_and_export_onnx.py", "sha256": "5e9a733a375a65940cdae40b3cef4c67299c666429d7b27589064cf9a7974b5c"},
+        {"path": "tools/mlmove_pipeline/validate_e2e_onnx.py", "sha256": "446f1a17ac23131eb58cd362bbcc675d2d142b4d34bff8feefc85a7559c2c242"},
+        {"path": "tools/mlmove_pipeline/run_mining_and_training_loop.py", "sha256": "e3d22c0609f12104b85c9676aa05b7ea7dc14611e10a48925e40144ca285245e"},
+        {"path": "src/CsBotManager/MicroMoveEngine.cs", "sha256": "e1f56099938355fdf2a90018c42e1c2b2575caf55dec16987dcab105428f1954"},
+        {"path": "src/CsBotManager/MovementArbitrator.cs", "sha256": "9326c8c62a50560dd3fd3d07bf4901aa9fbe97097f5d4208bd098c2d364dcb35"},
+        {"path": "src/CsBotManager/BotLocomotionDriver.cs", "sha256": "7a5b9115cfa1239adcf8576093639e06f27f525f435e3fdac2d74da777b92d0b"},
+        {"path": "src/CsBotManager/MovementExecutionTracker.cs", "sha256": "7b2c8153dd285680eb30126a2d57fcb4ac991644aa60fa5209f08e974d10cd12"}
+      ],
+      "covered_tests": [
+        "tests/test_movement_contract_v2.py",
+        "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+        "tests/CsBotManager.Tests/TickDeltaAndAppliedIntentTests.cs",
+        "tests/CsBotManager.Tests/V4_2_4_PrecisionTests.cs",
+        "tests/CsBotManager.Tests/V4_2_5_PrecisionTests.cs",
+        "tests/CsBotManager.Tests/V4_2_6_PrecisionTests.cs",
+        "tests/CsBotManager.Tests/V4_2_7_PrecisionTests.cs"
+      ],
+      "uncovered_and_high_risk_nodes": [
+        "src/CsBotManager/MicroMoveEngine.cs:RunOnnxBatchInference (L717-L801: sem teste xUnit C# carregando sessao .onnx real)",
+        "src/CsBotManager/MicroMoveEngine.cs:EnsureModelsDirectory / OnModelFileDetected (L583-L613: FileSystemWatcher sem cobertura de teste automatizado)",
+        "src/CsBotManager/MovementArbitrator.cs:ApplyWinningIntent (L592-L764: camada nativa api.StartUsercmdMovement / api.InjectUsercmd depende de ponteiros nativos CS2)",
+        "tools/mlmove_pipeline/run_mining_and_training_loop.py (L202: ValueError ao fazer unpack X, Y = load_dataset_for_map(map_name))"
+      ]
+    },
+    {
+      "flow_id": "jump",
+      "flow_title": "Jump: previsao -> JumpExecutionGate -> comando -> landing",
+      "audit_report_path": ".agents/audit/graph_impact_jump.json",
+      "audit_report_bytes": 18484,
+      "audit_report_sha256": "b1bbc815e760e6ce9feb2c711287fcf45af28ba5c9670011425918a4e9dd3e9c",
+      "risk_level": "CRITICAL",
+      "graph_matched_nodes_count": 193,
+      "src_files_impacted_count": 21,
+      "test_files_impacted_count": 12,
+      "primary_files": [
+        {"path": "tools/phase2_dataset/step6_7_8_jump_and_movement.py", "sha256": "18ccfd0003e6cfff75848a81dd159a4b158c32fcdae0a1f26dde37d6628e983a"},
+        {"path": "src/CsBotManager/JumpExecutionGate.cs", "sha256": "55e2ff88b2e13aad3739219ba6b7b2697f9da7b8e84ccc1e199ff4102637259d"},
+        {"path": "src/CsBotManager/MicroMoveEngine.cs", "sha256": "e1f56099938355fdf2a90018c42e1c2b2575caf55dec16987dcab105428f1954"},
+        {"path": "src/CsBotManager/MobilityController.cs", "sha256": "e078f3346b0e321d1c6e9856b88806fe8e71be163e337d8655a58ea97b673b7b"},
+        {"path": "src/CsBotManager/BotLocomotionDriver.cs", "sha256": "7a5b9115cfa1239adcf8576093639e06f27f525f435e3fdac2d74da777b92d0b"},
+        {"path": "src/CsBotManager/SpotTestRunner.cs", "sha256": "00b4745e4c3e45c64446b0de25c510a85a280e9125421a6a65f5e5d5461b085c"}
+      ],
+      "covered_tests": [
+        "tests/CsBotManager.Tests/Phase17SemanticAndJumpTests.cs",
+        "tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs",
+        "tests/test_movement_contract_v2.py",
+        "tests/test_phase2_2_training_inputs.py"
+      ],
+      "uncovered_and_high_risk_nodes": [
+        "src/CsBotManager/JumpExecutionGate.cs (L80-L384: desconectado do runtime; nunca instanciado em CsBotManagerPlugin, MicroMoveEngine, BotLocomotionDriver ou MovementArbitrator)",
+        "src/CsBotManager/BotLocomotionDriver.cs:UpdateTick (L992: Stuck 2D publica MovementIntent com Buttons = IN_JUMP | IN_FORWARD sem passar pelo JumpExecutionGate)",
+        "src/CsBotManager/SpotTestRunner.cs:OnTick (L362-L372: aplica curVz = 260.0f direto via pawn.Teleport na L362 e publica Buttons |= IN_JUMP no Arbitrator na L369-L372 sem passar pelo JumpExecutionGate)"
+      ]
+    },
+    {
+      "flow_id": "c4",
+      "flow_title": "C4: eventos -> BombObjectiveState -> materializacao -> movimento -> plant/retake",
+      "audit_report_path": ".agents/audit/graph_impact_c4.json",
+      "audit_report_bytes": 21855,
+      "audit_report_sha256": "9d3abba0ed8c8c70cb571e95ce0c74a1a5e4a9f42536f5a315a857347f85306f",
+      "risk_level": "CRITICAL",
+      "graph_matched_nodes_count": 148,
+      "src_files_impacted_count": 39,
+      "test_files_impacted_count": 18,
+      "primary_files": [
+        {"path": "src/CsBotManager/Models.cs", "sha256": "6e18489868b6706d5b93fbcfcf0adb4a3f005bb322d6931a61a41af56f1c2bc9"},
+        {"path": "src/CsBotManager/CsBotManagerPlugin.cs", "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb"},
+        {"path": "src/CsBotManager/TacticalOrderMaterializer.cs", "sha256": "b26598660349bd1ba45959c2fbca09ffee76637885be6e3410185d269c57379d"},
+        {"path": "src/CsBotManager/SiteClearAndPlantController.cs", "sha256": "a7201c5ab998d39188d35b67e2db898512a957556f4e38a0ba0a76b7836b1de3"},
+        {"path": "src/CsBotManager/CtRetakeAndDefuseBrain.cs", "sha256": "1d78ceddf29ee47ea0292517a9a819df285e4cf361289146f3ffb707bf7688b7"},
+        {"path": "src/CsBotManager/TrMacroPivotController.cs", "sha256": "b895e79564424f429fad014a731c7b8ee7777ca26dbbb4667c259d196cdf6e7b"},
+        {"path": "src/CsBotManager/MidRoundAdapter.cs", "sha256": "9596905385e719a7c8c95e66893a06f43770bc98478f78df95f02d96084fb80c"},
+        {"path": "src/CsBotManager/C4MismatchEpisodeTracker.cs", "sha256": "46f50a5d10b4798050e6b1e4d6ea8051491196584b90e6f586a2ae59fa27b27f"},
+        {"path": "src/CsBotManager/BotLocomotionDriver.cs", "sha256": "7a5b9115cfa1239adcf8576093639e06f27f525f435e3fdac2d74da777b92d0b"},
+        {"path": "src/CsBotManager/MovementArbitrator.cs", "sha256": "9326c8c62a50560dd3fd3d07bf4901aa9fbe97097f5d4208bd098c2d364dcb35"}
+      ],
+      "covered_tests": [
+        "tests/CsBotManager.Tests/V4_2_6_PrecisionTests.cs",
+        "tests/CsBotManager.Tests/V4_2_7_PrecisionTests.cs",
+        "tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs",
+        "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs",
+        "tests/CsBotManager.Tests/GeographyAndPivotTests.cs"
+      ],
+      "uncovered_and_high_risk_nodes": [
+        "src/CsBotManager/MovementArbitrator.cs:GetActiveBombObjectiveState (L146: delegate nunca conectado em CsBotManagerPlugin.Load L158-L279)",
+        "src/CsBotManager/BotLocomotionDriver.cs:UpdateTick (L735: PlantController.AnnounceAndStartPlant chamado com site hardcoded \"A\")",
+        "src/CsBotManager/BotLocomotionDriver.cs:UpdateTick (L758, L1063, L1117: leitura de _plugin?.CurrentPlan?.TacticName e coordenadas hardcoded de Mirage)"
+      ]
+    },
+    {
+      "flow_id": "recovery",
+      "flow_title": "Recovery: deteccao -> classificacao -> stages -> resultado fisico",
+      "audit_report_path": ".agents/audit/graph_impact_recovery.json",
+      "audit_report_bytes": 18389,
+      "audit_report_sha256": "b53ad2d034a20ee1be805a10b3eb98a38dbcb4abf6560da11bf23e32752e342f",
+      "risk_level": "HIGH",
+      "graph_matched_nodes_count": 170,
+      "src_files_impacted_count": 27,
+      "test_files_impacted_count": 11,
+      "primary_files": [
+        {"path": "src/CsBotManager/BotLocomotionDriver.cs", "sha256": "7a5b9115cfa1239adcf8576093639e06f27f525f435e3fdac2d74da777b92d0b"},
+        {"path": "src/CsBotManager/MicroMoveEngine.cs", "sha256": "e1f56099938355fdf2a90018c42e1c2b2575caf55dec16987dcab105428f1954"},
+        {"path": "src/CsBotManager/MovementExecutionTracker.cs", "sha256": "7b2c8153dd285680eb30126a2d57fcb4ac991644aa60fa5209f08e974d10cd12"},
+        {"path": "src/CsBotManager/MobilityController.cs", "sha256": "e078f3346b0e321d1c6e9856b88806fe8e71be163e337d8655a58ea97b673b7b"},
+        {"path": "src/CsBotManager/RecoveryAttempt.cs", "sha256": "d6e21935aa2b10412c02d128bbb02a0bcb1de04ed3e3111f407942fb27ee6dd9"},
+        {"path": "src/CsBotManager/MapPlayableBounds.cs", "sha256": "9a4cbfb0d277cd5a3e0c32ce69392cba65801d6fcea7f913d0192ee6ac86ca07"}
+      ],
+      "covered_tests": [
+        "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+        "tests/CsBotManager.Tests/MovementExecutionTrackerTests.cs",
+        "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs",
+        "tests/CsBotManager.Tests/V4_2_4_PrecisionTests.cs"
+      ],
+      "uncovered_and_high_risk_nodes": [
+        "src/CsBotManager/BotLocomotionDriver.cs:UpdateTick (L895-L1004: avalia EvaluateStuck2DWindow na L910, mas nao invoca RequestRecovery L319 nem FindAlternativeWaypointForRecovery L295, deixando _activeRecoveryBySlot e _allRecoveryAttempts vazios no loop de tick)"
+      ]
+    },
+    {
+      "flow_id": "economy",
+      "flow_title": "Economy: plano economico -> comando -> inventario confirmado",
+      "audit_report_path": ".agents/audit/graph_impact_economy.json",
+      "audit_report_bytes": 17229,
+      "audit_report_sha256": "0dc5352b84ec87400c799ca387cdc675eed6a1b0c4d67fb219c3d8eb6bd45d45",
+      "risk_level": "CRITICAL",
+      "graph_matched_nodes_count": 98,
+      "src_files_impacted_count": 24,
+      "test_files_impacted_count": 9,
+      "primary_files": [
+        {"path": "src/CsBotManager/EconomyManager.cs", "sha256": "032f34410ea4d2f15bef8b40934956805fac378c7326c625421d81c5371cdf5c"},
+        {"path": "src/CsBotManager/CsBotManagerPlugin.cs", "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb"},
+        {"path": "src/CsBotManager/RoleManager.cs", "sha256": "bf2ce47bc6eed7930ba742a40b7d277cea6020d4be77db4d755c66f703f155e8"},
+        {"path": "src/CsBotManager/MatchTelemetryLogger.cs", "sha256": "c0be0dd73a9d520e3355c77574b96a235fccd5330cf991b78dc1390cc183d52b"}
+      ],
+      "covered_tests": [
+        "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+        "tests/CsBotManager.Tests/V4_2_2_FinalAdjustmentsTests.cs",
+        "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs"
+      ],
+      "uncovered_and_high_risk_nodes": [
+        "src/CsBotManager/EconomyManager.cs:CurrentBuyState (L62-L64: retorna sempre _ctSnapshot)",
+        "src/CsBotManager/CsBotManagerPlugin.cs:OnRoundStart (L621-L630: timer de 11.0s usa CurrentBuyState CT para teamBots e passa _currentPlan do humano para enemyBots)",
+        "src/CsBotManager/EconomyManager.cs:ExecuteDeterministicBuys (L796-L1002: sem cobertura unitaria direta com mock de CCSPlayerController)"
+      ]
+    }
+  ]
+}

@@ -45,6 +45,14 @@ public class TrackedBotNavState
     public int StuckCount { get; set; }
     public float LastEnemyVisibleTime { get; set; }
     public float UnstuckCooldownUntil { get; set; }
+    public int CommandGeneration { get; set; } = 1;
+    public Guid CurrentLogicalIntentId { get; set; } = Guid.Empty;
+    public string CurrentLogicalActionType { get; set; } = string.Empty;
+    public int LastJiggleDirection { get; set; } = 1;
+    public bool UseExactPortalSteering { get; set; }
+    public IReadOnlySet<int>? ForbiddenNavAreas { get; set; }
+    public int? SingleJumpPulseTick { get; set; }
+    public int? SingleAttackPulseTick { get; set; }
 }
 
 public sealed class Stuck2DEvaluationResult
@@ -111,6 +119,10 @@ public class BotLocomotionDriver
     public CtRetakeAndDefuseBrain? RetakeBrain { get; set; }
     public UtilityAndClockCoordinator? UtilityCoordinator { get; set; }
     public MapProfileManager? MapProfileManager { get; set; }
+    public GameplaySpotTelemetryTracker? SpotTelemetryTracker { get; set; }
+    public Func<int, bool>? IsOpeningCanaryActiveSlot { get; set; }
+    public MovementAuthorityLeaseManager? LeaseManager { get; set; }
+    public Func<int>? GetCurrentRoundId { get; set; }
 
     private MicroMoveEngine? _microMoveEngine;
     public MicroMoveEngine? MicroMoveEngine
@@ -123,6 +135,7 @@ public class BotLocomotionDriver
             {
                 _microMoveEngine.Arbitrator = Arbitrator;
                 _microMoveEngine.Config = Config;
+                _microMoveEngine.IsSlotProtectedFromOverride = s => IsOpeningCanaryActiveSlot?.Invoke(s) == true;
             }
         }
     }
@@ -257,6 +270,80 @@ public class BotLocomotionDriver
         _waypointBlacklistUntil[key] = currentTime + cooldown;
     }
 
+    public static Guid EnsureLogicalActionId(TrackedBotNavState state, string actionType, bool forceNew = false)
+    {
+        if (forceNew || state.CurrentLogicalIntentId == Guid.Empty || !string.Equals(state.CurrentLogicalActionType, actionType, StringComparison.Ordinal))
+        {
+            if (state.CurrentLogicalIntentId != Guid.Empty)
+            {
+                state.CommandGeneration++;
+            }
+            state.CurrentLogicalIntentId = Guid.NewGuid();
+            state.CurrentLogicalActionType = actionType;
+        }
+        return state.CurrentLogicalIntentId;
+    }
+
+    public static bool ShouldMonitorForStuck(
+        bool isHoldingSpot,
+        float holdDurationRemaining,
+        EngagementStance stance,
+        float dist2DToTarget,
+        bool isBombPlanted,
+        bool isDefusing,
+        bool isPlanting,
+        bool hasReachedDestination)
+    {
+        if (isDefusing || isPlanting) return false;
+        if (hasReachedDestination && dist2DToTarget <= 85f) return false;
+        if (isHoldingSpot && holdDurationRemaining > 0f && stance != EngagementStance.AGGRESSIVE_POKE) return false;
+        return dist2DToTarget > 85f;
+    }
+
+    public TacticalSpot? FindAlternativeWaypointForRecovery(
+        int botSlot,
+        string? currentSpotId,
+        string teamSide,
+        string bombsite,
+        float botX,
+        float botY,
+        float minDistanceFromCurrent,
+        float currentTime)
+    {
+        if (MapProfileManager == null) return null;
+        var candidates = MapProfileManager.GetSpotsForTeam(teamSide);
+        foreach (var spot in candidates)
+        {
+            if (string.Equals(spot.Id, currentSpotId, StringComparison.OrdinalIgnoreCase)) continue;
+            if (IsWaypointBlacklisted(botSlot, spot.Id, currentTime)) continue;
+            string spotSite = PresetSpatialValidator.DetermineSpotBombsite(spot);
+            if (!string.IsNullOrEmpty(bombsite) && bombsite != "None" && !string.Equals(spotSite, bombsite, StringComparison.OrdinalIgnoreCase))
+                continue;
+            return spot;
+        }
+        return null;
+    }
+
+    public RecoveryAttempt? RequestRecovery(int botSlot, long internalRoundId, string triggerReason, float currentTime, int gameTick)
+    {
+        if (_activeRecoveryBySlot.TryGetValue(botSlot, out var existing) && !existing.Recovered && string.IsNullOrEmpty(existing.FailureReason))
+        {
+            return existing;
+        }
+        var attempt = new RecoveryAttempt
+        {
+            BotSlot = botSlot,
+            InternalRoundId = internalRoundId,
+            TriggerReason = triggerReason,
+            TriggerTime = currentTime,
+            TriggerTick = gameTick,
+            Stage = 1
+        };
+        _activeRecoveryBySlot[botSlot] = attempt;
+        _allRecoveryAttempts.Add(attempt);
+        return attempt;
+    }
+
     public void NotifyBombState(bool isPlanted, Vector? bombPosition, bool isSaveActive, List<CCSPlayerController>? ctBots = null)
     {
         _isBombPlanted = isPlanted;
@@ -325,6 +412,18 @@ public class BotLocomotionDriver
         _isBombPlanted = false;
         _bombPosition = null;
         _isTacticalSaveActive = false;
+        _lastTickTime = 0f;
+        _currentTickDeltaTime = 1.0f / Math.Max(1f, Config.ServerTickRate);
+
+        foreach (var kvp in _activeRecoveryBySlot)
+        {
+            if (!kvp.Value.Recovered && string.IsNullOrEmpty(kvp.Value.FailureReason))
+            {
+                kvp.Value.FailureReason = "CancelledRoundEnd";
+            }
+        }
+        _activeRecoveryBySlot.Clear();
+        _lastAppliedLogicalIntentBySlot.Clear();
 
         var api = BotApi;
         Arbitrator.ResetRound(api);
@@ -332,11 +431,20 @@ public class BotLocomotionDriver
         _waypointBlacklistUntil.Clear();
         _waypointFailureCounts.Clear();
         _grenadeHoldStartTime.Clear();
+        SpotTelemetryTracker?.OnRoundEnd();
         MicroMoveEngine?.ResetRound(api);
     }
 
     public void ClearNavigation(int slot)
     {
+        if (_activeRecoveryBySlot.TryRemove(slot, out var rec))
+        {
+            if (!rec.Recovered && string.IsNullOrEmpty(rec.FailureReason))
+            {
+                rec.FailureReason = "CancelledBotDeath";
+            }
+        }
+        _lastAppliedLogicalIntentBySlot.TryRemove(slot, out _);
         _botStates.TryRemove(slot, out _);
         Arbitrator.ClearBotState(slot, BotApi);
     }
@@ -349,14 +457,60 @@ public class BotLocomotionDriver
     public void NavigateToSpot(CCSPlayerController controller, TacticalSpot spot, bool hurry = false, EngagementStance? stanceOverride = null, BotOrderPriority priority = BotOrderPriority.Medium_Tactical)
     {
         if (controller == null || !controller.IsValid || !controller.PawnIsAlive) return;
+        if (IsOpeningCanaryActiveSlot?.Invoke(controller.Slot) == true && priority < BotOrderPriority.Critical_SaveOrPivot)
+        {
+            int rnd = GetCurrentRoundId?.Invoke() ?? 1;
+            if (LeaseManager == null || !LeaseManager.AllowCompetingWriter(rnd, controller.Slot, Server.TickCount, "BotLocomotionDriver.NavigateToSpot", $"Spot:{spot.Id}"))
+            {
+                return;
+            }
+        }
 
         float now = Server.CurrentTime;
+        UtilitySpotValidationOutcome? validationOutcome = null;
+        if (MapProfileManager != null)
+        {
+            var occupied = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var kv in _botStates)
+            {
+                if (kv.Key != controller.Slot && kv.Value.TargetSpot != null)
+                {
+                    occupied.Add(kv.Value.TargetSpot.Id);
+                }
+            }
+            var valCtx = SpotTelemetryTracker != null
+                ? SpotTelemetryTracker.BuildValidationContext(controller, controller.PlayerPawn.Value?.AbsOrigin, occupied)
+                : new UtilitySpotValidationContext
+                {
+                    MapName = "de_mirage",
+                    RequestedSide = controller.Team == CsTeam.Terrorist ? "TR" : "CT",
+                    OccupiedSpotIds = occupied,
+                };
+            validationOutcome = UtilitySpotAssignmentValidator.ValidateAndResolve(spot, valCtx, MapProfileManager.CurrentProfile.Spots);
+            if (validationOutcome.ApprovedSpot != null)
+            {
+                spot = validationOutcome.ApprovedSpot;
+            }
+            else if (validationOutcome.FallbackUsed)
+            {
+                return; // NO_VALID_ALTERNATIVE: nunca atribuir spot inválido
+            }
+        }
+
         if (IsWaypointBlacklisted(controller.Slot, spot.Id, now) && !string.IsNullOrEmpty(spot.FallbackSpotId))
         {
             var alt = MapProfileManager?.GetSpotById(spot.FallbackSpotId);
-            if (alt != null && !IsWaypointBlacklisted(controller.Slot, alt.Id, now))
+            if (alt != null && !IsWaypointBlacklisted(controller.Slot, alt.Id, now) && MapProfileManager != null)
             {
-                spot = alt;
+                var altCheck = UtilitySpotAssignmentValidator.ValidateCandidate(
+                    alt,
+                    SpotTelemetryTracker != null
+                        ? SpotTelemetryTracker.BuildValidationContext(controller, controller.PlayerPawn.Value?.AbsOrigin)
+                        : new UtilitySpotValidationContext { RequestedSide = controller.Team == CsTeam.Terrorist ? "TR" : "CT" });
+                if (altCheck.IsValid)
+                {
+                    spot = alt;
+                }
             }
         }
 
@@ -404,12 +558,24 @@ public class BotLocomotionDriver
         };
 
         _botStates[controller.Slot] = state;
+        if (SpotTelemetryTracker != null && controller.PlayerPawn.Value?.AbsOrigin != null)
+        {
+            SpotTelemetryTracker.OnSpotAssigned(controller.Slot, controller, spot, controller.PlayerPawn.Value.AbsOrigin, Server.TickCount, now, validationOutcome);
+        }
         PublishImmediateNavmeshIntent(controller, state);
     }
 
     public void NavigateToPosition(CCSPlayerController controller, float x, float y, float z, float? lookX = null, float? lookY = null, float? lookZ = null, bool hurry = false, EngagementStance stance = EngagementStance.PASSIVE_HOLD, BotOrderPriority priority = BotOrderPriority.Medium_Tactical)
     {
         if (controller == null || !controller.IsValid || !controller.PawnIsAlive) return;
+        if (IsOpeningCanaryActiveSlot?.Invoke(controller.Slot) == true && priority < BotOrderPriority.Critical_SaveOrPivot)
+        {
+            int rnd = GetCurrentRoundId?.Invoke() ?? 1;
+            if (LeaseManager == null || !LeaseManager.AllowCompetingWriter(rnd, controller.Slot, Server.TickCount, "BotLocomotionDriver.NavigateToPosition", $"Pos:({x:F0},{y:F0},{z:F0})"))
+            {
+                return;
+            }
+        }
 
         if (_botStates.TryGetValue(controller.Slot, out var existingState))
         {
@@ -450,9 +616,108 @@ public class BotLocomotionDriver
         NavigateToPosition(controller, point.X, point.Y, point.Z, null, null, null, hurry, stance, priority);
     }
 
+    public void DispatchOpeningCanaryWaypoint(
+        CCSPlayerController controller,
+        float x, float y, float z,
+        TacticalSpot? finalSpot,
+        bool hurry,
+        EngagementStance stance = EngagementStance.PASSIVE_HOLD)
+    {
+        if (controller == null || !controller.IsValid || !controller.PawnIsAlive) return;
+        float? lookX = null;
+        float? lookY = null;
+        float? lookZ = null;
+        if (finalSpot != null && (finalSpot.Yaw != 0 || finalSpot.Pitch != 0))
+        {
+            double pitchRad = finalSpot.Pitch * Math.PI / 180.0;
+            double yawRad = finalSpot.Yaw * Math.PI / 180.0;
+            lookX = finalSpot.X + (float)(Math.Cos(pitchRad) * Math.Cos(yawRad) * 400.0);
+            lookY = finalSpot.Y + (float)(Math.Cos(pitchRad) * Math.Sin(yawRad) * 400.0);
+            lookZ = finalSpot.Z + 64.0f + (float)(Math.Sin(-pitchRad) * 400.0);
+        }
+
+        var state = new TrackedBotNavState
+        {
+            Slot = controller.Slot,
+            TargetSpot = finalSpot,
+            TargetX = x,
+            TargetY = y,
+            TargetZ = z,
+            LookX = lookX,
+            LookY = lookY,
+            LookZ = lookZ,
+            Stance = stance,
+            Hurry = hurry,
+            LastRepathTime = 0f,
+            StanceActionTimer = 0f,
+            JiggleDirection = 1,
+            ActiveMovementId = 0,
+            HasReachedDestination = false,
+            IsHoldingSpot = false,
+            HoldDurationRemaining = 0f,
+            ForceCrouch = false,
+            Priority = BotOrderPriority.High_CombatFallback
+        };
+        _botStates[controller.Slot] = state;
+        PublishImmediateNavmeshIntent(controller, state);
+    }
+
+    public void ConfigureCanaryTransitionState(
+        int slot,
+        bool hurry,
+        bool forceCrouch,
+        bool useExactPortalSteering,
+        IReadOnlySet<int>? forbiddenAreas,
+        int? singleJumpPulseTick = null,
+        int? singleAttackPulseTick = null)
+    {
+        if (_botStates.TryGetValue(slot, out var state))
+        {
+            state.Hurry = hurry;
+            state.ForceCrouch = forceCrouch;
+            state.UseExactPortalSteering = useExactPortalSteering;
+            state.ForbiddenNavAreas = forbiddenAreas;
+            state.SingleJumpPulseTick = singleJumpPulseTick;
+            state.SingleAttackPulseTick = singleAttackPulseTick;
+        }
+    }
+
+    public void HoldOpeningCanaryForStagger(CCSPlayerController controller, float holdSeconds = 0.06f)
+    {
+        if (controller == null || !controller.IsValid || !controller.PawnIsAlive) return;
+        var origin = controller.PlayerPawn.Value?.AbsOrigin;
+        float x = origin?.X ?? 0f;
+        float y = origin?.Y ?? 0f;
+        float z = origin?.Z ?? 0f;
+        if (!_botStates.TryGetValue(controller.Slot, out var state))
+        {
+            state = new TrackedBotNavState
+            {
+                Slot = controller.Slot,
+                TargetX = x,
+                TargetY = y,
+                TargetZ = z,
+                Priority = BotOrderPriority.High_CombatFallback
+            };
+            _botStates[controller.Slot] = state;
+        }
+        state.HoldDurationRemaining = Math.Max(state.HoldDurationRemaining, holdSeconds);
+        state.IsHoldingSpot = false;
+        state.HasReachedDestination = false;
+        state.ForceCrouch = false;
+    }
+
     public void HoldPosition(CCSPlayerController controller, float duration = 3.0f, bool crouch = false, BotOrderPriority priority = BotOrderPriority.Medium_Tactical)
     {
         if (controller == null || !controller.IsValid || !controller.PawnIsAlive) return;
+        if (IsOpeningCanaryActiveSlot?.Invoke(controller.Slot) == true && priority < BotOrderPriority.Critical_SaveOrPivot)
+        {
+            int rnd = GetCurrentRoundId?.Invoke() ?? 1;
+            if (LeaseManager == null || !LeaseManager.AllowCompetingWriter(rnd, controller.Slot, Server.TickCount, "BotLocomotionDriver.HoldPosition", $"Hold:{duration:F1}s"))
+            {
+                return;
+            }
+        }
 
         if (_botStates.TryGetValue(controller.Slot, out var state))
         {
@@ -512,6 +777,7 @@ public class BotLocomotionDriver
             _ => MovementIntentSource.TacticalNavigation
         };
 
+        bool isCanary = IsOpeningCanaryActiveSlot?.Invoke(controller.Slot) == true;
         Arbitrator.PublishIntent(new MovementIntent
         {
             BotSlot = controller.Slot,
@@ -520,8 +786,8 @@ public class BotLocomotionDriver
             CurrentTime = now,
             Source = source,
             Kind = MovementCommandKind.NavigateNavMesh,
-            Reason = $"NavigateImmediate({state.TargetSpot?.Id ?? "Pos"})",
-            ExpiresAtTime = now + 0.10f,
+            Reason = isCanary ? $"OpeningCanaryImmediate({state.TargetSpot?.Id ?? "Waypoint"})" : $"NavigateImmediate({state.TargetSpot?.Id ?? "Pos"})",
+            ExpiresAtTime = now + 0.15f,
             GoalX = state.TargetX,
             GoalY = state.TargetY,
             GoalZ = state.TargetZ,
@@ -552,8 +818,16 @@ public class BotLocomotionDriver
         float dt = _lastTickTime > 0f ? Math.Clamp(currentTime - _lastTickTime, 0.001f, 0.1f) : 0.015625f;
         _lastTickTime = currentTime;
 
+        if (Arbitrator.CurrentPhase != ArbitrationWindowPhase.Collecting)
+        {
+            Arbitrator.BeginTick(gameTick, currentTime);
+        }
+
         // Etapa A: Coleta intenções do MicroMoveEngine (16Hz / 64Hz interpolation)
-        MicroMoveEngine?.UpdateTick(currentTime, RoundTimeRemaining, _isBombPlanted, _botStates, api);
+        if (_plugin?.IsSpotTestActive != true)
+        {
+            MicroMoveEngine?.UpdateTick(currentTime, RoundTimeRemaining, _isBombPlanted, _botStates, api);
+        }
 
         // Etapa B: Avalia estado de navegação, objetivos de C4 e Stuck 2D de cada bot e publica intenções no Arbitrator
         foreach (var kvp in _botStates)
@@ -600,7 +874,11 @@ public class BotLocomotionDriver
             // 1. PRIORIDADE MÁXIMA DE OBJETIVO - C4 PLANT (TR) & C4 DEFUSE/SAVE (CT)
             // =========================================================================
             bool objectivePublished = false;
-            if (controller.Team == CsTeam.Terrorist && HasC4(controller))
+            if (_plugin?.IsSpotTestActive == true)
+            {
+                // Isola o teste A/B de spot contra lógica de C4/Plant/Save
+            }
+            else if (controller.Team == CsTeam.Terrorist && HasC4(controller))
             {
                 bool isNearSiteOrPlanting = false;
                 try { isNearSiteOrPlanting = pawn.InBombZone; } catch { }
@@ -768,15 +1046,16 @@ public class BotLocomotionDriver
             float distSq3D = (dxTarget * dxTarget) + (dyTarget * dyTarget) + (dzTarget * dzTarget);
 
             // Se TradeSpacing sugeriu um offset lateral no NavMesh, aplica ao destino tático do bot
+            bool isCanarySlot = IsOpeningCanaryActiveSlot?.Invoke(slot) == true;
             var microTraj = MicroMoveEngine?.GetTrajectory(slot);
-            if (microTraj != null && microTraj.IsOverrideActive && microTraj.SuggestedGoalOverride != null)
+            if (!isCanarySlot && _plugin?.IsSpotTestActive != true && microTraj != null && microTraj.IsOverrideActive && microTraj.SuggestedGoalOverride != null)
             {
                 state.TargetX = microTraj.SuggestedGoalOverride.X;
                 state.TargetY = microTraj.SuggestedGoalOverride.Y;
                 state.TargetZ = microTraj.SuggestedGoalOverride.Z;
             }
 
-            bool isIntendingToMove = !state.IsHoldingSpot && state.HoldDurationRemaining <= 0f && dist2DToTarget > 85.0f;
+            bool isIntendingToMove = !isCanarySlot && !state.IsHoldingSpot && state.HoldDurationRemaining <= 0f && dist2DToTarget > 85.0f;
             if (isIntendingToMove)
             {
                 if (state.LastCheckTime <= 0f)
@@ -820,19 +1099,26 @@ public class BotLocomotionDriver
                             string oldSpotId = state.TargetSpot?.Id ?? $"({state.TargetX:F0},{state.TargetY:F0})";
                             string newSpotId = oldSpotId;
 
-                            if (stuckEval.ShouldBlacklistCurrentWaypoint && state.TargetSpot != null)
+                            if (_plugin?.IsSpotTestActive != true && stuckEval.ShouldBlacklistCurrentWaypoint && state.TargetSpot != null)
                             {
                                 BlacklistWaypoint(slot, state.TargetSpot.Id, currentTime);
                                 TacticalSpot? replacementSpot = null;
-                                if (!string.IsNullOrEmpty(state.TargetSpot.FallbackSpotId))
+                                UtilitySpotValidationOutcome? repOutcome = null;
+                                if (MapProfileManager != null)
                                 {
-                                    replacementSpot = MapProfileManager?.GetSpotById(state.TargetSpot.FallbackSpotId);
-                                }
-                                if (replacementSpot == null || IsWaypointBlacklisted(slot, replacementSpot.Id, currentTime))
-                                {
-                                    string sideStr = controller.Team == CsTeam.CounterTerrorist ? "CT" : "TR";
-                                    replacementSpot = MapProfileManager?.GetSpotsForTeam(sideStr)
-                                        .FirstOrDefault(s => s.Id != state.TargetSpot.Id && !IsWaypointBlacklisted(slot, s.Id, currentTime));
+                                    var occupied = _botStates.Where(kv => kv.Key != slot && kv.Value.TargetSpot != null).Select(kv => kv.Value.TargetSpot!.Id).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                                    var bl = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { state.TargetSpot.Id };
+                                    var valCtx = SpotTelemetryTracker != null
+                                        ? SpotTelemetryTracker.BuildValidationContext(controller, pawn.AbsOrigin, occupied, bl)
+                                        : new UtilitySpotValidationContext { RequestedSide = controller.Team == CsTeam.Terrorist ? "TR" : "CT", OccupiedSpotIds = occupied, BlacklistedSpotIds = bl };
+                                    var requestedForRep = !string.IsNullOrEmpty(state.TargetSpot.FallbackSpotId)
+                                        ? MapProfileManager.GetSpotById(state.TargetSpot.FallbackSpotId) ?? state.TargetSpot
+                                        : state.TargetSpot;
+                                    repOutcome = UtilitySpotAssignmentValidator.ValidateAndResolve(requestedForRep, valCtx, MapProfileManager.CurrentProfile.Spots);
+                                    if (repOutcome.ApprovedSpot != null && !IsWaypointBlacklisted(slot, repOutcome.ApprovedSpot.Id, currentTime))
+                                    {
+                                        replacementSpot = repOutcome.ApprovedSpot;
+                                    }
                                 }
 
                                 if (replacementSpot != null)
@@ -842,11 +1128,19 @@ public class BotLocomotionDriver
                                     state.TargetY = replacementSpot.Y;
                                     state.TargetZ = replacementSpot.Z;
                                     newSpotId = replacementSpot.Id;
+                                    if (SpotTelemetryTracker != null && pawn.AbsOrigin != null)
+                                    {
+                                        SpotTelemetryTracker.OnSpotReplaced(slot, controller, replacementSpot, pawn.AbsOrigin, gameTick, currentTime, "Stuck2DBlacklist", repOutcome);
+                                    }
                                 }
                             }
 
                             float strafeSpeed = (state.StuckCount % 2 == 0) ? 220f : -220f;
                             state.UnstuckCooldownUntil = currentTime + 0.65f;
+                            if (SpotTelemetryTracker != null && pawn.AbsOrigin != null)
+                            {
+                                SpotTelemetryTracker.OnSpotRecovery(slot, controller, pawn.AbsOrigin, gameTick, currentTime);
+                            }
 
                             TelemetryLogger?.LogEvent(
                                 "UNSTUCK - 2D RECOVERY",
@@ -917,8 +1211,12 @@ public class BotLocomotionDriver
             // =========================================================================
             // 4. URGÊNCIA CRÍTICA DE FIM DE ROUND (<= 45s TR / RETAKE CT)
             // =========================================================================
-            if (controller.Team == CsTeam.Terrorist && RoundTimeRemaining <= 45.0f && !_isBombPlanted)
+            if (_plugin?.IsSpotTestActive != true && controller.Team == CsTeam.Terrorist && RoundTimeRemaining <= 45.0f && !_isBombPlanted)
             {
+                if (state.TargetSpot != null && SpotTelemetryTracker != null && pawn.AbsOrigin != null)
+                {
+                    SpotTelemetryTracker.OnSpotAbandoned(slot, controller, pawn.AbsOrigin, gameTick, currentTime, "TimePressureFallback");
+                }
                 state.IsHoldingSpot = false;
                 state.HasReachedDestination = false;
                 state.HoldingSinceTime = 0f;
@@ -936,7 +1234,7 @@ public class BotLocomotionDriver
                     targetSitePos = targetSite == "B" ? new Vector(-1190.0f, -150.0f, -165.0f) : new Vector(-1160.0f, -2450.0f, -168.0f);
                 }
 
-                if (targetSitePos != null && (targetSitePos - pawn.AbsOrigin).Length() > 150f)
+                if (targetSitePos != null && pawn.AbsOrigin != null && (targetSitePos - pawn.AbsOrigin).Length() > 150f)
                 {
                     state.TargetX = targetSitePos.X;
                     state.TargetY = targetSitePos.Y;
@@ -955,7 +1253,7 @@ public class BotLocomotionDriver
                     if (pC4 != null) bombPos = pC4.AbsOrigin;
                 }
 
-                if (bombPos != null && (bombPos - pawn.AbsOrigin).Length() > 350.0f)
+                if (bombPos != null && pawn.AbsOrigin != null && (bombPos - pawn.AbsOrigin).Length() > 350.0f)
                 {
                     state.IsHoldingSpot = false;
                     state.HasReachedDestination = false;
@@ -969,7 +1267,7 @@ public class BotLocomotionDriver
             }
 
             // Expiração rigorosa de IsHoldingSpot APENAS para Terroristas (CTs mantêm o ângulo no spot até rotação/retake!)
-            if (state.IsHoldingSpot && controller.Team == CsTeam.Terrorist && !_isBombPlanted)
+            if (_plugin?.IsSpotTestActive != true && state.IsHoldingSpot && controller.Team == CsTeam.Terrorist && !_isBombPlanted)
             {
                 float holdDuration = currentTime - state.HoldingSinceTime;
                 float maxHoldTime = (!bot.IsEnemyVisible || state.Stance == EngagementStance.AGGRESSIVE_POKE)
@@ -978,6 +1276,10 @@ public class BotLocomotionDriver
 
                 if (state.HoldingSinceTime > 0f && holdDuration >= maxHoldTime)
                 {
+                    if (SpotTelemetryTracker != null && pawn.AbsOrigin != null)
+                    {
+                        SpotTelemetryTracker.OnSpotHoldEnded(slot, controller, pawn.AbsOrigin, gameTick, currentTime, "TrHoldTimeout");
+                    }
                     state.IsHoldingSpot = false;
                     state.HasReachedDestination = false;
                     state.HoldingSinceTime = 0f;
@@ -994,7 +1296,7 @@ public class BotLocomotionDriver
             // =========================================================================
             // 5. INTENÇÃO DE NAVEGAÇÃO TÁTICA (EM TRÂNSITO vs. NO SPOT)
             // =========================================================================
-            if (distSq3D > (85.0f * 85.0f))
+            if (isCanarySlot || distSq3D > (85.0f * 85.0f))
             {
                 state.HasReachedDestination = false;
                 state.IsHoldingSpot = false;
@@ -1004,7 +1306,26 @@ public class BotLocomotionDriver
                 float? lookZ = null;
                 bool clearLook = false;
 
-                if (bot.IsEnemyVisible)
+                if (isCanarySlot)
+                {
+                    float steerX = state.TargetX;
+                    float steerY = state.TargetY;
+                    float steerZ = state.TargetZ;
+                    var navGraph = NavMeshGraph.Default;
+                    if (!state.UseExactPortalSteering && navGraph != null)
+                    {
+                        (steerX, steerY, steerZ) = navGraph.GetNextSteerTarget(
+                            curX, curY, curZ,
+                            state.TargetX, state.TargetY, state.TargetZ,
+                            minLookaheadUnits: 42f,
+                            forbiddenAreas: state.ForbiddenNavAreas);
+                    }
+                    lookX = steerX;
+                    lookY = steerY;
+                    lookZ = curZ + 62.0f;
+                    clearLook = false;
+                }
+                else if (bot.IsEnemyVisible)
                 {
                     state.LastEnemyVisibleTime = currentTime;
                 }
@@ -1021,11 +1342,62 @@ public class BotLocomotionDriver
                 }
 
                 bool shouldRepath = false;
-                if (currentTime - state.LastRepathTime > 1.2f)
+                float repathInterval = isCanarySlot ? 0.35f : 1.2f;
+                if (currentTime - state.LastRepathTime > repathInterval)
                 {
                     shouldRepath = true;
                     state.LastRepathTime = currentTime;
+                    if (SpotTelemetryTracker != null && pawn.AbsOrigin != null)
+                    {
+                        SpotTelemetryTracker.OnSpotRepath(slot, controller, pawn.AbsOrigin, gameTick, currentTime);
+                    }
                 }
+
+                float intentGoalX = state.TargetX;
+                float intentGoalY = state.TargetY;
+                float intentGoalZ = state.TargetZ;
+
+                if (isCanarySlot)
+                {
+                    var navGraph = NavMeshGraph.Default;
+                    if (!state.UseExactPortalSteering && navGraph != null)
+                    {
+                        (intentGoalX, intentGoalY, intentGoalZ) = navGraph.GetNextSteerTarget(
+                            curX, curY, curZ,
+                            state.TargetX, state.TargetY, state.TargetZ,
+                            minLookaheadUnits: 42f,
+                            forbiddenAreas: state.ForbiddenNavAreas);
+                    }
+                    float[] moveToGoal = NativeCcsBotLocomotionBridge.GetMoveToGoal(bot.Handle, bot);
+                    bool goalDrifted = MathF.Abs(moveToGoal[0] - intentGoalX) > 15.0f
+                        || MathF.Abs(moveToGoal[1] - intentGoalY) > 15.0f;
+                    if (goalDrifted)
+                    {
+                        shouldRepath = true;
+                    }
+                }
+
+                bool emitJumpNow = isCanarySlot && state.SingleJumpPulseTick.HasValue && state.SingleJumpPulseTick.Value == gameTick;
+                bool emitAttackNow = isCanarySlot && state.SingleAttackPulseTick.HasValue && state.SingleAttackPulseTick.Value == gameTick;
+                ulong canaryButtons = IN_FORWARD;
+                if (state.ForceCrouch)
+                {
+                    canaryButtons |= IN_DUCK;
+                }
+                if (emitJumpNow)
+                {
+                    canaryButtons |= 0x2UL;
+                    state.SingleJumpPulseTick = null;
+                }
+                if (emitAttackNow)
+                {
+                    canaryButtons |= 0x1UL;
+                    state.SingleAttackPulseTick = null;
+                }
+
+                string canaryReason = emitJumpNow
+                    ? $"OpeningCanaryTransit({state.TargetSpot?.Id ?? "Waypoint"})|TransitionStepUpJumpPulse"
+                    : $"OpeningCanaryTransit({state.TargetSpot?.Id ?? "Waypoint"})";
 
                 Arbitrator.PublishIntent(new MovementIntent
                 {
@@ -1037,19 +1409,22 @@ public class BotLocomotionDriver
                         ? MovementIntentSource.EmergencyFallback
                         : MovementIntentSource.TacticalNavigation,
                     Kind = MovementCommandKind.NavigateNavMesh,
-                    Reason = $"TransitTo({state.TargetSpot?.Id ?? "Target"})",
+                    Reason = isCanarySlot ? canaryReason : $"TransitTo({state.TargetSpot?.Id ?? "Target"})",
                     ExpiresAtTime = currentTime + 0.08f,
-                    GoalX = state.TargetX,
-                    GoalY = state.TargetY,
-                    GoalZ = state.TargetZ,
+                    GoalX = intentGoalX,
+                    GoalY = intentGoalY,
+                    GoalZ = intentGoalZ,
                     ForceRepath = shouldRepath,
                     IsStopping = false,
                     Hurry = state.Hurry,
                     Sneak = !state.Hurry && state.Stance == EngagementStance.AGGRESSIVE_POKE,
+                    Buttons = isCanarySlot ? canaryButtons : 0UL,
+                    ButtonsDurationMs = isCanarySlot ? 64 : 0,
                     LookX = lookX,
                     LookY = lookY,
                     LookZ = lookZ,
-                    LookDuration = 0.2f,
+                    LookDuration = 0.25f,
+                    LookTolerance = isCanarySlot ? 1.5f : 3.0f,
                     ClearLookIfClose = clearLook
                 });
             }
@@ -1060,6 +1435,10 @@ public class BotLocomotionDriver
                 {
                     state.IsHoldingSpot = true;
                     state.HoldingSinceTime = currentTime;
+                    if (SpotTelemetryTracker != null && pawn.AbsOrigin != null)
+                    {
+                        SpotTelemetryTracker.OnSpotReached(slot, controller, pawn.AbsOrigin, gameTick, currentTime);
+                    }
                 }
                 state.LastCheckTime = 0f;
                 state.StuckCount = 0;
@@ -1163,6 +1542,7 @@ public class BotLocomotionDriver
                 Arbitrator.ApplyWinningIntent(decision, controller, api);
             }
         }
+        Arbitrator.EndTick();
     }
 
     public void AlertNearbyTeammatesOfThreat(Vector threatPos, int victimSlot, CsTeam team, float radius = 950f)
@@ -1226,6 +1606,14 @@ public class BotLocomotionDriver
     public void ThrowUtility(CCSPlayerController controller, int weaponDefIndex, float? aimX = null, float? aimY = null, float? aimZ = null)
     {
         if (controller == null || !controller.IsValid || !controller.PawnIsAlive) return;
+        if (IsOpeningCanaryActiveSlot?.Invoke(controller.Slot) == true)
+        {
+            int rnd = GetCurrentRoundId?.Invoke() ?? 1;
+            if (LeaseManager == null || !LeaseManager.AllowCompetingWriter(rnd, controller.Slot, Server.TickCount, "BotLocomotionDriver.ThrowUtility", $"UtilityDef:{weaponDefIndex}"))
+            {
+                return;
+            }
+        }
 
         var api = BotApi;
         var pawn = controller.PlayerPawn.Value;
@@ -1313,7 +1701,8 @@ public class BotLocomotionDriver
                     }
                 }
             });
-            _plugin?.AddRoundTimer(0.35f, () =>
+            // Re-equipa arma de fogo apenas APÓS o arremesso completo da utilitária (1.35s)
+            _plugin?.AddRoundTimer(1.35f, () =>
             {
                 if (controller.IsValid && controller.PawnIsAlive)
                 {
@@ -1323,11 +1712,33 @@ public class BotLocomotionDriver
         }
         else
         {
-            controller.ExecuteClientCommand("+attack");
-            _plugin?.AddRoundTimer(0.55f, () =>
+            string slotCmd = weaponDefIndex switch
             {
-                if (controller.IsValid) controller.ExecuteClientCommand("-attack");
-                ForceEquipBestFirearm(controller);
+                44 => "slot6",
+                43 => "slot7",
+                45 => "slot8",
+                47 => "slot9",
+                46 or 48 => "slot10",
+                _ => "slot4"
+            };
+            controller.ExecuteClientCommand(slotCmd);
+            _plugin?.AddRoundTimer(0.80f, () =>
+            {
+                if (controller.IsValid && controller.PawnIsAlive)
+                {
+                    controller.ExecuteClientCommand("+attack");
+                    _plugin?.AddRoundTimer(0.30f, () =>
+                    {
+                        if (controller.IsValid) controller.ExecuteClientCommand("-attack");
+                    });
+                }
+            });
+            _plugin?.AddRoundTimer(1.40f, () =>
+            {
+                if (controller.IsValid && controller.PawnIsAlive)
+                {
+                    ForceEquipBestFirearm(controller);
+                }
             });
         }
     }
@@ -1353,6 +1764,14 @@ public class BotLocomotionDriver
         bool isKnife = wName.Contains("knife", StringComparison.OrdinalIgnoreCase) || wName.Contains("bayonet", StringComparison.OrdinalIgnoreCase);
         if (isKnife && (_isBombPlanted || (currentTime - RoundStartTime >= 10.0f) || RoundTimeRemaining <= 105.0f))
         {
+            if (IsOpeningCanaryActiveSlot?.Invoke(slot) == true && !_isBombPlanted)
+            {
+                int rnd = GetCurrentRoundId?.Invoke() ?? 1;
+                if (LeaseManager == null || !LeaseManager.AllowCompetingWriter(rnd, slot, Server.TickCount, "BotLocomotionDriver.CheckGrenadeEquipWatchdog", "ForceEquipBestFirearmOnKnife"))
+                {
+                    return;
+                }
+            }
             ForceEquipBestFirearm(controller);
             return;
         }
@@ -1416,6 +1835,17 @@ public class BotLocomotionDriver
     public void ForceSwitchToBestCombatWeapon(CCSPlayerController controller)
     {
         ForceEquipBestFirearm(controller);
+    }
+
+    public void ForceEquipKnifeForCanary(CCSPlayerController bot)
+    {
+        if (bot == null || !bot.IsValid || !bot.PawnIsAlive) return;
+        var api = BotApi;
+        if (api != null)
+        {
+            api.SwitchBotWeapon(bot.Slot, 9001);
+        }
+        bot.ExecuteClientCommand("slot3");
     }
 
     public void ForceEquipBestFirearm(CCSPlayerController bot)

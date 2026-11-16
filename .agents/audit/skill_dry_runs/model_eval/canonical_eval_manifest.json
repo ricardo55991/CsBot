@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T16:47:04.062268+00:00",
+  "split_name": "test",
+  "dry_run": true,
+  "data_nature": "SIMULATED",
+  "verdict": "CONDITIONAL",
+  "checkpoint": {
+    "provided": false,
+    "exists": false,
+    "sha256": null,
+    "size_bytes": null
+  },
+  "metrics_input_sha256": null,
+  "invariants": {
+    "model_eval": true,
+    "torch_no_grad": true,
+    "test_shuffle": false,
+    "augmentation": false,
+    "teacher_forcing": false,
+    "zero_support_policy": "N/A",
+    "single_canonical_metric_per_split": true
+  },
+  "invariant_errors": [],
+  "generated_artifacts": {
+    "canonical_metrics.json": {
+      "path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\model_eval\\canonical_metrics.json",
+      "sha256": "d6c13b98aadcb0a7b5f2c2de2778c4309d21d7e46e56647d5804fcabc277ccd9"
+    },
+    "confusion_counts.csv": {
+      "path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\model_eval\\confusion_counts.csv",
+      "sha256": "d1ef41f391ebe58f0b79113fb8dd38e8a0eb95301f6aad3fac00cc7bcd721043"
+    },
+    "confusion_normalized.csv": {
+      "path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\model_eval\\confusion_normalized.csv",
+      "sha256": "e417f13c85cdf5e7f17caba6689d2c44f8cff36871dce1f563fe40a9a49b7124"
+    },
+    "calibration.json": {
+      "path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\model_eval\\calibration.json",
+      "sha256": "4e646712c0846d900387be3db3ac9a27dbb4b77412b6ce894c12ce1e5ac92d78"
+    },
+    "checkpoint_comparison.json": {
+      "path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\audit\\skill_dry_runs\\model_eval\\checkpoint_comparison.json",
+      "sha256": "adf440a456aa06e67d31c879484a4238bfbf961f5d9c4f6393404f204cebf1ce"
+    }
+  }
+}

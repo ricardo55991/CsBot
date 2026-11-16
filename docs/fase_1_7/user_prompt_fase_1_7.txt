@@ -1,0 +1,182 @@
+<USER_REQUEST>
+# FASE 1.7: NORMALIZAÇÃO SEMÂNTICA DO PERFIL MIRAGE V2 E HOMOLOGAÇÃO VISUAL HUMANA
+
+## OBJETIVO
+
+O perfil Mirage V2 já passou por:
+
+- inventário de 444 arquivos NPZ;
+- análise de 13.676 rounds profissionais;
+- clustering espacial;
+- correção controlada de 20 spots críticos;
+- testes físicos A/B no servidor dedicado;
+- 274 testes unitários aprovados;
+- partida normal de cinco rounds;
+- reconciliação entre perfil, runtime e documentação.
+
+Os spots corrigidos já estão aprovados como base espacial para o dataset V2.
+
+Entretanto, antes da Fase 2, ainda precisamos:
+
+1. auditar os chokepoints antigos do perfil;
+2. uniformizar os metadados dos 45 spots;
+3. atribuir confiança e status de validação;
+4. instrumentar o `JumpExecutionGate`;
+5. gerar evidências visuais dos oito spots mais sensíveis;
+6. permitir que o usuário faça a aprovação humana olhando screenshots reais do CS2.
+
+Esta fase não deve iniciar treinamento.
+
+Esta fase não deve alterar o ONNX.
+
+Esta fase não deve alterar automaticamente as coordenadas dos 20 spots já homologados.
+
+Esta fase não deve preencher decisões humanas automaticamente.
+
+---
+
+# 1. REGRAS DE ESCOPO
+
+## Não alterar
+
+Não alterar:
+
+- ONNX atual;
+- Utility AI;
+- `MovementArbitrator`;
+- `MicroMoveEngine`;
+- economia;
+- C4;
+- retake;
+- recovery;
+- probabilidades táticas;
+- coordenadas dos 20 spots corrigidos;
+- coordenadas dos 12 `SMALL_ADJUSTMENT`;
+- coordenadas dos 6 `INSUFFICIENT_EVIDENCE`.
+
+## Permitido alterar
+
+Pode alterar somente:
+
+- metadados semânticos do perfil;
+- schema dos spots;
+- estruturas de confiança;
+- instrumentação de Jump;
+- documentação;
+- ferramentas de auditoria;
+- scripts de geração de imagens e relatórios;
+- testes relacionados a esta fase.
+
+## Não fazer
+
+Não:
+
+- treinar Transformer;
+- gerar dataset definitivo ainda;
+- alterar chokepoints automaticamente;
+- promover spot de baixa confiança sem evidência;
+- preencher `APPROVED_BY_USER`;
+- declarar inspeção humana sem confirmação do usuário;
+- criar scree
+<truncated 12823 bytes>
+a_hide_first_person.png
+    03_ct_a_ninja_hide_external.png
+
+    04_ct_mid_window_crouch_first_person.png
+    04_ct_mid_window_crouch_external.png
+
+    05_ct_b_van_peek_first_person.png
+    05_ct_b_van_peek_external.png
+
+    06_tr_staging_a_ramp_first_person.png
+    06_tr_staging_a_ramp_external.png
+
+    07_tr_staging_palace_room_first_person.png
+    07_tr_staging_palace_room_external.png
+
+    08_ct_retake_a_connector_first_person.png
+    08_ct_retake_a_connector_external.png
+
+---
+
+# 11. DECISÃO TÉCNICA
+
+Após concluir a parte técnica, responder:
+
+    MIRAGE_SEMANTIC_PROFILE_READY_FOR_PHASE_2_PENDING_HUMAN_REVIEW
+
+somente se:
+
+- chokepoints foram auditados;
+- schema foi uniformizado;
+- confiança foi registrada;
+- spots pendentes não foram promovidos indevidamente;
+- Jump foi instrumentado;
+- testes passaram;
+- 16 screenshots foram geradas;
+- coordenadas das screenshots correspondem ao perfil;
+- decisões humanas permanecem pendentes.
+
+Não responder:
+
+    MIRAGE_SEMANTIC_PROFILE_READY_FOR_PHASE_2
+
+antes do usuário revisar as imagens.
+
+---
+
+# 12. DECISÃO APÓS O USUÁRIO
+
+Depois que o usuário devolver o checklist:
+
+## Se todos estiverem aprovados
+
+Atualizar os oito spots com:
+
+    validation_status = APPROVED_BY_USER
+
+Responder:
+
+    MIRAGE_SEMANTIC_PROFILE_READY_FOR_PHASE_2
+
+## Se houver APPROVED_WITH_NOTE
+
+Registrar a observação.
+
+Não alterar automaticamente a coordenada.
+
+Avaliar se a observação bloqueia dataset ou apenas produção.
+
+## Se houver REJECTED
+
+Responder:
+
+    MIRAGE_SEMANTIC_PROFILE_NOT_READY_FOR_PHASE_2
+
+Criar proposta isolada para o spot rejeitado.
+
+Não alterar os demais spots.
+
+---
+
+# 13. PROIBIÇÃO DE TREINAMENTO
+
+Não iniciar:
+
+- Positioning Transformer;
+- MLMove V2;
+- Jump Head;
+- exportação ONNX;
+- shadow mode;
+- canary.
+
+O treinamento só poderá começar depois de:
+
+    MIRAGE_SEMANTIC_PROFILE_READY_FOR_PHASE_2
+
+e depois da auditoria dos manifests da Fase 2.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-11-05T00:01:35-03:00.
+</ADDITIONAL_METADATA>

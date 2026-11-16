@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2 Arsenal Web UI | CsBot Suite</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Header Bar -->
+    <header class="top-nav">
+        <div class="brand">
+            <div class="brand-logo">CS2</div>
+            <div class="brand-title">
+                <h1>ARSENAL WEB UI</h1>
+                <span class="sub">CSBOT SUITE &bull; WEAPONPAINTS MARIADB</span>
+            </div>
+        </div>
+
+        <div class="nav-status">
+            <div class="status-pill online" id="dbStatus">
+                <span class="dot"></span>
+                <span>MariaDB: Conectado</span>
+            </div>
+            <div class="steamid-box">
+                <span class="label">STEAMID:</span>
+                <input type="text" id="steamidInput" value="76561198816182970" spellcheck="false">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="workspace">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="section-label">CATEGORIAS</div>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="knives">
+                    <span class="icon">🗡️</span> Facas & Gemas
+                </button>
+                <button class="tab-btn" data-tab="gloves">
+                    <span class="icon">🧤</span> Luvas
+                </button>
+                <button class="tab-btn" data-tab="rifles">
+                    <span class="icon">🔫</span> Rifles & Snipers
+                </button>
+                <button class="tab-btn" data-tab="pistols">
+                    <span class="icon">🎯</span> Pistolas & SMGs
+                </button>
+                <button class="tab-btn" data-tab="inventory">
+                    <span class="icon">🎒</span> Arsenal Equipado
+                </button>
+                <a href="/radar" target="_blank" class="tab-btn radar-link-btn" style="text-decoration:none; display:flex; align-items:center; background: rgba(0, 229, 255, 0.15); border: 1px solid #00E5FF; color: #00E5FF; margin-top: 12px; font-weight: bold; border-radius: 6px;">
+                    <span class="icon">📡</span> Radar 2D (2ª Tela) ↗
+                </a>
+            </nav>
+
+            <div class="quick-tip">
+                <div class="tip-title">⚡ ATUALIZAÇÃO NO JOGO</div>
+                <div class="tip-body">Após equipar sua skin aqui no painel, digite <code>!wp</code> no chat do jogo ou troque de arma para ver o item imediatamente na sua mão!</div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            <!-- Filter & Search Toolbar -->
+            <div class="toolbar">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Filtrar por nome da arma ou skin (ex: Doppler, Fade, Ruby, AK-47, Asiimov)...">
+                </div>
+                <div class="team-filter">
+                    <span class="filter-label">EQUIPAR PARA:</span>
+                    <span class="team-lock-badge" id="teamLockBadge" style="display: none;"></span>
+                    <div class="btn-group">
+                        <button class="team-btn active" data-team="0">AMBOS</button>
+                        <button class="team-btn ct" data-team="3">CT</button>
+                        <button class="team-btn tr" data-team="2">TR</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weapon Subcategory Filter Pills (visível em rifles e pistolas) -->
+            <div class="weapon-pills-bar" id="weaponPillsBar" style="display: none;">
+                <!-- Gerado dinamicamente com as armas da categoria -->
+            </div>
+
+            <!-- Gem Quick Presets Banner (visible on knives tab) -->
+            <div class="gem-presets-bar" id="gemPresetsBar">
+                <div class="presets-title">💎 VISUALIZAÇÃO GLOBAL DE ACABAMENTOS & GEMAS (TROCA TODAS AS FACAS EM 1 CLIQUE):</div>
+                <div class="presets-chips" id="gemChipsContainer">
+                    <!-- Gerado dinamicamente pelo JS -->
+                </div>
+            </div>
+
+            <!-- Items Catalog Grid -->
+            <div class="items-grid" id="itemsGrid">
+                <!-- Cards de itens renderizados aqui -->
+            </div>
+        </main>
+
+        <!-- Right Inspection & Customization Drawer -->
+        <aside class="inspect-drawer" id="inspectDrawer">
+            <div class="drawer-header">
+                <h2>PERSONALIZAÇÃO</h2>
+                <span class="rarity-badge" id="inspectRarity">COVERT</span>
+            </div>
+
+            <div class="inspect-preview">
+                <img id="inspectImage" src="" alt="Weapon Preview">
+                <div class="inspect-name" id="inspectName">Selecione um item</div>
+                <div class="inspect-type" id="inspectType">Clique em uma faca, luva ou arma</div>
+            </div>
+
+            <!-- Customization Controls -->
+            <div class="drawer-controls">
+                <div class="control-group" id="knifeSkinSelectGroup" style="display: none;">
+                    <label for="knifeSkinSelect">PINTURA INDIVIDUAL DESTA FACA:</label>
+                    <select id="knifeSkinSelect" class="custom-select"></select>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>DESGASTE (FLOAT / WEAR)</span>
+                        <span class="value-highlight" id="floatValueDisplay">0.0001 (Factory New)</span>
+                    </div>
+                    <input type="range" id="floatSlider" min="0.0001" max="0.9999" step="0.0001" value="0.0001">
+                    <div class="wear-bar">
+                        <span class="fn">FN</span>
+                        <span class="mw">MW</span>
+                        <span class="ft">FT</span>
+                        <span class="ww">WW</span>
+                        <span class="bs">BS</span>
+                    </div>
+                </div>
+
+                <div class="control-row">
+                    <div class="control-group half">
+                        <label for="seedInput">PATTERN / SEED:</label>
+                        <input type="number" id="seedInput" min="0" max="1000" value="0" placeholder="0 - 1000">
+                    </div>
+                    <div class="control-group half">
+                        <label for="paintIdInput">PAINT INDEX:</label>
+                        <input type="number" id="paintIdInput" value="0" readonly>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="nametagInput">NAME TAG (OPCIONAL):</label>
+                    <input type="text" id="nametagInput" maxlength="32" placeholder="Nome personalizado da arma...">
+                </div>
+
+                <div class="control-row checkbox-row">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="stattrakCheckbox">
+                        <span class="checkmark"></span>
+                        <span class="label-text">StatTrak™</span>
+                    </label>
+                    <input type="number" id="stattrakCountInput" min="0" value="0" placeholder="Kills">
+                </div>
+
+                <button class="btn-equip" id="btnEquipAction">
+                    <span class="btn-text">⚡ EQUIPAR NO ARSENAL</span>
+                </button>
+
+                <button class="btn-inspect" id="btnInspectAction" title="Inspecione a skin em 3D ou abra no CS2">
+                    <span class="btn-icon">🔍</span>
+                    <span class="btn-text">INSPECIONAR SKIN</span>
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modal de Inspeção Interativa (Panorama CS2 Inspector) -->
+    <div class="inspect-modal-backdrop" id="inspectModalBackdrop" style="display: none;">
+        <div class="inspect-modal-card">
+            <!-- Header do Modal -->
+            <div class="inspect-modal-header">
+                <div class="modal-title-group">
+                    <span class="modal-badge-rarity" id="modalRarityBadge">SECRETO</span>
+                    <h2 class="modal-weapon-name" id="modalWeaponName">AWP | Graphite</h2>
+                    <span class="modal-weapon-type" id="modalWeaponType">Rifle de Precisão</span>
+                </div>
+                <button class="modal-close-btn" id="modalCloseBtn" title="Fechar (ESC)">✕</button>
+            </div>
+
+            <!-- Palco 3D Interativo (Stage com Iluminação e Giro) -->
+            <div class="inspect-stage" id="inspectStage">
+                <div class="stage-lighting"></div>
+                <div class="stage-turntable" id="stageTurntable">
+                    <img id="modalInspectImage" src="" alt="Skin Preview" class="stage-weapon-img">
+                    <div class="stage-reflection" id="stageReflection"></div>
+                </div>
+                <div class="stage-controls">
+                    <button class="stage-btn" id="btnToggleRotate" title="Girar 360° Automaticamente">🔄 Giro 360°</button>
+                    <button class="stage-btn" id="btnFlipSide" title="Virar Playside / Backside">↔️ Virar Lado</button>
+                    <button class="stage-btn" id="btnResetView" title="Centralizar Câmera">🎯 Resetar</button>
+                </div>
+                <div class="stage-hint">Arraste ou mova o mouse para girar em 3D</div>
+            </div>
+
+            <!-- Dados Técnicos da Skin -->
+            <div class="inspect-modal-meta">
+                <div class="meta-item">
+                    <span class="meta-label">DESGASTE (FLOAT)</span>
+                    <span class="meta-value" id="modalFloatVal">0.0001 (Factory New)</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">PATTERN SEED</span>
+                    <span class="meta-value" id="modalSeedVal">0</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">PAINT INDEX</span>
+                    <span class="meta-value" id="modalPaintVal">212</span>
+                </div>
+                <div class="meta-item" id="modalStattrakBox" style="display: none;">
+                    <span class="meta-label">STATTRAK™</span>
+                    <span class="meta-value stattrak-orange" id="modalStattrakVal">0 Kills</span>
+                </div>
+                <div class="meta-item" id="modalNametagBox" style="display: none;">
+                    <span class="meta-label">NAME TAG</span>
+                    <span class="meta-value nametag-plate" id="modalNametagVal">""</span>
+                </div>
+            </div>
+
+            <!-- Botões de Ação -->
+            <div class="inspect-modal-actions">
+                <button class="btn-action-cs2" id="btnLaunchCs2Inspect" title="Abre a tela oficial de inspeção 3D no CS2 via Steam">
+                    <span class="btn-icon">🎮</span>
+                    <span>ABRIR NO CS2 (JOGO)</span>
+                </button>
+                <button class="btn-action-secondary" id="btnCopyInspectLink" title="Copiar link oficial da Steam (steam://...)">
+                    <span>📋 Copiar Link Steam</span>
+                </button>
+                <button class="btn-action-secondary" id="btnCopyConsoleCmd" title="Copiar comando de console (csgo_econ_action_preview ...)">
+                    <span>⌨️ Copiar Comando Console</span>
+                </button>
+                <button class="btn-action-secondary" id="btnOpenWeb3D" title="Abrir em visualizador 3D online">
+                    <span>🌐 3D no Navegador (Web)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

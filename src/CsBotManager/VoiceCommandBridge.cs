@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using CounterStrikeSharp.API;
@@ -20,12 +21,15 @@ public class VoiceCommandBridge
     private readonly BotLocomotionDriver _locomotionDriver;
     private readonly Func<TacticalPlan> _getCurrentPlan;
 
-    private HttpListener? _listener;
+    private TcpListener? _tcpListener;
+    private CancellationTokenSource? _serverCts;
     private bool _isRunning = false;
     private const string ListenerUri = "http://127.0.0.1:27080/voice/";
 
     public string LastVoiceCommand { get; private set; } = string.Empty;
+    public string LastVoiceAction { get; private set; } = string.Empty;
     public MatchTelemetryLogger? TelemetryLogger { get; set; }
+    public LiveRadarTelemetryService? RadarTelemetry { get; set; }
 
     public VoiceCommandBridge(
         BasePlugin plugin,
@@ -55,17 +59,17 @@ public class VoiceCommandBridge
     {
         try
         {
-            _listener = new HttpListener();
-            _listener.Prefixes.Add(ListenerUri);
-            _listener.Start();
+            _serverCts = new CancellationTokenSource();
+            _tcpListener = new TcpListener(IPAddress.Loopback, 27080);
+            _tcpListener.Start();
             _isRunning = true;
 
-            _listener.BeginGetContext(OnContextReceived, null);
-            Server.PrintToConsole($"[VoiceCommandBridge] Listener de voz iniciado com sucesso em {ListenerUri}");
+            Task.Run(async () => await ListenLoopAsync(_serverCts.Token));
+            Server.PrintToConsole("[VoiceCommandBridge] Servidor TCP/HTTP de voz e radar iniciado com sucesso em http://127.0.0.1:27080/");
         }
         catch (Exception ex)
         {
-            Server.PrintToConsole($"[VoiceCommandBridge] Aviso ao iniciar HTTP Listener: {ex.Message}");
+            Server.PrintToConsole($"[VoiceCommandBridge] Aviso ao iniciar TCP Listener: {ex.Message}");
         }
     }
 
@@ -74,51 +78,127 @@ public class VoiceCommandBridge
         _isRunning = false;
         try
         {
-            _listener?.Stop();
-            _listener?.Close();
+            _serverCts?.Cancel();
+            _tcpListener?.Stop();
         }
         catch { }
     }
 
-    private void OnContextReceived(IAsyncResult ar)
+    private async Task ListenLoopAsync(CancellationToken token)
     {
-        if (!_isRunning || _listener == null) return;
-
-        try
+        while (_isRunning && !token.IsCancellationRequested && _tcpListener != null)
         {
-            var context = _listener.EndGetContext(ar);
-            _listener.BeginGetContext(OnContextReceived, null);
-
-            if (context.Request.HttpMethod == "POST")
+            try
             {
-                using var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding);
-                string jsonBody = reader.ReadToEnd();
-
-                var payload = JsonSerializer.Deserialize<VoiceCommandPayload>(jsonBody);
-                if (payload != null && !string.IsNullOrWhiteSpace(payload.Text))
-                {
-                    Server.NextFrame(() =>
-                    {
-                        ProcessVoiceCommand(payload.Text);
-                    });
-                }
-
-                string responseString = "{\"status\":\"ok\",\"message\":\"Comando processado com sucesso\"}";
-                byte[] buffer = Encoding.UTF8.GetBytes(responseString);
-                context.Response.ContentType = "application/json";
-                context.Response.ContentLength64 = buffer.Length;
-                context.Response.OutputStream.Write(buffer, 0, buffer.Length);
-                context.Response.OutputStream.Close();
+                var client = await _tcpListener.AcceptTcpClientAsync(token);
+                _ = Task.Run(async () => await HandleClientAsync(client));
             }
-            else
+            catch (OperationCanceledException)
             {
-                context.Response.StatusCode = 405;
-                context.Response.Close();
+                break;
+            }
+            catch (Exception)
+            {
+                if (!_isRunning) break;
             }
         }
-        catch (Exception ex)
+    }
+
+    private async Task HandleClientAsync(TcpClient client)
+    {
+        using (client)
+        using (var stream = client.GetStream())
         {
-            Server.PrintToConsole($"[VoiceCommandBridge] Erro ao processar requisição: {ex.Message}");
+            try
+            {
+                byte[] buffer = new byte[8192];
+                int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+                if (bytesRead <= 0) return;
+
+                string requestText = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                string firstLine = requestText.Split('\n')[0].Trim();
+                string[] parts = firstLine.Split(' ');
+                if (parts.Length < 2) return;
+
+                string method = parts[0].ToUpperInvariant();
+                string path = parts[1];
+
+                // Trata CORS Preflight (OPTIONS)
+                if (method == "OPTIONS")
+                {
+                    string res = "HTTP/1.1 204 No Content\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Allow-Methods: GET, POST, OPTIONS\r\nAccess-Control-Allow-Headers: Content-Type\r\nConnection: close\r\n\r\n";
+                    byte[] resBytes = Encoding.UTF8.GetBytes(res);
+                    await stream.WriteAsync(resBytes, 0, resBytes.Length);
+                    return;
+                }
+
+                // GET /radar/state -> Retorna telemetria ultrarrápida do mapa e jogadores
+                if (method == "GET" && path.Contains("/radar/state"))
+                {
+                    byte[] data = RadarTelemetry?.GetLatestStateBytes() ?? Encoding.UTF8.GetBytes("{\"status\":\"no_telemetry\"}");
+                    string header = $"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {data.Length}\r\nConnection: close\r\n\r\n";
+                    byte[] headerBytes = Encoding.UTF8.GetBytes(header);
+                    await stream.WriteAsync(headerBytes, 0, headerBytes.Length);
+                    await stream.WriteAsync(data, 0, data.Length);
+                    return;
+                }
+
+                // POST /radar/command -> Executa ordens vindas da UI web (segunda tela)
+                if (method == "POST" && path.Contains("/radar/command"))
+                {
+                    int bodyIndex = requestText.IndexOf("\r\n\r\n");
+                    string jsonBody = bodyIndex >= 0 ? requestText.Substring(bodyIndex + 4) : "";
+                    try
+                    {
+                        var cmdObj = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonBody);
+                        if (cmdObj != null && cmdObj.TryGetValue("command", out var cmdText))
+                        {
+                            Server.NextFrame(() =>
+                            {
+                                ProcessVoiceCommand(cmdText);
+                            });
+                        }
+                    }
+                    catch { }
+
+                    byte[] okBytes = Encoding.UTF8.GetBytes("{\"status\":\"ok\"}");
+                    string header = $"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {okBytes.Length}\r\nConnection: close\r\n\r\n";
+                    byte[] headerBytes = Encoding.UTF8.GetBytes(header);
+                    await stream.WriteAsync(headerBytes, 0, headerBytes.Length);
+                    await stream.WriteAsync(okBytes, 0, okBytes.Length);
+                    return;
+                }
+
+                if (method == "POST" && path.Contains("/voice/"))
+                {
+                    int bodyIndex = requestText.IndexOf("\r\n\r\n");
+                    string jsonBody = bodyIndex >= 0 ? requestText.Substring(bodyIndex + 4) : "";
+                    try
+                    {
+                        var payload = JsonSerializer.Deserialize<VoiceCommandPayload>(jsonBody);
+                        if (payload != null && !string.IsNullOrWhiteSpace(payload.Text))
+                        {
+                            Server.NextFrame(() =>
+                            {
+                                ProcessVoiceCommand(payload.Text);
+                            });
+                        }
+                    }
+                    catch { }
+
+                    byte[] okBytes = Encoding.UTF8.GetBytes("{\"status\":\"ok\",\"message\":\"Comando processado com sucesso\"}");
+                    string header = $"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {okBytes.Length}\r\nConnection: close\r\n\r\n";
+                    byte[] headerBytes = Encoding.UTF8.GetBytes(header);
+                    await stream.WriteAsync(headerBytes, 0, headerBytes.Length);
+                    await stream.WriteAsync(okBytes, 0, okBytes.Length);
+                    return;
+                }
+
+                string notFound = "HTTP/1.1 404 Not Found\r\nConnection: close\r\n\r\n";
+                byte[] notFoundBytes = Encoding.UTF8.GetBytes(notFound);
+                await stream.WriteAsync(notFoundBytes, 0, notFoundBytes.Length);
+            }
+            catch { }
         }
     }
 
@@ -149,6 +229,7 @@ public class VoiceCommandBridge
 
             var allPlayers = Utilities.GetPlayers().Where(p => p != null && p.IsValid && !p.IsHLTV).ToList();
             TelemetryLogger?.RecordPlayerNote(human, noteText, allPlayers, activePlan);
+            LastVoiceAction = $"Nota forense registrada: {noteText}";
             HumanCommunicationLogger.RecordCommunication("VOICE", human.Team, roundNum, text, "DEBUG_NOTE", $"Nota registrada: {noteText}", 0.01);
             return;
         }
@@ -157,6 +238,7 @@ public class VoiceCommandBridge
         if (lower.Contains("executa") || lower.Contains("entra") || lower.Contains("vai") || lower.Contains("go"))
         {
             _pacingController.TriggerExecute($"Voz do IGL: \"{text}\"", teamBots);
+            LastVoiceAction = "Ordem de entrada rápida: bots aceleraram execução!";
             HumanCommunicationLogger.RecordCommunication("VOICE", human.Team, roundNum, text, "BUILTIN_COMMAND", "TriggerExecute", 0.01);
             return;
         }
@@ -166,6 +248,7 @@ public class VoiceCommandBridge
         {
             string targetSite = lower.Contains("a") ? "A" : "B";
             _midRoundAdapter.TriggerSilentRotate(targetSite, teamBots);
+            LastVoiceAction = $"Rotação silenciosa (Shift) ordenada para o Bombsite {targetSite}";
             HumanCommunicationLogger.RecordCommunication("VOICE", human.Team, roundNum, text, "BUILTIN_COMMAND", $"TriggerSilentRotate({targetSite})", 0.01);
             return;
         }
@@ -179,6 +262,7 @@ public class VoiceCommandBridge
             else if (lower.Contains("tapete") || lower.Contains("b")) sector = "tapete";
 
             _ctController.RequestHumanDuoFlash(human, sector, teamBots);
+            LastVoiceAction = $"Pop-Flash em dupla solicitada no setor {sector.ToUpper()}";
             HumanCommunicationLogger.RecordCommunication("VOICE", human.Team, roundNum, text, "BUILTIN_COMMAND", $"RequestHumanDuoFlash({sector})", 0.01);
             return;
         }
@@ -190,6 +274,7 @@ public class VoiceCommandBridge
             {
                 _midRoundAdapter.ApplyAction(bot, MidRoundAction.HIDE_COVER, null);
             }
+            LastVoiceAction = "Ordem de cobertura: bots recuando e salvando equipamentos";
             HumanCommunicationLogger.RecordCommunication("VOICE", human.Team, roundNum, text, "BUILTIN_COMMAND", "HIDE_COVER", 0.01);
             return;
         }
@@ -206,6 +291,11 @@ public class VoiceCommandBridge
             if (!dropped)
             {
                 human.PrintToChat($" {ChatColors.Red}[CsBot]{ChatColors.Default} Nenhum bot com saldo para drop no momento.");
+                LastVoiceAction = "Nenhum bot com saldo suficiente para drop";
+            }
+            else
+            {
+                LastVoiceAction = $"Drop efetuado com sucesso ({weapon ?? "melhor arma"})";
             }
             HumanCommunicationLogger.RecordCommunication("VOICE", human.Team, roundNum, text, "BUILTIN_COMMAND", $"DropWeapon({weapon ?? "auto"}, dropped={dropped})", 0.01);
             return;
@@ -228,7 +318,22 @@ public class VoiceCommandBridge
                     }
                 }
             }
+            LastVoiceAction = "Posições recalculadas conforme spawn inicial mais próximo";
             HumanCommunicationLogger.RecordCommunication("VOICE", human.Team, roundNum, text, "BUILTIN_COMMAND", "AssignPositionsBySpawn", 0.01);
+            return;
+        }
+
+        // 6.5 Comando de Pausa / Retomada
+        if (lower.Contains("pausar") || lower.Contains("pause"))
+        {
+            Server.ExecuteCommand("css_pause");
+            LastVoiceAction = "Partida pausada via comando tático";
+            return;
+        }
+        if (lower.Contains("retomar") || lower.Contains("despausar") || lower.Contains("continue") || lower.Contains("unpause"))
+        {
+            Server.ExecuteCommand("css_continue");
+            LastVoiceAction = "Partida retomada via comando tático";
             return;
         }
 
@@ -260,6 +365,7 @@ public class VoiceCommandBridge
                     bool claimed = _roleManager.ClaimPositionForPlayer(human, key, teamBots, activePlan, _mapProfileManager);
                     if (claimed)
                     {
+                        LastVoiceAction = $"Você assumiu {key.ToUpper()}: bots liberaram a posição e reajustaram os ângulos";
                         // Move fisicamente os bots usando a ordem individualizada do slot (V4.3)
                         foreach (var bot in teamBots)
                         {

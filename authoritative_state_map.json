@@ -1,0 +1,431 @@
+{
+  "schema_version": "1.0.0",
+  "project": "CsBot",
+  "generated_at_utc": "2026-11-07T18:11:00Z",
+  "data_nature": "REAL",
+  "inferred_future_nodes_nature": "INFERRED",
+  "review_status": "AGENT_REVIEWED",
+  "graphify_source": {
+    "graph_json_path": "graphify-out/graph.json",
+    "graph_json_bytes": 4033979,
+    "graph_json_sha256": "7a09693f1f6568803fa7f2ae7a0286cbe38c09f3900d08b96c6538f4eaa264f0",
+    "graph_report_path": "graphify-out/GRAPH_REPORT.md",
+    "graph_report_bytes": 37406,
+    "graph_report_sha256": "c61b333860ee82bcc2dbb9ada62e5458ff671b780ba795d415387913b554e1ae",
+    "total_nodes": 2627,
+    "total_edges": 5533,
+    "extracted_edges": 5041,
+    "inferred_edges": 492,
+    "communities_total": 253
+  },
+  "state_domains": [
+    {
+      "domain_id": "FLOW_01_POSITIONING_TRANSFORMER",
+      "flow_name": "Positioning Transformer (dataset -> dataloader -> checkpoint -> export futuro -> runtime futuro)",
+      "authoritative_states": [
+        {
+          "state_name": "MirageSpotCatalogAndContracts",
+          "nature": "REAL",
+          "owner_files": [
+            "datasets/mirage_v2/contracts/mirage_spot_catalog_v3.json",
+            "datasets/mirage_v2/contracts/spot_semantic_classification.json",
+            "datasets/mirage_v2/contracts/aim_profiles_v1.json",
+            "datasets/mirage_v2/contracts/train_split_v2.json",
+            "datasets/mirage_v2/contracts/validation_split_v2.json",
+            "datasets/mirage_v2/contracts/test_split_v2.json"
+          ],
+          "authoritative_symbols": [
+            "tools/phase3a_training/data_utils.py:STATES (L19-L27)",
+            "tools/phase3a_training/data_utils.py:SECTORS (L30-L37)",
+            "tools/phase3a_training/data_utils.py:TRANSITIONS (L45-L53)",
+            "tools/phase3a_training/data_utils.py:EXIT_TRIGGERS (L56-L65)",
+            "tools/phase3a_training/data_utils.py:INVALID_SPOT_INDEX (L40-L43)"
+          ],
+          "writers": [
+            "tools/phase2_dataset/step1_2_3_build_contracts.py:main (L32-L285)",
+            "tools/phase2_dataset/step4_5_inventory_and_splits.py:main (L59-L395)"
+          ],
+          "readers": [
+            "tools/phase2_dataset/step9_to_18_build_datasets.py:build_datasets_and_reports (L22-L516)",
+            "tools/phase3a_training/data_utils.py:load_and_preprocess_shard (L191-L310)",
+            "tools/phase3a_training/evaluate_positioning_v1_canonical.py:run_canonical_inference (L47-L220)"
+          ],
+          "fallbacks": [
+            "INVALID_SPOT_INDEX = 53 para observacoes UNMAPPED_POSITION (91.86% do corpus em TRANSIT)"
+          ]
+        },
+        {
+          "state_name": "PositioningParquetShardsAndInMemoryTensors",
+          "nature": "REAL",
+          "owner_files": [
+            "tools/phase3a_training/data_utils.py",
+            "tools/phase2_dataset/dataloaders.py"
+          ],
+          "authoritative_symbols": [
+            "InMemoryPositioningDataset.self_history ([N, 32, 18], L139-L182)",
+            "InMemoryPositioningDataset.teammate_features ([N, 32, 4, 18], L139-L182)",
+            "InMemoryPositioningDataset.round_context ([N, 12], L139-L182)",
+            "InMemoryPositioningDataset.candidate_spot_mask ([N, 53], L139-L182)",
+            "InMemoryPositioningDataset.label_state ([N], L139-L182)",
+            "InMemoryPositioningDataset.label_sector ([N], L139-L182)",
+            "InMemoryPositioningDataset.label_spot ([N], L139-L182)",
+            "InMemoryPositioningDataset.label_transition ([N], L139-L182)",
+            "InMemoryPositioningDataset.label_exit_trigger ([N], L139-L182)",
+            "InMemoryPositioningDataset.is_valid_spot ([N], L139-L182)"
+          ],
+          "writers": [
+            "tools/phase2_dataset/forensic_step2_materialize_shards.py:partition_and_audit_dataset (L31-L94)",
+            "tools/phase3a_training/extract_objective_save_events.py:extract_from_corpus (L74-L633)",
+            "tools/phase3a_training/build_challenge_v2.py:main (L25-L210)",
+            "tools/phase3a_training/data_utils.py:load_and_preprocess_shard (L191-L310)",
+            "tools/phase2_dataset/dataloaders.py:PositioningDatasetV1.__getitem__ (L62-L110)"
+          ],
+          "readers": [
+            "tools/phase3a_training/train_full.py:train_single_seed (L62-L300)",
+            "tools/phase3a_training/finetune_state_head.py:run_experiment (L180-L299)",
+            "tools/phase3a_training/evaluate_positioning_v1_canonical.py:run_canonical_inference (L47-L220)"
+          ],
+          "fallbacks": [
+            "data_utils.py:load_and_preprocess_shard (L204-L215) faz fallback para colunas x,y,z ou zeros caso current_pos nao exista",
+            "positioning_model.py:PositioningTransformerV1.forward (L190-L199) habilita todos os 53 spots (safe_mask[all_false] = True) se uma linha de candidate_spot_mask for toda False"
+          ],
+          "mutation_risks": [
+            "SYNTHETIC/TEMPLATED: data_utils.py:load_and_preprocess_shard (L217-L238) sintetiza self_history [N,32,18] com drift linear np.linspace(-0.01, 0.0, 32) e teammate_features [N,32,4,18] com offset (i+1)*0.05 sobre a posicao do proprio jogador",
+            "candidate_spot_mask e inicializado com np.ones((n, 53), dtype=bool) em load_and_preprocess_shard (L253)"
+          ]
+        },
+        {
+          "state_name": "PositioningModelCheckpointsAndRuntimeMacroState",
+          "nature": "REAL",
+          "owner_files": [
+            "models/positioning/de_mirage_positioning_v1.pt",
+            "models/positioning/de_mirage_positioning_v1_1_candidate.pt",
+            "src/CsBotManager/BotLocomotionDriver.cs",
+            "src/CsBotManager/CsBotManagerPlugin.cs",
+            "src/CsBotManager/Models.cs"
+          ],
+          "authoritative_symbols": [
+            "PositioningTransformerV1.state_dict (head_state, head_sector, head_spot, head_transition, head_exit_trigger, L49-L206)",
+            "BotLocomotionDriver._botStates (ConcurrentDictionary<int, TrackedBotNavState>, L103)",
+            "TacticalPlan.BotOrders (Dictionary<string, BotTacticalOrder>, L382)",
+            "CsBotManagerPlugin._currentPlan (TacticalPlan, L46)",
+            "CsBotManagerPlugin._currentTrPlan (TacticalPlan, L48)",
+            "CsBotManagerPlugin._currentCtPlan (TacticalPlan, L49)"
+          ],
+          "writers": [
+            "tools/phase3a_training/train_full.py:train_single_seed (L62-L300)",
+            "tools/phase3a_training/finetune_state_head.py:main (L352-L858)",
+            "src/CsBotManager/TacticalUtilityIglEngine.cs:DecideRoundPlans (L148-L192)",
+            "src/CsBotManager/TacticalOrderMaterializer.cs:MaterializeTacticalOrders (L12-L432)",
+            "src/CsBotManager/BotLocomotionDriver.cs:NavigateToSpot (L449-L512)",
+            "src/CsBotManager/BotLocomotionDriver.cs:NavigateToPosition (L514-L550)"
+          ],
+          "readers": [
+            "tools/phase3a_training/evaluate_positioning_v1_canonical.py:run_canonical_inference (L47-L220)",
+            "src/CsBotManager/BotLocomotionDriver.cs:UpdateTick (L652-L1307)"
+          ],
+          "planned_future_nodes_inferred": [
+            "PLANNED_FUTURE_NODE (INFERRED): Exportador ONNX para PositioningTransformerV1 (ainda nao materializado em tools/phase3a_training/)",
+            "PLANNED_FUTURE_NODE (INFERRED): InferenceSession de posicionamento em C# alimentando TacticalOrderMaterializer / MidRoundAdapter / BotLocomotionDriver._botStates"
+          ]
+        }
+      ]
+    },
+    {
+      "domain_id": "FLOW_02_MLMOVE_V1",
+      "flow_name": "MLMove V1 (ONNX -> inferencia -> MovementArbitrator -> usercmd)",
+      "authoritative_states": [
+        {
+          "state_name": "OnnxInferenceAndTrajectoriesState",
+          "nature": "REAL",
+          "owner_files": [
+            "src/CsBotManager/MicroMoveEngine.cs",
+            "tools/mlmove_pipeline/contract_spec.py"
+          ],
+          "authoritative_symbols": [
+            "MicroMoveEngine._onnxLock (object, L285)",
+            "MicroMoveEngine._trajectories (ConcurrentDictionary<int, MicroMoveTrajectory>, L290)",
+            "MicroMoveEngine._ctFogInputTensor (float[MaxPlayers, FeatureDim], L291)",
+            "MicroMoveEngine._trFogInputTensor (float[MaxPlayers, FeatureDim], L292)",
+            "MicroMoveEngine._onnxBatchInputBuffer (float[2 * MaxPlayers * FeatureDim], L293)",
+            "MicroMoveEngine._onnxBatchOutputLogits (float[2, MaxPlayers, HorizonsCount, ActionSpaceSize], L294)",
+            "MicroMoveEngine._onnxSession (InferenceSession?, L295)",
+            "MicroMoveTrajectory.Step0_Now / Step1_125ms / Step2_250ms (MicroMoveStep, L201-L203)"
+          ],
+          "writers": [
+            "src/CsBotManager/MicroMoveEngine.cs:EnsureModelsDirectory (L583-L604)",
+            "src/CsBotManager/MicroMoveEngine.cs:OnModelFileDetected (L606-L613)",
+            "src/CsBotManager/MicroMoveEngine.cs:TryLoadMapModel (L647-L715)",
+            "src/CsBotManager/MicroMoveEngine.cs:BuildStandardizedInputTensor (L1075-L1083)",
+            "src/CsBotManager/MicroMoveEngine.cs:BuildFogOfWarInputTensorForTeam (L1085-L1169)",
+            "src/CsBotManager/MicroMoveEngine.cs:RunOnnxBatchInference (L717-L801)",
+            "src/CsBotManager/MicroMoveEngine.cs:PredictBatch16Hz (L1171-L1592)"
+          ],
+          "readers": [
+            "src/CsBotManager/MicroMoveEngine.cs:GetTrajectory (L803-L806)",
+            "src/CsBotManager/MicroMoveEngine.cs:UpdateTick (L933-L1073)",
+            "src/CsBotManager/BotLocomotionDriver.cs:UpdateTick (L667, L887-L893)"
+          ],
+          "fallbacks": [
+            "Se _onnxSession == null ou RunOnnxBatchInference retornar false, PredictBatch16Hz (L1171-L1592) avalia overrides taticos (Counter-Strafe L459, Trade Spacing TryEvaluatePairRepulsion L367, Wall-Hugging L1452) ou desativa traj.IsOverrideActive = false (L1589) caindo para NavMesh_GPS"
+          ]
+        },
+        {
+          "state_name": "MovementArbitrationWindowAndAppliedEngineState",
+          "nature": "REAL",
+          "owner_files": [
+            "src/CsBotManager/MovementArbitrator.cs",
+            "src/CsBotManager/MovementExecutionTracker.cs"
+          ],
+          "authoritative_symbols": [
+            "MovementArbitrator._collectingIntentsBySlot (ConcurrentDictionary<int, List<MovementIntent>>, L150)",
+            "MovementArbitrator._queuedIntentsForNextTickBySlot (ConcurrentDictionary<int, List<MovementIntent>>, L151)",
+            "MovementArbitrator._lastDecisionsBySlot (ConcurrentDictionary<int, ArbitratedMovementDecision>, L152)",
+            "MovementArbitrator._activeUsercmdHandleBySlot (ConcurrentDictionary<int, long>, L153)",
+            "MovementArbitrator._lastAppliedTickBySlot (ConcurrentDictionary<int, int>, L154)",
+            "MovementArbitrator.CurrentPhase (ArbitrationWindowPhase, L170)",
+            "MovementArbitrator.CurrentInternalRoundId (long, L173)"
+          ],
+          "writers": [
+            "src/CsBotManager/MovementArbitrator.cs:BeginTick (L180-L245)",
+            "src/CsBotManager/MovementArbitrator.cs:PublishDuringCollection (L287-L352)",
+            "src/CsBotManager/MovementArbitrator.cs:QueueForNextTick (L354-L422)",
+            "src/CsBotManager/MovementArbitrator.cs:PublishIntent (L424-L453)",
+            "src/CsBotManager/MovementArbitrator.cs:CloseCollectionWindow (L455-L461)",
+            "src/CsBotManager/MovementArbitrator.cs:ResolveAllIntents (L463-L481)",
+            "src/CsBotManager/MovementArbitrator.cs:CollectAndResolveIntents (L505-L587)",
+            "src/CsBotManager/MovementArbitrator.cs:ApplyWinningIntent (L592-L764)",
+            "src/CsBotManager/MovementArbitrator.cs:EndTick (L496-L503)"
+          ],
+          "readers": [
+            "src/CsBotManager/MovementArbitrator.cs:GetLastDecision (L766-L769)",
+            "src/CsBotManager/MovementArbitrator.cs:GetActiveUsercmdHandle (L168)",
+            "src/CsBotManager/MovementExecutionTracker.cs:RecordOrUpdateIntentIssued (L545-L603)",
+            "src/CsBotManager/MovementExecutionTracker.cs:UpdateTick (L888-L1022)"
+          ],
+          "side_effects": [
+            "api.StartUsercmdMovement(slot, fMove, sMove) e api.CancelUsercmdMovement(slot, oldHandle) (L645, L661, L670)",
+            "api.InjectUsercmd(slot, intent.Buttons, Math.Clamp(intent.ButtonsDurationMs, 50, 1000)) (L679)",
+            "bot.IsStopping / bot.WaitTimer (L687-L696)",
+            "bot.GoalPosition[0..2] = valResult.SanitizedGoal.X/Y/Z e bot.RepathTimer.Timestamp = 0f (L719-L727)",
+            "bot.LookAtSpot[0..2] (L748-L760)"
+          ],
+          "mutation_risks": [
+            "Bug em tools/mlmove_pipeline/run_mining_and_training_loop.py (L202): X, Y = load_dataset_for_map(map_name) tenta desempacotar ShardedMemmapDataset"
+          ]
+        }
+      ]
+    },
+    {
+      "domain_id": "FLOW_03_JUMP",
+      "flow_name": "Jump (previsao -> JumpExecutionGate -> comando -> landing)",
+      "authoritative_states": [
+        {
+          "state_name": "JumpExecutionGateStateMachine",
+          "nature": "REAL",
+          "owner_files": [
+            "src/CsBotManager/JumpExecutionGate.cs"
+          ],
+          "authoritative_symbols": [
+            "JumpExecutionGate._states (ConcurrentDictionary<int, JumpGateState>, L82)",
+            "JumpGateState (sealed class, L9-L21: LastJumpIssuedTick, LastGroundedTick, LastLandingTick, JumpPressedLastTick, ConsecutiveJumpPredictions, ConsecutiveAirborneTicks, IsGrounded, RepeatedJumpSequenceDetected)",
+            "JumpExecutionGate.EmittedEvents (List<JumpGateEvent>, L88)"
+          ],
+          "writers": [
+            "src/CsBotManager/JumpExecutionGate.cs:GetOrCreateState (L94-L97)",
+            "src/CsBotManager/JumpExecutionGate.cs:RecordEvent (L99-L146)",
+            "src/CsBotManager/JumpExecutionGate.cs:UpdateGroundedState (L148-L186)",
+            "src/CsBotManager/JumpExecutionGate.cs:EvaluateJumpRequest (L198-L351)",
+            "src/CsBotManager/JumpExecutionGate.cs:RecordJumpExecuted (L353-L360)",
+            "src/CsBotManager/JumpExecutionGate.cs:ResetRound (L362-L365)"
+          ],
+          "readers": [
+            "src/CsBotManager/JumpExecutionGate.cs:IsGrounded (L188-L196)",
+            "tests/CsBotManager.Tests/Phase17SemanticAndJumpTests.cs"
+          ],
+          "mutation_risks": [
+            "CRITICO: JumpExecutionGate nunca e instanciado nem chamado por MicroMoveEngine, BotLocomotionDriver ou MovementArbitrator em producao; opera apenas nos testes unitarios"
+          ]
+        },
+        {
+          "state_name": "RuntimeJumpEmissionChannels",
+          "nature": "REAL",
+          "owner_files": [
+            "src/CsBotManager/MicroMoveEngine.cs",
+            "src/CsBotManager/BotLocomotionDriver.cs",
+            "src/CsBotManager/SpotTestRunner.cs"
+          ],
+          "authoritative_symbols": [
+            "MicroMoveStep.IsJump (bool, L63) e MicroMoveStep.Buttons (ulong, L67: IN_JUMP = 1UL << 1 em FromActionId L100-L142)",
+            "MovementIntent.Buttons (ulong, L115)"
+          ],
+          "writers": [
+            "src/CsBotManager/MicroMoveEngine.cs:MicroMoveStep.FromActionId (L100-L142: converte actionId 49..96 em IsJump=true e Buttons |= 1UL << 1)",
+            "src/CsBotManager/MicroMoveEngine.cs:PredictBatch16Hz (L1567-L1569)",
+            "src/CsBotManager/BotLocomotionDriver.cs:UpdateTick (L992: Stage de Stuck 2D publica MovementIntent com Buttons = IN_JUMP | IN_FORWARD)",
+            "src/CsBotManager/SpotTestRunner.cs:OnTick (L360-L370: injeta curVz = 260.0f via pawn.Teleport na L362 e btns |= BotLocomotionDriver.IN_JUMP na L369 via Arbitrator.PublishIntent na L372)"
+          ],
+          "readers": [
+            "src/CsBotManager/MicroMoveEngine.cs:UpdateTick (L933-L1073: propaga step.Buttons para MovementIntent)",
+            "src/CsBotManager/MovementArbitrator.cs:ApplyWinningIntent (L675-L682: chama api.InjectUsercmd)"
+          ],
+          "fallbacks": [
+            "JumpExecutionGate.EvaluateJumpRequest (L231) converte actionId0 de pulo bloqueado (49..96) para a acao equivalente sem pulo: convertedNonJumpAction = actionId0 > 48 ? (actionId0 - 48) : actionId0"
+          ]
+        }
+      ]
+    },
+    {
+      "domain_id": "FLOW_04_C4_OBJECTIVE",
+      "flow_name": "C4 (eventos -> BombObjectiveState -> materializacao -> movimento -> plant/retake)",
+      "authoritative_states": [
+        {
+          "state_name": "BombObjectiveCanonicalState",
+          "nature": "REAL",
+          "owner_files": [
+            "src/CsBotManager/Models.cs",
+            "src/CsBotManager/CsBotManagerPlugin.cs",
+            "src/CsBotManager/C4MismatchEpisodeTracker.cs"
+          ],
+          "authoritative_symbols": [
+            "TacticalPlan.BombObjectiveState (BombObjectiveState, L412 de Models.cs)",
+            "BombObjectiveState (sealed class, L985-L1039 de Models.cs: MaterializedRealSite, FakeSite, CommittedSite, RealSite, PlantedSite, ObjectiveRevision [Guid], UpdatedAtTick)",
+            "BombsiteParser.ResolveBombCarrierTargetSite (L675-L724 de Models.cs)",
+            "BotLocomotionDriver.C4MismatchTracker (C4MismatchEpisodeTracker, L91 de BotLocomotionDriver.cs)"
+          ],
+          "writers": [
+            "src/CsBotManager/Models.cs:BombObjectiveState.CommitMaterializedSite (L1000-L1018)",
+            "src/CsBotManager/Models.cs:BombObjectiveState.UpdateCommittedSite (L1020-L1030)",
+            "src/CsBotManager/Models.cs:BombObjectiveState.MarkPlanted (L1032-L1039)",
+            "src/CsBotManager/TacticalOrderMaterializer.cs:MaterializeTrOrders (L632-L713)",
+            "src/CsBotManager/TacticalOrderMaterializer.cs:ValidateAndRepairOrders (L735-L870)",
+            "src/CsBotManager/TacticalOrderMaterializer.cs:MaterializeCtRetakeOrdersDeterministic (L914-L1104)",
+            "src/CsBotManager/CsBotManagerPlugin.cs:OnBombPlanted (L932-L956)",
+            "src/CsBotManager/CsBotManagerPlugin.cs:OnBombBeginDefuse (L958-L980)",
+            "src/CsBotManager/BotLocomotionDriver.cs:NotifyBombState (L339-L395)"
+          ],
+          "readers": [
+            "src/CsBotManager/Models.cs:BombsiteParser.ResolveBombCarrierTargetSite (L675-L724)",
+            "src/CsBotManager/MovementArbitrator.cs:PublishDuringCollection (L314-L333: le GetActiveBombObjectiveState)",
+            "src/CsBotManager/MovementArbitrator.cs:ApplyWinningIntent (L700-L724)"
+          ],
+          "mutation_risks": [
+            "CRITICO 1: MovementArbitrator.GetActiveBombObjectiveState (L146) nunca e atribuido em CsBotManagerPlugin.Load (L158-L279), permanecendo null no runtime real",
+            "CRITICO 2: BotLocomotionDriver.UpdateTick (L735) passa literal hardcoded \"A\" em PlantController.AnnounceAndStartPlant(controller, \"A\", aliveTrs, aliveCts)",
+            "CRITICO 3: BotLocomotionDriver.UpdateTick (L758, L1063, L1117) le _plugin?.CurrentPlan?.TacticName (plano do time do jogador humano) para decidir o bombsite do portador da C4"
+          ]
+        },
+        {
+          "state_name": "PlantAndRetakeControllerState",
+          "nature": "REAL",
+          "owner_files": [
+            "src/CsBotManager/SiteClearAndPlantController.cs",
+            "src/CsBotManager/CtRetakeAndDefuseBrain.cs"
+          ],
+          "authoritative_symbols": [
+            "SiteClearAndPlantController (L7-L194: HasAnnouncedPlant, IsSiteSafeToPlant L63, GetPlantPosition L123, AnnounceAndStartPlant L163)",
+            "CtRetakeAndDefuseBrain (L16-L330: CurrentDefuseAction, TryDeploySmokeOnC4 L70, DecideDefuseStrategy L112, OnDefuseTapped L166, CheckAndEnforceSmartDefusePriority L243, ShouldInjectDefuseInput L285)"
+          ],
+          "writers": [
+            "src/CsBotManager/SiteClearAndPlantController.cs:OnRoundStart (L35-L41)",
+            "src/CsBotManager/SiteClearAndPlantController.cs:AnnounceAndStartPlant (L163-L193)",
+            "src/CsBotManager/CtRetakeAndDefuseBrain.cs:OnRoundStart (L55-L68)",
+            "src/CsBotManager/CtRetakeAndDefuseBrain.cs:DecideDefuseStrategy (L112-L164)",
+            "src/CsBotManager/CtRetakeAndDefuseBrain.cs:OnDefuseTapped (L166-L241)"
+          ],
+          "readers": [
+            "src/CsBotManager/BotLocomotionDriver.cs:UpdateTick (L719-L875)"
+          ]
+        }
+      ]
+    },
+    {
+      "domain_id": "FLOW_05_RECOVERY",
+      "flow_name": "Recovery (deteccao -> classificacao -> stages -> resultado fisico)",
+      "authoritative_states": [
+        {
+          "state_name": "LocomotionStuckAndRecoveryState",
+          "nature": "REAL",
+          "owner_files": [
+            "src/CsBotManager/BotLocomotionDriver.cs",
+            "src/CsBotManager/MicroMoveEngine.cs",
+            "src/CsBotManager/MovementExecutionTracker.cs",
+            "src/CsBotManager/RecoveryAttempt.cs"
+          ],
+          "authoritative_symbols": [
+            "BotLocomotionDriver._botStates (ConcurrentDictionary<int, TrackedBotNavState>, L103: StuckCount, LastCheckX/Y, LastCheckDistToTarget2D, LastCheckTime, UnstuckCooldownUntil)",
+            "BotLocomotionDriver._waypointBlacklistUntil (ConcurrentDictionary<(int Slot, string SpotId), float>, L104)",
+            "BotLocomotionDriver._activeRecoveryBySlot (ConcurrentDictionary<int, RecoveryAttempt>, L92)",
+            "BotLocomotionDriver._allRecoveryAttempts (ConcurrentBag<RecoveryAttempt>, L94)",
+            "MovementExecutionTracker._activeSampleBySlot (ConcurrentDictionary<int, MovementExecutionSample>, L279)"
+          ],
+          "writers": [
+            "src/CsBotManager/BotLocomotionDriver.cs:EvaluateStuck2DWindow (L170-L243)",
+            "src/CsBotManager/BotLocomotionDriver.cs:BlacklistWaypoint (L256-L263)",
+            "src/CsBotManager/BotLocomotionDriver.cs:RequestRecovery (L319-L337)",
+            "src/CsBotManager/BotLocomotionDriver.cs:UpdateTick (L895-L1004)",
+            "src/CsBotManager/MovementExecutionTracker.cs:UpdateTick (L888-L1022)",
+            "src/CsBotManager/MovementExecutionTracker.cs:CompleteSample (L1024-L1117)"
+          ],
+          "readers": [
+            "src/CsBotManager/MicroMoveEngine.cs:ClassifyStandstillState (L242-L261)",
+            "src/CsBotManager/BotLocomotionDriver.cs:ShouldMonitorForStuck (L279-L293)",
+            "src/CsBotManager/BotLocomotionDriver.cs:FindAlternativeWaypointForRecovery (L295-L317)",
+            "src/CsBotManager/TrackerMetricsAggregator.cs:GenerateAggregatedReport (L257-L905)"
+          ],
+          "side_effects": [
+            "BotLocomotionDriver.UpdateTick (L939-L1000): faz BlacklistWaypoint do spot travado, substitui por FallbackSpotId ou GetSpotsForTeam, chama SpotTelemetryTracker.OnSpotRecovery (L972) e publica MovementIntent (Source=Unstuck, Kind=UsercmdVector, ForwardMove=140f, SideMove=+/-220f, Buttons=IN_JUMP | IN_FORWARD, ForceRepath=true)"
+          ],
+          "mutation_risks": [
+            "CRITICO: BotLocomotionDriver.RequestRecovery (L319-L337) e FindAlternativeWaypointForRecovery (L295-L317) nunca sao invocados dentro de BotLocomotionDriver.UpdateTick (L895-L1004); UpdateTick executa sua propria substituicao inline de spot e injeta IN_JUMP | IN_FORWARD em todos os estagios de Stuck 2D sem alimentar _activeRecoveryBySlot / _allRecoveryAttempts"
+          ]
+        }
+      ]
+    },
+    {
+      "domain_id": "FLOW_06_ECONOMY",
+      "flow_name": "Economy (plano economico -> comando -> inventario confirmado)",
+      "authoritative_states": [
+        {
+          "state_name": "TeamEconomyPreAndPostBuySnapshots",
+          "nature": "REAL",
+          "owner_files": [
+            "src/CsBotManager/EconomyManager.cs",
+            "src/CsBotManager/Models.cs"
+          ],
+          "authoritative_symbols": [
+            "EconomyManager._ctSnapshot (TeamEconomySnapshot, L56: PurchaseIntent, FinalBuyState, CompletionState)",
+            "EconomyManager._trSnapshot (TeamEconomySnapshot, L57: PurchaseIntent, FinalBuyState, CompletionState)",
+            "EconomyManager.CurrentBuyState (BuyState property, L62-L64)"
+          ],
+          "writers": [
+            "src/CsBotManager/EconomyManager.cs:SanitizeNativePurchasesAndRefund (L291-L322)",
+            "src/CsBotManager/EconomyManager.cs:CapturePreBuySnapshot (L331-L407)",
+            "src/CsBotManager/EconomyManager.cs:ExecuteDeterministicBuys (L796-L1002)",
+            "src/CsBotManager/EconomyManager.cs:DeliverArmor (L1004-L1023)",
+            "src/CsBotManager/EconomyManager.cs:DeliverDefuser (L1025-L1042)",
+            "src/CsBotManager/EconomyManager.cs:DeliverItem (L1044-L1082)",
+            "src/CsBotManager/EconomyManager.cs:EnforceC4Discipline (L1158-L1207)",
+            "src/CsBotManager/EconomyManager.cs:ConsolidatePostBuySnapshot (L409-L460)"
+          ],
+          "readers": [
+            "src/CsBotManager/EconomyManager.cs:InspectPlayerInventory (L477-L551)",
+            "src/CsBotManager/EconomyManager.cs:GetTeamSnapshot (L69-L72)",
+            "src/CsBotManager/EconomyManager.cs:GetTeamBuyState (L74-L80)",
+            "src/CsBotManager/CsBotManagerPlugin.cs:OnRoundStart (L378-L672)",
+            "src/CsBotManager/TacticalUtilityIglEngine.cs:DecideRoundPlans (L148-L192)"
+          ],
+          "side_effects": [
+            "bot.GiveNamedItem(weaponName) em DeliverArmor (L1014), DeliverDefuser (L1035), DeliverItem (L1059) e EnforceC4Discipline (L1195)",
+            "RemovePrimaryWeapons(bot) (L1235-L1253) e EquipBestWeapon(bot) (L1209-L1233)",
+            "Utilities.SetStateChanged(bot, \"CCSPlayerController\", \"m_pInGameMoneyServices\")"
+          ],
+          "mutation_risks": [
+            "CRITICO 1: EconomyManager.CurrentBuyState (L62-L64) retorna sempre _ctSnapshot, ignorando o time TR",
+            "CRITICO 2: CsBotManagerPlugin.OnRoundStart (L621-L630) passa _economyManager.CurrentBuyState para teamBots (mesmo quando humanTeam e TR) e na L630 passa _currentPlan (plano do time do humano) para enemyBots"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "schema": "csbot.test_impact_matrix.v1",
+  "governance_version": "1.2.0-lean",
+  "description": "Matriz de impacto e selecao inteligente de testes por blast radius (Smart Testing), proibindo testes redundantes e fora do escopo.",
+  "tiers": {
+    "documentation_and_reports": {
+      "path_patterns": [
+        "*.md",
+        "docs/**",
+        "reports/**",
+        "training_runs/**/source_feasibility_report.md",
+        "training_runs/**/*_report.md"
+      ],
+      "required_checks": [
+        "file_exists_and_non_empty",
+        "valid_markdown_or_json_syntax",
+        "relative_paths_only",
+        "zero_secrets",
+        "valid_sha256_if_declared"
+      ],
+      "forbidden_tests": [
+        "dotnet test",
+        "dotnet build",
+        "pytest full suite",
+        "redteam full suite"
+      ],
+      "risk_tier": "Tier 1"
+    },
+    "static_json_manifest_and_contracts": {
+      "path_patterns": [
+        "*.json",
+        "datasets/**/manifests/*.json",
+        ".agents/contracts/*.json"
+      ],
+      "required_checks": [
+        "json_syntax_validation",
+        "json_schema_validation",
+        "reference_path_validation",
+        "zero_secrets"
+      ],
+      "forbidden_tests": [
+        "dotnet test",
+        "dotnet build",
+        "runtime tests"
+      ],
+      "risk_tier": "Tier 1"
+    },
+    "isolated_python_tool": {
+      "path_patterns": [
+        "tools/**/*.py",
+        ".agents/hooks/*.py"
+      ],
+      "required_checks": [
+        "python_py_compile",
+        "targeted_unit_test"
+      ],
+      "forbidden_tests": [
+        "dotnet test",
+        "pytest full suite"
+      ],
+      "risk_tier": "Tier 2"
+    },
+    "dataset_dataloader_and_labels": {
+      "path_patterns": [
+        "src/dataloader/**/*.py",
+        "datasets/**/*.parquet",
+        "datasets/**/*.npz"
+      ],
+      "required_checks": [
+        "dataloader_unit_tests",
+        "leakage_test",
+        "label_support_check",
+        "provenance_check"
+      ],
+      "forbidden_tests": [
+        "dotnet test"
+      ],
+      "risk_tier": "Tier 3"
+    },
+    "localized_csharp": {
+      "path_patterns": [
+        "src/CsBotManager/**/*.cs"
+      ],
+      "required_checks": [
+        "dotnet build specific_project",
+        "dotnet test --filter Category=AffectedTest"
+      ],
+      "forbidden_tests": [
+        "full python redteam"
+      ],
+      "risk_tier": "Tier 3"
+    },
+    "shared_cross_language_contract": {
+      "path_patterns": [
+        "src/CsBotManager/MapProfiles/*.json",
+        "shared_contracts/*.json"
+      ],
+      "required_checks": [
+        "python_consumer_tests",
+        "dotnet build CsBotManager",
+        "dotnet test filtered_consumers",
+        "full_suite_only_at_phase_gate"
+      ],
+      "risk_tier": "Tier 3"
+    },
+    "onnx_checkpoint_and_runtime": {
+      "path_patterns": [
+        "models/*.pt",
+        "models/*.onnx",
+        "checkpoints/**"
+      ],
+      "required_checks": [
+        "parity_test",
+        "shape_and_dtype_verification",
+        "inference_latency_benchmark",
+        "full_csharp_suite_at_phase_gate"
+      ],
+      "risk_tier": "Tier 4"
+    }
+  }
+}

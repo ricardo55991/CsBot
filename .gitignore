@@ -39,6 +39,10 @@ graphify-out/
 .graphify*
 needs_update
 
+# --- Cleanup & Quarentena Local ---
+.cleanup/quarantine/
+.cleanup/quarantine/**
+
 # --- Python (__pycache__, Ambientes Virtuais & Cache) ---
 __pycache__/
 *.py[cod]
@@ -79,3 +83,25 @@ AUDITORIA_*.txt
 
 # Scratch / Arquivos Temporários de Trabalho do Agente
 scratch/
+
+
+# --- Artefatos Pesados de Execução, Telemetria, Datasets e Treinamento ---
+*.jsonl
+*.parquet
+*.npz
+*.onnx
+*.onnx.data
+*.pt
+*.pth
+*.trx
+training_runs/
+datasets/
+models/
+artifacts/
+phase_gate_out/
+.cleanup/
+src/CsBotManager/MapProfiles/backups/
+export_*_bundle.txt
+temp_user_prompt.txt
+ArquivosSolicitados.txt
+phase_2_1_prompt*.txt

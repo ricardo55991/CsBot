@@ -1,0 +1,117 @@
+{
+  "config_version": "1.0.0",
+  "description": "Configuração de exemplo do downloader seguro de demos do domínio intermediário (FASE 2A-INTERMEDIATE). NÃO contém segredos: todos os campos sensíveis são placeholders vazios e devem ser fornecidos por variável de ambiente ou secret store local.",
+  "mode_default": "DRY_RUN",
+  "dry_run_is_default": true,
+  "execute_requires_explicit_flag": "--execute",
+  "secret_source": "ENV",
+  "secret_env_vars": {
+    "faceit_data_api_key": "CSBOT_FACEIT_DATA_API_KEY",
+    "faceit_downloads_api_key": "CSBOT_FACEIT_DOWNLOADS_API_KEY",
+    "steam_api_key": "CSBOT_STEAM_API_KEY",
+    "corpus_pseudonym_salt": "CSBOT_CORPUS_PSEUDONYM_SALT"
+  },
+  "credentials": {
+    "faceit_data_api_key": "",
+    "faceit_downloads_api_key": "",
+    "steam_api_key": ""
+  },
+  "credentials_note": "Campos acima DEVEM permanecer vazios neste arquivo versionado. O código lê os valores exclusivamente de os.environ[secret_env_vars[*]].",
+  "require_secret_when_executing": true,
+  "network": {
+    "allowed_domains": [
+      "open.faceit.com",
+      "api.faceit.com",
+      "download.faceit.com",
+      "api.steampowered.com"
+    ],
+    "allow_subdomains": true,
+    "require_https": true,
+    "reject_ip_literals": true,
+    "reject_userinfo_in_url": true,
+    "request_timeout_seconds": 30,
+    "user_agent": "CsBot-IntermediateAcquisition/1.0 (research; non-commercial)"
+  },
+  "rate_limit": {
+    "requests_per_second": 1.0,
+    "burst": 3
+  },
+  "retry": {
+    "retry_limit": 4,
+    "backoff_initial_seconds": 2.0,
+    "backoff_factor": 2.0,
+    "backoff_max_seconds": 60.0
+  },
+  "download": {
+    "chunk_size_bytes": 262144,
+    "max_download_bytes": 104857600,
+    "resumable": true,
+    "range_header_enabled": true,
+    "verify_sha256": true,
+    "partial_suffix": ".part",
+    "state_suffix": ".state.json"
+  },
+  "archive": {
+    "allowed_formats": ["zip", "tar", "gz", "bz2"],
+    "max_entries": 5000,
+    "max_uncompressed_bytes": 2097152000,
+    "max_compression_ratio": 200,
+    "block_absolute_paths": true,
+    "block_parent_traversal": true,
+    "block_symlinks": true,
+    "block_device_files": true
+  },
+  "paths": {
+    "root": "datasets/mirage_domains/intermediate_competitive",
+    "raw_demos": "datasets/mirage_domains/intermediate_competitive/raw_demos",
+    "archives": "datasets/mirage_domains/intermediate_competitive/archives",
+    "metadata": "datasets/mirage_domains/intermediate_competitive/metadata",
+    "manifests": "datasets/mirage_domains/intermediate_competitive/manifests",
+    "quarantine": "datasets/mirage_domains/intermediate_competitive/quarantine",
+    "processed_npz": "datasets/mirage_domains/intermediate_competitive/processed_npz",
+    "reports": "datasets/mirage_domains/intermediate_competitive/reports"
+  },
+  "domain_contract_path": "datasets/mirage_domains/domain_contract_v1.json",
+  "map_name": "de_mirage",
+  "demo_acceptance": {
+    "minimum_rounds": 16,
+    "overtime_exempt": true,
+    "expected_player_slots": 10,
+    "require_finite_coordinates": true
+  },
+  "skill_buckets": {
+    "included_pilot": ["FACEIT_LEVEL_5_6", "FACEIT_LEVEL_7_8", "VALVE_COMPETITIVE_MAP_RANK"],
+    "excluded_pilot": ["FACEIT_LEVEL_1_4", "FACEIT_LEVEL_9_10", "VALVE_OPT_IN_UNKNOWN_RANK", "PROFESSIONAL_HLTV"],
+    "pending_distribution_audit": ["VALVE_PREMIER_RATING"]
+  },
+  "signed_url_persistence_allowed": false,
+  "signed_url_persistence_note": "PROIBIDO. Qualquer config com valor true é rejeitada na carga (exit code 1). URLs assinadas nunca são persistidas em config, metadata, manifest, log ou relatório; apenas o identificador estável da fonte é registrado.",
+  "audit_log": {
+    "enabled": true,
+    "path": "",
+    "append_only": true,
+    "redact_credentials": true,
+    "path_note": "Vazio significa stdout (nenhum arquivo criado em modo dry-run)."
+  },
+  "quarantine_on_failure": true,
+  "canonical_pipeline": {
+    "dem_to_npz_extractor": "tools/mlmove_pipeline/extract_16hz_tensors.py",
+    "feature_contract": "tools/mlmove_pipeline/contract_spec.py",
+    "temporal_dataloader": "tools/phase3a_training/canonical_temporal_dataloader.py",
+    "index_materializer": "tools/phase3a_training/materialize_full_temporal_index.py",
+    "expected_npz_keys": ["X", "Y"],
+    "expected_npz_shape": "[total_frames, 10, 18] float32 para X",
+    "sample_rate_hz": 16,
+    "reuse_policy": "REFERENCE_AND_INVOKE_ONLY_DO_NOT_MODIFY"
+  },
+  "prohibitions": {
+    "no_real_download_in_this_phase": true,
+    "no_training": true,
+    "no_test_split_access": true,
+    "no_final_holdout_access": true,
+    "no_onnx_export": true,
+    "no_csharp_integration": true,
+    "no_auth_bypass": true,
+    "no_tos_or_rate_limit_evasion": true
+  }
+}

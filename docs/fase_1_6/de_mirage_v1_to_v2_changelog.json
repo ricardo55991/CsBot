@@ -1,0 +1,372 @@
+{
+  "map": "de_mirage",
+  "old_version": 1,
+  "new_version": 2,
+  "sha256_v1": "f105573d0a62a9f0b140c01ad6a5b24b7ae40a03c2ec6c2feb9d787b9a6e0fff",
+  "sha256_v2": "26962295848882fffec48767019efd00847816d0797f14ccfcdb643032d7dbc1",
+  "total_spots": 45,
+  "updated_spots_count": 20,
+  "kept_spots_count": 25,
+  "updates": [
+    {
+      "SpotId": "ct_a_ticket_passive",
+      "Name": "Ticket / Cabine CT",
+      "OldPosition": [
+        -1011.5,
+        -2479.9,
+        -168.0
+      ],
+      "NewPosition": [
+        -1011.5,
+        -2479.9,
+        -168.0
+      ],
+      "VisualLandmark": "Atras da cabine/caixa do Ticket CT olhando para Rampa A",
+      "CurrentValvePlace": "Shop",
+      "ProposedValvePlace": "CTSpawn",
+      "DecisionReason": "Coordenada legada estava erroneamente no Mercado/Shop do Bomb B. Proposta posiciona o CT no Ticket A real com 336 demos profissionais e linha de visao limpa para Rampa A."
+    },
+    {
+      "SpotId": "ct_a_firebox_oneanddone",
+      "Name": "Firebox (One & Done)",
+      "OldPosition": [
+        -284.2,
+        -2399.9,
+        -164.0
+      ],
+      "NewPosition": [
+        -284.2,
+        -2399.9,
+        -164.0
+      ],
+      "VisualLandmark": "Canto fechado da Firebox no Bomb A marcando Palacio",
+      "CurrentValvePlace": "Ladder",
+      "ProposedValvePlace": "BombsiteA",
+      "DecisionReason": "Coordenada legada estava dentro da Ladder Room no Meio. Proposta coloca o bot no canto One & Done da Firebox no Bomb A (128 demos)."
+    },
+    {
+      "SpotId": "ct_a_ninja_hide",
+      "Name": "Ninja / Atrás da Tripla",
+      "OldPosition": [
+        -439.8,
+        -2337.7,
+        -168.0
+      ],
+      "NewPosition": [
+        -439.8,
+        -2337.7,
+        -168.0
+      ],
+      "VisualLandmark": "Recanto escondido do Ninja atras da caixa Tripla no Bomb A",
+      "CurrentValvePlace": "SnipersNest",
+      "ProposedValvePlace": "BombsiteA",
+      "DecisionReason": "Coordenada legada estava na Janela/SnipersNest do Meio. Proposta posiciona o bot no spot Ninja real do Bomb A (145 demos)."
+    },
+    {
+      "SpotId": "ct_a_triple_jiggle",
+      "Name": "Caixa Tripla (Jiggle)",
+      "OldPosition": [
+        -710.8,
+        -2129.6,
+        -180.0
+      ],
+      "NewPosition": [
+        -710.8,
+        -2129.6,
+        -180.0
+      ],
+      "VisualLandmark": "Borda da Caixa Tripla no Bomb A com jiggle para Rampa/Conector",
+      "CurrentValvePlace": "SnipersNest",
+      "ProposedValvePlace": "BombsiteA",
+      "DecisionReason": "Coordenada legada estava dentro da Janela do Meio. Proposta coloca o bot na Caixa Tripla real do Bomb A (268 demos profissionais)."
+    },
+    {
+      "SpotId": "ct_a_stairs_cross",
+      "Name": "Degraus / Cabecinha",
+      "OldPosition": [
+        -497.8,
+        -1309.0,
+        -160.0
+      ],
+      "NewPosition": [
+        -497.8,
+        -1309.0,
+        -160.0
+      ],
+      "VisualLandmark": "Base dos degraus da Cabecinha (Stairs) no Bomb A",
+      "CurrentValvePlace": "SnipersNest",
+      "ProposedValvePlace": "Stairs",
+      "DecisionReason": "Coordenada legada estava dentro da Janela do Meio. Proposta coloca o bot na base de Stairs no Bomb A marcando Rampa/Palacio (298 demos)."
+    },
+    {
+      "SpotId": "ct_a_jungle_support",
+      "Name": "Ligação / Jungle",
+      "OldPosition": [
+        -992.1,
+        -1304.9,
+        -155.6
+      ],
+      "NewPosition": [
+        -992.1,
+        -1304.9,
+        -155.6
+      ],
+      "VisualLandmark": "Interior da Jungle do Bomb A com visao cruzada para Rampa e Palacio",
+      "CurrentValvePlace": "SnipersNest",
+      "ProposedValvePlace": "Jungle",
+      "DecisionReason": "Coordenada legada estava no fundo do SnipersNest. Proposta coloca o bot na posicao de suporte da Jungle no Bomb A (158 demos)."
+    },
+    {
+      "SpotId": "ct_a_palace_close_poke",
+      "Name": "Debaixo do Palácio",
+      "OldPosition": [
+        151.9,
+        -1914.1,
+        -168.0
+      ],
+      "NewPosition": [
+        151.9,
+        -1914.1,
+        -168.0
+      ],
+      "VisualLandmark": "Piso terreo debaixo da varanda do Palacio (Under-Palace) no Bomb A",
+      "CurrentValvePlace": "Catwalk",
+      "ProposedValvePlace": "BombsiteA",
+      "DecisionReason": "Coordenada legada estava no Catwalk do Meio. Proposta coloca o CT no solo debaixo do Palacio (Under-Palace Z=-168) no Bomb A (241 demos)."
+    },
+    {
+      "SpotId": "ct_mid_window_crouch",
+      "Name": "Janela Meio (Agachado)",
+      "OldPosition": [
+        -1139.4,
+        -462.3,
+        -168.0
+      ],
+      "NewPosition": [
+        -1139.4,
+        -462.3,
+        -168.0
+      ],
+      "VisualLandmark": "Parapeito frontal da Janela do Meio (SnipersNest) agachado",
+      "CurrentValvePlace": "Ladder",
+      "ProposedValvePlace": "SnipersNest",
+      "DecisionReason": "Coordenada legada estava recuada na parede da Ladder Room. Proposta coloca o bot no batente utilizavel da Janela mirando Top Mid (256 demos)."
+    },
+    {
+      "SpotId": "ct_mid_window_deep_awp",
+      "Name": "Janela Fundo (AWP)",
+      "OldPosition": [
+        -1175.8,
+        -732.5,
+        -168.0
+      ],
+      "NewPosition": [
+        -1175.8,
+        -732.5,
+        -168.0
+      ],
+      "VisualLandmark": "Recuo seguro no fundo da Janela do Meio com AWP",
+      "CurrentValvePlace": "Shop",
+      "ProposedValvePlace": "SnipersNest",
+      "DecisionReason": "Coordenada legada estava fora da Janela (setor Shop). Proposta posiciona o AWPer no fundo seguro do SnipersNest (70 demos especializadas de AWP)."
+    },
+    {
+      "SpotId": "ct_mid_connector_headshot",
+      "Name": "Conector Degrau (Headshot)",
+      "OldPosition": [
+        -520.0,
+        -984.0,
+        -168.0
+      ],
+      "NewPosition": [
+        -520.0,
+        -984.0,
+        -168.0
+      ],
+      "VisualLandmark": "Primeiro degrau com cobertura de headshot dentro do Conector",
+      "CurrentValvePlace": "Middle",
+      "ProposedValvePlace": "Connector",
+      "DecisionReason": "Coordenada legada estava no Meio aberto sem protecao de cover. Proposta coloca o bot abrigado no degrau do Conector mirando Meio (299 demos)."
+    },
+    {
+      "SpotId": "ct_mid_short_catwalk",
+      "Name": "Short / Catwalk",
+      "OldPosition": [
+        -906.4,
+        78.5,
+        -166.0
+      ],
+      "NewPosition": [
+        -906.4,
+        78.5,
+        -166.0
+      ],
+      "VisualLandmark": "Passarela do Catwalk / Short cobrindo Meio e saida do Rato",
+      "CurrentValvePlace": "Connector",
+      "ProposedValvePlace": "Catwalk",
+      "DecisionReason": "Coordenada legada estava erroneamente no Conector. Proposta posiciona o bot no Catwalk do Meio marcando Rato/Top Mid (214 demos)."
+    },
+    {
+      "SpotId": "ct_mid_underpass_peek",
+      "Name": "Beco / Saída do Rato",
+      "OldPosition": [
+        -737.1,
+        -21.0,
+        -144.0
+      ],
+      "NewPosition": [
+        -737.1,
+        -21.0,
+        -144.0
+      ],
+      "VisualLandmark": "Saida da rampa do Underpass / Beco do Rato em direcao ao Meio",
+      "CurrentValvePlace": "Connector",
+      "ProposedValvePlace": "Underpass",
+      "DecisionReason": "Coordenada legada estava no Conector Z=-220. Proposta utiliza o Medoid do Cluster 153 no topo do Underpass saindo para o Meio (257 demos)."
+    },
+    {
+      "SpotId": "ct_b_van_peek",
+      "Name": "Van B (Jiggle Peek)",
+      "OldPosition": [
+        -2191.6,
+        712.6,
+        -101.8
+      ],
+      "NewPosition": [
+        -2191.6,
+        712.6,
+        -101.8
+      ],
+      "VisualLandmark": "Em cima / quina da Van no Bomb B vigiando Tapete",
+      "CurrentValvePlace": "BombsiteB",
+      "ProposedValvePlace": "Truck",
+      "DecisionReason": "Coordenada legada estava a 906u da Van no meio do Bomb B. Proposta posiciona o bot exatamente na Van B (302 demos profissionais)."
+    },
+    {
+      "SpotId": "ct_b_market_window",
+      "Name": "Janela do Mercado B",
+      "OldPosition": [
+        -2017.4,
+        -599.8,
+        -168.0
+      ],
+      "NewPosition": [
+        -1912.8,
+        5.1,
+        -168.0
+      ],
+      "VisualLandmark": "Quina defensiva da Janela do Mercado no Bomb B segurando avanco vindo do Mercado (Cluster 32 medoid, Y=+5.1 preserva invariante Y>0 de B)",
+      "CurrentValvePlace": "BombsiteB",
+      "ProposedValvePlace": "BombsiteB",
+      "DecisionReason": "Coordenada legada estava em Z=-130 flutuando no meio do bomb. Proposta posiciona o CT no Medoid profissional real do Cluster 32 (177 demos, 99.2% CT, Z=-168) marcando a Janela do Mercado de dentro do Bomb B, preservando a invariante arquitetural Y>0 do Bomb B."
+    },
+    {
+      "SpotId": "ct_spawn_safe",
+      "Name": "Recuo Seguro Base CT",
+      "OldPosition": [
+        -1279.6,
+        -967.9,
+        -168.0
+      ],
+      "NewPosition": [
+        -1279.6,
+        -967.9,
+        -168.0
+      ],
+      "VisualLandmark": "Recuo defensivo no interior da Base CT (CT Spawn)",
+      "CurrentValvePlace": "Shop",
+      "ProposedValvePlace": "CTSpawn",
+      "DecisionReason": "Coordenada legada estava no Mercado B. Proposta posiciona o bot no CT Spawn real seguro para save/fallback (279 demos)."
+    },
+    {
+      "SpotId": "tr_staging_a_ramp",
+      "Name": "Staging: Rampa A / Caverna",
+      "OldPosition": [
+        321.1,
+        -1708.1,
+        -176.0
+      ],
+      "NewPosition": [
+        321.1,
+        -1708.1,
+        -176.0
+      ],
+      "VisualLandmark": "Entrada da Rampa A / Caverna TR preparando ataque",
+      "CurrentValvePlace": "Catwalk",
+      "ProposedValvePlace": "TRamp",
+      "DecisionReason": "Coordenada legada estava no Catwalk do Meio. Proposta posiciona o TR no Staging da Rampa A real (300 demos profissionais)."
+    },
+    {
+      "SpotId": "tr_staging_palace_room",
+      "Name": "Staging: Sala do Palácio",
+      "OldPosition": [
+        288.1,
+        -2373.4,
+        -40.0
+      ],
+      "NewPosition": [
+        288.1,
+        -2373.4,
+        -40.0
+      ],
+      "VisualLandmark": "Sala interna do Palacio (Palace Interior Z=-40) preparando rush/exec",
+      "CurrentValvePlace": "Catwalk",
+      "ProposedValvePlace": "PalaceInterior",
+      "DecisionReason": "Coordenada legada estava no Catwalk do Meio. Proposta coloca o TR dentro da sala do Palacio (306 demos)."
+    },
+    {
+      "SpotId": "tr_staging_underpass_top",
+      "Name": "Staging: Entrada do Rato",
+      "OldPosition": [
+        -1038.9,
+        -728.5,
+        -264.0
+      ],
+      "NewPosition": [
+        -1038.9,
+        -728.5,
+        -264.0
+      ],
+      "VisualLandmark": "Entrada rebaixada do Underpass / Rato pelo lado TR (Z=-264)",
+      "CurrentValvePlace": "TopofMid",
+      "ProposedValvePlace": "Middle",
+      "DecisionReason": "Coordenada legada estava no Top Mid aberto. Proposta posiciona o TR na entrada abrigada do Rato/Underpass (312 demos)."
+    },
+    {
+      "SpotId": "ct_retake_a_connector",
+      "Name": "Retake A: Conector",
+      "OldPosition": [
+        -802.4,
+        -1221.3,
+        -168.0
+      ],
+      "NewPosition": [
+        -802.4,
+        -1221.3,
+        -168.0
+      ],
+      "VisualLandmark": "Entrada do Conector vindo do Meio para Retake do Bomb A",
+      "CurrentValvePlace": "BombsiteA",
+      "ProposedValvePlace": "Connector",
+      "DecisionReason": "Coordenada legada estava na base de Stairs dentro do Bomb A (WRONG_HEIGHT/setor errado para staging de retake). Proposta coloca o CT no Conector para iniciar o retake (28 demos)."
+    },
+    {
+      "SpotId": "ct_retake_a_jungle",
+      "Name": "Retake A: Selva",
+      "OldPosition": [
+        -1016.2,
+        -1527.6,
+        -163.8
+      ],
+      "NewPosition": [
+        -1016.2,
+        -1527.6,
+        -163.8
+      ],
+      "VisualLandmark": "Corredor da Jungle preparando entrada de retake no Bomb A",
+      "CurrentValvePlace": "Catwalk",
+      "ProposedValvePlace": "Jungle",
+      "DecisionReason": "Coordenada legada estava no Catwalk do Meio. Proposta posiciona o CT no corredor da Jungle para o retake do A (47 demos)."
+    }
+  ]
+}

@@ -1,0 +1,2917 @@
+[
+  {
+    "num": 1,
+    "id": "b_short_pillar_hold_apps",
+    "name": "Pilar do L (Arco) - Marcação Tapete",
+    "side": "AMBOS",
+    "sector": "Bombsite B",
+    "group": "Bomb B - Marcação & Plant",
+    "coords": [
+      -1463.8,
+      179.5,
+      -167.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Pilar maciço de concreto do L/Catwalk.",
+    "primary_aim": {
+      "name": "Saída do Tapete B / Janela",
+      "target": "Tapete B Janela",
+      "yaw": 123.7,
+      "pitch": -10.4,
+      "desc": "Visão cravada na boca da janela do Tapete para abater quem tentar saltar para a Van."
+    },
+    "secondary_aims": [
+      {
+        "name": "Cima da Van / Salto",
+        "target": "Topo da Van",
+        "yaw": 95.0,
+        "pitch": -2.0,
+        "desc": "Compensação de mira para quem pula direto na van."
+      },
+      {
+        "name": "Avanço Arcos / Meio",
+        "target": "Arcos Catwalk",
+        "yaw": -35.0,
+        "pitch": 0.0,
+        "desc": "Giro de segurança contra rush inimigo pelo Catwalk/Meio."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Banco / Forest (#03)",
+      "target": "Cruzamento Drop da Janela do Tapete",
+      "yaw": 115.0,
+      "desc": "Double-peek com o Banco: o TR que pula da janela toma fogo cruzado sem ter cover."
+    },
+    "fallback_route": {
+      "destination": "Recuo para Catwalk Meio / Arcos",
+      "target_coords": [
+        -1350.0,
+        100.0
+      ],
+      "desc": "Se tomar rush massivo ou flashbang, recua 3 passos para trás da quina do pilar em direção ao Meio."
+    },
+    "danger": "Flashes pop do Tapete e molotov no pilar.",
+    "objective": "Travar o avanço TR pelos apartamentos B protegendo o L e Van."
+  },
+  {
+    "num": 2,
+    "id": "b_short_pillar_bomb_control",
+    "name": "Pilar do L (Arco) - Controle de Inimigos no Bomb",
+    "side": "AMBOS",
+    "sector": "Bombsite B",
+    "group": "Bomb B - Marcação & Plant",
+    "coords": [
+      -1393.0,
+      248.6,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Pilar do L e desnível do chão de pedras.",
+    "primary_aim": {
+      "name": "Bomb Site B / Defuse Default",
+      "target": "Default Plant B",
+      "yaw": 174.5,
+      "pitch": -0.2,
+      "desc": "Marcação direta da área de plant e defuse atrás da caixa central."
+    },
+    "secondary_aims": [
+      {
+        "name": "Porta do Mercado",
+        "target": "Mercado Porta",
+        "yaw": -120.0,
+        "pitch": 0.0,
+        "desc": "Controle de rotação CT vindo da cozinha/mercado."
+      },
+      {
+        "name": "Saída Tapete B",
+        "target": "Boca do Tapete",
+        "yaw": 115.0,
+        "pitch": -8.0,
+        "desc": "Verificação de avanço tardio de lurkers no tapete."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Forest TR (#16)",
+      "target": "Cravada na Caixa Central do Bomb",
+      "yaw": 170.0,
+      "desc": "Crossfire na caixa do default: impede defuse ou plant com cobertura dos dois lados."
+    },
+    "fallback_route": {
+      "destination": "Recuo para Conector Meio",
+      "target_coords": [
+        -1200.0,
+        180.0
+      ],
+      "desc": "Recuo protegido para trás do arco em direção ao conector/top mid."
+    },
+    "danger": "HE na quina do pilar e granadas incendiárias do mercado.",
+    "objective": "Controle pós-plant da C4 ou punição de defuse no bomb B."
+  },
+  {
+    "num": 3,
+    "id": "b_forest_bench_hold_apps",
+    "name": "Forest / Banco B - Marcação Boca do Tapete",
+    "side": "AMBOS",
+    "sector": "Bombsite B",
+    "group": "Bomb B - Marcação & Plant",
+    "coords": [
+      -2531.3,
+      274.1,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Paredão de pedra do Banco B e tijolos da lateral.",
+    "primary_aim": {
+      "name": "Saída e Janela do Tapete B",
+      "target": "Tapete B Janela",
+      "yaw": 37.0,
+      "pitch": -7.6,
+      "desc": "Ângulo clássico de sniper ou rifle pegando os TRs de lado logo na saída da janela."
+    },
+    "secondary_aims": [
+      {
+        "name": "Drop da Van",
+        "target": "Chão da Van",
+        "yaw": 15.0,
+        "pitch": -2.0,
+        "desc": "Foco no inimigo que aterrissa no piso do bomb após o pulo."
+      },
+      {
+        "name": "Entrada Mercado B",
+        "target": "Janela Mercado",
+        "yaw": -65.0,
+        "pitch": 0.0,
+        "desc": "Vigilância contra retake CT rápido pelo mercado."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Van (#06) ou Pilar L (#01)",
+      "target": "Saída da Janela dos Apartamentos",
+      "yaw": 37.0,
+      "desc": "Crossfire clássico: enquanto o inimigo olha pra Van, o Banco pega de lado limpo."
+    },
+    "fallback_route": {
+      "destination": "Recuo profundo Banco B",
+      "target_coords": [
+        -2620.0,
+        420.0
+      ],
+      "desc": "Descer a mira, agachar e colar na quina cega de pedra do Banco B."
+    },
+    "danger": "Molotov comum de tapete na floresta/banco.",
+    "objective": "Eliminar o primeiro homem do rush B e quebrar o ritmo da invasão."
+  },
+  {
+    "num": 4,
+    "id": "b_forest_bench_bomb_site",
+    "name": "Forest / Banco B - Controle de Bomb (Inimigos Caídos)",
+    "side": "AMBOS",
+    "sector": "Bombsite B",
+    "group": "Bomb B - Marcação & Plant",
+    "coords": [
+      -2501.4,
+      350.0,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Quina do muro do Banco e caçamba de madeira.",
+    "primary_aim": {
+      "name": "Default Plant B / Carro",
+      "target": "Default Plant B",
+      "yaw": -5.0,
+      "pitch": -0.2,
+      "desc": "Mira fechada no ponto de plant padrão punindo quem tenta ajoelhar na caixa."
+    },
+    "secondary_aims": [
+      {
+        "name": "Janela do Mercado B",
+        "target": "Mercado Janela",
+        "yaw": -45.0,
+        "pitch": 0.0,
+        "desc": "Vigilância contra CTs atirando da janela do mercado."
+      },
+      {
+        "name": "Passagem do L / Arcos",
+        "target": "Arco Catwalk",
+        "yaw": -25.0,
+        "pitch": 0.0,
+        "desc": "Checagem de rotação vinda do short/meio."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Saída Mercado (#11)",
+      "target": "Cruzamento Default Plant B",
+      "yaw": -5.0,
+      "desc": "Crossfire na C4: quem se aproxima do defuse fica preso entre Banco e Mercado."
+    },
+    "fallback_route": {
+      "destination": "Recuo para Canto Cego da Floresta",
+      "target_coords": [
+        -2650.0,
+        490.0
+      ],
+      "desc": "Agachar atrás do muro de tijolos da Floresta quebrando qualquer linha de tiro."
+    },
+    "danger": "Smokes de tapete bloqueando a visão da floresta.",
+    "objective": "Garantir eliminação de invasores que já caíram no chão do bomb site."
+  },
+  {
+    "num": 5,
+    "id": "b_van_behind_bomb_hold",
+    "name": "Atrás da Van - Marcação Bomb / Defuse Denial",
+    "side": "TR",
+    "sector": "Bombsite B",
+    "group": "Bomb B - Marcação & Plant",
+    "coords": [
+      -2239.6,
+      821.4,
+      -120.1
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Carcaça metálica da van e caixas traseiras.",
+    "primary_aim": {
+      "name": "Passarela do Tapete / Drop B",
+      "target": "Drop Tapete",
+      "yaw": -63.0,
+      "pitch": 1.4,
+      "desc": "Agachado atrás da lataria da van marcando quem desce da janela do tapete."
+    },
+    "secondary_aims": [
+      {
+        "name": "Janela do Tapete",
+        "target": "Tapete B Janela",
+        "yaw": -15.0,
+        "pitch": 5.0,
+        "desc": "Elevação de mira para contestar sniper no tapete."
+      },
+      {
+        "name": "Porta do Mercado",
+        "target": "Mercado Porta",
+        "yaw": -135.0,
+        "pitch": 0.0,
+        "desc": "Giro rápido para conter retake CT pela porta do mercado."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Banco B (#03)",
+      "target": "Área de Queda da Van",
+      "yaw": -63.0,
+      "desc": "Apoio mútuo: quem passa pela van é fatiado pelo jogador do banco."
+    },
+    "fallback_route": {
+      "destination": "Recuo para Canto do Carro / Fundos B",
+      "target_coords": [
+        -2320.0,
+        920.0
+      ],
+      "desc": "Agachar e recuar rente à roda da van em direção ao beco dos fundos."
+    },
+    "danger": "HEs rebatidas na parede do tapete que caem direto na traseira da van.",
+    "objective": "Segurar a van em off-angle protegendo o pós-plant."
+  },
+  {
+    "num": 6,
+    "id": "b_van_behind_apps_hold",
+    "name": "Em Cima da Van - Marcação Saída do Tapete",
+    "side": "CT",
+    "sector": "Bombsite B",
+    "group": "Bomb B - Marcação & Plant",
+    "coords": [
+      -1981.9,
+      702.6,
+      -48.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Teto da van e ângulo superior de headshot.",
+    "primary_aim": {
+      "name": "Boca da Janela do Tapete B",
+      "target": "Tapete B Janela",
+      "yaw": 0.5,
+      "pitch": 1.7,
+      "desc": "Mira milimétrica no nível da cabeça do primeiro TR que botar a cara na janela do tapete."
+    },
+    "secondary_aims": [
+      {
+        "name": "Passarela Apartamentos",
+        "target": "Passarela Tapete",
+        "yaw": 25.0,
+        "pitch": 0.0,
+        "desc": "Visão lateral pegando TRs vindo pela escada do tapete."
+      },
+      {
+        "name": "Piso do Bomb B",
+        "target": "Chão Bomb",
+        "yaw": -45.0,
+        "pitch": -10.0,
+        "desc": "Ajuste para eliminar quem conseguiu pular para o chão."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Pilar do L (#01) e Banco (#03)",
+      "target": "Boca da Janela dos Apartamentos",
+      "yaw": 0.5,
+      "desc": "Crossfire mortal triplo: Van segura a cabeça, Pilar do L e Banco pegam o salto."
+    },
+    "fallback_route": {
+      "destination": "Drop para trás da Van",
+      "target_coords": [
+        -2240.0,
+        820.0
+      ],
+      "desc": "Soltar o agachamento e cair imediatamente atrás da lataria da van em direção ao mercado."
+    },
+    "danger": "Prefire clássico de TR no capô/teto da van.",
+    "objective": "Garantir o first kill de CT no round na boca dos apartamentos."
+  },
+  {
+    "num": 7,
+    "id": "b_site_default_plant_box",
+    "name": "Caixa Central Default B (Plant Box)",
+    "side": "AMBOS",
+    "sector": "Bombsite B",
+    "group": "Bomb B - Marcação & Plant",
+    "coords": [
+      -1956.5,
+      311.6,
+      -160.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Caixa de madeira do plant default.",
+    "primary_aim": {
+      "name": "Janela do Tapete B",
+      "target": "Tapete B Janela",
+      "yaw": 92.2,
+      "pitch": -13.8,
+      "desc": "Mira em pé na quina da caixa de madeira cobrindo a janela do tapete."
+    },
+    "secondary_aims": [
+      {
+        "name": "Porta do Mercado",
+        "target": "Mercado Porta",
+        "yaw": -150.0,
+        "pitch": 0.0,
+        "desc": "Controle da saída da porta do mercado em retake."
+      },
+      {
+        "name": "Van / Passarela",
+        "target": "Cima da Van",
+        "yaw": 50.0,
+        "pitch": 0.0,
+        "desc": "Checagem de inimigos usando a van como cover."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Forest B (#04)",
+      "target": "Entorno da Caixa Default",
+      "yaw": 92.2,
+      "desc": "Crossfire com Forest para fechar o cerco a qualquer inimigo no site."
+    },
+    "fallback_route": {
+      "destination": "Recuo para trás da Caixa Default",
+      "target_coords": [
+        -2050.0,
+        340.0
+      ],
+      "desc": "Agachar atrás da madeira da caixa para iniciar o defuse com cover."
+    },
+    "danger": "Spam de balas pela madeira da caixa default.",
+    "objective": "Ancoragem central no bomb B ou posição de plant rápido de TR."
+  },
+  {
+    "num": 8,
+    "id": "ct_retake_b_kitchen_entry",
+    "name": "Entrada Mercado - Checagem Interior da Cozinha",
+    "side": "CT",
+    "sector": "Mercado B",
+    "group": "Retomada CT B (Retake B)",
+    "coords": [
+      -1579.2,
+      -722.6,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Portal de pedra da entrada do Mercado vindo do CT.",
+    "primary_aim": {
+      "name": "Canto da Porta do Mercado / Saída Bomb",
+      "target": "Porta Mercado Bomb",
+      "yaw": 160.0,
+      "pitch": 0.2,
+      "desc": "Fatiando a entrada do mercado procurando TRs escondidos na quina da porta."
+    },
+    "secondary_aims": [
+      {
+        "name": "Janela do Mercado",
+        "target": "Janela Mercado",
+        "yaw": 120.0,
+        "pitch": 0.0,
+        "desc": "Checagem do balcão e peitoril da janela."
+      },
+      {
+        "name": "Duto para Janela Meio",
+        "target": "Duto Mercado",
+        "yaw": -80.0,
+        "pitch": 0.0,
+        "desc": "Segurança contra lurkers vindos do duto."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Pilar do L (#02)",
+      "target": "Limpeza sincronizada do Mercado e Bomb B",
+      "yaw": 160.0,
+      "desc": "Avanço em pinça: CT entra pelo Mercado enquanto outro pressiona pelo L."
+    },
+    "fallback_route": {
+      "destination": "Recuo para Corredor CT Spawn",
+      "target_coords": [
+        -1650.0,
+        -950.0
+      ],
+      "desc": "Recuo em linha reta para a segurança das paredes da base CT."
+    },
+    "danger": "HE e molotov de TR lançados de dentro do mercado.",
+    "objective": "Iniciar a retomada do bomb B limpando as posições internas da cozinha."
+  },
+  {
+    "num": 9,
+    "id": "ct_retake_b_market_window_site",
+    "name": "Mercado Janela - Verificação do Bomb Site",
+    "side": "CT",
+    "sector": "Mercado B",
+    "group": "Retomada CT B (Retake B)",
+    "coords": [
+      -1776.2,
+      -622.2,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Bancada e parede de tijolos da janela do mercado.",
+    "primary_aim": {
+      "name": "Default Plant B / Trás da Van",
+      "target": "Default Plant B",
+      "yaw": 111.4,
+      "pitch": -0.4,
+      "desc": "Visão privilegiada do site através da janela quebrada do mercado."
+    },
+    "secondary_aims": [
+      {
+        "name": "Banco / Forest",
+        "target": "Banco B",
+        "yaw": 145.0,
+        "pitch": 0.0,
+        "desc": "Visada no canto da floresta para abater campistas."
+      },
+      {
+        "name": "Canto Edward",
+        "target": "Embaixo Tapete",
+        "yaw": 75.0,
+        "pitch": -5.0,
+        "desc": "Checagem do ponto cego embaixo do tapete."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Saída Porta Mercado (#11)",
+      "target": "Fogo Cruzado no Bomb Site B",
+      "yaw": 111.4,
+      "desc": "Janela dá suporte por cima enquanto o companheiro abre a porta por baixo."
+    },
+    "fallback_route": {
+      "destination": "Agachamento sob o peitoril da Janela",
+      "target_coords": [
+        -1750.0,
+        -700.0
+      ],
+      "desc": "Agachar imediatamente cortando a linha de visão do bomb."
+    },
+    "danger": "AWP inimigo cravado do tapete ou floresta na janela do mercado.",
+    "objective": "Fornecer first contact aéreo no bomb para cobrir quem abre a porta."
+  },
+  {
+    "num": 10,
+    "id": "ct_retake_b_market_window_tapete",
+    "name": "Mercado Janela - Anti-Sniper Janela do Tapete",
+    "side": "CT",
+    "sector": "Mercado B",
+    "group": "Retomada CT B (Retake B)",
+    "coords": [
+      -1964.0,
+      -496.1,
+      -168.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Quina esquerda da janela do mercado.",
+    "primary_aim": {
+      "name": "Janela e Passarela do Tapete B",
+      "target": "Tapete B Janela",
+      "yaw": 74.1,
+      "pitch": -5.5,
+      "desc": "Agachado na quina da janela cravando a mira na janela do tapete para duelar contra AWP TR."
+    },
+    "secondary_aims": [
+      {
+        "name": "Cima da Van",
+        "target": "Topo da Van",
+        "yaw": 50.0,
+        "pitch": 0.0,
+        "desc": "Checagem rápida de TR no teto do veículo."
+      },
+      {
+        "name": "Banco / Forest",
+        "target": "Banco B",
+        "yaw": 125.0,
+        "pitch": 0.0,
+        "desc": "Suporte contra sniper na floresta."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Saída Porta Mercado (#12)",
+      "target": "Neutralização do AWP no Tapete B",
+      "yaw": 74.1,
+      "desc": "Corta o suporte dos TRs que estiverem marcando do Tapete enquanto o time invade."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o interior do Mercado",
+      "target_coords": [
+        -1850.0,
+        -600.0
+      ],
+      "desc": "Agachar e recuar para trás da estante central do mercado."
+    },
+    "danger": "Prefire mortal de AWP da janela do tapete.",
+    "objective": "Neutralizar o sniper adversário que trava a saída da janela do mercado."
+  },
+  {
+    "num": 11,
+    "id": "ct_retake_b_door_exit_straight",
+    "name": "Saída Mercado - Abertura Reta (Default / Van)",
+    "side": "CT",
+    "sector": "Bombsite B",
+    "group": "Retomada CT B (Retake B)",
+    "coords": [
+      -2316.7,
+      -549.9,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Marco de concreto da porta do mercado.",
+    "primary_aim": {
+      "name": "Floresta / Banco B e Default",
+      "target": "Banco B",
+      "yaw": 86.8,
+      "pitch": -0.8,
+      "desc": "Abertura limpa pela porta mirando reto na quina do banco e default."
+    },
+    "secondary_aims": [
+      {
+        "name": "Cima da Van",
+        "target": "Topo da Van",
+        "yaw": 45.0,
+        "pitch": 0.0,
+        "desc": "Visada rápida no topo da van para surpreender lurker."
+      },
+      {
+        "name": "Canto Edward",
+        "target": "Embaixo Tapete",
+        "yaw": 65.0,
+        "pitch": -2.0,
+        "desc": "Checagem do canto direito da porta."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Janela do Mercado (#09)",
+      "target": "Cruzamento Default Plant e Floresta",
+      "yaw": 86.8,
+      "desc": "Double-peek sincronizado janela e porta do mercado."
+    },
+    "fallback_route": {
+      "destination": "Retorno para trás do batente da Porta",
+      "target_coords": [
+        -2280.0,
+        -450.0
+      ],
+      "desc": "Strafe rápido para a direita se protegendo atrás da parede do mercado."
+    },
+    "danger": "TR marcando a porta cravado do canto da floresta.",
+    "objective": "Abertura dinâmica para tomar o bomb site no retake CT."
+  },
+  {
+    "num": 12,
+    "id": "ct_retake_b_door_exit_close_left",
+    "name": "Saída Mercado - Limpeza Canto Esquerdo (Lixo / Forest)",
+    "side": "CT",
+    "sector": "Bombsite B",
+    "group": "Retomada CT B (Retake B)",
+    "coords": [
+      -2101.0,
+      -202.7,
+      -166.8
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Batente esquerdo da porta do mercado.",
+    "primary_aim": {
+      "name": "Canto do Banco / Forest Deep",
+      "target": "Forest Deep",
+      "yaw": 130.6,
+      "pitch": 0.0,
+      "desc": "Mira fechada no canto mais profundo da floresta colado na lixeira."
+    },
+    "secondary_aims": [
+      {
+        "name": "Default Plant",
+        "target": "Default Plant B",
+        "yaw": 85.0,
+        "pitch": 0.0,
+        "desc": "Virada para cobrir defuse no centro do bomb."
+      },
+      {
+        "name": "Trás da Van",
+        "target": "Trás da Van",
+        "yaw": 55.0,
+        "pitch": 0.0,
+        "desc": "Checagem do recuo da van."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Pilar do L (#02)",
+      "target": "Cerco aos defensores TR no bomb B",
+      "yaw": 130.6,
+      "desc": "Pilar do L pressiona de um lado e porta do mercado limpa o outro."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o vão da Porta do Mercado",
+      "target_coords": [
+        -2150.0,
+        -300.0
+      ],
+      "desc": "Pisar para trás para cortar contato com a floresta."
+    },
+    "danger": "HE rebatida na saída da porta.",
+    "objective": "Limpar o ponto cego da esquerda na saída do mercado."
+  },
+  {
+    "num": 13,
+    "id": "ct_retake_b_door_exit_right_short",
+    "name": "Saída Mercado - Limpeza Bomb Direito & L (Catwalk)",
+    "side": "CT",
+    "sector": "Bombsite B",
+    "group": "Retomada CT B (Retake B)",
+    "coords": [
+      -1936.5,
+      -58.3,
+      -165.7
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Pilar direito da porta do mercado.",
+    "primary_aim": {
+      "name": "Arco do L / Catwalk B",
+      "target": "Arco Catwalk",
+      "yaw": 32.6,
+      "pitch": 0.0,
+      "desc": "Fatiando a quina direita abrindo mira no Arco do L para neutralizar lurkers."
+    },
+    "secondary_aims": [
+      {
+        "name": "Janela do Tapete",
+        "target": "Tapete B Janela",
+        "yaw": 65.0,
+        "pitch": -2.0,
+        "desc": "Vigilância contra quem tenta atirar de cima."
+      },
+      {
+        "name": "Default Plant B",
+        "target": "Default Plant B",
+        "yaw": 105.0,
+        "pitch": 0.0,
+        "desc": "Apoio ao desarmador de C4."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Defuser na Caixa Central (#07)",
+      "target": "Cobertura do Flanco do L/Catwalk",
+      "yaw": 32.6,
+      "desc": "Protege totalmente o defuser contra qualquer inimigo descendo do Catwalk."
+    },
+    "fallback_route": {
+      "destination": "Recuo para dentro do Mercado",
+      "target_coords": [
+        -2050.0,
+        -180.0
+      ],
+      "desc": "Retornar para dentro do mercado se a passagem estiver com smoke."
+    },
+    "danger": "TR marcando agachado atrás da van.",
+    "objective": "Garantir a segurança do lado direito do bomb e arco do L no retake."
+  },
+  {
+    "num": 14,
+    "id": "tr_b_tapete_window_market_awp",
+    "name": "Janela do Tapete - AWP cravado no Mercado",
+    "side": "TR",
+    "sector": "Apartamentos B",
+    "group": "Pós-Plant & Marcação TR B",
+    "coords": [
+      -1590.2,
+      708.2,
+      -48.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Moldura de madeira e alvenaria da janela do tapete.",
+    "primary_aim": {
+      "name": "Janela do Mercado B",
+      "target": "Mercado Janela",
+      "yaw": -108.3,
+      "pitch": 5.5,
+      "desc": "Agachado na janela do tapete com sniper cravado na janela do mercado punindo qualquer retake CT."
+    },
+    "secondary_aims": [
+      {
+        "name": "Porta do Mercado",
+        "target": "Mercado Porta",
+        "yaw": -135.0,
+        "pitch": 0.0,
+        "desc": "Transição de mira rápida se o CT sair pela porta."
+      },
+      {
+        "name": "Pilar do L",
+        "target": "Pilar do L",
+        "yaw": -45.0,
+        "pitch": 0.0,
+        "desc": "Checagem de avanço CT pelo Catwalk."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Cozinha Tapete (#40) e Forest TR (#16)",
+      "target": "Trava Total de Saídas do Mercado",
+      "yaw": -108.3,
+      "desc": "Bloqueia instantaneamente a tentativa de retake CT vinda da cozinha."
+    },
+    "fallback_route": {
+      "destination": "Recuo para Corredor dos Apartamentos",
+      "target_coords": [
+        -1350.0,
+        700.0
+      ],
+      "desc": "Agachar e deslizar para o fundo do corredor de madeira do tapete."
+    },
+    "danger": "HE ou molotov jogado da porta do mercado na janela.",
+    "objective": "Dominar o pós-plant à distância impedindo rotação CT pelo mercado."
+  },
+  {
+    "num": 15,
+    "id": "tr_b_tapete_window_bomb_curve",
+    "name": "Janela do Tapete - Ângulo Curvado no Plant Default",
+    "side": "TR",
+    "sector": "Apartamentos B",
+    "group": "Pós-Plant & Marcação TR B",
+    "coords": [
+      -1551.6,
+      697.6,
+      -48.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Parede curvada dos fundos da janela do tapete.",
+    "primary_aim": {
+      "name": "C4 Default Plant B / Área de Defuse",
+      "target": "Default Plant B",
+      "yaw": -152.3,
+      "pitch": 14.3,
+      "desc": "Ângulo fechado em pé na janela olhando diretamente para quem tentar tocar na bomba defusando."
+    },
+    "secondary_aims": [
+      {
+        "name": "Saída Porta Mercado",
+        "target": "Mercado Porta",
+        "yaw": -130.0,
+        "pitch": 10.0,
+        "desc": "Cobertura contra CT correndo para o defuse."
+      },
+      {
+        "name": "Topo da Van",
+        "target": "Topo da Van",
+        "yaw": -90.0,
+        "pitch": 0.0,
+        "desc": "Checagem de CT limpando a van."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Forest TR (#17)",
+      "target": "Punição de Defuse no Bomb B",
+      "yaw": -152.3,
+      "desc": "Enquanto o CT foca na floresta, o Tapete atira de cima com dano fatal."
+    },
+    "fallback_route": {
+      "destination": "Quebra de visão no Tapete B",
+      "target_coords": [
+        -1450.0,
+        720.0
+      ],
+      "desc": "Dar 2 passos para trás quebrando a linha de tiro com o bomb."
+    },
+    "danger": "Spam de balas pela madeira do tapete.",
+    "objective": "Garantir a vitória do round pós-plant abatendo o defuser."
+  },
+  {
+    "num": 16,
+    "id": "tr_b_forest_hold_short",
+    "name": "Forest TR - Marcação Retomada do L / Arco",
+    "side": "TR",
+    "sector": "Bombsite B",
+    "group": "Pós-Plant & Marcação TR B",
+    "coords": [
+      -2529.7,
+      349.2,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Paredão de pedra da Forest B.",
+    "primary_aim": {
+      "name": "Arco do L / Entrada Catwalk",
+      "target": "Arco Catwalk",
+      "yaw": -8.7,
+      "pitch": -0.4,
+      "desc": "Em pé no Banco marcando com precisão o Arco do L para frear avanço CT pelo Catwalk."
+    },
+    "secondary_aims": [
+      {
+        "name": "Janela do Mercado",
+        "target": "Mercado Janela",
+        "yaw": -45.0,
+        "pitch": 0.0,
+        "desc": "Checagem rápida de CT espiando pela janela."
+      },
+      {
+        "name": "Porta do Mercado",
+        "target": "Mercado Porta",
+        "yaw": -75.0,
+        "pitch": 0.0,
+        "desc": "Visão da porta do mercado em caso de rush."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Tapete B (#14)",
+      "target": "Controle Cruzado do Bomb B",
+      "yaw": -8.7,
+      "desc": "Segura qualquer investida CT pelos dois eixos principais de entrada."
+    },
+    "fallback_route": {
+      "destination": "Recuo para Canto da Floresta",
+      "target_coords": [
+        -2600.0,
+        480.0
+      ],
+      "desc": "Esconder atrás do muro de tijolos da floresta."
+    },
+    "danger": "Flashbang pop jogada por cima do arco do L.",
+    "objective": "Neutralizar a retomada CT pelo Meio/Short no pós-plant."
+  },
+  {
+    "num": 17,
+    "id": "tr_b_forest_hold_market",
+    "name": "Forest TR - Marcação Retomada do Mercado",
+    "side": "TR",
+    "sector": "Bombsite B",
+    "group": "Pós-Plant & Marcação TR B",
+    "coords": [
+      -2582.9,
+      442.1,
+      -167.9
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Pilar de concreto e caçamba da Forest.",
+    "primary_aim": {
+      "name": "Janela e Porta do Mercado B",
+      "target": "Mercado Porta",
+      "yaw": -36.6,
+      "pitch": 0.1,
+      "desc": "Mira posicionada no meio do caminho entre porta e janela do mercado para abater saídas de CT."
+    },
+    "secondary_aims": [
+      {
+        "name": "Arco do L",
+        "target": "Arco Catwalk",
+        "yaw": 10.0,
+        "pitch": 0.0,
+        "desc": "Vigilância contra avanço pelo L."
+      },
+      {
+        "name": "Defuse C4",
+        "target": "Default Plant B",
+        "yaw": 30.0,
+        "pitch": 0.0,
+        "desc": "Punição imediata de defuse."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Canto Edward (#41)",
+      "target": "Armadilha mortal na saída do Mercado",
+      "yaw": -36.6,
+      "desc": "Edward distrai ou pega as costas enquanto Forest elimina de frente."
+    },
+    "fallback_route": {
+      "destination": "Recuo colado no Muro Traseiro",
+      "target_coords": [
+        -2640.0,
+        520.0
+      ],
+      "desc": "Colar na parede dos fundos da floresta para ganhar tempo de C4."
+    },
+    "danger": "Granada incendiária na floresta.",
+    "objective": "Impedir que os CTs utilizem a cozinha como base de retake."
+  },
+  {
+    "num": 18,
+    "id": "ct_retake_a_market_to_ctspawn",
+    "name": "Saída Mercado para Base CT - Travessia de Rotação",
+    "side": "CT",
+    "sector": "Base CT",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      -1616.8,
+      -618.9,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Paredão de pedra do corredor de ligação Mercado-CT.",
+    "primary_aim": {
+      "name": "Rampa da Base CT / Acesso Bomb A",
+      "target": "Acesso CT Bomb A",
+      "yaw": -84.0,
+      "pitch": 2.0,
+      "desc": "Correndo da cozinha para o CT spawn checando a subida da rampa para A."
+    },
+    "secondary_aims": [
+      {
+        "name": "Duto / Vents",
+        "target": "Duto Mercado",
+        "yaw": 10.0,
+        "pitch": 0.0,
+        "desc": "Checagem de costas contra TR vindo do duto."
+      },
+      {
+        "name": "Janela do Meio",
+        "target": "Janela Meio",
+        "yaw": 45.0,
+        "pitch": 0.0,
+        "desc": "Visão de suporte para o meio."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Jungle Entrada (#21)",
+      "target": "Sincronização de Retake A pelo CT e Jungle",
+      "yaw": -84.0,
+      "desc": "Avanço coordenado: um CT vai pelo Ticket e outro pela Jungle para prensar o Bomb A."
+    },
+    "fallback_route": {
+      "destination": "Recuo para dentro do Mercado",
+      "target_coords": [
+        -1600.0,
+        -500.0
+      ],
+      "desc": "Voltar para o abrigo do mercado caso o caminho para CT esteja dominado."
+    },
+    "danger": "Lurker TR aguardando a rotação de costas no corredor.",
+    "objective": "Garantir rotação ultrarrápida do Bomb B para o Bomb A no retake."
+  },
+  {
+    "num": 19,
+    "id": "ct_retake_a_vents_entry_jungle",
+    "name": "Entrada no Duto (Vents) - Checagem da Jungle",
+    "side": "CT",
+    "sector": "Duto / Vents",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      -1329.4,
+      -964.8,
+      -168.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Grelha e armação metálica do duto.",
+    "primary_aim": {
+      "name": "Corredor da Jungle / Ligação Bomb A",
+      "target": "Jungle Corredor",
+      "yaw": -60.9,
+      "pitch": -2.3,
+      "desc": "Agachado dentro do duto mirando na abertura da Jungle para limpar o caminho para o Bomb A."
+    },
+    "secondary_aims": [
+      {
+        "name": "Janela do Meio",
+        "target": "Janela Meio",
+        "yaw": 20.0,
+        "pitch": 0.0,
+        "desc": "Visão da sala da janela em caso de lurker."
+      },
+      {
+        "name": "Base CT",
+        "target": "Base CT",
+        "yaw": -110.0,
+        "pitch": 0.0,
+        "desc": "Cobertura da retaguarda."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Cabecinha (#23)",
+      "target": "Conexão rápida Duto - Cabecinha",
+      "yaw": -60.9,
+      "desc": "Refrag imediato: se o companheiro da cabecinha for alvejado, o duto abre fogo."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o interior do Duto",
+      "target_coords": [
+        -1400.0,
+        -800.0
+      ],
+      "desc": "Agachar e rastejar de volta pelo tubo em direção ao Mercado."
+    },
+    "danger": "HE jogada dentro do tubo do duto que causa dano total.",
+    "objective": "Criar rota alternativa silenciosa de retake para a Jungle e Site A."
+  },
+  {
+    "num": 20,
+    "id": "ct_retake_a_mid_clear_under_window",
+    "name": "Entrada Meio - Checagem Embaixo da Janela (Moscou)",
+    "side": "CT",
+    "sector": "Meio",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      -1217.7,
+      -652.1,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Pilar e sombra sob o balcão da janela do meio.",
+    "primary_aim": {
+      "name": "Entrada do Conector / Top Mid",
+      "target": "Top Mid Conector",
+      "yaw": -1.2,
+      "pitch": 7.9,
+      "desc": "Em pé embaixo da janela checando o avanço pelo conector e meio."
+    },
+    "secondary_aims": [
+      {
+        "name": "Janela do Meio",
+        "target": "Janela Meio",
+        "yaw": -90.0,
+        "pitch": 15.0,
+        "desc": "Olhar para cima checando se há TR no sniper nest."
+      },
+      {
+        "name": "Duto",
+        "target": "Duto Vents",
+        "yaw": 170.0,
+        "pitch": 0.0,
+        "desc": "Checagem de recuo."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Janela Meio (#33/#44)",
+      "target": "Trava no Meio Inferior e Superior",
+      "yaw": -1.2,
+      "desc": "Crossfire vertical com a Janela do Meio travando qualquer invasor no Meio."
+    },
+    "fallback_route": {
+      "destination": "Recuo para trás do Pilar sob a Janela",
+      "target_coords": [
+        -1280.0,
+        -680.0
+      ],
+      "desc": "Colar na parede de pedra quebrando o ângulo de visão do Top Mid."
+    },
+    "danger": "Flashbang estourada no ar no meio que cega totalmente quem está embaixo.",
+    "objective": "Limpar o Meio antes de rotacionar para o Bomb A ou Conector."
+  },
+  {
+    "num": 21,
+    "id": "ct_retake_a_jungle_entry_site",
+    "name": "Entrada na Jungle - Marcação Bomb A (Default / Triple)",
+    "side": "CT",
+    "sector": "Jungle",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      -1233.6,
+      -1239.9,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Portal de alvenaria e caixas da Jungle.",
+    "primary_aim": {
+      "name": "Caixa de Fogo / Tetris / Site A",
+      "target": "Tetris Bomb A",
+      "yaw": -34.6,
+      "pitch": 0.3,
+      "desc": "Em pé na quina da Jungle abrindo mira na Firebox e Tetris para fatiar o Bomb A."
+    },
+    "secondary_aims": [
+      {
+        "name": "Palácio / Balcão",
+        "target": "Palácio Balcão",
+        "yaw": -10.0,
+        "pitch": 5.0,
+        "desc": "Visada na saída do palácio para eliminar lurker."
+      },
+      {
+        "name": "Cabecinha / Stairs",
+        "target": "Cabecinha",
+        "yaw": 15.0,
+        "pitch": 0.0,
+        "desc": "Checagem de segurança das escadas."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Ticket Booth (#24)",
+      "target": "Cruzamento na Caixa Tripla e Tetris",
+      "yaw": -34.6,
+      "desc": "Avanço coordenado clássico de retake: Jungle e Ticket disparam simultaneamente."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o nicho da Jungle",
+      "target_coords": [
+        -1300.0,
+        -1150.0
+      ],
+      "desc": "Dar 2 passos para trás protegendo-se na alvenaria da Jungle."
+    },
+    "danger": "Molotov comum jogado da rampa na Jungle.",
+    "objective": "Fornecer o primeiro homem de retake pela Jungle para retomar o Site A."
+  },
+  {
+    "num": 22,
+    "id": "ct_retake_a_jungle_entry_stairs",
+    "name": "Entrada na Jungle - Checagem da Cabecinha (Stairs)",
+    "side": "CT",
+    "sector": "Jungle",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      -1245.4,
+      -1374.2,
+      -164.8
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Pilar direito da Jungle.",
+    "primary_aim": {
+      "name": "Cabecinha / Escada do Conector",
+      "target": "Cabecinha Stairs",
+      "yaw": 0.5,
+      "pitch": -0.5,
+      "desc": "Mira apontada no topo dos degraus da Cabecinha para checar se há TR marcando o retake."
+    },
+    "secondary_aims": [
+      {
+        "name": "Site A / Caixa Tripla",
+        "target": "Caixa Tripla A",
+        "yaw": -45.0,
+        "pitch": 0.0,
+        "desc": "Transição para o centro do bomb."
+      },
+      {
+        "name": "Rampa A",
+        "target": "Rampa A Caverna",
+        "yaw": -15.0,
+        "pitch": 0.0,
+        "desc": "Checagem da entrada da rampa."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Conector Top (#34)",
+      "target": "Domínio das Escadas da Cabecinha",
+      "yaw": 0.5,
+      "desc": "Cobre o avanço do companheiro que sobe o Conector em direção ao Bomb A."
+    },
+    "fallback_route": {
+      "destination": "Recuo para a curva da Jungle",
+      "target_coords": [
+        -1320.0,
+        -1300.0
+      ],
+      "desc": "Recuo rápido para a segurança do corredor traseiro da Jungle."
+    },
+    "danger": "Prefire de TR do Tetris na quina da Jungle.",
+    "objective": "Garantir a limpeza segura da Cabecinha antes do avanço para o Bomb A."
+  },
+  {
+    "num": 23,
+    "id": "ct_retake_a_stairs_clear_site",
+    "name": "Cabecinha (Stairs) - Abertura Bomb A & Palácio",
+    "side": "CT",
+    "sector": "Cabecinha",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      -540.6,
+      -1443.6,
+      -73.9
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Degraus de pedra da Cabecinha e desnível de headshot.",
+    "primary_aim": {
+      "name": "Sanduíche / Tetris / Caixa Tripla",
+      "target": "Sanduíche Bomb A",
+      "yaw": -52.4,
+      "pitch": -3.1,
+      "desc": "Agachado nos degraus superiores da Cabecinha dominando a visão de Sanduíche e Tetris."
+    },
+    "secondary_aims": [
+      {
+        "name": "Saída da Caverna / Rampa",
+        "target": "Rampa A Caverna",
+        "yaw": -15.0,
+        "pitch": 0.0,
+        "desc": "Cravada na saída da caverna impedindo reforços TR."
+      },
+      {
+        "name": "Balcão do Palácio",
+        "target": "Palácio Balcão",
+        "yaw": -85.0,
+        "pitch": 8.0,
+        "desc": "Checagem do balcão para punir lurker."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Ticket Booth (#24) e Areia (#53)",
+      "target": "Fogo Cruzado na Entrada do Bomb A",
+      "yaw": -52.4,
+      "desc": "Crossfire mortal: quem entra pela Rampa A fica entre o fogo da Cabecinha e do Ticket."
+    },
+    "fallback_route": {
+      "destination": "Queda para trás do degrau superior / Jungle",
+      "target_coords": [
+        -650.0,
+        -1350.0
+      ],
+      "desc": "Agachar e descer as escadas para trás em direção à Jungle."
+    },
+    "danger": "Headshot angle mortal para quem sobe da rampa.",
+    "objective": "Posição pivô dominante para controlar todo o Bomb A no retake."
+  },
+  {
+    "num": 24,
+    "id": "ct_retake_a_ticket_hold_ramp",
+    "name": "Base CT / Ticket - Marcação Caverna / Rampa A (AWP)",
+    "side": "CT",
+    "sector": "Base CT / Ticket",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      -1020.9,
+      -2489.1,
+      -168.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Cabine de madeira do Ticket e caixa de ferramentas.",
+    "primary_aim": {
+      "name": "Subida da Rampa A / Caverna",
+      "target": "Rampa A Caverna",
+      "yaw": 37.2,
+      "pitch": -0.6,
+      "desc": "Agachado ou apoiado no Ticket cravando a AWP na boca da subida da Rampa A."
+    },
+    "secondary_aims": [
+      {
+        "name": "Balcão do Palácio",
+        "target": "Palácio Balcão",
+        "yaw": 75.0,
+        "pitch": 5.0,
+        "desc": "Compensação rápida para o balcão superior."
+      },
+      {
+        "name": "Tetris / Sanduíche",
+        "target": "Tetris Bomb A",
+        "yaw": 15.0,
+        "pitch": 0.0,
+        "desc": "Checagem das caixas de madeira de A."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Cabecinha (#23) e Firebox (#28)",
+      "target": "Trava Angular Rampa A",
+      "yaw": 37.2,
+      "desc": "Sniper no Ticket fecha o ângulo longo enquanto o rifle na Cabecinha cobre o avanço."
+    },
+    "fallback_route": {
+      "destination": "Recuo para trás da Cabine do Ticket / Base CT",
+      "target_coords": [
+        -1150.0,
+        -2550.0
+      ],
+      "desc": "Agachar e recuar para a depressão de terreno da Base CT."
+    },
+    "danger": "Smoke de Rampa e de Ticket que apagam a visão do sniper.",
+    "objective": "Travar o avanço TR pela Rampa A à longa distância com rifle de precisão."
+  },
+  {
+    "num": 25,
+    "id": "ct_retake_a_ramp_clear_site",
+    "name": "Entrada Caverna / Rampa - Abertura Bomb A",
+    "side": "AMBOS",
+    "sector": "Rampa A",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      301.7,
+      -1492.3,
+      -176.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Paredão de pedra da boca da Caverna A.",
+    "primary_aim": {
+      "name": "Caixa Tripla / Default Plant A",
+      "target": "Default Plant A",
+      "yaw": -143.6,
+      "pitch": -0.4,
+      "desc": "Em pé na saída da rampa abrindo mira na Caixa Tripla e área central do bomb."
+    },
+    "secondary_aims": [
+      {
+        "name": "Ticket / Base CT",
+        "target": "Ticket CT",
+        "yaw": -110.0,
+        "pitch": 0.0,
+        "desc": "Checagem da cabine do ticket para abater sniper."
+      },
+      {
+        "name": "Cabecinha / Jungle",
+        "target": "Cabecinha",
+        "yaw": -175.0,
+        "pitch": 0.0,
+        "desc": "Visada na subida da cabecinha."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Palácio Balcão (#30)",
+      "target": "Entrada em Pinça no Bomb A",
+      "yaw": -143.6,
+      "desc": "Avanço duplo Rampa e Palácio sincronizado que sobrecarrega a defesa CT."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o interior da Caverna",
+      "target_coords": [
+        450.0,
+        -1550.0
+      ],
+      "desc": "Deslizar para trás da quina de pedra entrando na segurança do túnel TR."
+    },
+    "danger": "HE explosiva de CT no início do round na boca da caverna.",
+    "objective": "Conquistar a primeira linha de visão do Bomb A vindo da rampa."
+  },
+  {
+    "num": 26,
+    "id": "ct_retake_a_ramp_clear_sandwich",
+    "name": "Entrada Caverna / Rampa - Marcação Tetris",
+    "side": "AMBOS",
+    "sector": "Rampa A",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      394.4,
+      -1598.7,
+      -209.1
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Desnível de terreno e quina da rampa.",
+    "primary_aim": {
+      "name": "Vala do Sanduíche / Caixas Tetris",
+      "target": "Sanduíche Tetris",
+      "yaw": 164.7,
+      "pitch": -7.7,
+      "desc": "Mira cravada no Tetris e Sanduíche para eliminar CTs jogando em off-angle."
+    },
+    "secondary_aims": [
+      {
+        "name": "Cabecinha / Stairs",
+        "target": "Cabecinha",
+        "yaw": -165.0,
+        "pitch": 0.0,
+        "desc": "Checagem do topo das escadas."
+      },
+      {
+        "name": "Palácio Subida",
+        "target": "Palácio Balcão",
+        "yaw": 110.0,
+        "pitch": 5.0,
+        "desc": "Suporte aéreo."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Palácio Sala Deep (#31)",
+      "target": "Cobertura do Flanco do Tetris",
+      "yaw": 164.7,
+      "desc": "Limpeza sincronizada do Tetris antes da abertura total do time."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o túnel da Caverna",
+      "target_coords": [
+        420.0,
+        -1650.0
+      ],
+      "desc": "Pisar para trás para cortar linha de tiro do bomb."
+    },
+    "danger": "Incendiária de CT queimando a subida da rampa.",
+    "objective": "Neutralizar posições de emboscada no Tetris e Sanduíche."
+  },
+  {
+    "num": 27,
+    "id": "ct_retake_a_ramp_clear_tetris",
+    "name": "Entrada Caverna / Rampa - Checagem Tetris",
+    "side": "AMBOS",
+    "sector": "Rampa A",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      93.7,
+      -1685.3,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Pedra da rampa e caixotes da entrada.",
+    "primary_aim": {
+      "name": "Topo e Canto do Tetris",
+      "target": "Tetris Bomb A",
+      "yaw": 166.9,
+      "pitch": 0.6,
+      "desc": "Mira fechada no canto e topo do Tetris para não tomar surpresa ao passar da rampa."
+    },
+    "secondary_aims": [
+      {
+        "name": "Sanduíche",
+        "target": "Sanduíche",
+        "yaw": 140.0,
+        "pitch": 0.0,
+        "desc": "Checagem do vão entre o muro e o Tetris."
+      },
+      {
+        "name": "Ticket / CT",
+        "target": "Ticket CT",
+        "yaw": -120.0,
+        "pitch": 0.0,
+        "desc": "Visada na base CT."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Areia (#53)",
+      "target": "Cruzamento na base do Tetris",
+      "yaw": 166.9,
+      "desc": "Suporte para aliados que dropam do Palácio em direção à Areia."
+    },
+    "fallback_route": {
+      "destination": "Recuo para a boca da Caverna",
+      "target_coords": [
+        250.0,
+        -1650.0
+      ],
+      "desc": "Quebrar linha de tiro recuando 2 metros para dentro da caverna."
+    },
+    "danger": "Flashes de CT estourando no céu da rampa.",
+    "objective": "Assegurar a transição da rampa para o interior do Bomb A."
+  },
+  {
+    "num": 28,
+    "id": "a_firebox_ninja_hold",
+    "name": "Firebox / Canto do Ninja (One & Done)",
+    "side": "AMBOS",
+    "sector": "Bombsite A",
+    "group": "Bomb A - Âncoras & Pós-Plant",
+    "coords": [
+      -381.5,
+      -2395.0,
+      -164.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Pilha de caixas duplas de madeira da Firebox e quina do muro do ninja.",
+    "primary_aim": {
+      "name": "Balcão do Palácio / Saída TR",
+      "target": "Palácio Balcão",
+      "yaw": 102.6,
+      "pitch": -0.1,
+      "desc": "Agachado no canto ninja com mira voltada para o Balcão do Palácio aguardando a saída do TR."
+    },
+    "secondary_aims": [
+      {
+        "name": "Saída da Caverna / Rampa",
+        "target": "Rampa A Caverna",
+        "yaw": 45.0,
+        "pitch": 0.0,
+        "desc": "Giro de mira para punir quem sobe da rampa em direção ao default."
+      },
+      {
+        "name": "Tetris / Sanduíche",
+        "target": "Tetris Bomb A",
+        "yaw": 15.0,
+        "pitch": 0.0,
+        "desc": "Visão rente às caixas para abater lurkers no Tetris."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Caixa Tripla (#29) e Sanduíche",
+      "target": "Armadilha Suprema do Bomb A",
+      "yaw": 102.6,
+      "desc": "Crossfire mortal: o inimigo foca na Caixa Tripla e toma tiro nas costas da Firebox."
+    },
+    "fallback_route": {
+      "destination": "Encolhimento no Canto Ninja da Firebox",
+      "target_coords": [
+        -420.0,
+        -2450.0
+      ],
+      "desc": "Agachar completamente no vértice da parede ficando invisível para quem vem da Rampa."
+    },
+    "danger": "Molotov certeiro de TR que queima todo o nicho da Firebox.",
+    "objective": "Posição de ancoragem 'one and done' para punir rush com múltiplas eliminações."
+  },
+  {
+    "num": 29,
+    "id": "a_triple_box_hold",
+    "name": "Caixa Tripla A (Triple Box Anchor)",
+    "side": "AMBOS",
+    "sector": "Bombsite A",
+    "group": "Bomb A - Âncoras & Pós-Plant",
+    "coords": [
+      -660.9,
+      -2198.9,
+      -180.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Três caixas grandes de madeira no centro de A.",
+    "primary_aim": {
+      "name": "Subida da Rampa A / Caverna",
+      "target": "Rampa A Caverna",
+      "yaw": 36.2,
+      "pitch": -0.6,
+      "desc": "Em pé na quina da Caixa Tripla fatiando a subida da rampa com jiggle peek constante."
+    },
+    "secondary_aims": [
+      {
+        "name": "Balcão do Palácio",
+        "target": "Palácio Balcão",
+        "yaw": 75.0,
+        "pitch": 5.0,
+        "desc": "Elevação de mira para contestar o balcão do palácio."
+      },
+      {
+        "name": "Conector / Meio",
+        "target": "Conector A",
+        "yaw": -35.0,
+        "pitch": 0.0,
+        "desc": "Vigilância contra avanço pelo conector."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Firebox (#28) e Cabecinha (#23)",
+      "target": "Cerco Total ao Acesso do Bomb A",
+      "yaw": 36.2,
+      "desc": "Caixa Tripla jiggla e distrai enquanto Firebox e Cabecinha disparam de ângulos opostos."
+    },
+    "fallback_route": {
+      "destination": "Recuo para trás das Caixas em direção ao CT",
+      "target_coords": [
+        -800.0,
+        -2300.0
+      ],
+      "desc": "Girar para trás das caixas e recuar em direção ao Ticket/Base CT."
+    },
+    "danger": "Smokes de Cabecinha e CT que isolam a Caixa Tripla do restante do time.",
+    "objective": "Principal âncora viva do Bomb A com alta mobilidade de jiggle peek."
+  },
+  {
+    "num": 30,
+    "id": "a_palace_balcony_tr",
+    "name": "Palácio Balcão - Domínio Superior A",
+    "side": "TR",
+    "sector": "Palácio A",
+    "group": "Bomb A - Âncoras & Pós-Plant",
+    "coords": [
+      -99.6,
+      -2138.1,
+      -168.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Pilar de mármore e peitoril de pedra do Palácio.",
+    "primary_aim": {
+      "name": "Ticket / Base CT",
+      "target": "Ticket CT",
+      "yaw": 141.0,
+      "pitch": -0.8,
+      "desc": "Agachado na quina do balcão mirando direto na cabine do Ticket para eliminar o sniper CT."
+    },
+    "secondary_aims": [
+      {
+        "name": "Cabecinha / Stairs",
+        "target": "Cabecinha",
+        "yaw": 175.0,
+        "pitch": 0.0,
+        "desc": "Visão privilegiada da Cabecinha e Jungle."
+      },
+      {
+        "name": "Jungle / Conector",
+        "target": "Jungle A",
+        "yaw": -165.0,
+        "pitch": 0.0,
+        "desc": "Transição para conter rotação CT pelo conector."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Tetris (#47/#48) e Rampa A (#25)",
+      "target": "Domínio Aéreo e Terrestre de A",
+      "yaw": 141.0,
+      "desc": "Ataque em dois níveis de altura simultâneos que quebra a mira defensiva CT."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o interior do Palácio",
+      "target_coords": [
+        100.0,
+        -2150.0
+      ],
+      "desc": "Agachar e dar 3 passos para trás entrando no salão seguro de mármore do Palácio."
+    },
+    "danger": "Incendiária de CT na boca do balcão que força a queda do jogador.",
+    "objective": "Fornecer cobertura de longa distância e dominar o alto do Bomb A no pós-plant."
+  },
+  {
+    "num": 31,
+    "id": "a_palace_deep_room",
+    "name": "Sala do Palácio Deep (Pillars / Staging)",
+    "side": "TR",
+    "sector": "Palácio A",
+    "group": "Bomb A - Âncoras & Pós-Plant",
+    "coords": [
+      90.0,
+      -2244.6,
+      -40.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Pilares maciços de mármore da sala interna do Palácio.",
+    "primary_aim": {
+      "name": "Passarela de Saída do Palácio / Balcão",
+      "target": "Palácio Saída Balcão",
+      "yaw": 142.5,
+      "pitch": 4.2,
+      "desc": "Em pé no corredor interno aguardando o momento exato de executar as granadas em A."
+    },
+    "secondary_aims": [
+      {
+        "name": "Saída para a Areia",
+        "target": "Areia Palácio",
+        "yaw": 95.0,
+        "pitch": 0.0,
+        "desc": "Checagem de CT agressivo rusheando pelo palácio."
+      },
+      {
+        "name": "Corredor TR Spawn",
+        "target": "TR Spawn Corredor",
+        "yaw": -35.0,
+        "pitch": 0.0,
+        "desc": "Segurança de retaguarda."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Palácio Balcão (#30)",
+      "target": "Staging Seguro e Refrag de A",
+      "yaw": 142.5,
+      "desc": "Prepara o segundo homem do rush para entrar logo atrás do primeiro contato."
+    },
+    "fallback_route": {
+      "destination": "Recuo para a Sala dos Fundos do Palácio",
+      "target_coords": [
+        250.0,
+        -2300.0
+      ],
+      "desc": "Recuo seguro para trás dos pilares em direção à escada de spawn TR."
+    },
+    "danger": "Flashbang pop jogada por CT do balcão para dentro da sala.",
+    "objective": "Área protegida de preparação tática e lançamento de utilitários no Palácio."
+  },
+  {
+    "num": 32,
+    "id": "a_shadow_under_palace",
+    "name": "Debaixo do Palácio (Shadow / Close Poke)",
+    "side": "AMBOS",
+    "sector": "Bombsite A",
+    "group": "Bomb A - Âncoras & Pós-Plant",
+    "coords": [
+      -219.0,
+      -2154.3,
+      -170.7
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Sombra da laje do Palácio e esteios de sustentação.",
+    "primary_aim": {
+      "name": "Saída da Caverna / Rampa A",
+      "target": "Rampa A Caverna",
+      "yaw": 60.8,
+      "pitch": -0.6,
+      "desc": "Em pé na penumbra debaixo do balcão marcando de surpresa quem passa da Rampa."
+    },
+    "secondary_aims": [
+      {
+        "name": "Sanduíche / Tetris",
+        "target": "Tetris Bomb A",
+        "yaw": 10.0,
+        "pitch": 0.0,
+        "desc": "Checagem de quem avança para as caixas."
+      },
+      {
+        "name": "Balcão Palácio",
+        "target": "Palácio Balcão",
+        "yaw": 115.0,
+        "pitch": 15.0,
+        "desc": "Olhar para cima contra quem pula do balcão."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Cabecinha (#23) e Ticket (#24)",
+      "target": "Surpresa de Costas na Invasão",
+      "yaw": 60.8,
+      "desc": "O inimigo passa olhando para o Ticket e toma tiro à queima-roupa da Shadow."
+    },
+    "fallback_route": {
+      "destination": "Recuo colado na Parede dos Fundos do Palácio",
+      "target_coords": [
+        -150.0,
+        -2250.0
+      ],
+      "desc": "Encolher contra o batente de tijolos quebrando ângulo com a rampa."
+    },
+    "danger": "HE de TR lançada da rampa direto embaixo do balcão.",
+    "objective": "Posição antieco de extrema proximidade para conseguir armas dos invasores."
+  },
+  {
+    "num": 33,
+    "id": "mid_window_right_deep",
+    "name": "Janela Meio - Lado Direito / Deep (AWP Angle)",
+    "side": "CT",
+    "sector": "Janela do Meio",
+    "group": "Meio & Conector",
+    "coords": [
+      -1181.4,
+      -718.5,
+      -168.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Bancada e batente direito de tijolos da Janela do Meio.",
+    "primary_aim": {
+      "name": "Top Mid / Saída da Caverna TR",
+      "target": "Top Mid Caixas",
+      "yaw": 17.7,
+      "pitch": -0.8,
+      "desc": "Agachado no fundo direito da janela com a AWP cravada na passagem do Top Mid."
+    },
+    "secondary_aims": [
+      {
+        "name": "Saída do Rato / Sub",
+        "target": "Underground Rato",
+        "yaw": -30.0,
+        "pitch": -5.0,
+        "desc": "Compensação rápida para punir lurker subindo do rato."
+      },
+      {
+        "name": "Cadeira / Conector",
+        "target": "Cadeira Meio",
+        "yaw": -60.0,
+        "pitch": 0.0,
+        "desc": "Checagem de segurança da cadeira."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Conector Top (#34) e Janela Esquerda (#44)",
+      "target": "Dominância Absoluta do Meio",
+      "yaw": 17.7,
+      "desc": "Sniper de elite trava o meio longo enquanto o Conector protege o avanço curto."
+    },
+    "fallback_route": {
+      "destination": "Agachamento sob a bancada da Janela",
+      "target_coords": [
+        -1200.0,
+        -800.0
+      ],
+      "desc": "Agachar imediatamente e deslizar para trás em direção à Jungle."
+    },
+    "danger": "Smoke de spawn TR na janela que tira totalmente a visão do sniper.",
+    "objective": "Garantir o first pick de AWP no Meio travando a progressão TR no mapa."
+  },
+  {
+    "num": 34,
+    "id": "mid_connector_top_stairs",
+    "name": "Conector Superior - Degrau (Headshot Angle)",
+    "side": "CT",
+    "sector": "Conector",
+    "group": "Meio & Conector",
+    "coords": [
+      -808.0,
+      -921.9,
+      -168.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Degraus superiores do Conector e parede de pedra.",
+    "primary_aim": {
+      "name": "Top Mid / Caixas de Madeira TR",
+      "target": "Top Mid Caixas",
+      "yaw": 34.5,
+      "pitch": -1.2,
+      "desc": "Agachado no degrau superior do Conector mostrando apenas a cabeça contra o Top Mid."
+    },
+    "secondary_aims": [
+      {
+        "name": "Saída do Sub / Rato",
+        "target": "Underground Rato",
+        "yaw": 75.0,
+        "pitch": -8.0,
+        "desc": "Visada na boca do rato para abater invasor."
+      },
+      {
+        "name": "Cadeira / Catwalk",
+        "target": "Cadeira Meio",
+        "yaw": -15.0,
+        "pitch": 0.0,
+        "desc": "Controle do Catwalk e Arcos."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Janela Meio (#33)",
+      "target": "Fogo Cruzado no Pátio do Meio",
+      "yaw": 34.5,
+      "desc": "Crossfire vertical clássico: quem tenta brigar com a janela toma tiro do Conector."
+    },
+    "fallback_route": {
+      "destination": "Descida das Escadas do Conector para Bomb A",
+      "target_coords": [
+        -700.0,
+        -1100.0
+      ],
+      "desc": "Descer os degraus agachado em direção à segurança da Jungle e Bomb A."
+    },
+    "danger": "Flashbang estourada no céu do meio que cega quem está no degrau.",
+    "objective": "Segurar a transição do Meio para o Bomb A com excelente ângulo de headshot."
+  },
+  {
+    "num": 35,
+    "id": "mid_connector_bottom",
+    "name": "Conector Inferior - Passagem Z (Bottom Connector)",
+    "side": "AMBOS",
+    "sector": "Conector",
+    "group": "Meio & Conector",
+    "coords": [
+      -576.2,
+      -1082.4,
+      -168.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Quina inferior da curva em Z do Conector.",
+    "primary_aim": {
+      "name": "Top Mid / Avanço Caixas TR",
+      "target": "Top Mid Caixas",
+      "yaw": 100.5,
+      "pitch": -0.6,
+      "desc": "Agachado na quina inferior do conector espiando quem se aproxima da subida."
+    },
+    "secondary_aims": [
+      {
+        "name": "Saída Rato",
+        "target": "Underground Rato",
+        "yaw": 135.0,
+        "pitch": -5.0,
+        "desc": "Cravada na boca do rato à curta distância."
+      },
+      {
+        "name": "Top Conector",
+        "target": "Conector Top",
+        "yaw": 45.0,
+        "pitch": 5.0,
+        "desc": "Vigilância de retaguarda."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Conector Top (#34)",
+      "target": "Refrag e Apoio no Conector",
+      "yaw": 100.5,
+      "desc": "Linha defensiva em profundidade dentro do Conector."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o fundo do Conector / Bomb A",
+      "target_coords": [
+        -500.0,
+        -1150.0
+      ],
+      "desc": "Virar a quina e subir em direção à Cabecinha."
+    },
+    "danger": "HE que quica na parede do conector e explode no pé.",
+    "objective": "Travar rushe agressivo pelo conector com espingarda ou rifle à queima-roupa."
+  },
+  {
+    "num": 36,
+    "id": "mid_top_mid_boxes",
+    "name": "Top Mid - Caixas TR (Boxes Top Mid)",
+    "side": "TR",
+    "sector": "Top Mid",
+    "group": "Meio & Conector",
+    "coords": [
+      368.0,
+      -223.0,
+      -167.7
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Pilhas de caixas de madeira e carroça no Top Mid.",
+    "primary_aim": {
+      "name": "Janela do Meio",
+      "target": "Janela Meio",
+      "yaw": -162.4,
+      "pitch": 0.2,
+      "desc": "Em pé atrás das caixas do Top Mid disputando o controle da Janela do Meio com rifle ou AWP."
+    },
+    "secondary_aims": [
+      {
+        "name": "Escada do Conector",
+        "target": "Conector Top",
+        "yaw": -135.0,
+        "pitch": 0.0,
+        "desc": "Transição para abater CT na cabecinha/conector."
+      },
+      {
+        "name": "B Short / Catwalk",
+        "target": "Catwalk Meio",
+        "yaw": -95.0,
+        "pitch": 0.0,
+        "desc": "Controle do Catwalk em caso de push CT."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Rato / Underground (#37)",
+      "target": "Pressão Sincronizada no Meio",
+      "yaw": -162.4,
+      "desc": "Enquanto o Top Mid troca tiro de longe, o Rato avança silencioso para pegar o flanco."
+    },
+    "fallback_route": {
+      "destination": "Recuo para trás das Caixas em direção ao Spawn TR",
+      "target_coords": [
+        450.0,
+        -150.0
+      ],
+      "desc": "Dar 2 passos para a esquerda quebrando visão da Janela e Conector."
+    },
+    "danger": "AWP CT experiente cravado no pixel da janela.",
+    "objective": "Conquistar o controle inicial do Meio abrindo opções de split A ou split B."
+  },
+  {
+    "num": 37,
+    "id": "mid_underground_sub",
+    "name": "Underground / Rato (Lower Mid TR)",
+    "side": "AMBOS",
+    "sector": "Underground",
+    "group": "Meio & Conector",
+    "coords": [
+      -1030.2,
+      -428.9,
+      -321.5
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Túnel subterrâneo e degraus de pedra do Rato.",
+    "primary_aim": {
+      "name": "Escada de Subida para o Meio / Conector",
+      "target": "Meio Subida Rato",
+      "yaw": -49.9,
+      "pitch": -10.2,
+      "desc": "Em pé no final do túnel subterrâneo mirando na boca da escada de saída para o Meio."
+    },
+    "secondary_aims": [
+      {
+        "name": "Janela do Meio (Visão Inferior)",
+        "target": "Janela Meio",
+        "yaw": -85.0,
+        "pitch": 15.0,
+        "desc": "Olhar por baixo da janela para surpreender CT."
+      },
+      {
+        "name": "Túnel dos Apartamentos B",
+        "target": "Túnel Apartamentos",
+        "yaw": 130.0,
+        "pitch": 0.0,
+        "desc": "Checagem de rotação vinda de B."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Top Mid (#36)",
+      "target": "Flanco Mortal contra a Janela e Conector",
+      "yaw": -49.9,
+      "desc": "Flanqueamento mortal: pega o CT distraído enquanto o Top Mid atira."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o Túnel do Rato em direção a B",
+      "target_coords": [
+        -1100.0,
+        -200.0
+      ],
+      "desc": "Descer os degraus correndo para a segurança da curva subterrânea."
+    },
+    "danger": "CT descendo de surpresa no duto ou pulando da janela.",
+    "objective": "Executar rotação silenciosa e flanco decisivo no Meio."
+  },
+  {
+    "num": 38,
+    "id": "mid_catwalk_short",
+    "name": "Catwalk / Short B (Esquina do L)",
+    "side": "AMBOS",
+    "sector": "Catwalk / Short",
+    "group": "Meio & Conector",
+    "coords": [
+      -902.8,
+      191.2,
+      -172.8
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Parapeito de concreto da passarela do Catwalk.",
+    "primary_aim": {
+      "name": "Janela do Meio",
+      "target": "Janela Meio",
+      "yaw": -64.8,
+      "pitch": -1.2,
+      "desc": "Em pé na passarela do Catwalk mirando direto no balcão da Janela do Meio."
+    },
+    "secondary_aims": [
+      {
+        "name": "Top Conector",
+        "target": "Conector Top",
+        "yaw": -110.0,
+        "pitch": 0.0,
+        "desc": "Checagem do topo do conector para conter suporte CT."
+      },
+      {
+        "name": "Top Mid / Carroça",
+        "target": "Top Mid Caixas",
+        "yaw": 15.0,
+        "pitch": 0.0,
+        "desc": "Vigilância contra avanço pelo meio."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Top Mid (#36) e Arco do L (#43)",
+      "target": "Sufocamento da Posição da Janela CT",
+      "yaw": -64.8,
+      "desc": "Fecha o cerco contra a Janela em dois ângulos convergentes."
+    },
+    "fallback_route": {
+      "destination": "Recuo pelo Catwalk em direção aos Arcos do B",
+      "target_coords": [
+        -1150.0,
+        200.0
+      ],
+      "desc": "Girar e recuar pela passarela em direção à proteção do Arco do L."
+    },
+    "danger": "Sniper CT na Janela esperando o primeiro pixel de abertura no Catwalk.",
+    "objective": "Estabelecer domínio do Catwalk para preparar entrada dividida em B."
+  },
+  {
+    "num": 39,
+    "id": "tr_b_apps_house_staging",
+    "name": "Apartamentos B - Entrada / Sofá (Staging Inicial)",
+    "side": "TR",
+    "sector": "Apartamentos B",
+    "group": "Apartamentos B",
+    "coords": [
+      -764.4,
+      522.1,
+      -77.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Paredes de alvenaria e sofá da sala dos Apartamentos.",
+    "primary_aim": {
+      "name": "Corredor de Avanço para a Cozinha B",
+      "target": "Cozinha Tapete",
+      "yaw": 161.9,
+      "pitch": -1.5,
+      "desc": "Em pé na sala do sofá aguardando o alinhamento da equipe para avanço no Tapete B."
+    },
+    "secondary_aims": [
+      {
+        "name": "Saída para o Meio / Duto TR",
+        "target": "Duto TR Meio",
+        "yaw": -90.0,
+        "pitch": 0.0,
+        "desc": "Checagem de rotação para o meio."
+      },
+      {
+        "name": "Entrada do TR Spawn",
+        "target": "TR Spawn",
+        "yaw": 10.0,
+        "pitch": 0.0,
+        "desc": "Segurança de retaguarda."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Cozinha Tapete (#40)",
+      "target": "Staging Seguro e Refrag nos Apartamentos",
+      "yaw": 161.9,
+      "desc": "Garante avanço em coluna coordenado com utilitários."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o Pátio do Spawn TR",
+      "target_coords": [
+        -600.0,
+        450.0
+      ],
+      "desc": "Recuo total para a segurança da escada de spawn TR."
+    },
+    "danger": "Push extremamente agressivo de CT pelo tapete nos primeiros segundos.",
+    "objective": "Área segura de staging para preparar execuções táticas no Bomb B."
+  },
+  {
+    "num": 40,
+    "id": "tr_b_apps_kitchen_control",
+    "name": "Apartamentos B - Cozinha do Tapete (Avanço B)",
+    "side": "AMBOS",
+    "sector": "Apartamentos B",
+    "group": "Apartamentos B",
+    "coords": [
+      -1111.7,
+      687.0,
+      -80.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Bancada e batentes de madeira da cozinha dos apartamentos.",
+    "primary_aim": {
+      "name": "Passagem Estreita / Entrada do Tapete B",
+      "target": "Corredor Tapete B",
+      "yaw": 178.2,
+      "pitch": 0.1,
+      "desc": "Em pé na cozinha marcando a porta estreita de acesso à passarela do Tapete B."
+    },
+    "secondary_aims": [
+      {
+        "name": "Janela da Cozinha",
+        "target": "Janela Cozinha",
+        "yaw": 135.0,
+        "pitch": 0.0,
+        "desc": "Visada externa para lançar granadas no bomb."
+      },
+      {
+        "name": "Retaguarda Sofá",
+        "target": "Sofá Apartamentos",
+        "yaw": 0.0,
+        "pitch": 0.0,
+        "desc": "Checagem de cobertura do time."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Sofá Apartamentos (#39)",
+      "target": "Entrada em Massa no Tapete B",
+      "yaw": 178.2,
+      "desc": "Primeiro homem prepara o flashbang e abre espaço para o segundo."
+    },
+    "fallback_route": {
+      "destination": "Recuo para a Sala do Sofá",
+      "target_coords": [
+        -950.0,
+        650.0
+      ],
+      "desc": "Deslizar para trás da parede da cozinha quebrando linha de fogo."
+    },
+    "danger": "HE ou incendiária de CT estourada no corredor estreito.",
+    "objective": "Conquistar o controle da cozinha e disparar o rush/execução no Bomb B."
+  },
+  {
+    "num": 41,
+    "id": "ct_b_edward_under_apps",
+    "name": "Canto Edward - Embaixo do Tapete B",
+    "side": "AMBOS",
+    "sector": "Bombsite B",
+    "group": "Bomb B - Marcação & Plant",
+    "coords": [
+      -1888.0,
+      250.5,
+      -160.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Estrutura de pedra suspensa abaixo da janela do tapete.",
+    "primary_aim": {
+      "name": "Saída / Drop do Tapete B",
+      "target": "Tapete B Drop",
+      "yaw": 58.4,
+      "pitch": -10.9,
+      "desc": "Em pé colado na parede abaixo do tapete cravando quem desce da janela sem ser visto."
+    },
+    "secondary_aims": [
+      {
+        "name": "Van / Passarela",
+        "target": "Cima da Van",
+        "yaw": 20.0,
+        "pitch": 0.0,
+        "desc": "Checagem rápida de inimigos na van."
+      },
+      {
+        "name": "Default Plant B",
+        "target": "Default Plant B",
+        "yaw": 105.0,
+        "pitch": 0.0,
+        "desc": "Apoio a defuse ou plant."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Forest / Banco (#03)",
+      "target": "Armadilha Edward no Drop B",
+      "yaw": 58.4,
+      "desc": "O inimigo foca no Banco e toma tiro à queima-roupa do Edward colado na parede."
+    },
+    "fallback_route": {
+      "destination": "Encolhimento absoluto contra o Batente de Pedra",
+      "target_coords": [
+        -1850.0,
+        200.0
+      ],
+      "desc": "Colar as costas na pedra ficando totalmente invisível para a janela."
+    },
+    "danger": "Inimigo que dropa checando o canto direito primeiro.",
+    "objective": "Posição antieco lendária para conseguir eliminações de surpresa no Bomb B."
+  },
+  {
+    "num": 42,
+    "id": "ct_b_empty_pillar_jail",
+    "name": "Pilar Vazio / Jail - Fundo Recuado B",
+    "side": "AMBOS",
+    "sector": "Bombsite B",
+    "group": "Bomb B - Marcação & Plant",
+    "coords": [
+      -2021.2,
+      -57.5,
+      -166.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Coluna maciça central e grades de ferro do fundo de B.",
+    "primary_aim": {
+      "name": "Saída do Tapete B",
+      "target": "Tapete B Janela",
+      "yaw": 85.8,
+      "pitch": -7.9,
+      "desc": "Em pé na coluna recuada com visão limpa da saída do tapete e da van."
+    },
+    "secondary_aims": [
+      {
+        "name": "Arco do L",
+        "target": "Arco Catwalk",
+        "yaw": 35.0,
+        "pitch": 0.0,
+        "desc": "Checagem do avanço de inimigos pelo L."
+      },
+      {
+        "name": "Porta do Mercado",
+        "target": "Mercado Porta",
+        "yaw": -140.0,
+        "pitch": 0.0,
+        "desc": "Transição para conter retake CT."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Van (#05/#06) e Default Plant (#07)",
+      "target": "Ancoragem do Fundo do Bomb B",
+      "yaw": 85.8,
+      "desc": "Suporte recuado que garante refrag se a van for abatida."
+    },
+    "fallback_route": {
+      "destination": "Recuo contornando a Coluna em direção ao Mercado",
+      "target_coords": [
+        -1950.0,
+        -150.0
+      ],
+      "desc": "Girar para trás da coluna quebrando o contato visual com o tapete."
+    },
+    "danger": "Smokes profundas no bomb que cortam a visão do fundo.",
+    "objective": "Âncora defensiva de segunda linha no Bomb B para troca de tiro favorável."
+  },
+  {
+    "num": 43,
+    "id": "ct_b_short_arch_hold_mid",
+    "name": "Quina do Arco do L - Defesa 2-1-2",
+    "side": "CT",
+    "sector": "Catwalk / Short",
+    "group": "Bomb B - Marcação & Plant",
+    "coords": [
+      -1489.5,
+      259.9,
+      -167.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Arco de alvenaria do L/Short.",
+    "primary_aim": {
+      "name": "Passarela do Catwalk / Top Mid",
+      "target": "Catwalk Meio",
+      "yaw": -15.1,
+      "pitch": -0.4,
+      "desc": "Em pé na quina do arco marcando quem tenta avançar pelo Catwalk em direção a B."
+    },
+    "secondary_aims": [
+      {
+        "name": "Escada do Conector",
+        "target": "Conector Top",
+        "yaw": -55.0,
+        "pitch": 0.0,
+        "desc": "Visada na ligação do conector."
+      },
+      {
+        "name": "Janela do Tapete B",
+        "target": "Tapete B Janela",
+        "yaw": 115.0,
+        "pitch": 0.0,
+        "desc": "Giro rápido se os apartamentos rushearem."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Pilar do L (#01)",
+      "target": "Barreira Impenetrável no Catwalk",
+      "yaw": -15.1,
+      "desc": "Double-peek no L: bloqueia completamente rotações do Meio para B."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o interior do Bomb B",
+      "target_coords": [
+        -1550.0,
+        300.0
+      ],
+      "desc": "Dar 2 passos para a direita entrando no abrigo das paredes do Bomb B."
+    },
+    "danger": "Flashbang estourada no ar no meio que cega o jogador do L.",
+    "objective": "Pivô defensivo da estratégia 2-1-2 protegendo a transição Meio-B."
+  },
+  {
+    "num": 44,
+    "id": "mid_window_left_awp",
+    "name": "Janela Meio - Quina Esquerda (Pixel AWP)",
+    "side": "CT",
+    "sector": "Janela do Meio",
+    "group": "Meio & Conector",
+    "coords": [
+      -1200.0,
+      -597.1,
+      -168.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Batente esquerdo de tijolos da Janela do Meio.",
+    "primary_aim": {
+      "name": "Top Mid / Avanço Caixas TR",
+      "target": "Top Mid Caixas",
+      "yaw": 12.1,
+      "pitch": -1.0,
+      "desc": "Agachado na quina esquerda da janela cravando o pixel minúsculo de quem passa no Top Mid."
+    },
+    "secondary_aims": [
+      {
+        "name": "Entrada do Rato",
+        "target": "Underground Rato",
+        "yaw": -25.0,
+        "pitch": -5.0,
+        "desc": "Checagem da boca do underground."
+      },
+      {
+        "name": "Top Conector",
+        "target": "Conector Top",
+        "yaw": -50.0,
+        "pitch": 0.0,
+        "desc": "Vigilância de retaguarda."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Janela Direita (#33) e Conector (#34)",
+      "target": "Pixel AWP Duplo no Meio",
+      "yaw": 12.1,
+      "desc": "Variação de ângulo para desorientar o contra-sniper TR."
+    },
+    "fallback_route": {
+      "destination": "Agachamento protegido sob o Batente",
+      "target_coords": [
+        -1250.0,
+        -650.0
+      ],
+      "desc": "Agachar e deslizar para trás cortando linha de tiro do Top Mid."
+    },
+    "danger": "Tiro varado na madeira da janela.",
+    "objective": "Fornecer ângulo alternativo de sniper impossível de prefire imediato."
+  },
+  {
+    "num": 45,
+    "id": "mid_chair_delpan_hold",
+    "name": "Cadeira / Delpan - Trava Meio & Rato",
+    "side": "AMBOS",
+    "sector": "Meio",
+    "group": "Meio & Conector",
+    "coords": [
+      -873.2,
+      -789.0,
+      -222.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Nicho rebaixado da Cadeira (Delpan) e parede de pedra.",
+    "primary_aim": {
+      "name": "Top Mid / Passagem do Meio",
+      "target": "Top Mid Caixas",
+      "yaw": 103.8,
+      "pitch": 12.2,
+      "desc": "Agachado na cadeira em ângulo off-angle surpreendente contra quem desce o Meio."
+    },
+    "secondary_aims": [
+      {
+        "name": "Subida do Rato",
+        "target": "Underground Rato",
+        "yaw": 145.0,
+        "pitch": -8.0,
+        "desc": "Punição imediata de quem sai do subterrâneo."
+      },
+      {
+        "name": "Janela do Meio",
+        "target": "Janela Meio",
+        "yaw": -80.0,
+        "pitch": 10.0,
+        "desc": "Checagem de CT espiando pela janela."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Conector Top (#34)",
+      "target": "Fogo Cruzado na Cadeira e Conector",
+      "yaw": 103.8,
+      "desc": "Enquanto o inimigo foca no Conector, a Cadeira pune com headshot limpo."
+    },
+    "fallback_route": {
+      "destination": "Salto rápido para a entrada do Conector",
+      "target_coords": [
+        -750.0,
+        -850.0
+      ],
+      "desc": "Pular e agachar na curva do Conector buscando cobertura."
+    },
+    "danger": "Granadas e molotovs que caem direto no buraco da cadeira.",
+    "objective": "Posição de choque agressiva para quebrar rush e isolar duelistas no Meio."
+  },
+  {
+    "num": 46,
+    "id": "mid_ladder_room_control",
+    "name": "Sala da Escada (Ladder Room Control)",
+    "side": "AMBOS",
+    "sector": "Ladder Room",
+    "group": "Meio & Conector",
+    "coords": [
+      -1234.2,
+      -898.0,
+      -130.0
+    ],
+    "stance": "Agachado",
+    "recommended_stance": "PASSIVE_HOLD",
+    "cover": "Escada de ferro, paredes de tijolos e duto.",
+    "primary_aim": {
+      "name": "Janela da Sala da Escada / Visão Meio",
+      "target": "Janela Ladder Meio",
+      "yaw": 57.5,
+      "pitch": 1.7,
+      "desc": "Agachado na sala da escada vigiando a abertura para o Meio e Catwalk."
+    },
+    "secondary_aims": [
+      {
+        "name": "Duto para B",
+        "target": "Duto Mercado B",
+        "yaw": -120.0,
+        "pitch": 0.0,
+        "desc": "Checagem da grelha do duto em direção a B."
+      },
+      {
+        "name": "Saída para Catwalk",
+        "target": "Catwalk Meio",
+        "yaw": -35.0,
+        "pitch": 0.0,
+        "desc": "Visada na porta de saída para o short."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Janela Meio (#33) e Catwalk (#38)",
+      "target": "Emboscada e Rotação Silenciosa",
+      "yaw": 57.5,
+      "desc": "Surpreende jogadores que tentam subir pelo Catwalk sem olhar a fresta da escada."
+    },
+    "fallback_route": {
+      "destination": "Subida rápida pela Escada de Ferro para o duto",
+      "target_coords": [
+        -1280.0,
+        -950.0
+      ],
+      "desc": "Subir a escada e entrar no túnel superior protegendo-se com alvenaria."
+    },
+    "danger": "HE lançada pela fresta da janela que quica na parede da escada.",
+    "objective": "Ponto de controle e rotação invisível entre Meio e Bomb B."
+  },
+  {
+    "num": 47,
+    "id": "a_tetris_top_control",
+    "name": "Em cima do Tetris - Domínio Superior A",
+    "side": "AMBOS",
+    "sector": "Bombsite A",
+    "group": "Bomb A - Âncoras & Pós-Plant",
+    "coords": [
+      -203.5,
+      -1600.8,
+      -54.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Caixas de madeira elevadas do topo do Tetris.",
+    "primary_aim": {
+      "name": "Balcão do Palácio / Saída TR",
+      "target": "Palácio Balcão",
+      "yaw": 163.6,
+      "pitch": 6.8,
+      "desc": "Em pé em cima das caixas de madeira superiores do Tetris dominando o Balcão do Palácio com mira na cabeça."
+    },
+    "secondary_aims": [
+      {
+        "name": "Subida da Rampa A",
+        "target": "Rampa A Caverna",
+        "yaw": 115.0,
+        "pitch": 0.0,
+        "desc": "Visão privilegiada da cabeça dos TRs subindo a rampa."
+      },
+      {
+        "name": "Cabecinha / Stairs",
+        "target": "Cabecinha",
+        "yaw": -155.0,
+        "pitch": 0.0,
+        "desc": "Controle de retaguarda contra CT."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Areia (#53) e Cabecinha (#23)",
+      "target": "Domínio Vertical Absoluto de A",
+      "yaw": 163.6,
+      "desc": "Tetris no topo atira por cima enquanto a Areia atira por baixo pela madeira."
+    },
+    "fallback_route": {
+      "destination": "Drop para o chão do Tetris / Sanduíche",
+      "target_coords": [
+        -280.0,
+        -1650.0
+      ],
+      "desc": "Pular imediatamente das caixas para o chão quebrando a linha de tiro do Balcão."
+    },
+    "danger": "Ângulo exposto para múltiplos lados se houver invasão simultânea.",
+    "objective": "Controlar as duas entradas de A com extrema vantagem de altura."
+  },
+  {
+    "num": 48,
+    "id": "a_tetris_corner_ramp_palace",
+    "name": "Canto do Tetris - Marcação Caverna & Palácio",
+    "side": "AMBOS",
+    "sector": "Bombsite A",
+    "group": "Bomb A - Âncoras & Pós-Plant",
+    "coords": [
+      -305.7,
+      -1606.7,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Paredão de madeira do Tetris e quina de pedra.",
+    "primary_aim": {
+      "name": "Subida da Rampa A / Caverna",
+      "target": "Rampa A Caverna",
+      "yaw": 2.8,
+      "pitch": 5.5,
+      "desc": "Em pé no canto do Tetris cravando a mira na boca da rampa com cover total nas costas."
+    },
+    "secondary_aims": [
+      {
+        "name": "Balcão do Palácio",
+        "target": "Palácio Balcão",
+        "yaw": 75.0,
+        "pitch": 8.0,
+        "desc": "Elevação de mira para o balcão superior."
+      },
+      {
+        "name": "Default Plant A",
+        "target": "Default Plant A",
+        "yaw": -75.0,
+        "pitch": 0.0,
+        "desc": "Transição para conter plant ou defuse."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Areia (#53) e Firebox (#28)",
+      "target": "Crossfire na Subida da Rampa A",
+      "yaw": 2.8,
+      "desc": "O inimigo que sobe a rampa toma tiro frontal do Tetris e cruzado da Areia."
+    },
+    "fallback_route": {
+      "destination": "Recuo para trás da Madeira do Tetris / Sanduíche",
+      "target_coords": [
+        -350.0,
+        -1650.0
+      ],
+      "desc": "Dar 2 passos para a esquerda entrando no abrigo do Sanduíche."
+    },
+    "danger": "Molotov comum jogado no Tetris da rampa.",
+    "objective": "Travar a rampa a curta distância com cover de alta solidez."
+  },
+  {
+    "num": 49,
+    "id": "a_default_plant_headshot",
+    "name": "Caixa Default A - Ponto de Plant & Headglitch",
+    "side": "AMBOS",
+    "sector": "Bombsite A",
+    "group": "Bomb A - Âncoras & Pós-Plant",
+    "coords": [
+      -632.7,
+      -2183.1,
+      -180.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Caixa central do plant default de A.",
+    "primary_aim": {
+      "name": "Subida da Rampa A / Caverna",
+      "target": "Rampa A Caverna",
+      "yaw": 36.2,
+      "pitch": -0.8,
+      "desc": "Em pé usando o headglitch da caixa do default cravando quem avança da Rampa."
+    },
+    "secondary_aims": [
+      {
+        "name": "Saída do Palácio",
+        "target": "Palácio Balcão",
+        "yaw": 78.0,
+        "pitch": 5.0,
+        "desc": "Checagem do balcão superior."
+      },
+      {
+        "name": "Conector / Jungle",
+        "target": "Conector A",
+        "yaw": -35.0,
+        "pitch": 0.0,
+        "desc": "Controle de rotação CT."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Sanduíche (#53) e Cabecinha (#23)",
+      "target": "Trava Central do Bomb Site A",
+      "yaw": 36.2,
+      "desc": "Crossfire com Sanduíche cobrindo a C4 de múltiplos lados."
+    },
+    "fallback_route": {
+      "destination": "Agachamento atrás da Caixa / Recuo para CT",
+      "target_coords": [
+        -700.0,
+        -2250.0
+      ],
+      "desc": "Agachar completamente atrás da madeira para iniciar defuse ou recuar para CT."
+    },
+    "danger": "Spam varado através das caixas do default.",
+    "objective": "Ponto oficial de plant da C4 ou contestação de retake em headshot angle."
+  },
+  {
+    "num": 50,
+    "id": "tr_a_ramp_staging_wait",
+    "name": "Rampa A Caverna - Staging TR Protegido",
+    "side": "TR",
+    "sector": "Rampa A",
+    "group": "Rampa A",
+    "coords": [
+      320.0,
+      -1590.0,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Paredão maciço de pedra da Caverna A.",
+    "primary_aim": {
+      "name": "Abertura Caverna / Ticket",
+      "target": "Abertura Caverna",
+      "yaw": -155.0,
+      "pitch": 0.0,
+      "desc": "Em pé protegido no fundo da caverna aguardando o lançamento das smokes de Cabecinha e CT."
+    },
+    "secondary_aims": [
+      {
+        "name": "Cabecinha (Stairs)",
+        "target": "Cabecinha",
+        "yaw": 165.0,
+        "pitch": 0.0,
+        "desc": "Alinhamento prévio para avanço coordenado."
+      },
+      {
+        "name": "Balcão do Palácio",
+        "target": "Palácio Balcão",
+        "yaw": 110.0,
+        "pitch": 0.0,
+        "desc": "Sincronização com os aliados no palácio."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Palácio Deep (#31)",
+      "target": "Sincronização da Invasão TR no Bomb A",
+      "yaw": -155.0,
+      "desc": "Aguardam juntos os utilitários antes de disparar a entrada combinada."
+    },
+    "fallback_route": {
+      "destination": "Recuo para o Pátio de Spawn TR",
+      "target_coords": [
+        450.0,
+        -1500.0
+      ],
+      "desc": "Recuo em linha reta pelo túnel em caso de rush agressivo de CT na caverna."
+    },
+    "danger": "HE ou molotov profundo de CT na Caverna.",
+    "objective": "Staging TR protegido na Caverna/Rampa A antes da execução."
+  },
+  {
+    "num": 51,
+    "id": "ct_retake_a_ramp_hold_sand_pit",
+    "name": "Entrada Caverna / Rampa - Marcação Areia (Sanduíche)",
+    "side": "AMBOS",
+    "sector": "Rampa A",
+    "group": "Retomada CT A (Retake A)",
+    "coords": [
+      5.3,
+      -1442.7,
+      -170.1
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Paredão de pedra da boca da caverna.",
+    "primary_aim": {
+      "name": "Vala da Areia / Embaixo do Palácio",
+      "target": "Areia Palácio",
+      "yaw": -94.6,
+      "pitch": -0.3,
+      "desc": "Em pé na descida da rampa mirando para a depressão de terreno da Areia embaixo do Palácio."
+    },
+    "secondary_aims": [
+      {
+        "name": "Tetris / Sanduíche",
+        "target": "Tetris Bomb A",
+        "yaw": -155.0,
+        "pitch": 0.0,
+        "desc": "Checagem do vão do tetris."
+      },
+      {
+        "name": "Balcão do Palácio",
+        "target": "Palácio Balcão",
+        "yaw": -45.0,
+        "pitch": 10.0,
+        "desc": "Vigilância contra queda do balcão."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Caixa Tripla (#29)",
+      "target": "Varredura da Areia e Fundo de A",
+      "yaw": -94.6,
+      "desc": "Neutraliza defensores escondidos na Areia que tentam pegar as costas do time."
+    },
+    "fallback_route": {
+      "destination": "Recuo para a proteção da Pedra da Rampa A",
+      "target_coords": [
+        150.0,
+        -1500.0
+      ],
+      "desc": "Dar 2 passos para a direita quebrando visão da Areia."
+    },
+    "danger": "Inimigo escondido atrás da madeira da Areia pronto para disparar.",
+    "objective": "Limpar o esconderijo da Areia durante o avanço para o Bomb A."
+  },
+  {
+    "num": 52,
+    "id": "mid_connector_top_hold_underpass",
+    "name": "Conector Superior - Marcação Saída do Rato (Underpass)",
+    "side": "CT",
+    "sector": "Conector",
+    "group": "Meio & Conector",
+    "coords": [
+      -520.1,
+      -1034.8,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Parede de alvenaria e degraus do topo do Conector.",
+    "primary_aim": {
+      "name": "Entrada do Rato / Underpass",
+      "target": "Underpass Rato",
+      "yaw": 130.5,
+      "pitch": 12.3,
+      "desc": "Em pé no topo do Conector cravando a boca do túnel do Rato para anular lurkers."
+    },
+    "secondary_aims": [
+      {
+        "name": "Top Mid",
+        "target": "Top Mid Caixas",
+        "yaw": 50.0,
+        "pitch": 0.0,
+        "desc": "Transição para conter rush pelo meio aberto."
+      },
+      {
+        "name": "Janela do Meio",
+        "target": "Janela Meio",
+        "yaw": -75.0,
+        "pitch": 0.0,
+        "desc": "Apoio defensivo para o sniper."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Janela Meio (#33)",
+      "target": "Trava de Flanco do Rato",
+      "yaw": 130.5,
+      "desc": "Protege as costas da Janela contra qualquer jogador saindo do subterrâneo."
+    },
+    "fallback_route": {
+      "destination": "Recuo para as Escadas do Conector em direção a A",
+      "target_coords": [
+        -600.0,
+        -1100.0
+      ],
+      "desc": "Descer os degraus em direção ao Bomb A."
+    },
+    "danger": "Flashbang pop jogada de dentro do túnel do rato.",
+    "objective": "Anular totalmente o flanco subterrâneo do Rato protegendo o Meio."
+  },
+  {
+    "num": 53,
+    "id": "ct_a_sand_pit_under_palace_hold_caverna",
+    "name": "Areia (Embaixo do Palácio) - Marcação Tetris & Caverna",
+    "side": "CT",
+    "sector": "Bombsite A",
+    "group": "Bomb A - Âncoras & Pós-Plant",
+    "coords": [
+      -17.6,
+      -2003.5,
+      -168.0
+    ],
+    "stance": "Em pé",
+    "recommended_stance": "AGGRESSIVE_POKE",
+    "cover": "Estrutura de esteios de madeira do Palácio e vala da Areia.",
+    "primary_aim": {
+      "name": "Fresta da Madeira / Tetris e Subida da Caverna",
+      "target": "Tetris e Rampa A",
+      "yaw": 92.9,
+      "pitch": 0.1,
+      "desc": "Em pé na vala da Areia com a mira alinhada reta na fresta dos esteios de madeira apontando direto para o Tetris e boca da Caverna."
+    },
+    "secondary_aims": [
+      {
+        "name": "Cabecinha / Stairs",
+        "target": "Cabecinha",
+        "yaw": 145.0,
+        "pitch": 0.0,
+        "desc": "Checagem de suporte para aliados recuando da cabecinha."
+      },
+      {
+        "name": "Default Plant A",
+        "target": "Default Plant A",
+        "yaw": -85.0,
+        "pitch": 0.0,
+        "desc": "Espiar defuse ou plant default em caso de invasão."
+      }
+    ],
+    "support_aim": {
+      "partner_spot": "Tetris (#48) e Cabecinha (#23)",
+      "target": "Cruzamento Fatal na Passagem da Rampa para o Bomb",
+      "yaw": 92.9,
+      "desc": "Fatiamento sincronizado: quem passa da rampa toma tiro frontal do Tetris e tiro cruzado reto da Areia através da fresta."
+    },
+    "fallback_route": {
+      "destination": "Recuo para trás dos Esteios de Madeira sob o Palácio",
+      "target_coords": [
+        -50.0,
+        -2100.0
+      ],
+      "desc": "Agachar e recuar 2 metros para trás dos caibros grossos de madeira do Palácio."
+    },
+    "danger": "Smokes e HEs de TR jogadas da Caverna na Areia.",
+    "objective": "Âncora primordial de A dentro da Areia (Embaixo do Palácio), protegida do meio e cravada reto no Tetris."
+  }
+]

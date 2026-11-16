@@ -1,0 +1,54 @@
+{
+ "scripts": [
+  {
+   "script": "validate_skill_bucket.py",
+   "exit_code": 0,
+   "cases_ok": 14,
+   "cases_total": 14,
+   "ratio": "(14/14)",
+   "declared_cases": 14,
+   "all_ok": true
+  },
+  {
+   "script": "verify_archive.py",
+   "exit_code": 0,
+   "cases_ok": 8,
+   "cases_total": 8,
+   "ratio": "(8/8)",
+   "declared_cases": 8,
+   "all_ok": true
+  },
+  {
+   "script": "extract_demo.py",
+   "exit_code": 0,
+   "cases_ok": 8,
+   "cases_total": 8,
+   "ratio": "(8/8)",
+   "declared_cases": 8,
+   "all_ok": true
+  },
+  {
+   "script": "deduplicate_demo.py",
+   "exit_code": 0,
+   "cases_ok": 6,
+   "cases_total": 6,
+   "ratio": "(6/6)",
+   "declared_cases": 6,
+   "all_ok": true
+  },
+  {
+   "script": "resume_download.py",
+   "exit_code": 0,
+   "cases_ok": 4,
+   "cases_total": 4,
+   "ratio": "(4/4)",
+   "declared_cases": 4,
+   "all_ok": true
+  }
+ ],
+ "totals": {
+  "cases_ok": 40,
+  "cases_total": 40,
+  "ratio": "(40/40)"
+ }
+}

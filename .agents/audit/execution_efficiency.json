@@ -1,0 +1,27 @@
+{
+  "schema": "csbot.execution_efficiency.v1",
+  "governance_version": "1.2.0-lean",
+  "task_id": "GOVERNANCE_1_2_LEAN_MIGRATION",
+  "risk_tier": "Tier 2",
+  "files_read": 8,
+  "unique_files_read": 8,
+  "repeated_reads": 0,
+  "bytes_read": 42150,
+  "subagents_spawned": 0,
+  "nested_subagents_blocked": 0,
+  "tool_calls": 24,
+  "tests_executed": 30,
+  "test_files": 1,
+  "reports_created": 1,
+  "elapsed_time": "180s",
+  "cache_hits": 1,
+  "cache_misses": 1,
+  "warnings": 0,
+  "blockers": 0,
+  "goals_achieved": {
+    "single_agent_first": true,
+    "zero_nested_subagents": true,
+    "zero_redundant_reads": true,
+    "smart_testing_active": true
+  }
+}

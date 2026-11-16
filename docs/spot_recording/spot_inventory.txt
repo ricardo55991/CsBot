@@ -1,0 +1,53 @@
+#01 | id=b_short_pillar_hold_apps | side=AMBOS | sector=Bombsite B | group=Bomb B - Marcação & Plant | name=Pilar do L (Arco) - Marcação Tapete
+#02 | id=b_short_pillar_bomb_control | side=AMBOS | sector=Bombsite B | group=Bomb B - Marcação & Plant | name=Pilar do L (Arco) - Controle de Inimigos no Bomb
+#03 | id=b_forest_bench_hold_apps | side=AMBOS | sector=Bombsite B | group=Bomb B - Marcação & Plant | name=Forest / Banco B - Marcação Boca do Tapete
+#04 | id=b_forest_bench_bomb_site | side=AMBOS | sector=Bombsite B | group=Bomb B - Marcação & Plant | name=Forest / Banco B - Controle de Bomb (Inimigos Caídos)
+#05 | id=b_van_behind_bomb_hold | side=TR | sector=Bombsite B | group=Bomb B - Marcação & Plant | name=Atrás da Van - Marcação Bomb / Defuse Denial
+#06 | id=b_van_behind_apps_hold | side=CT | sector=Bombsite B | group=Bomb B - Marcação & Plant | name=Em Cima da Van - Marcação Saída do Tapete
+#07 | id=b_site_default_plant_box | side=AMBOS | sector=Bombsite B | group=Bomb B - Marcação & Plant | name=Caixa Central Default B (Plant Box)
+#08 | id=ct_retake_b_kitchen_entry | side=CT | sector=Mercado B | group=Retomada CT B (Retake B) | name=Entrada Mercado - Checagem Interior da Cozinha
+#09 | id=ct_retake_b_market_window_site | side=CT | sector=Mercado B | group=Retomada CT B (Retake B) | name=Mercado Janela - Verificação do Bomb Site
+#10 | id=ct_retake_b_market_window_tapete | side=CT | sector=Mercado B | group=Retomada CT B (Retake B) | name=Mercado Janela - Anti-Sniper Janela do Tapete
+#11 | id=ct_retake_b_door_exit_straight | side=CT | sector=Bombsite B | group=Retomada CT B (Retake B) | name=Saída Mercado - Abertura Reta (Default / Van)
+#12 | id=ct_retake_b_door_exit_close_left | side=CT | sector=Bombsite B | group=Retomada CT B (Retake B) | name=Saída Mercado - Limpeza Canto Esquerdo (Lixo / Forest)
+#13 | id=ct_retake_b_door_exit_right_short | side=CT | sector=Bombsite B | group=Retomada CT B (Retake B) | name=Saída Mercado - Limpeza Bomb Direito & L (Catwalk)
+#14 | id=tr_b_tapete_window_market_awp | side=TR | sector=Apartamentos B | group=Pós-Plant & Marcação TR B | name=Janela do Tapete - AWP cravado no Mercado
+#15 | id=tr_b_tapete_window_bomb_curve | side=TR | sector=Apartamentos B | group=Pós-Plant & Marcação TR B | name=Janela do Tapete - Ângulo Curvado no Plant Default
+#16 | id=tr_b_forest_hold_short | side=TR | sector=Bombsite B | group=Pós-Plant & Marcação TR B | name=Forest TR - Marcação Retomada do L / Arco
+#17 | id=tr_b_forest_hold_market | side=TR | sector=Bombsite B | group=Pós-Plant & Marcação TR B | name=Forest TR - Marcação Retomada do Mercado
+#18 | id=ct_retake_a_market_to_ctspawn | side=CT | sector=Base CT | group=Retomada CT A (Retake A) | name=Saída Mercado para Base CT - Travessia de Rotação
+#19 | id=ct_retake_a_vents_entry_jungle | side=CT | sector=Duto / Vents | group=Retomada CT A (Retake A) | name=Entrada no Duto (Vents) - Checagem da Jungle
+#20 | id=ct_retake_a_mid_clear_under_window | side=CT | sector=Meio | group=Retomada CT A (Retake A) | name=Entrada Meio - Checagem Embaixo da Janela (Moscou)
+#21 | id=ct_retake_a_jungle_entry_site | side=CT | sector=Jungle | group=Retomada CT A (Retake A) | name=Entrada na Jungle - Marcação Bomb A (Default / Triple)
+#22 | id=ct_retake_a_jungle_entry_stairs | side=CT | sector=Jungle | group=Retomada CT A (Retake A) | name=Entrada na Jungle - Checagem da Cabecinha (Stairs)
+#23 | id=ct_retake_a_stairs_clear_site | side=CT | sector=Cabecinha | group=Retomada CT A (Retake A) | name=Cabecinha (Stairs) - Abertura Bomb A & Palácio
+#24 | id=ct_retake_a_ticket_hold_ramp | side=CT | sector=Base CT / Ticket | group=Retomada CT A (Retake A) | name=Base CT / Ticket - Marcação Caverna / Rampa A (AWP)
+#25 | id=ct_retake_a_ramp_clear_site | side=AMBOS | sector=Rampa A | group=Retomada CT A (Retake A) | name=Entrada Caverna / Rampa - Abertura Bomb A
+#26 | id=ct_retake_a_ramp_clear_sandwich | side=AMBOS | sector=Rampa A | group=Retomada CT A (Retake A) | name=Entrada Caverna / Rampa - Marcação Tetris
+#27 | id=ct_retake_a_ramp_clear_tetris | side=AMBOS | sector=Rampa A | group=Retomada CT A (Retake A) | name=Entrada Caverna / Rampa - Checagem Tetris
+#28 | id=a_firebox_ninja_hold | side=AMBOS | sector=Bombsite A | group=Bomb A - Âncoras & Pós-Plant | name=Firebox / Canto do Ninja (One & Done)
+#29 | id=a_triple_box_hold | side=AMBOS | sector=Bombsite A | group=Bomb A - Âncoras & Pós-Plant | name=Caixa Tripla A (Triple Box Anchor)
+#30 | id=a_palace_balcony_tr | side=TR | sector=Palácio A | group=Bomb A - Âncoras & Pós-Plant | name=Palácio Balcão - Domínio Superior A
+#31 | id=a_palace_deep_room | side=TR | sector=Palácio A | group=Bomb A - Âncoras & Pós-Plant | name=Sala do Palácio Deep (Pillars / Staging)
+#32 | id=a_shadow_under_palace | side=AMBOS | sector=Bombsite A | group=Bomb A - Âncoras & Pós-Plant | name=Debaixo do Palácio (Shadow / Close Poke)
+#33 | id=mid_window_right_deep | side=CT | sector=Janela do Meio | group=Meio & Conector | name=Janela Meio - Lado Direito / Deep (AWP Angle)
+#34 | id=mid_connector_top_stairs | side=CT | sector=Conector | group=Meio & Conector | name=Conector Superior - Degrau (Headshot Angle)
+#35 | id=mid_connector_bottom | side=AMBOS | sector=Conector | group=Meio & Conector | name=Conector Inferior - Passagem Z (Bottom Connector)
+#36 | id=mid_top_mid_boxes | side=TR | sector=Top Mid | group=Meio & Conector | name=Top Mid - Caixas TR (Boxes Top Mid)
+#37 | id=mid_underground_sub | side=AMBOS | sector=Underground | group=Meio & Conector | name=Underground / Rato (Lower Mid TR)
+#38 | id=mid_catwalk_short | side=AMBOS | sector=Catwalk / Short | group=Meio & Conector | name=Catwalk / Short B (Esquina do L)
+#39 | id=tr_b_apps_house_staging | side=TR | sector=Apartamentos B | group=Apartamentos B | name=Apartamentos B - Entrada / Sofá (Staging Inicial)
+#40 | id=tr_b_apps_kitchen_control | side=AMBOS | sector=Apartamentos B | group=Apartamentos B | name=Apartamentos B - Cozinha do Tapete (Avanço B)
+#41 | id=ct_b_edward_under_apps | side=AMBOS | sector=Bombsite B | group=Bomb B - Marcação & Plant | name=Canto Edward - Embaixo do Tapete B
+#42 | id=ct_b_empty_pillar_jail | side=AMBOS | sector=Bombsite B | group=Bomb B - Marcação & Plant | name=Pilar Vazio / Jail - Fundo Recuado B
+#43 | id=ct_b_short_arch_hold_mid | side=CT | sector=Catwalk / Short | group=Bomb B - Marcação & Plant | name=Quina do Arco do L - Defesa 2-1-2
+#44 | id=mid_window_left_awp | side=CT | sector=Janela do Meio | group=Meio & Conector | name=Janela Meio - Quina Esquerda (Pixel AWP)
+#45 | id=mid_chair_delpan_hold | side=AMBOS | sector=Meio | group=Meio & Conector | name=Cadeira / Delpan - Trava Meio & Rato
+#46 | id=mid_ladder_room_control | side=AMBOS | sector=Ladder Room | group=Meio & Conector | name=Sala da Escada (Ladder Room Control)
+#47 | id=a_tetris_top_control | side=AMBOS | sector=Bombsite A | group=Bomb A - Âncoras & Pós-Plant | name=Em cima do Tetris - Domínio Superior A
+#48 | id=a_tetris_corner_ramp_palace | side=AMBOS | sector=Bombsite A | group=Bomb A - Âncoras & Pós-Plant | name=Canto do Tetris - Marcação Caverna & Palácio
+#49 | id=a_default_plant_headshot | side=AMBOS | sector=Bombsite A | group=Bomb A - Âncoras & Pós-Plant | name=Caixa Default A - Ponto de Plant & Headglitch
+#50 | id=tr_a_ramp_staging_wait | side=TR | sector=Rampa A | group=Rampa A | name=Rampa A Caverna - Staging TR Protegido
+#51 | id=ct_retake_a_ramp_hold_sand_pit | side=AMBOS | sector=Rampa A | group=Retomada CT A (Retake A) | name=Entrada Caverna / Rampa - Marcação Areia (Sanduíche)
+#52 | id=mid_connector_top_hold_underpass | side=CT | sector=Conector | group=Meio & Conector | name=Conector Superior - Marcação Saída do Rato (Underpass)
+#53 | id=ct_a_sand_pit_under_palace_hold_caverna | side=CT | sector=Bombsite A | group=Bomb A - Âncoras & Pós-Plant | name=Areia (Embaixo do Palácio) - Marcação Subida da Caverna

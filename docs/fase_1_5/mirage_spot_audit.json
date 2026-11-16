@@ -1,0 +1,5835 @@
+{
+  "generated_at": "2026-11-04 16:29:59",
+  "map_profile_file": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MapProfiles\\de_mirage.json",
+  "spots": 45,
+  "classification_counts": {
+    "WRONG_SECTOR": 19,
+    "VALID": 7,
+    "SMALL_ADJUSTMENT": 12,
+    "INSUFFICIENT_EVIDENCE": 6,
+    "WRONG_HEIGHT": 1
+  },
+  "method": {
+    "place_model": "kNN k=30 sobre 420739 amostras last_place_name (8 .dem), metrica dx^2+dy^2+(2dz)^2",
+    "walkability": "proxy empirico: 99617 voxels 16x16x32u ocupados por pes de jogadores vivos; NAO e projecao em NavMesh",
+    "hold_events": "69320 eventos (v2d<35.0, >= 1.5s, raio<= 64.0u); 446 descartados por deriva",
+    "clusters": "picos de densidade (celula 24.0u, faixa Z 56.0u, min 60), atribuicao <= 120.0u com dz*2",
+    "role_filter": "somente AWP (feature arma); papeis reais ausentes nas npz (role_code sintetico)",
+    "phase_filter": "tempo desde o reset do round (freeze removido); bomb_planted ausente nas npz"
+  },
+  "audit": [
+    {
+      "SpotId": "ct_a_ticket_passive",
+      "Name": "Ticket / Cabine CT",
+      "CurrentPosition": [
+        -1930.0,
+        -680.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteA",
+        "CTSpawn"
+      ],
+      "ActualValvePlace": "Shop",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:PASSIVE_HOLD",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Shop (pureza 1.0), esperado=['BombsiteA', 'CTSpawn']",
+      "ProposedPosition": [
+        -1011.5,
+        -2479.9,
+        -168.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 2020.7,
+      "EvidenceCount": 1353,
+      "DemoDiversity": 336,
+      "DemoDiversityPct": 75.7,
+      "PlayerDiversity": 499,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 4.0,
+      "Confidence": 0.945,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 125,
+        "demos": 86,
+        "players": 88,
+        "dwell": 3.06
+      },
+      "Candidates": [
+        {
+          "cluster_id": 50,
+          "medoid": [
+            -1011.5,
+            -2479.9,
+            -168.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 1353,
+            "demos": 336,
+            "players": 499,
+            "dwell": 4.0
+          },
+          "distance_from_current_u": 2020.8,
+          "cluster_confidence": 0.816,
+          "score": 762.72
+        },
+        {
+          "cluster_id": 54,
+          "medoid": [
+            -842.5,
+            -2253.7,
+            -174.8
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 866,
+            "demos": 293,
+            "players": 400,
+            "dwell": 3.16
+          },
+          "distance_from_current_u": 1913.1,
+          "cluster_confidence": 0.758,
+          "score": 643.87
+        },
+        {
+          "cluster_id": 47,
+          "medoid": [
+            -1072.6,
+            -2326.9,
+            -168.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 333,
+            "demos": 179,
+            "players": 218,
+            "dwell": 2.88
+          },
+          "distance_from_current_u": 1856.8,
+          "cluster_confidence": 0.708,
+          "score": 382.16
+        },
+        {
+          "cluster_id": 144,
+          "medoid": [
+            -925.3,
+            -2518.6,
+            -105.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 188,
+            "demos": 112,
+            "players": 122,
+            "dwell": 5.47
+          },
+          "distance_from_current_u": 2098.1,
+          "cluster_confidence": 0.805,
+          "score": 252.7
+        }
+      ],
+      "SetposCurrent": "setpos -1930.0 -680.0 -160.0; setang 0 60.0 0",
+      "SetposProposed": "setpos -1011.5 -2479.9 -168.0; setang 0 60.0 0"
+    },
+    {
+      "SpotId": "ct_a_firebox_oneanddone",
+      "Name": "Firebox (One & Done)",
+      "CurrentPosition": [
+        -1050.0,
+        -240.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteA"
+      ],
+      "ActualValvePlace": "Ladder",
+      "ActualPlacePurity": 0.6,
+      "TeamSide": "CT",
+      "Usage": "Hold:ONE_AND_DONE",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -368,
+        -336,
+        -304,
+        -144,
+        -48,
+        -16,
+        16
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Ladder (pureza 0.6), esperado=['BombsiteA']",
+      "ProposedPosition": [
+        -284.2,
+        -2399.9,
+        -164.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 2291.6,
+      "EvidenceCount": 180,
+      "DemoDiversity": 128,
+      "DemoDiversityPct": 28.8,
+      "PlayerDiversity": 140,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 14.56,
+      "Confidence": 0.769,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 24,
+        "demos": 18,
+        "players": 18,
+        "dwell": 2.62
+      },
+      "Candidates": [
+        {
+          "cluster_id": 70,
+          "medoid": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 1004,
+            "demos": 301,
+            "players": 445,
+            "dwell": 3.38
+          },
+          "distance_from_current_u": 2066.6,
+          "cluster_confidence": 0.807,
+          "score": 679.88
+        },
+        {
+          "cluster_id": 71,
+          "medoid": [
+            -284.2,
+            -2399.9,
+            -164.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 180,
+            "demos": 128,
+            "players": 140,
+            "dwell": 14.56
+          },
+          "distance_from_current_u": 2291.7,
+          "cluster_confidence": 0.831,
+          "score": 292.96
+        },
+        {
+          "cluster_id": 72,
+          "medoid": [
+            -203.0,
+            -2335.5,
+            -168.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 39,
+            "demos": 27,
+            "players": 27,
+            "dwell": 3.88
+          },
+          "distance_from_current_u": 2260.3,
+          "cluster_confidence": 0.537,
+          "score": 51.87
+        },
+        {
+          "cluster_id": 67,
+          "medoid": [
+            -439.8,
+            -2337.7,
+            -168.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 272,
+            "demos": 145,
+            "players": 175,
+            "dwell": 2.78
+          },
+          "distance_from_current_u": 2184.7,
+          "cluster_confidence": 0.722,
+          "score": 86.86
+        }
+      ],
+      "SetposCurrent": "setpos -1050.0 -240.0 -160.0; setang 0 110.0 0",
+      "SetposProposed": "setpos -284.2 -2399.9 -164.0; setang 0 110.0 0"
+    },
+    {
+      "SpotId": "ct_a_ninja_hide",
+      "Name": "Ninja / Atrás da Tripla",
+      "CurrentPosition": [
+        -1320.0,
+        -290.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteA"
+      ],
+      "ActualValvePlace": "SnipersNest",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:PASSIVE_HOLD",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -144,
+        -112
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=SnipersNest (pureza 1.0), esperado=['BombsiteA']",
+      "ProposedPosition": [
+        -439.8,
+        -2337.7,
+        -168.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 2228.9,
+      "EvidenceCount": 272,
+      "DemoDiversity": 145,
+      "DemoDiversityPct": 32.7,
+      "PlayerDiversity": 175,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.78,
+      "Confidence": 0.779,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 70,
+          "medoid": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 1004,
+            "demos": 301,
+            "players": 445,
+            "dwell": 3.38
+          },
+          "distance_from_current_u": 2136.5,
+          "cluster_confidence": 0.807,
+          "score": 679.88
+        },
+        {
+          "cluster_id": 67,
+          "medoid": [
+            -439.8,
+            -2337.7,
+            -168.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 272,
+            "demos": 145,
+            "players": 175,
+            "dwell": 2.78
+          },
+          "distance_from_current_u": 2228.9,
+          "cluster_confidence": 0.722,
+          "score": 312.11
+        },
+        {
+          "cluster_id": 71,
+          "medoid": [
+            -284.2,
+            -2399.9,
+            -164.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 180,
+            "demos": 128,
+            "players": 140,
+            "dwell": 14.56
+          },
+          "distance_from_current_u": 2350.5,
+          "cluster_confidence": 0.831,
+          "score": 292.96
+        },
+        {
+          "cluster_id": 61,
+          "medoid": [
+            -710.8,
+            -2129.6,
+            -180.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 741,
+            "demos": 268,
+            "players": 389,
+            "dwell": 2.75
+          },
+          "distance_from_current_u": 1938.3,
+          "cluster_confidence": 0.783,
+          "score": 83.68
+        }
+      ],
+      "SetposCurrent": "setpos -1320.0 -290.0 -160.0; setang 0 120.0 0",
+      "SetposProposed": "setpos -439.8 -2337.7 -168.0; setang 0 120.0 0"
+    },
+    {
+      "SpotId": "ct_a_triple_jiggle",
+      "Name": "Caixa Tripla (Jiggle)",
+      "CurrentPosition": [
+        -1150.0,
+        -460.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteA"
+      ],
+      "ActualValvePlace": "SnipersNest",
+      "ActualPlacePurity": 0.9,
+      "TeamSide": "CT",
+      "Usage": "Hold:JIGGLE_INFO",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80,
+        -48,
+        16,
+        48
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=SnipersNest (pureza 0.9), esperado=['BombsiteA']",
+      "ProposedPosition": [
+        -710.8,
+        -2129.6,
+        -180.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 1726.5,
+      "EvidenceCount": 741,
+      "DemoDiversity": 268,
+      "DemoDiversityPct": 60.4,
+      "PlayerDiversity": 389,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.75,
+      "Confidence": 0.935,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 467,
+        "demos": 224,
+        "players": 302,
+        "dwell": 3.19
+      },
+      "Candidates": [
+        {
+          "cluster_id": 61,
+          "medoid": [
+            -710.8,
+            -2129.6,
+            -180.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 741,
+            "demos": 268,
+            "players": 389,
+            "dwell": 2.75
+          },
+          "distance_from_current_u": 1726.9,
+          "cluster_confidence": 0.783,
+          "score": 597.3
+        },
+        {
+          "cluster_id": 66,
+          "medoid": [
+            -418.8,
+            -2010.5,
+            -180.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 55,
+            "demos": 40,
+            "players": 43,
+            "dwell": 2.62
+          },
+          "distance_from_current_u": 1714.7,
+          "cluster_confidence": 0.6,
+          "score": 80.0
+        },
+        {
+          "cluster_id": 65,
+          "medoid": [
+            -497.7,
+            -1999.1,
+            -180.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 19,
+            "demos": 16,
+            "players": 16,
+            "dwell": 2.19
+          },
+          "distance_from_current_u": 1672.1,
+          "cluster_confidence": 0.624,
+          "score": 32.48
+        },
+        {
+          "cluster_id": 70,
+          "medoid": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 1004,
+            "demos": 301,
+            "players": 445,
+            "dwell": 3.38
+          },
+          "distance_from_current_u": 1906.8,
+          "cluster_confidence": 0.807,
+          "score": 180.48
+        }
+      ],
+      "SetposCurrent": "setpos -1150.0 -460.0 -160.0; setang 0 100.0 0",
+      "SetposProposed": "setpos -710.8 -2129.6 -180.0; setang 0 100.0 0"
+    },
+    {
+      "SpotId": "ct_a_stairs_cross",
+      "Name": "Degraus / Cabecinha",
+      "CurrentPosition": [
+        -1100.0,
+        -620.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Stairs"
+      ],
+      "ActualValvePlace": "SnipersNest",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:PASSIVE_HOLD",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -272,
+        -240,
+        -208,
+        -176,
+        -144,
+        -112,
+        -80,
+        -48,
+        -16,
+        80
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=SnipersNest (pureza 1.0), esperado=['Stairs']",
+      "ProposedPosition": [
+        -497.8,
+        -1309.0,
+        -160.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 915.1,
+      "EvidenceCount": 795,
+      "DemoDiversity": 298,
+      "DemoDiversityPct": 67.1,
+      "PlayerDiversity": 441,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.5,
+      "Confidence": 0.916,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 110,
+        "demos": 84,
+        "players": 92,
+        "dwell": 2.59
+      },
+      "Candidates": [
+        {
+          "cluster_id": 63,
+          "medoid": [
+            -497.8,
+            -1309.0,
+            -160.0
+          ],
+          "valve_place": "Stairs",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 795,
+            "demos": 298,
+            "players": 441,
+            "dwell": 2.5
+          },
+          "distance_from_current_u": 915.1,
+          "cluster_confidence": 0.72,
+          "score": 640.7
+        },
+        {
+          "cluster_id": 281,
+          "medoid": [
+            -504.7,
+            -1615.2,
+            -40.0
+          ],
+          "valve_place": "Stairs",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 293,
+            "demos": 172,
+            "players": 197,
+            "dwell": 3.06
+          },
+          "distance_from_current_u": 1184.2,
+          "cluster_confidence": 0.782,
+          "score": 383.13
+        },
+        {
+          "cluster_id": 160,
+          "medoid": [
+            -496.1,
+            -1373.0,
+            -130.3
+          ],
+          "valve_place": "Stairs",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 135,
+            "demos": 86,
+            "players": 102,
+            "dwell": 2.25
+          },
+          "distance_from_current_u": 967.1,
+          "cluster_confidence": 0.711,
+          "score": 183.93
+        },
+        {
+          "cluster_id": 219,
+          "medoid": [
+            -496.1,
+            -1435.3,
+            -80.5
+          ],
+          "valve_place": "Stairs",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 98,
+            "demos": 75,
+            "players": 81,
+            "dwell": 2.19
+          },
+          "distance_from_current_u": 1027.0,
+          "cluster_confidence": 0.643,
+          "score": 154.03
+        }
+      ],
+      "SetposCurrent": "setpos -1100.0 -620.0 -160.0; setang 0 80.0 0",
+      "SetposProposed": "setpos -497.8 -1309.0 -160.0; setang 0 80.0 0"
+    },
+    {
+      "SpotId": "ct_a_jungle_support",
+      "Name": "Ligação / Jungle",
+      "CurrentPosition": [
+        -1250.0,
+        -780.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Jungle"
+      ],
+      "ActualValvePlace": "SnipersNest",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:PASSIVE_HOLD",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -144,
+        -112,
+        -80
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=SnipersNest (pureza 1.0), esperado=['Jungle']",
+      "ProposedPosition": [
+        -992.1,
+        -1304.9,
+        -155.6
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 584.9,
+      "EvidenceCount": 227,
+      "DemoDiversity": 158,
+      "DemoDiversityPct": 35.6,
+      "PlayerDiversity": 187,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.5,
+      "Confidence": 0.836,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 410,
+        "demos": 229,
+        "players": 304,
+        "dwell": 2.31
+      },
+      "Candidates": [
+        {
+          "cluster_id": 51,
+          "medoid": [
+            -992.1,
+            -1304.9,
+            -155.6
+          ],
+          "valve_place": "Jungle",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 227,
+            "demos": 158,
+            "players": 187,
+            "dwell": 2.5
+          },
+          "distance_from_current_u": 584.9,
+          "cluster_confidence": 0.804,
+          "score": 356.29
+        },
+        {
+          "cluster_id": 48,
+          "medoid": [
+            -1016.2,
+            -1527.6,
+            -163.8
+          ],
+          "valve_place": "Jungle",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 173,
+            "demos": 110,
+            "players": 120,
+            "dwell": 2.38
+          },
+          "distance_from_current_u": 783.3,
+          "cluster_confidence": 0.67,
+          "score": 229.62
+        }
+      ],
+      "SetposCurrent": "setpos -1250.0 -780.0 -160.0; setang 0 70.0 0",
+      "SetposProposed": "setpos -992.1 -1304.9 -155.6; setang 0 70.0 0"
+    },
+    {
+      "SpotId": "ct_a_palace_close_poke",
+      "Name": "Debaixo do Palácio",
+      "CurrentPosition": [
+        -880.0,
+        -320.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteA",
+        "Scaffolding"
+      ],
+      "ActualValvePlace": "Catwalk",
+      "ActualPlacePurity": 0.87,
+      "TeamSide": "CT",
+      "Usage": "Hold:AGGRESSIVE_POKE",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80,
+        -48,
+        -16,
+        16
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Catwalk (pureza 0.87), esperado=['BombsiteA', 'Scaffolding']",
+      "ProposedPosition": [
+        151.9,
+        -1914.1,
+        -168.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 1899.0,
+      "EvidenceCount": 661,
+      "DemoDiversity": 241,
+      "DemoDiversityPct": 54.3,
+      "PlayerDiversity": 318,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.06,
+      "Confidence": 0.935,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 137,
+        "demos": 90,
+        "players": 93,
+        "dwell": 2.69
+      },
+      "Candidates": [
+        {
+          "cluster_id": 75,
+          "medoid": [
+            151.9,
+            -1914.1,
+            -168.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 661,
+            "demos": 241,
+            "players": 318,
+            "dwell": 3.06
+          },
+          "distance_from_current_u": 1899.0,
+          "cluster_confidence": 0.784,
+          "score": 537.43
+        },
+        {
+          "cluster_id": 70,
+          "medoid": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 1004,
+            "demos": 301,
+            "players": 445,
+            "dwell": 3.38
+          },
+          "distance_from_current_u": 1934.0,
+          "cluster_confidence": 0.807,
+          "score": 86.09
+        },
+        {
+          "cluster_id": 167,
+          "medoid": [
+            141.2,
+            -1973.9,
+            -112.8
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 110,
+            "demos": 85,
+            "players": 92,
+            "dwell": 1.88
+          },
+          "distance_from_current_u": 1946.1,
+          "cluster_confidence": 0.635,
+          "score": 54.26
+        },
+        {
+          "cluster_id": 68,
+          "medoid": [
+            -264.0,
+            -1504.0,
+            -164.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 700,
+            "demos": 226,
+            "players": 291,
+            "dwell": 5.12
+          },
+          "distance_from_current_u": 1334.7,
+          "cluster_confidence": 0.862,
+          "score": 43.16
+        }
+      ],
+      "SetposCurrent": "setpos -880.0 -320.0 -160.0; setang 0 140.0 0",
+      "SetposProposed": "setpos 151.9 -1914.1 -168.0; setang 0 140.0 0"
+    },
+    {
+      "SpotId": "ct_mid_window_crouch",
+      "Name": "Janela Meio (Agachado)",
+      "CurrentPosition": [
+        -1380.0,
+        -540.0,
+        -120.0
+      ],
+      "ExpectedValvePlace": [
+        "SnipersNest"
+      ],
+      "ActualValvePlace": "Ladder",
+      "ActualPlacePurity": 0.8,
+      "TeamSide": "CT",
+      "Usage": "Hold:JIGGLE_INFO",
+      "AssociatedBombsite": "Mid",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -112
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Ladder (pureza 0.8), esperado=['SnipersNest']",
+      "ProposedPosition": [
+        -1139.4,
+        -462.3,
+        -168.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 257.4,
+      "EvidenceCount": 588,
+      "DemoDiversity": 256,
+      "DemoDiversityPct": 57.7,
+      "PlayerDiversity": 367,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.0,
+      "Confidence": 0.919,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 45,
+          "medoid": [
+            -1139.4,
+            -462.3,
+            -168.0
+          ],
+          "valve_place": "SnipersNest",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 588,
+            "demos": 256,
+            "players": 367,
+            "dwell": 3.0
+          },
+          "distance_from_current_u": 270.4,
+          "cluster_confidence": 0.731,
+          "score": 553.92
+        },
+        {
+          "cluster_id": 44,
+          "medoid": [
+            -1175.8,
+            -732.5,
+            -168.0
+          ],
+          "valve_place": "SnipersNest",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 266,
+            "demos": 165,
+            "players": 198,
+            "dwell": 2.41
+          },
+          "distance_from_current_u": 296.6,
+          "cluster_confidence": 0.777,
+          "score": 87.91
+        },
+        {
+          "cluster_id": 118,
+          "medoid": [
+            -1247.9,
+            -759.9,
+            -129.0
+          ],
+          "valve_place": "SnipersNest",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 114,
+            "demos": 96,
+            "players": 103,
+            "dwell": 2.28
+          },
+          "distance_from_current_u": 257.2,
+          "cluster_confidence": 0.856,
+          "score": 46.23
+        },
+        {
+          "cluster_id": 123,
+          "medoid": [
+            -1203.6,
+            -731.8,
+            -129.0
+          ],
+          "valve_place": "SnipersNest",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 82,
+            "demos": 70,
+            "players": 71,
+            "dwell": 2.47
+          },
+          "distance_from_current_u": 261.2,
+          "cluster_confidence": 0.603,
+          "score": 33.42
+        }
+      ],
+      "SetposCurrent": "setpos -1380.0 -540.0 -120.0; setang 0 -20.0 0",
+      "SetposProposed": "setpos -1139.4 -462.3 -168.0; setang 0 -20.0 0"
+    },
+    {
+      "SpotId": "ct_mid_window_deep_awp",
+      "Name": "Janela Fundo (AWP)",
+      "CurrentPosition": [
+        -1480.0,
+        -560.0,
+        -100.0
+      ],
+      "ExpectedValvePlace": [
+        "SnipersNest"
+      ],
+      "ActualValvePlace": "Shop",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:PASSIVE_HOLD",
+      "AssociatedBombsite": "Mid",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -112
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Shop (pureza 1.0), esperado=['SnipersNest']",
+      "ProposedPosition": [
+        -1175.8,
+        -732.5,
+        -168.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 356.3,
+      "EvidenceCount": 96,
+      "DemoDiversity": 70,
+      "DemoDiversityPct": 15.8,
+      "PlayerDiversity": 73,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.53,
+      "Confidence": 0.608,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": true
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 44,
+          "medoid": [
+            -1175.8,
+            -732.5,
+            -168.0
+          ],
+          "valve_place": "SnipersNest",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 96,
+            "demos": 70,
+            "players": 73,
+            "dwell": 3.53
+          },
+          "distance_from_current_u": 375.2,
+          "cluster_confidence": 0.777,
+          "score": 155.49
+        },
+        {
+          "cluster_id": 123,
+          "medoid": [
+            -1203.6,
+            -731.8,
+            -129.0
+          ],
+          "valve_place": "SnipersNest",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 62,
+            "demos": 54,
+            "players": 54,
+            "dwell": 2.72
+          },
+          "distance_from_current_u": 330.6,
+          "cluster_confidence": 0.603,
+          "score": 108.2
+        },
+        {
+          "cluster_id": 118,
+          "medoid": [
+            -1247.9,
+            -759.9,
+            -129.0
+          ],
+          "valve_place": "SnipersNest",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 29,
+            "demos": 26,
+            "players": 27,
+            "dwell": 2.31
+          },
+          "distance_from_current_u": 311.8,
+          "cluster_confidence": 0.856,
+          "score": 60.32
+        },
+        {
+          "cluster_id": 45,
+          "medoid": [
+            -1139.4,
+            -462.3,
+            -168.0
+          ],
+          "valve_place": "SnipersNest",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 68,
+            "demos": 51,
+            "players": 55,
+            "dwell": 2.59
+          },
+          "distance_from_current_u": 379.5,
+          "cluster_confidence": 0.731,
+          "score": 25.85
+        }
+      ],
+      "SetposCurrent": "setpos -1480.0 -560.0 -100.0; setang 0 -25.0 0",
+      "SetposProposed": "setpos -1175.8 -732.5 -168.0; setang 0 -25.0 0"
+    },
+    {
+      "SpotId": "ct_mid_connector_headshot",
+      "Name": "Conector Degrau (Headshot)",
+      "CurrentPosition": [
+        -820.0,
+        -840.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Connector"
+      ],
+      "ActualValvePlace": "Middle",
+      "ActualPlacePurity": 0.9,
+      "TeamSide": "CT",
+      "Usage": "Hold:PASSIVE_HOLD",
+      "AssociatedBombsite": "Mid",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -208,
+        -176,
+        -144,
+        -112,
+        112
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Middle (pureza 0.9), esperado=['Connector']",
+      "ProposedPosition": [
+        -520.0,
+        -984.0,
+        -168.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 332.9,
+      "EvidenceCount": 759,
+      "DemoDiversity": 299,
+      "DemoDiversityPct": 67.3,
+      "PlayerDiversity": 438,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.5,
+      "Confidence": 0.947,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 254,
+        "demos": 162,
+        "players": 184,
+        "dwell": 2.75
+      },
+      "Candidates": [
+        {
+          "cluster_id": 62,
+          "medoid": [
+            -520.0,
+            -984.0,
+            -168.0
+          ],
+          "valve_place": "Connector",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 759,
+            "demos": 299,
+            "players": 438,
+            "dwell": 3.5
+          },
+          "distance_from_current_u": 333.2,
+          "cluster_confidence": 0.823,
+          "score": 681.35
+        },
+        {
+          "cluster_id": 58,
+          "medoid": [
+            -802.4,
+            -1221.3,
+            -168.0
+          ],
+          "valve_place": "Connector",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 145,
+            "demos": 91,
+            "players": 98,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 382.0,
+          "cluster_confidence": 0.817,
+          "score": 47.4
+        },
+        {
+          "cluster_id": 146,
+          "medoid": [
+            -808.0,
+            -1152.0,
+            -120.2
+          ],
+          "valve_place": "Connector",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 58,
+            "demos": 45,
+            "players": 48,
+            "dwell": 3.59
+          },
+          "distance_from_current_u": 322.2,
+          "cluster_confidence": 0.667,
+          "score": 20.4
+        },
+        {
+          "cluster_id": 148,
+          "medoid": [
+            -783.1,
+            -1153.9,
+            -120.2
+          ],
+          "valve_place": "Connector",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 35,
+            "demos": 31,
+            "players": 31,
+            "dwell": 2.69
+          },
+          "distance_from_current_u": 325.9,
+          "cluster_confidence": 0.514,
+          "score": 14.2
+        }
+      ],
+      "SetposCurrent": "setpos -820.0 -840.0 -160.0; setang 0 -50.0 0",
+      "SetposProposed": "setpos -520.0 -984.0 -168.0; setang 0 -50.0 0"
+    },
+    {
+      "SpotId": "ct_mid_short_catwalk",
+      "Name": "Short / Catwalk",
+      "CurrentPosition": [
+        -950.0,
+        -1050.0,
+        -140.0
+      ],
+      "ExpectedValvePlace": [
+        "Catwalk"
+      ],
+      "ActualValvePlace": "Connector",
+      "ActualPlacePurity": 0.8,
+      "TeamSide": "CT",
+      "Usage": "Hold:AGGRESSIVE_POKE",
+      "AssociatedBombsite": "Mid",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -208,
+        -144
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Connector (pureza 0.8), esperado=['Catwalk']",
+      "ProposedPosition": [
+        -906.4,
+        78.5,
+        -166.0
+      ],
+      "ProposalResolution": "NEEDS_VISUAL_CONFIRMATION",
+      "ProposalShift_u": 1129.6,
+      "EvidenceCount": 342,
+      "DemoDiversity": 214,
+      "DemoDiversityPct": 48.2,
+      "PlayerDiversity": 269,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.72,
+      "Confidence": 0.727,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 53,
+          "medoid": [
+            -906.4,
+            78.5,
+            -166.0
+          ],
+          "valve_place": "Catwalk",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 342,
+            "demos": 214,
+            "players": 269,
+            "dwell": 2.72
+          },
+          "distance_from_current_u": 1130.5,
+          "cluster_confidence": 0.757,
+          "score": 188.0
+        },
+        {
+          "cluster_id": 55,
+          "medoid": [
+            -872.3,
+            -243.2,
+            -167.5
+          ],
+          "valve_place": "Catwalk",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 241,
+            "demos": 129,
+            "players": 147,
+            "dwell": 2.62
+          },
+          "distance_from_current_u": 812.4,
+          "cluster_confidence": 0.698,
+          "score": 109.52
+        },
+        {
+          "cluster_id": 42,
+          "medoid": [
+            -1219.1,
+            107.6,
+            -166.7
+          ],
+          "valve_place": "Catwalk",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 133,
+            "demos": 75,
+            "players": 84,
+            "dwell": 2.38
+          },
+          "distance_from_current_u": 1189.7,
+          "cluster_confidence": 0.473,
+          "score": 55.24
+        },
+        {
+          "cluster_id": 152,
+          "medoid": [
+            -747.1,
+            -21.6,
+            -144.0
+          ],
+          "valve_place": "Catwalk",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 90,
+            "demos": 65,
+            "players": 67,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 1048.3,
+          "cluster_confidence": 0.478,
+          "score": 48.03
+        }
+      ],
+      "SetposCurrent": "setpos -950.0 -1050.0 -140.0; setang 0 -40.0 0",
+      "SetposProposed": "setpos -906.4 78.5 -166.0; setang 0 -40.0 0"
+    },
+    {
+      "SpotId": "ct_mid_underpass_peek",
+      "Name": "Beco / Saída do Rato",
+      "CurrentPosition": [
+        -720.0,
+        -1020.0,
+        -220.0
+      ],
+      "ExpectedValvePlace": [
+        "Underpass",
+        "Ladder"
+      ],
+      "ActualValvePlace": "Connector",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:ONE_AND_DONE",
+      "AssociatedBombsite": "Mid",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -208,
+        -176,
+        -144,
+        -112
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Connector (pureza 1.0), esperado=['Underpass', 'Ladder']",
+      "ProposedPosition": [
+        -983.5,
+        289.8,
+        -166.7
+      ],
+      "ProposalResolution": "NEEDS_VISUAL_CONFIRMATION",
+      "ProposalShift_u": 1337.1,
+      "EvidenceCount": 713,
+      "DemoDiversity": 270,
+      "DemoDiversityPct": 60.8,
+      "PlayerDiversity": 372,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.06,
+      "Confidence": 0.729,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 17,
+        "demos": 14,
+        "players": 15,
+        "dwell": 2.62
+      },
+      "Candidates": [
+        {
+          "cluster_id": 52,
+          "medoid": [
+            -983.5,
+            289.8,
+            -166.7
+          ],
+          "valve_place": "Underpass",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 713,
+            "demos": 270,
+            "players": 372,
+            "dwell": 3.06
+          },
+          "distance_from_current_u": 1340.3,
+          "cluster_confidence": 0.762,
+          "score": 237.87
+        },
+        {
+          "cluster_id": 153,
+          "medoid": [
+            -737.1,
+            -21.0,
+            -144.0
+          ],
+          "valve_place": "Underpass",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 613,
+            "demos": 249,
+            "players": 319,
+            "dwell": 3.31
+          },
+          "distance_from_current_u": 1010.6,
+          "cluster_confidence": 0.884,
+          "score": 234.56
+        },
+        {
+          "cluster_id": 56,
+          "medoid": [
+            -760.0,
+            289.1,
+            -164.0
+          ],
+          "valve_place": "Underpass",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 447,
+            "demos": 208,
+            "players": 250,
+            "dwell": 2.75
+          },
+          "distance_from_current_u": 1314.5,
+          "cluster_confidence": 0.712,
+          "score": 178.05
+        },
+        {
+          "cluster_id": 49,
+          "medoid": [
+            -1015.0,
+            -87.3,
+            -168.0
+          ],
+          "valve_place": "Ladder",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 311,
+            "demos": 170,
+            "players": 201,
+            "dwell": 3.44
+          },
+          "distance_from_current_u": 983.8,
+          "cluster_confidence": 0.757,
+          "score": 149.34
+        }
+      ],
+      "SetposCurrent": "setpos -720.0 -1020.0 -220.0; setang 0 40.0 0",
+      "SetposProposed": "setpos -983.5 289.8 -166.7; setang 0 40.0 0"
+    },
+    {
+      "SpotId": "ct_b_van_peek",
+      "Name": "Van B (Jiggle Peek)",
+      "CurrentPosition": [
+        -1350.0,
+        380.0,
+        -150.0
+      ],
+      "ExpectedValvePlace": [
+        "Truck"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:JIGGLE_INFO",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        16
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=BombsiteB (pureza 1.0), esperado=['Truck']",
+      "ProposedPosition": [
+        -2191.6,
+        712.6,
+        -101.8
+      ],
+      "ProposalResolution": "RESOLVED_UNIQUE_PLACE",
+      "ProposalShift_u": 906.2,
+      "EvidenceCount": 972,
+      "DemoDiversity": 302,
+      "DemoDiversityPct": 68.0,
+      "PlayerDiversity": 450,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.56,
+      "Confidence": 0.958,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 57,
+        "demos": 43,
+        "players": 44,
+        "dwell": 2.5
+      },
+      "Candidates": [
+        {
+          "cluster_id": 111,
+          "medoid": [
+            -2191.6,
+            712.6,
+            -101.8
+          ],
+          "valve_place": "Truck",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 972,
+            "demos": 302,
+            "players": 450,
+            "dwell": 3.56
+          },
+          "distance_from_current_u": 910.1,
+          "cluster_confidence": 0.859,
+          "score": 280.71
+        },
+        {
+          "cluster_id": 197,
+          "medoid": [
+            -2081.0,
+            816.1,
+            -44.0
+          ],
+          "valve_place": "Truck",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 538,
+            "demos": 213,
+            "players": 278,
+            "dwell": 3.5
+          },
+          "distance_from_current_u": 877.2,
+          "cluster_confidence": 0.826,
+          "score": 194.47
+        },
+        {
+          "cluster_id": 29,
+          "medoid": [
+            -2114.0,
+            653.5,
+            -146.7
+          ],
+          "valve_place": "Truck",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 260,
+            "demos": 169,
+            "players": 207,
+            "dwell": 2.69
+          },
+          "distance_from_current_u": 811.5,
+          "cluster_confidence": 0.755,
+          "score": 148.3
+        },
+        {
+          "cluster_id": 243,
+          "medoid": [
+            -2361.1,
+            733.1,
+            -39.7
+          ],
+          "valve_place": "Truck",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 182,
+            "demos": 102,
+            "players": 114,
+            "dwell": 3.22
+          },
+          "distance_from_current_u": 1093.5,
+          "cluster_confidence": 0.631,
+          "score": 83.18
+        }
+      ],
+      "SetposCurrent": "setpos -1350.0 380.0 -150.0; setang 0 -85.0 0",
+      "SetposProposed": "setpos -2191.6 712.6 -101.8; setang 0 -85.0 0"
+    },
+    {
+      "SpotId": "ct_b_bench_deep",
+      "Name": "Banco / Floreira B",
+      "CurrentPosition": [
+        -1950.0,
+        450.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteB"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:PASSIVE_HOLD",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80,
+        -48
+      ],
+      "CurrentClassification": "VALID",
+      "ClassificationReason": "cluster profissional 31 a 42.1u",
+      "ProposedPosition": null,
+      "ProposalResolution": "KEEP",
+      "ProposalShift_u": 0.0,
+      "EvidenceCount": 50,
+      "DemoDiversity": 38,
+      "DemoDiversityPct": 8.6,
+      "PlayerDiversity": 44,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.56,
+      "Confidence": 0.676,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 50,
+        "demos": 38,
+        "players": 44,
+        "dwell": 2.56
+      },
+      "Candidates": [
+        {
+          "cluster_id": 25,
+          "medoid": [
+            -2494.8,
+            266.4,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 298,
+            "demos": 158,
+            "players": 186,
+            "dwell": 3.38
+          },
+          "distance_from_current_u": 575.1,
+          "cluster_confidence": 0.816,
+          "score": 358.66
+        },
+        {
+          "cluster_id": 24,
+          "medoid": [
+            -2600.0,
+            535.6,
+            -160.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 283,
+            "demos": 135,
+            "players": 149,
+            "dwell": 5.06
+          },
+          "distance_from_current_u": 655.6,
+          "cluster_confidence": 0.905,
+          "score": 321.47
+        },
+        {
+          "cluster_id": 26,
+          "medoid": [
+            -2353.0,
+            103.2,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 314,
+            "demos": 148,
+            "players": 176,
+            "dwell": 4.03
+          },
+          "distance_from_current_u": 531.9,
+          "cluster_confidence": 0.844,
+          "score": 85.86
+        },
+        {
+          "cluster_id": 27,
+          "medoid": [
+            -2270.7,
+            378.8,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 270,
+            "demos": 145,
+            "players": 175,
+            "dwell": 2.84
+          },
+          "distance_from_current_u": 328.9,
+          "cluster_confidence": 0.75,
+          "score": 64.36
+        }
+      ],
+      "SetposCurrent": "setpos -1950.0 450.0 -160.0; setang 0 -60.0 0",
+      "SetposProposed": null
+    },
+    {
+      "SpotId": "ct_b_site_default_crouch",
+      "Name": "Caixa Plant B (Default)",
+      "CurrentPosition": [
+        -1750.0,
+        300.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteB"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:PASSIVE_HOLD",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        16
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 178.1u com 87 demos",
+      "ProposedPosition": [
+        -1927.1,
+        319.3,
+        -160.0
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 178.1,
+      "EvidenceCount": 206,
+      "DemoDiversity": 87,
+      "DemoDiversityPct": 19.6,
+      "PlayerDiversity": 100,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.56,
+      "Confidence": 0.627,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 1,
+        "demos": 1,
+        "players": 1,
+        "dwell": 3.69
+      },
+      "Candidates": [
+        {
+          "cluster_id": 33,
+          "medoid": [
+            -1927.1,
+            319.3,
+            -160.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 206,
+            "demos": 87,
+            "players": 100,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 178.1,
+          "cluster_confidence": 0.7,
+          "score": 184.88
+        },
+        {
+          "cluster_id": 31,
+          "medoid": [
+            -1987.8,
+            431.4,
+            -160.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 113,
+            "demos": 81,
+            "players": 93,
+            "dwell": 2.5
+          },
+          "distance_from_current_u": 271.7,
+          "cluster_confidence": 0.778,
+          "score": 180.02
+        },
+        {
+          "cluster_id": 32,
+          "medoid": [
+            -1912.8,
+            5.1,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 353,
+            "demos": 169,
+            "players": 200,
+            "dwell": 2.81
+          },
+          "distance_from_current_u": 337.2,
+          "cluster_confidence": 0.713,
+          "score": 85.86
+        },
+        {
+          "cluster_id": 27,
+          "medoid": [
+            -2270.7,
+            378.8,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 270,
+            "demos": 145,
+            "players": 175,
+            "dwell": 2.84
+          },
+          "distance_from_current_u": 526.9,
+          "cluster_confidence": 0.75,
+          "score": 48.69
+        }
+      ],
+      "SetposCurrent": "setpos -1750.0 300.0 -160.0; setang 0 -80.0 0",
+      "SetposProposed": "setpos -1927.1 319.3 -160.0; setang 0 -80.0 0"
+    },
+    {
+      "SpotId": "ct_b_market_window",
+      "Name": "Janela do Mercado B",
+      "CurrentPosition": [
+        -1880.0,
+        180.0,
+        -130.0
+      ],
+      "ExpectedValvePlace": [
+        "Shop"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:PASSIVE_HOLD",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        48,
+        80
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=BombsiteB (pureza 1.0), esperado=['Shop']",
+      "ProposedPosition": [
+        -1756.8,
+        -560.2,
+        -128.0
+      ],
+      "ProposalResolution": "NEEDS_VISUAL_CONFIRMATION",
+      "ProposalShift_u": 750.4,
+      "EvidenceCount": 71,
+      "DemoDiversity": 53,
+      "DemoDiversityPct": 11.9,
+      "PlayerDiversity": 55,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.0,
+      "Confidence": 0.303,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 3,
+        "demos": 3,
+        "players": 3,
+        "dwell": 3.94
+      },
+      "Candidates": [
+        {
+          "cluster_id": 30,
+          "medoid": [
+            -2017.4,
+            -599.8,
+            -168.0
+          ],
+          "valve_place": "Shop",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 473,
+            "demos": 207,
+            "players": 247,
+            "dwell": 4.06
+          },
+          "distance_from_current_u": 795.5,
+          "cluster_confidence": 0.831,
+          "score": 189.51
+        },
+        {
+          "cluster_id": 112,
+          "medoid": [
+            -1756.8,
+            -560.2,
+            -128.0
+          ],
+          "valve_place": "Shop",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 71,
+            "demos": 53,
+            "players": 55,
+            "dwell": 3.0
+          },
+          "distance_from_current_u": 750.4,
+          "cluster_confidence": 0.567,
+          "score": 41.53
+        },
+        {
+          "cluster_id": 114,
+          "medoid": [
+            -1744.2,
+            -569.5,
+            -128.0
+          ],
+          "valve_place": "Shop",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 66,
+            "demos": 50,
+            "players": 53,
+            "dwell": 3.22
+          },
+          "distance_from_current_u": 761.7,
+          "cluster_confidence": 0.544,
+          "score": 38.6
+        }
+      ],
+      "SetposCurrent": "setpos -1880.0 180.0 -130.0; setang 0 -45.0 0",
+      "SetposProposed": "setpos -1756.8 -560.2 -128.0; setang 0 -45.0 0"
+    },
+    {
+      "SpotId": "ct_b_market_door",
+      "Name": "Porta do Mercado B",
+      "CurrentPosition": [
+        -1650.0,
+        220.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Shop",
+        "BombsiteB"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Hold:PASSIVE_HOLD",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -16,
+        16
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 244.7u com 56 demos",
+      "ProposedPosition": [
+        -1428.3,
+        116.8,
+        -164.2
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 244.6,
+      "EvidenceCount": 96,
+      "DemoDiversity": 56,
+      "DemoDiversityPct": 12.6,
+      "PlayerDiversity": 61,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.88,
+      "Confidence": 0.469,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 1,
+        "demos": 1,
+        "players": 1,
+        "dwell": 3.69
+      },
+      "Candidates": [
+        {
+          "cluster_id": 26,
+          "medoid": [
+            -2353.0,
+            103.2,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 314,
+            "demos": 148,
+            "players": 176,
+            "dwell": 4.03
+          },
+          "distance_from_current_u": 712.8,
+          "cluster_confidence": 0.844,
+          "score": 341.14
+        },
+        {
+          "cluster_id": 27,
+          "medoid": [
+            -2270.7,
+            378.8,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 270,
+            "demos": 145,
+            "players": 175,
+            "dwell": 2.84
+          },
+          "distance_from_current_u": 640.9,
+          "cluster_confidence": 0.75,
+          "score": 317.19
+        },
+        {
+          "cluster_id": 25,
+          "medoid": [
+            -2494.8,
+            266.4,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 298,
+            "demos": 158,
+            "players": 186,
+            "dwell": 3.38
+          },
+          "distance_from_current_u": 846.2,
+          "cluster_confidence": 0.816,
+          "score": 102.11
+        },
+        {
+          "cluster_id": 28,
+          "medoid": [
+            -2197.5,
+            14.5,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 108,
+            "demos": 78,
+            "players": 82,
+            "dwell": 2.75
+          },
+          "distance_from_current_u": 585.0,
+          "cluster_confidence": 0.58,
+          "score": 52.44
+        }
+      ],
+      "SetposCurrent": "setpos -1650.0 220.0 -160.0; setang 0 -60.0 0",
+      "SetposProposed": "setpos -1428.3 116.8 -164.2; setang 0 -60.0 0"
+    },
+    {
+      "SpotId": "ct_b_short_corner",
+      "Name": "Canto do L (Short)",
+      "CurrentPosition": [
+        -1050.0,
+        250.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteB",
+        "Catwalk"
+      ],
+      "ActualValvePlace": "Catwalk",
+      "ActualPlacePurity": 0.77,
+      "TeamSide": "CT",
+      "Usage": "Hold:ONE_AND_DONE",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -368,
+        -336,
+        -304,
+        -176,
+        -144,
+        -112,
+        -16
+      ],
+      "CurrentClassification": "VALID",
+      "ClassificationReason": "posicao propria com evidencia (229 demos) mesmo fora de pico",
+      "ProposedPosition": null,
+      "ProposalResolution": "KEEP",
+      "ProposalShift_u": 0.0,
+      "EvidenceCount": 520,
+      "DemoDiversity": 229,
+      "DemoDiversityPct": 51.6,
+      "PlayerDiversity": 306,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.88,
+      "Confidence": 1.0,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "setup/mid(<=65s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 520,
+        "demos": 229,
+        "players": 306,
+        "dwell": 2.88
+      },
+      "Candidates": [
+        {
+          "cluster_id": 39,
+          "medoid": [
+            -1258.4,
+            504.6,
+            -163.4
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 288,
+            "demos": 151,
+            "players": 164,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 329.1,
+          "cluster_confidence": 0.7,
+          "score": 320.88
+        },
+        {
+          "cluster_id": 38,
+          "medoid": [
+            -1436.0,
+            356.0,
+            -167.7
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 155,
+            "demos": 108,
+            "players": 121,
+            "dwell": 2.38
+          },
+          "distance_from_current_u": 400.6,
+          "cluster_confidence": 0.603,
+          "score": 216.41
+        },
+        {
+          "cluster_id": 53,
+          "medoid": [
+            -906.4,
+            78.5,
+            -166.0
+          ],
+          "valve_place": "Catwalk",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 342,
+            "demos": 214,
+            "players": 269,
+            "dwell": 2.72
+          },
+          "distance_from_current_u": 224.0,
+          "cluster_confidence": 0.757,
+          "score": 37.26
+        },
+        {
+          "cluster_id": 42,
+          "medoid": [
+            -1219.1,
+            107.6,
+            -166.7
+          ],
+          "valve_place": "Catwalk",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 133,
+            "demos": 75,
+            "players": 84,
+            "dwell": 2.38
+          },
+          "distance_from_current_u": 221.5,
+          "cluster_confidence": 0.473,
+          "score": 25.23
+        }
+      ],
+      "SetposCurrent": "setpos -1050.0 250.0 -160.0; setang 0 -100.0 0",
+      "SetposProposed": null
+    },
+    {
+      "SpotId": "ct_spawn_safe",
+      "Name": "Recuo Seguro Base CT",
+      "CurrentPosition": [
+        -2050.0,
+        -800.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "CTSpawn"
+      ],
+      "ActualValvePlace": "Shop",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Fallback/Save",
+      "AssociatedBombsite": "CT Spawn",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -144
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Shop (pureza 1.0), esperado=['CTSpawn']",
+      "ProposedPosition": [
+        -1279.6,
+        -967.9,
+        -168.0
+      ],
+      "ProposalResolution": "NEEDS_VISUAL_CONFIRMATION",
+      "ProposalShift_u": 788.5,
+      "EvidenceCount": 730,
+      "DemoDiversity": 279,
+      "DemoDiversityPct": 62.8,
+      "PlayerDiversity": 397,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.66,
+      "Confidence": 0.727,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "any",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 50,
+          "medoid": [
+            -1011.5,
+            -2479.9,
+            -168.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 1409,
+            "demos": 341,
+            "players": 511,
+            "dwell": 3.94
+          },
+          "distance_from_current_u": 1975.0,
+          "cluster_confidence": 0.816,
+          "score": 309.63
+        },
+        {
+          "cluster_id": 41,
+          "medoid": [
+            -1279.6,
+            -967.9,
+            -168.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 730,
+            "demos": 279,
+            "players": 397,
+            "dwell": 2.66
+          },
+          "distance_from_current_u": 788.6,
+          "cluster_confidence": 0.756,
+          "score": 244.96
+        },
+        {
+          "cluster_id": 280,
+          "medoid": [
+            -840.1,
+            -2542.2,
+            -36.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 592,
+            "demos": 212,
+            "players": 250,
+            "dwell": 2.69
+          },
+          "distance_from_current_u": 2135.6,
+          "cluster_confidence": 0.807,
+          "score": 191.54
+        },
+        {
+          "cluster_id": 40,
+          "medoid": [
+            -1299.0,
+            -1160.9,
+            -168.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 450,
+            "demos": 207,
+            "players": 274,
+            "dwell": 2.88
+          },
+          "distance_from_current_u": 833.4,
+          "cluster_confidence": 0.729,
+          "score": 178.95
+        }
+      ],
+      "SetposCurrent": "setpos -2050.0 -800.0 -160.0; setang 0 0.0 0",
+      "SetposProposed": "setpos -1279.6 -967.9 -168.0; setang 0 0.0 0"
+    },
+    {
+      "SpotId": "ct_jungle_safe",
+      "Name": "Recuo Seguro Jungle",
+      "CurrentPosition": [
+        -1350.0,
+        -850.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Jungle",
+        "CTSpawn"
+      ],
+      "ActualValvePlace": "CTSpawn",
+      "ActualPlacePurity": 0.93,
+      "TeamSide": "CT",
+      "Usage": "Fallback/Save",
+      "AssociatedBombsite": "Jungle",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -144,
+        -112
+      ],
+      "CurrentClassification": "VALID",
+      "ClassificationReason": "evidencia local moderada (37 demos)",
+      "ProposedPosition": null,
+      "ProposalResolution": "KEEP",
+      "ProposalShift_u": 0.0,
+      "EvidenceCount": 41,
+      "DemoDiversity": 37,
+      "DemoDiversityPct": 8.3,
+      "PlayerDiversity": 38,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.75,
+      "Confidence": 0.674,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "any",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 41,
+        "demos": 37,
+        "players": 38,
+        "dwell": 2.75
+      },
+      "Candidates": [
+        {
+          "cluster_id": 50,
+          "medoid": [
+            -1011.5,
+            -2479.9,
+            -168.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 1409,
+            "demos": 341,
+            "players": 511,
+            "dwell": 3.94
+          },
+          "distance_from_current_u": 1664.8,
+          "cluster_confidence": 0.816,
+          "score": 309.63
+        },
+        {
+          "cluster_id": 41,
+          "medoid": [
+            -1279.6,
+            -967.9,
+            -168.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 730,
+            "demos": 279,
+            "players": 397,
+            "dwell": 2.66
+          },
+          "distance_from_current_u": 138.2,
+          "cluster_confidence": 0.756,
+          "score": 244.96
+        },
+        {
+          "cluster_id": 280,
+          "medoid": [
+            -840.1,
+            -2542.2,
+            -36.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 592,
+            "demos": 212,
+            "players": 250,
+            "dwell": 2.69
+          },
+          "distance_from_current_u": 1784.7,
+          "cluster_confidence": 0.807,
+          "score": 191.54
+        },
+        {
+          "cluster_id": 40,
+          "medoid": [
+            -1299.0,
+            -1160.9,
+            -168.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 450,
+            "demos": 207,
+            "players": 274,
+            "dwell": 2.88
+          },
+          "distance_from_current_u": 315.5,
+          "cluster_confidence": 0.729,
+          "score": 178.95
+        }
+      ],
+      "SetposCurrent": "setpos -1350.0 -850.0 -160.0; setang 0 45.0 0",
+      "SetposProposed": null
+    },
+    {
+      "SpotId": "tr_staging_a_ramp",
+      "Name": "Staging: Rampa A / Caverna",
+      "CurrentPosition": [
+        -250.0,
+        -200.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "TRamp"
+      ],
+      "ActualValvePlace": "Catwalk",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Staging",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -144,
+        -80,
+        16
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Catwalk (pureza 1.0), esperado=['TRamp']",
+      "ProposedPosition": [
+        321.1,
+        -1708.1,
+        -176.0
+      ],
+      "ProposalResolution": "RESOLVED_UNIQUE_PLACE",
+      "ProposalShift_u": 1612.7,
+      "EvidenceCount": 750,
+      "DemoDiversity": 300,
+      "DemoDiversityPct": 67.6,
+      "PlayerDiversity": 471,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.81,
+      "Confidence": 0.926,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "staging(<=50s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 82,
+          "medoid": [
+            321.1,
+            -1708.1,
+            -176.0
+          ],
+          "valve_place": "TRamp",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 750,
+            "demos": 300,
+            "players": 471,
+            "dwell": 2.81
+          },
+          "distance_from_current_u": 1612.9,
+          "cluster_confidence": 0.752,
+          "score": 262.8
+        },
+        {
+          "cluster_id": 16,
+          "medoid": [
+            438.4,
+            -1679.8,
+            -231.1
+          ],
+          "valve_place": "TRamp",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 259,
+            "demos": 153,
+            "players": 195,
+            "dwell": 2.62
+          },
+          "distance_from_current_u": 1638.3,
+          "cluster_confidence": 0.726,
+          "score": 132.04
+        },
+        {
+          "cluster_id": 177,
+          "medoid": [
+            280.1,
+            -1711.9,
+            -122.1
+          ],
+          "valve_place": "TRamp",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 74,
+            "demos": 51,
+            "players": 54,
+            "dwell": 4.0
+          },
+          "distance_from_current_u": 1603.9,
+          "cluster_confidence": 0.731,
+          "score": 44.14
+        }
+      ],
+      "SetposCurrent": "setpos -250.0 -200.0 -160.0; setang 0 -135.0 0",
+      "SetposProposed": "setpos 321.1 -1708.1 -176.0; setang 0 -135.0 0"
+    },
+    {
+      "SpotId": "tr_staging_palace_room",
+      "Name": "Staging: Sala do Palácio",
+      "CurrentPosition": [
+        -350.0,
+        -480.0,
+        -90.0
+      ],
+      "ExpectedValvePlace": [
+        "PalaceInterior"
+      ],
+      "ActualValvePlace": "Catwalk",
+      "ActualPlacePurity": 0.77,
+      "TeamSide": "TR",
+      "Usage": "Staging",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Catwalk (pureza 0.77), esperado=['PalaceInterior']",
+      "ProposedPosition": [
+        288.1,
+        -2373.4,
+        -40.0
+      ],
+      "ProposalResolution": "NEEDS_VISUAL_CONFIRMATION",
+      "ProposalShift_u": 1998.7,
+      "EvidenceCount": 889,
+      "DemoDiversity": 306,
+      "DemoDiversityPct": 68.9,
+      "PlayerDiversity": 484,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.88,
+      "Confidence": 0.715,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "staging(<=50s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 284,
+          "medoid": [
+            288.1,
+            -2373.4,
+            -40.0
+          ],
+          "valve_place": "PalaceInterior",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 889,
+            "demos": 306,
+            "players": 484,
+            "dwell": 2.88
+          },
+          "distance_from_current_u": 2000.5,
+          "cluster_confidence": 0.718,
+          "score": 262.85
+        },
+        {
+          "cluster_id": 282,
+          "medoid": [
+            23.7,
+            -2307.2,
+            -40.0
+          ],
+          "valve_place": "PalaceInterior",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 639,
+            "demos": 264,
+            "players": 366,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 1867.7,
+          "cluster_confidence": 0.724,
+          "score": 227.57
+        },
+        {
+          "cluster_id": 286,
+          "medoid": [
+            581.3,
+            -2224.0,
+            -40.0
+          ],
+          "valve_place": "PalaceInterior",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 518,
+            "demos": 235,
+            "players": 313,
+            "dwell": 3.06
+          },
+          "distance_from_current_u": 1979.6,
+          "cluster_confidence": 0.748,
+          "score": 205.39
+        },
+        {
+          "cluster_id": 285,
+          "medoid": [
+            400.6,
+            -2128.0,
+            -40.0
+          ],
+          "valve_place": "PalaceInterior",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 387,
+            "demos": 197,
+            "players": 256,
+            "dwell": 3.19
+          },
+          "distance_from_current_u": 1813.6,
+          "cluster_confidence": 0.741,
+          "score": 171.49
+        }
+      ],
+      "SetposCurrent": "setpos -350.0 -480.0 -90.0; setang 0 -140.0 0",
+      "SetposProposed": "setpos 288.1 -2373.4 -40.0; setang 0 -140.0 0"
+    },
+    {
+      "SpotId": "tr_staging_top_mid_boxes",
+      "Name": "Staging: Caixas Top Mid",
+      "CurrentPosition": [
+        450.0,
+        -950.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "TopofMid"
+      ],
+      "ActualValvePlace": "TopofMid",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Staging",
+      "AssociatedBombsite": "Mid",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144
+      ],
+      "CurrentClassification": "INSUFFICIENT_EVIDENCE",
+      "ClassificationReason": "apenas 4 demos com hold compativel em 96u",
+      "ProposedPosition": [
+        176.4,
+        -206.6,
+        -152.0
+      ],
+      "ProposalResolution": "PROPOSED_NEAREST_CLUSTER_FOR_LOW_EVIDENCE",
+      "ProposalShift_u": 792.2,
+      "EvidenceCount": 866,
+      "DemoDiversity": 336,
+      "DemoDiversityPct": 75.7,
+      "PlayerDiversity": 566,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.69,
+      "Confidence": 0.739,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "staging(<=50s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 4,
+        "demos": 4,
+        "players": 4,
+        "dwell": 1.62
+      },
+      "Candidates": [
+        {
+          "cluster_id": 174,
+          "medoid": [
+            176.4,
+            -206.6,
+            -152.0
+          ],
+          "valve_place": "TopofMid",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 866,
+            "demos": 336,
+            "players": 566,
+            "dwell": 2.69
+          },
+          "distance_from_current_u": 792.3,
+          "cluster_confidence": 0.798,
+          "score": 755.16
+        },
+        {
+          "cluster_id": 83,
+          "medoid": [
+            397.0,
+            -679.0,
+            -165.2
+          ],
+          "valve_place": "TopofMid",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 1228,
+            "demos": 342,
+            "players": 578,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 276.3,
+          "cluster_confidence": 0.66,
+          "score": 709.65
+        },
+        {
+          "cluster_id": 176,
+          "medoid": [
+            267.0,
+            -163.1,
+            -167.2
+          ],
+          "valve_place": "TopofMid",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 78,
+            "demos": 62,
+            "players": 65,
+            "dwell": 2.38
+          },
+          "distance_from_current_u": 808.0,
+          "cluster_confidence": 0.441,
+          "score": 111.68
+        },
+        {
+          "cluster_id": 175,
+          "medoid": [
+            203.5,
+            -215.4,
+            -167.9
+          ],
+          "valve_place": "TopofMid",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 54,
+            "demos": 46,
+            "players": 49,
+            "dwell": 2.47
+          },
+          "distance_from_current_u": 775.0,
+          "cluster_confidence": 0.425,
+          "score": 81.94
+        }
+      ],
+      "SetposCurrent": "setpos 450.0 -950.0 -160.0; setang 0 -170.0 0",
+      "SetposProposed": "setpos 176.4 -206.6 -152.0; setang 0 -170.0 0"
+    },
+    {
+      "SpotId": "tr_staging_underpass_top",
+      "Name": "Staging: Entrada do Rato",
+      "CurrentPosition": [
+        150.0,
+        -1050.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Middle",
+        "Underpass"
+      ],
+      "ActualValvePlace": "TopofMid",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Staging",
+      "AssociatedBombsite": "Mid",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -144,
+        -48
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=TopofMid (pureza 1.0), esperado=['Middle', 'Underpass']",
+      "ProposedPosition": [
+        -1038.9,
+        -728.5,
+        -264.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 1236.0,
+      "EvidenceCount": 772,
+      "DemoDiversity": 312,
+      "DemoDiversityPct": 70.3,
+      "PlayerDiversity": 521,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.56,
+      "Confidence": 0.916,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "staging(<=50s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 6,
+          "medoid": [
+            -1038.9,
+            -728.5,
+            -264.0
+          ],
+          "valve_place": "Middle",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 772,
+            "demos": 312,
+            "players": 521,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 1249.0,
+          "cluster_confidence": 0.72,
+          "score": 670.8
+        },
+        {
+          "cluster_id": 0,
+          "medoid": [
+            -948.0,
+            -265.1,
+            -364.0
+          ],
+          "valve_place": "Underpass",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 598,
+            "demos": 245,
+            "players": 346,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 1410.0,
+          "cluster_confidence": 0.705,
+          "score": 522.16
+        },
+        {
+          "cluster_id": 69,
+          "medoid": [
+            -319.3,
+            -926.0,
+            -166.0
+          ],
+          "valve_place": "Middle",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 354,
+            "demos": 181,
+            "players": 225,
+            "dwell": 3.22
+          },
+          "distance_from_current_u": 485.6,
+          "cluster_confidence": 0.837,
+          "score": 415.62
+        },
+        {
+          "cluster_id": 7,
+          "medoid": [
+            -961.5,
+            -393.2,
+            -264.0
+          ],
+          "valve_place": "Underpass",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 334,
+            "demos": 164,
+            "players": 215,
+            "dwell": 3.06
+          },
+          "distance_from_current_u": 1307.7,
+          "cluster_confidence": 0.731,
+          "score": 354.85
+        }
+      ],
+      "SetposCurrent": "setpos 150.0 -1050.0 -160.0; setang 0 -160.0 0",
+      "SetposProposed": "setpos -1038.9 -728.5 -264.0; setang 0 -160.0 0"
+    },
+    {
+      "SpotId": "tr_staging_b_apartments_house",
+      "Name": "Staging: Fundo dos Apartamentos B",
+      "CurrentPosition": [
+        -350.0,
+        650.0,
+        -60.0
+      ],
+      "ExpectedValvePlace": [
+        "House",
+        "BackAlley",
+        "Apartments"
+      ],
+      "ActualValvePlace": "BackAlley",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Staging",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -80,
+        -48,
+        -16
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 116.6u com 94 demos",
+      "ProposedPosition": [
+        -464.0,
+        654.0,
+        -72.0
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 114.7,
+      "EvidenceCount": 135,
+      "DemoDiversity": 94,
+      "DemoDiversityPct": 21.2,
+      "PlayerDiversity": 110,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.75,
+      "Confidence": 0.596,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "staging(<=50s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 27,
+        "demos": 22,
+        "players": 23,
+        "dwell": 2.56
+      },
+      "Candidates": [
+        {
+          "cluster_id": 211,
+          "medoid": [
+            -886.6,
+            583.7,
+            -81.7
+          ],
+          "valve_place": "BackAlley",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 967,
+            "demos": 288,
+            "players": 523,
+            "dwell": 2.75
+          },
+          "distance_from_current_u": 542.4,
+          "cluster_confidence": 0.719,
+          "score": 247.54
+        },
+        {
+          "cluster_id": 221,
+          "medoid": [
+            -161.2,
+            575.9,
+            -69.8
+          ],
+          "valve_place": "BackAlley",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 569,
+            "demos": 262,
+            "players": 359,
+            "dwell": 3.56
+          },
+          "distance_from_current_u": 203.8,
+          "cluster_confidence": 0.819,
+          "score": 238.29
+        },
+        {
+          "cluster_id": 207,
+          "medoid": [
+            -1154.2,
+            569.4,
+            -80.0
+          ],
+          "valve_place": "Apartments",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 801,
+            "demos": 273,
+            "players": 458,
+            "dwell": 2.5
+          },
+          "distance_from_current_u": 809.2,
+          "cluster_confidence": 0.694,
+          "score": 231.23
+        },
+        {
+          "cluster_id": 205,
+          "medoid": [
+            -1472.0,
+            664.1,
+            -48.0
+          ],
+          "valve_place": "Apartments",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 517,
+            "demos": 237,
+            "players": 344,
+            "dwell": 3.25
+          },
+          "distance_from_current_u": 1122.3,
+          "cluster_confidence": 0.743,
+          "score": 206.55
+        }
+      ],
+      "SetposCurrent": "setpos -350.0 650.0 -60.0; setang 0 180.0 0",
+      "SetposProposed": "setpos -464.0 654.0 -72.0; setang 0 180.0 0"
+    },
+    {
+      "SpotId": "tr_staging_b_apartments_kitchen",
+      "Name": "Staging: Cozinha do Tapete B",
+      "CurrentPosition": [
+        -850.0,
+        600.0,
+        -60.0
+      ],
+      "ExpectedValvePlace": [
+        "Apartments",
+        "BackAlley"
+      ],
+      "ActualValvePlace": "BackAlley",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Staging",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -80,
+        -48,
+        -16,
+        16,
+        48
+      ],
+      "CurrentClassification": "VALID",
+      "ClassificationReason": "cluster profissional 211 a 59.1u",
+      "ProposedPosition": null,
+      "ProposalResolution": "KEEP",
+      "ProposalShift_u": 0.0,
+      "EvidenceCount": 774,
+      "DemoDiversity": 274,
+      "DemoDiversityPct": 61.7,
+      "PlayerDiversity": 463,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.69,
+      "Confidence": 1.0,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "staging(<=50s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 774,
+        "demos": 274,
+        "players": 463,
+        "dwell": 2.69
+      },
+      "Candidates": [
+        {
+          "cluster_id": 211,
+          "medoid": [
+            -886.6,
+            583.7,
+            -81.7
+          ],
+          "valve_place": "BackAlley",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 967,
+            "demos": 288,
+            "players": 523,
+            "dwell": 2.75
+          },
+          "distance_from_current_u": 59.1,
+          "cluster_confidence": 0.719,
+          "score": 247.54
+        },
+        {
+          "cluster_id": 221,
+          "medoid": [
+            -161.2,
+            575.9,
+            -69.8
+          ],
+          "valve_place": "BackAlley",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 569,
+            "demos": 262,
+            "players": 359,
+            "dwell": 3.56
+          },
+          "distance_from_current_u": 689.5,
+          "cluster_confidence": 0.819,
+          "score": 238.29
+        },
+        {
+          "cluster_id": 207,
+          "medoid": [
+            -1154.2,
+            569.4,
+            -80.0
+          ],
+          "valve_place": "Apartments",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 801,
+            "demos": 273,
+            "players": 458,
+            "dwell": 2.5
+          },
+          "distance_from_current_u": 308.3,
+          "cluster_confidence": 0.694,
+          "score": 231.23
+        },
+        {
+          "cluster_id": 205,
+          "medoid": [
+            -1472.0,
+            664.1,
+            -48.0
+          ],
+          "valve_place": "Apartments",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 517,
+            "demos": 237,
+            "players": 344,
+            "dwell": 3.25
+          },
+          "distance_from_current_u": 625.8,
+          "cluster_confidence": 0.743,
+          "score": 206.55
+        }
+      ],
+      "SetposCurrent": "setpos -850.0 600.0 -60.0; setang 0 170.0 0",
+      "SetposProposed": null
+    },
+    {
+      "SpotId": "tr_staging_t_roof",
+      "Name": "Staging: Telhado TR",
+      "CurrentPosition": [
+        750.0,
+        -750.0,
+        -100.0
+      ],
+      "ExpectedValvePlace": [
+        "PalaceAlley",
+        "TSpawn",
+        "TopofMid"
+      ],
+      "ActualValvePlace": "TopofMid",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Staging",
+      "AssociatedBombsite": "Mid",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -112,
+        -16
+      ],
+      "CurrentClassification": "INSUFFICIENT_EVIDENCE",
+      "ClassificationReason": "apenas 0 demos com hold compativel em 96u",
+      "ProposedPosition": [
+        814.9,
+        -1549.0,
+        -109.0
+      ],
+      "ProposalResolution": "PROPOSED_NEAREST_CLUSTER_FOR_LOW_EVIDENCE",
+      "ProposalShift_u": 801.7,
+      "EvidenceCount": 601,
+      "DemoDiversity": 293,
+      "DemoDiversityPct": 66.0,
+      "PlayerDiversity": 419,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 4.94,
+      "Confidence": 0.756,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "staging(<=50s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 190,
+          "medoid": [
+            814.9,
+            -1549.0,
+            -109.0
+          ],
+          "valve_place": "PalaceAlley",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 601,
+            "demos": 293,
+            "players": 419,
+            "dwell": 4.94
+          },
+          "distance_from_current_u": 801.8,
+          "cluster_confidence": 0.852,
+          "score": 678.29
+        },
+        {
+          "cluster_id": 193,
+          "medoid": [
+            1004.0,
+            -1210.4,
+            -109.0
+          ],
+          "valve_place": "PalaceAlley",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 385,
+            "demos": 205,
+            "players": 284,
+            "dwell": 5.5
+          },
+          "distance_from_current_u": 526.1,
+          "cluster_confidence": 0.937,
+          "score": 496.36
+        },
+        {
+          "cluster_id": 191,
+          "medoid": [
+            873.0,
+            -1251.8,
+            -109.0
+          ],
+          "valve_place": "PalaceAlley",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 481,
+            "demos": 202,
+            "players": 273,
+            "dwell": 2.5
+          },
+          "distance_from_current_u": 517.0,
+          "cluster_confidence": 0.766,
+          "score": 445.92
+        },
+        {
+          "cluster_id": 192,
+          "medoid": [
+            1004.0,
+            -1253.9,
+            -109.0
+          ],
+          "valve_place": "PalaceAlley",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 32,
+            "demos": 28,
+            "players": 28,
+            "dwell": 3.16
+          },
+          "distance_from_current_u": 564.6,
+          "cluster_confidence": 0.381,
+          "score": 48.34
+        }
+      ],
+      "SetposCurrent": "setpos 750.0 -750.0 -100.0; setang 0 175.0 0",
+      "SetposProposed": "setpos 814.9 -1549.0 -109.0; setang 0 175.0 0"
+    },
+    {
+      "SpotId": "tr_spawn_safe",
+      "Name": "Recuo Seguro Base TR",
+      "CurrentPosition": [
+        1100.0,
+        -200.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "TSpawn"
+      ],
+      "ActualValvePlace": "TSpawn",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Fallback/Save",
+      "AssociatedBombsite": "TR Spawn",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112
+      ],
+      "CurrentClassification": "INSUFFICIENT_EVIDENCE",
+      "ClassificationReason": "apenas 3 demos com hold compativel em 96u",
+      "ProposedPosition": [
+        1240.0,
+        -1159.9,
+        -246.4
+      ],
+      "ProposalResolution": "PROPOSED_NEAREST_CLUSTER_FOR_LOW_EVIDENCE",
+      "ProposalShift_u": 973.9,
+      "EvidenceCount": 247,
+      "DemoDiversity": 140,
+      "DemoDiversityPct": 31.5,
+      "PlayerDiversity": 167,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 4.44,
+      "Confidence": 0.617,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "any",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 3,
+        "demos": 3,
+        "players": 3,
+        "dwell": 1.88
+      },
+      "Candidates": [
+        {
+          "cluster_id": 21,
+          "medoid": [
+            1240.0,
+            -1159.9,
+            -246.4
+          ],
+          "valve_place": "TSpawn",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 247,
+            "demos": 140,
+            "players": 167,
+            "dwell": 4.44
+          },
+          "distance_from_current_u": 985.3,
+          "cluster_confidence": 0.89,
+          "score": 132.3
+        },
+        {
+          "cluster_id": 86,
+          "medoid": [
+            1422.9,
+            36.5,
+            -168.0
+          ],
+          "valve_place": "TSpawn",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 230,
+            "demos": 149,
+            "players": 181,
+            "dwell": 2.47
+          },
+          "distance_from_current_u": 400.6,
+          "cluster_confidence": 0.772,
+          "score": 132.01
+        }
+      ],
+      "SetposCurrent": "setpos 1100.0 -200.0 -160.0; setang 0 180.0 0",
+      "SetposProposed": "setpos 1240.0 -1159.9 -246.4; setang 0 180.0 0"
+    },
+    {
+      "SpotId": "tr_exec_a_site_default",
+      "Name": "Exec: Plant Default A",
+      "CurrentPosition": [
+        -400.0,
+        -2100.0,
+        -170.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteA"
+      ],
+      "ActualValvePlace": "BombsiteA",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Execute",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80,
+        -48,
+        -16,
+        16
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 93.6u com 43 demos",
+      "ProposedPosition": [
+        -418.8,
+        -2010.5,
+        -180.0
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 92.0,
+      "EvidenceCount": 48,
+      "DemoDiversity": 43,
+      "DemoDiversityPct": 9.7,
+      "PlayerDiversity": 45,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.25,
+      "Confidence": 0.487,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "execute(>=18s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 9,
+        "demos": 9,
+        "players": 9,
+        "dwell": 3.25
+      },
+      "Candidates": [
+        {
+          "cluster_id": 70,
+          "medoid": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 153,
+            "demos": 101,
+            "players": 117,
+            "dwell": 3.31
+          },
+          "distance_from_current_u": 126.4,
+          "cluster_confidence": 0.807,
+          "score": 228.13
+        },
+        {
+          "cluster_id": 68,
+          "medoid": [
+            -264.0,
+            -1504.0,
+            -164.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 117,
+            "demos": 72,
+            "players": 80,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 611.4,
+          "cluster_confidence": 0.862,
+          "score": 167.58
+        },
+        {
+          "cluster_id": 65,
+          "medoid": [
+            -497.7,
+            -1999.1,
+            -180.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 81,
+            "demos": 75,
+            "players": 78,
+            "dwell": 3.25
+          },
+          "distance_from_current_u": 141.9,
+          "cluster_confidence": 0.624,
+          "score": 35.67
+        },
+        {
+          "cluster_id": 66,
+          "medoid": [
+            -418.8,
+            -2010.5,
+            -180.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 48,
+            "demos": 43,
+            "players": 45,
+            "dwell": 3.25
+          },
+          "distance_from_current_u": 93.6,
+          "cluster_confidence": 0.6,
+          "score": 28.84
+        }
+      ],
+      "SetposCurrent": "setpos -400.0 -2100.0 -170.0; setang 0 -90.0 0",
+      "SetposProposed": "setpos -418.8 -2010.5 -180.0; setang 0 -90.0 0"
+    },
+    {
+      "SpotId": "tr_exec_a_triple_clear",
+      "Name": "Exec: Limpeza Tripla A",
+      "CurrentPosition": [
+        -550.0,
+        -2000.0,
+        -170.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteA"
+      ],
+      "ActualValvePlace": "BombsiteA",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Execute",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80,
+        -48
+      ],
+      "CurrentClassification": "VALID",
+      "ClassificationReason": "cluster profissional 65 a 56.0u",
+      "ProposedPosition": null,
+      "ProposalResolution": "KEEP",
+      "ProposalShift_u": 0.0,
+      "EvidenceCount": 109,
+      "DemoDiversity": 99,
+      "DemoDiversityPct": 22.3,
+      "PlayerDiversity": 107,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.25,
+      "Confidence": 0.798,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "execute(>=18s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 109,
+        "demos": 99,
+        "players": 107,
+        "dwell": 3.25
+      },
+      "Candidates": [
+        {
+          "cluster_id": 65,
+          "medoid": [
+            -497.7,
+            -1999.1,
+            -180.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 81,
+            "demos": 75,
+            "players": 78,
+            "dwell": 3.25
+          },
+          "distance_from_current_u": 56.0,
+          "cluster_confidence": 0.624,
+          "score": 152.25
+        },
+        {
+          "cluster_id": 66,
+          "medoid": [
+            -418.8,
+            -2010.5,
+            -180.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 48,
+            "demos": 43,
+            "players": 45,
+            "dwell": 3.25
+          },
+          "distance_from_current_u": 133.1,
+          "cluster_confidence": 0.6,
+          "score": 86.0
+        },
+        {
+          "cluster_id": 70,
+          "medoid": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 153,
+            "demos": 101,
+            "players": 117,
+            "dwell": 3.31
+          },
+          "distance_from_current_u": 306.3,
+          "cluster_confidence": 0.807,
+          "score": 55.56
+        },
+        {
+          "cluster_id": 54,
+          "medoid": [
+            -842.5,
+            -2253.7,
+            -174.8
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 79,
+            "demos": 52,
+            "players": 56,
+            "dwell": 2.25
+          },
+          "distance_from_current_u": 387.3,
+          "cluster_confidence": 0.758,
+          "score": 11.47
+        }
+      ],
+      "SetposCurrent": "setpos -550.0 -2000.0 -170.0; setang 0 -120.0 0",
+      "SetposProposed": null
+    },
+    {
+      "SpotId": "tr_exec_a_stairs_clear",
+      "Name": "Exec: Domínio Degraus / Jungle",
+      "CurrentPosition": [
+        -300.0,
+        -1900.0,
+        -170.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteA",
+        "Stairs",
+        "Jungle"
+      ],
+      "ActualValvePlace": "BombsiteA",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Execute",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80,
+        16
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 163.5u com 43 demos",
+      "ProposedPosition": [
+        -418.8,
+        -2010.5,
+        -180.0
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 162.6,
+      "EvidenceCount": 48,
+      "DemoDiversity": 43,
+      "DemoDiversityPct": 9.7,
+      "PlayerDiversity": 45,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.25,
+      "Confidence": 0.487,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "execute(>=18s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 70,
+          "medoid": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 153,
+            "demos": 101,
+            "players": 117,
+            "dwell": 3.31
+          },
+          "distance_from_current_u": 261.8,
+          "cluster_confidence": 0.807,
+          "score": 91.25
+        },
+        {
+          "cluster_id": 68,
+          "medoid": [
+            -264.0,
+            -1504.0,
+            -164.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 117,
+            "demos": 72,
+            "players": 80,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 397.8,
+          "cluster_confidence": 0.862,
+          "score": 67.03
+        },
+        {
+          "cluster_id": 65,
+          "medoid": [
+            -497.7,
+            -1999.1,
+            -180.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 81,
+            "demos": 75,
+            "players": 78,
+            "dwell": 3.25
+          },
+          "distance_from_current_u": 222.0,
+          "cluster_confidence": 0.624,
+          "score": 60.9
+        },
+        {
+          "cluster_id": 54,
+          "medoid": [
+            -842.5,
+            -2253.7,
+            -174.8
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 79,
+            "demos": 52,
+            "players": 56,
+            "dwell": 2.25
+          },
+          "distance_from_current_u": 647.7,
+          "cluster_confidence": 0.758,
+          "score": 45.71
+        }
+      ],
+      "SetposCurrent": "setpos -300.0 -1900.0 -170.0; setang 0 -150.0 0",
+      "SetposProposed": "setpos -418.8 -2010.5 -180.0; setang 0 -150.0 0"
+    },
+    {
+      "SpotId": "tr_exec_mid_connector_push",
+      "Name": "Exec: Avanço Conector Meio",
+      "CurrentPosition": [
+        -750.0,
+        -850.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Connector",
+        "Middle"
+      ],
+      "ActualValvePlace": "Connector",
+      "ActualPlacePurity": 0.53,
+      "TeamSide": "TR",
+      "Usage": "Execute",
+      "AssociatedBombsite": "Mid",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -272,
+        -240,
+        -208,
+        -176,
+        -144,
+        -112
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 85.9u com 39 demos",
+      "ProposedPosition": [
+        -801.5,
+        -916.9,
+        -168.0
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 84.8,
+      "EvidenceCount": 53,
+      "DemoDiversity": 39,
+      "DemoDiversityPct": 8.8,
+      "PlayerDiversity": 40,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.62,
+      "Confidence": 0.534,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "execute(>=18s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 26,
+        "demos": 20,
+        "players": 20,
+        "dwell": 3.5
+      },
+      "Candidates": [
+        {
+          "cluster_id": 6,
+          "medoid": [
+            -1038.9,
+            -728.5,
+            -264.0
+          ],
+          "valve_place": "Middle",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 582,
+            "demos": 264,
+            "players": 399,
+            "dwell": 2.5
+          },
+          "distance_from_current_u": 376.2,
+          "cluster_confidence": 0.72,
+          "score": 227.04
+        },
+        {
+          "cluster_id": 69,
+          "medoid": [
+            -319.3,
+            -926.0,
+            -166.0
+          ],
+          "valve_place": "Middle",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 191,
+            "demos": 110,
+            "players": 125,
+            "dwell": 3.12
+          },
+          "distance_from_current_u": 437.5,
+          "cluster_confidence": 0.837,
+          "score": 101.03
+        },
+        {
+          "cluster_id": 10,
+          "medoid": [
+            -484.9,
+            -788.9,
+            -255.8
+          ],
+          "valve_place": "Middle",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 149,
+            "demos": 98,
+            "players": 115,
+            "dwell": 2.19
+          },
+          "distance_from_current_u": 332.7,
+          "cluster_confidence": 0.753,
+          "score": 85.9
+        },
+        {
+          "cluster_id": 8,
+          "medoid": [
+            -777.0,
+            -789.0,
+            -264.0
+          ],
+          "valve_place": "Middle",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 128,
+            "demos": 96,
+            "players": 111,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 218.4,
+          "cluster_confidence": 0.708,
+          "score": 81.98
+        }
+      ],
+      "SetposCurrent": "setpos -750.0 -850.0 -160.0; setang 0 -140.0 0",
+      "SetposProposed": "setpos -801.5 -916.9 -168.0; setang 0 -140.0 0"
+    },
+    {
+      "SpotId": "tr_exec_b_site_plant",
+      "Name": "Exec: Plant Default B",
+      "CurrentPosition": [
+        -1850.0,
+        350.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteB"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Execute",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80,
+        16,
+        48,
+        80
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 83.0u com 33 demos",
+      "ProposedPosition": [
+        -1927.1,
+        319.3,
+        -160.0
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 83.0,
+      "EvidenceCount": 36,
+      "DemoDiversity": 33,
+      "DemoDiversityPct": 7.4,
+      "PlayerDiversity": 33,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.56,
+      "Confidence": 0.492,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "execute(>=18s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 6,
+        "demos": 6,
+        "players": 6,
+        "dwell": 2.38
+      },
+      "Candidates": [
+        {
+          "cluster_id": 31,
+          "medoid": [
+            -1987.8,
+            431.4,
+            -160.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 135,
+            "demos": 99,
+            "players": 113,
+            "dwell": 3.25
+          },
+          "distance_from_current_u": 160.0,
+          "cluster_confidence": 0.778,
+          "score": 88.01
+        },
+        {
+          "cluster_id": 33,
+          "medoid": [
+            -1927.1,
+            319.3,
+            -160.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 36,
+            "demos": 33,
+            "players": 33,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 83.0,
+          "cluster_confidence": 0.7,
+          "score": 28.05
+        },
+        {
+          "cluster_id": 25,
+          "medoid": [
+            -2494.8,
+            266.4,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 38,
+            "demos": 22,
+            "players": 24,
+            "dwell": 2.38
+          },
+          "distance_from_current_u": 650.4,
+          "cluster_confidence": 0.816,
+          "score": 19.98
+        },
+        {
+          "cluster_id": 39,
+          "medoid": [
+            -1258.4,
+            504.6,
+            -163.4
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 28,
+            "demos": 17,
+            "players": 18,
+            "dwell": 2.72
+          },
+          "distance_from_current_u": 611.5,
+          "cluster_confidence": 0.7,
+          "score": 14.45
+        }
+      ],
+      "SetposCurrent": "setpos -1850.0 350.0 -160.0; setang 0 45.0 0",
+      "SetposProposed": "setpos -1927.1 319.3 -160.0; setang 0 45.0 0"
+    },
+    {
+      "SpotId": "tr_exec_b_van_clear",
+      "Name": "Exec: Limpeza da Van B",
+      "CurrentPosition": [
+        -1350.0,
+        350.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteB",
+        "Truck"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Execute",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        16
+      ],
+      "CurrentClassification": "INSUFFICIENT_EVIDENCE",
+      "ClassificationReason": "apenas 5 demos com hold compativel em 96u",
+      "ProposedPosition": [
+        -1987.8,
+        431.4,
+        -160.0
+      ],
+      "ProposalResolution": "PROPOSED_NEAREST_CLUSTER_FOR_LOW_EVIDENCE",
+      "ProposalShift_u": 643.0,
+      "EvidenceCount": 135,
+      "DemoDiversity": 99,
+      "DemoDiversityPct": 22.3,
+      "PlayerDiversity": 113,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.25,
+      "Confidence": 0.481,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "execute(>=18s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 6,
+        "demos": 5,
+        "players": 5,
+        "dwell": 2.38
+      },
+      "Candidates": [
+        {
+          "cluster_id": 31,
+          "medoid": [
+            -1987.8,
+            431.4,
+            -160.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 135,
+            "demos": 99,
+            "players": 113,
+            "dwell": 3.25
+          },
+          "distance_from_current_u": 643.0,
+          "cluster_confidence": 0.778,
+          "score": 88.01
+        },
+        {
+          "cluster_id": 33,
+          "medoid": [
+            -1927.1,
+            319.3,
+            -160.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 36,
+            "demos": 33,
+            "players": 33,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 577.9,
+          "cluster_confidence": 0.7,
+          "score": 28.05
+        },
+        {
+          "cluster_id": 25,
+          "medoid": [
+            -2494.8,
+            266.4,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 38,
+            "demos": 22,
+            "players": 24,
+            "dwell": 2.38
+          },
+          "distance_from_current_u": 1148.0,
+          "cluster_confidence": 0.816,
+          "score": 19.98
+        },
+        {
+          "cluster_id": 39,
+          "medoid": [
+            -1258.4,
+            504.6,
+            -163.4
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 28,
+            "demos": 17,
+            "players": 18,
+            "dwell": 2.72
+          },
+          "distance_from_current_u": 179.8,
+          "cluster_confidence": 0.7,
+          "score": 14.45
+        }
+      ],
+      "SetposCurrent": "setpos -1350.0 350.0 -160.0; setang 0 120.0 0",
+      "SetposProposed": "setpos -1987.8 431.4 -160.0; setang 0 120.0 0"
+    },
+    {
+      "SpotId": "tr_exec_b_market_push",
+      "Name": "Exec: Pressão Janela/Porta Mercado",
+      "CurrentPosition": [
+        -1750.0,
+        200.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteB",
+        "Shop"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "TR",
+      "Usage": "Execute",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        16
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 213.5u com 33 demos",
+      "ProposedPosition": [
+        -1927.1,
+        319.3,
+        -160.0
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 213.5,
+      "EvidenceCount": 36,
+      "DemoDiversity": 33,
+      "DemoDiversityPct": 7.4,
+      "PlayerDiversity": 33,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.56,
+      "Confidence": 0.492,
+      "FilterApplied": {
+        "side": "TR",
+        "phase": "execute(>=18s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 31,
+          "medoid": [
+            -1987.8,
+            431.4,
+            -160.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 135,
+            "demos": 99,
+            "players": 113,
+            "dwell": 3.25
+          },
+          "distance_from_current_u": 331.8,
+          "cluster_confidence": 0.778,
+          "score": 88.01
+        },
+        {
+          "cluster_id": 33,
+          "medoid": [
+            -1927.1,
+            319.3,
+            -160.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 36,
+            "demos": 33,
+            "players": 33,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 213.5,
+          "cluster_confidence": 0.7,
+          "score": 28.05
+        },
+        {
+          "cluster_id": 25,
+          "medoid": [
+            -2494.8,
+            266.4,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 38,
+            "demos": 22,
+            "players": 24,
+            "dwell": 2.38
+          },
+          "distance_from_current_u": 747.9,
+          "cluster_confidence": 0.816,
+          "score": 19.98
+        },
+        {
+          "cluster_id": 39,
+          "medoid": [
+            -1258.4,
+            504.6,
+            -163.4
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 28,
+            "demos": 17,
+            "players": 18,
+            "dwell": 2.72
+          },
+          "distance_from_current_u": 578.4,
+          "cluster_confidence": 0.7,
+          "score": 14.45
+        }
+      ],
+      "SetposCurrent": "setpos -1750.0 200.0 -160.0; setang 0 80.0 0",
+      "SetposProposed": "setpos -1927.1 319.3 -160.0; setang 0 80.0 0"
+    },
+    {
+      "SpotId": "ct_retake_a_connector",
+      "Name": "Retake A: Conector",
+      "CurrentPosition": [
+        -450.0,
+        -1600.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Connector"
+      ],
+      "ActualValvePlace": "BombsiteA",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Staging, Retake",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": false,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -48,
+        -16,
+        16
+      ],
+      "CurrentClassification": "WRONG_HEIGHT",
+      "ClassificationReason": "XY caminhavel, mas Z=-160 fora das alturas observadas [-48, -16, 16]",
+      "ProposedPosition": [
+        -802.4,
+        -1221.3,
+        -168.0
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 517.4,
+      "EvidenceCount": 44,
+      "DemoDiversity": 28,
+      "DemoDiversityPct": 6.3,
+      "PlayerDiversity": 28,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.38,
+      "Confidence": 0.515,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "late(>=35s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 1,
+        "demos": 1,
+        "players": 1,
+        "dwell": 1.69
+      },
+      "Candidates": [
+        {
+          "cluster_id": 62,
+          "medoid": [
+            -520.0,
+            -984.0,
+            -168.0
+          ],
+          "valve_place": "Connector",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 121,
+            "demos": 80,
+            "players": 84,
+            "dwell": 3.12
+          },
+          "distance_from_current_u": 620.2,
+          "cluster_confidence": 0.823,
+          "score": 182.3
+        },
+        {
+          "cluster_id": 58,
+          "medoid": [
+            -802.4,
+            -1221.3,
+            -168.0
+          ],
+          "valve_place": "Connector",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 44,
+            "demos": 28,
+            "players": 28,
+            "dwell": 2.38
+          },
+          "distance_from_current_u": 517.5,
+          "cluster_confidence": 0.817,
+          "score": 63.59
+        }
+      ],
+      "SetposCurrent": "setpos -450.0 -1600.0 -160.0; setang 0 0.0 0",
+      "SetposProposed": "setpos -802.4 -1221.3 -168.0; setang 0 0.0 0"
+    },
+    {
+      "SpotId": "ct_retake_a_stairs",
+      "Name": "Retake A: Degraus / Jungle",
+      "CurrentPosition": [
+        -300.0,
+        -1700.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Stairs",
+        "BombsiteA"
+      ],
+      "ActualValvePlace": "BombsiteA",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Staging, Retake",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80,
+        -48,
+        -16,
+        16
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 199.4u com 67 demos",
+      "ProposedPosition": [
+        -264.0,
+        -1504.0,
+        -164.0
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 199.3,
+      "EvidenceCount": 148,
+      "DemoDiversity": 67,
+      "DemoDiversityPct": 15.1,
+      "PlayerDiversity": 71,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.91,
+      "Confidence": 0.626,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "late(>=35s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 70,
+          "medoid": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 265,
+            "demos": 132,
+            "players": 147,
+            "dwell": 3.5
+          },
+          "distance_from_current_u": 462.4,
+          "cluster_confidence": 0.807,
+          "score": 119.26
+        },
+        {
+          "cluster_id": 63,
+          "medoid": [
+            -497.8,
+            -1309.0,
+            -160.0
+          ],
+          "valve_place": "Stairs",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 218,
+            "demos": 133,
+            "players": 148,
+            "dwell": 2.81
+          },
+          "distance_from_current_u": 438.2,
+          "cluster_confidence": 0.72,
+          "score": 114.38
+        },
+        {
+          "cluster_id": 54,
+          "medoid": [
+            -842.5,
+            -2253.7,
+            -174.8
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 212,
+            "demos": 122,
+            "players": 134,
+            "dwell": 2.94
+          },
+          "distance_from_current_u": 775.7,
+          "cluster_confidence": 0.758,
+          "score": 107.24
+        },
+        {
+          "cluster_id": 75,
+          "medoid": [
+            151.9,
+            -1914.1,
+            -168.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 214,
+            "demos": 108,
+            "players": 126,
+            "dwell": 2.75
+          },
+          "distance_from_current_u": 500.3,
+          "cluster_confidence": 0.784,
+          "score": 96.34
+        }
+      ],
+      "SetposCurrent": "setpos -300.0 -1700.0 -160.0; setang 0 -30.0 0",
+      "SetposProposed": "setpos -264.0 -1504.0 -164.0; setang 0 -30.0 0"
+    },
+    {
+      "SpotId": "ct_retake_a_jungle",
+      "Name": "Retake A: Selva",
+      "CurrentPosition": [
+        -950.0,
+        -450.0,
+        -140.0
+      ],
+      "ExpectedValvePlace": [
+        "Jungle"
+      ],
+      "ActualValvePlace": "Catwalk",
+      "ActualPlacePurity": 0.5,
+      "TeamSide": "CT",
+      "Usage": "Staging, Retake",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -336,
+        -304,
+        -272,
+        -240,
+        -208,
+        -176,
+        -144,
+        -112,
+        -80,
+        -48,
+        -16,
+        16,
+        48
+      ],
+      "CurrentClassification": "WRONG_SECTOR",
+      "ClassificationReason": "place real=Catwalk (pureza 0.5), esperado=['Jungle']",
+      "ProposedPosition": [
+        -1016.2,
+        -1527.6,
+        -163.8
+      ],
+      "ProposalResolution": "RESOLVED_LANDMARK_SUBREGION",
+      "ProposalShift_u": 1079.9,
+      "EvidenceCount": 69,
+      "DemoDiversity": 47,
+      "DemoDiversityPct": 10.6,
+      "PlayerDiversity": 48,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.5,
+      "Confidence": 0.518,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "late(>=35s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 1,
+        "demos": 1,
+        "players": 1,
+        "dwell": 1.88
+      },
+      "Candidates": [
+        {
+          "cluster_id": 51,
+          "medoid": [
+            -992.1,
+            -1304.9,
+            -155.6
+          ],
+          "valve_place": "Jungle",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 85,
+            "demos": 54,
+            "players": 60,
+            "dwell": 2.75
+          },
+          "distance_from_current_u": 856.5,
+          "cluster_confidence": 0.804,
+          "score": 121.77
+        },
+        {
+          "cluster_id": 48,
+          "medoid": [
+            -1016.2,
+            -1527.6,
+            -163.8
+          ],
+          "valve_place": "Jungle",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 69,
+            "demos": 47,
+            "players": 48,
+            "dwell": 2.5
+          },
+          "distance_from_current_u": 1080.7,
+          "cluster_confidence": 0.67,
+          "score": 98.11
+        }
+      ],
+      "SetposCurrent": "setpos -950.0 -450.0 -140.0; setang 0 10.0 0",
+      "SetposProposed": "setpos -1016.2 -1527.6 -163.8; setang 0 10.0 0"
+    },
+    {
+      "SpotId": "ct_retake_a_ticket",
+      "Name": "Retake A: CT Spawn / Cabine",
+      "CurrentPosition": [
+        -700.0,
+        -2200.0,
+        -180.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteA",
+        "CTSpawn"
+      ],
+      "ActualValvePlace": "BombsiteA",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Staging, Retake",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80,
+        -48,
+        -16,
+        16
+      ],
+      "CurrentClassification": "VALID",
+      "ClassificationReason": "posicao propria com evidencia (55 demos) mesmo fora de pico",
+      "ProposedPosition": null,
+      "ProposalResolution": "KEEP",
+      "ProposalShift_u": 0.0,
+      "EvidenceCount": 95,
+      "DemoDiversity": 55,
+      "DemoDiversityPct": 12.4,
+      "PlayerDiversity": 60,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.62,
+      "Confidence": 0.71,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "late(>=35s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 95,
+        "demos": 55,
+        "players": 60,
+        "dwell": 2.62
+      },
+      "Candidates": [
+        {
+          "cluster_id": 50,
+          "medoid": [
+            -1011.5,
+            -2479.9,
+            -168.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 320,
+            "demos": 174,
+            "players": 196,
+            "dwell": 3.38
+          },
+          "distance_from_current_u": 419.5,
+          "cluster_confidence": 0.816,
+          "score": 394.98
+        },
+        {
+          "cluster_id": 54,
+          "medoid": [
+            -842.5,
+            -2253.7,
+            -174.8
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 212,
+            "demos": 122,
+            "players": 134,
+            "dwell": 2.94
+          },
+          "distance_from_current_u": 152.6,
+          "cluster_confidence": 0.758,
+          "score": 268.1
+        },
+        {
+          "cluster_id": 280,
+          "medoid": [
+            -840.1,
+            -2542.2,
+            -36.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 233,
+            "demos": 109,
+            "players": 119,
+            "dwell": 2.62
+          },
+          "distance_from_current_u": 468.7,
+          "cluster_confidence": 0.807,
+          "score": 246.2
+        },
+        {
+          "cluster_id": 47,
+          "medoid": [
+            -1072.6,
+            -2326.9,
+            -168.0
+          ],
+          "valve_place": "CTSpawn",
+          "in_subregion": true,
+          "filtered_evidence": {
+            "count": 154,
+            "demos": 95,
+            "players": 107,
+            "dwell": 2.88
+          },
+          "distance_from_current_u": 394.3,
+          "cluster_confidence": 0.708,
+          "score": 202.82
+        }
+      ],
+      "SetposCurrent": "setpos -700.0 -2200.0 -180.0; setang 0 45.0 0",
+      "SetposProposed": null
+    },
+    {
+      "SpotId": "ct_retake_a_defuse_cover",
+      "Name": "Retake A: Defuse Cover Site",
+      "CurrentPosition": [
+        -400.0,
+        -2100.0,
+        -170.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteA"
+      ],
+      "ActualValvePlace": "BombsiteA",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Execute, Defuse, Retake",
+      "AssociatedBombsite": "A",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -80,
+        -48,
+        -16,
+        16
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 126.4u com 132 demos",
+      "ProposedPosition": [
+        -289.8,
+        -2161.5,
+        -173.9
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 126.3,
+      "EvidenceCount": 265,
+      "DemoDiversity": 132,
+      "DemoDiversityPct": 29.7,
+      "PlayerDiversity": 147,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.5,
+      "Confidence": 0.772,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "late(>=35s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 39,
+        "demos": 24,
+        "players": 24,
+        "dwell": 2.81
+      },
+      "Candidates": [
+        {
+          "cluster_id": 70,
+          "medoid": [
+            -289.8,
+            -2161.5,
+            -173.9
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 265,
+            "demos": 132,
+            "players": 147,
+            "dwell": 3.5
+          },
+          "distance_from_current_u": 126.4,
+          "cluster_confidence": 0.807,
+          "score": 119.26
+        },
+        {
+          "cluster_id": 54,
+          "medoid": [
+            -842.5,
+            -2253.7,
+            -174.8
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 212,
+            "demos": 122,
+            "players": 134,
+            "dwell": 2.94
+          },
+          "distance_from_current_u": 468.5,
+          "cluster_confidence": 0.758,
+          "score": 107.24
+        },
+        {
+          "cluster_id": 75,
+          "medoid": [
+            151.9,
+            -1914.1,
+            -168.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 214,
+            "demos": 108,
+            "players": 126,
+            "dwell": 2.75
+          },
+          "distance_from_current_u": 582.4,
+          "cluster_confidence": 0.784,
+          "score": 96.34
+        },
+        {
+          "cluster_id": 57,
+          "medoid": [
+            -790.7,
+            -1321.4,
+            -168.0
+          ],
+          "valve_place": "BombsiteA",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 137,
+            "demos": 95,
+            "players": 107,
+            "dwell": 2.19
+          },
+          "distance_from_current_u": 871.1,
+          "cluster_confidence": 0.712,
+          "score": 81.32
+        }
+      ],
+      "SetposCurrent": "setpos -400.0 -2100.0 -170.0; setang 0 -90.0 0",
+      "SetposProposed": "setpos -289.8 -2161.5 -173.9; setang 0 -90.0 0"
+    },
+    {
+      "SpotId": "ct_retake_b_market",
+      "Name": "Retake B: Mercado / Cozinha",
+      "CurrentPosition": [
+        -1750.0,
+        200.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Shop",
+        "BombsiteB"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Staging, Retake",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        16
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 213.5u com 32 demos",
+      "ProposedPosition": [
+        -1927.1,
+        319.3,
+        -160.0
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 213.5,
+      "EvidenceCount": 66,
+      "DemoDiversity": 32,
+      "DemoDiversityPct": 7.2,
+      "PlayerDiversity": 34,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.62,
+      "Confidence": 0.49,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "late(>=35s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 25,
+          "medoid": [
+            -2494.8,
+            266.4,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 158,
+            "demos": 91,
+            "players": 102,
+            "dwell": 2.91
+          },
+          "distance_from_current_u": 747.9,
+          "cluster_confidence": 0.816,
+          "score": 82.63
+        },
+        {
+          "cluster_id": 26,
+          "medoid": [
+            -2353.0,
+            103.2,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 142,
+            "demos": 85,
+            "players": 93,
+            "dwell": 3.75
+          },
+          "distance_from_current_u": 610.9,
+          "cluster_confidence": 0.844,
+          "score": 78.37
+        },
+        {
+          "cluster_id": 30,
+          "medoid": [
+            -2017.4,
+            -599.8,
+            -168.0
+          ],
+          "valve_place": "Shop",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 119,
+            "demos": 77,
+            "players": 79,
+            "dwell": 3.06
+          },
+          "distance_from_current_u": 843.5,
+          "cluster_confidence": 0.831,
+          "score": 70.49
+        },
+        {
+          "cluster_id": 27,
+          "medoid": [
+            -2270.7,
+            378.8,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 134,
+            "demos": 79,
+            "players": 87,
+            "dwell": 2.53
+          },
+          "distance_from_current_u": 550.8,
+          "cluster_confidence": 0.75,
+          "score": 69.12
+        }
+      ],
+      "SetposCurrent": "setpos -1750.0 200.0 -160.0; setang 0 0.0 0",
+      "SetposProposed": "setpos -1927.1 319.3 -160.0; setang 0 0.0 0"
+    },
+    {
+      "SpotId": "ct_retake_b_short",
+      "Name": "Retake B: Catwalk / L",
+      "CurrentPosition": [
+        -1100.0,
+        250.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "Catwalk",
+        "BombsiteB"
+      ],
+      "ActualValvePlace": "Catwalk",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Staging, Retake",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        -16
+      ],
+      "CurrentClassification": "VALID",
+      "ClassificationReason": "posicao propria com evidencia (48 demos) mesmo fora de pico",
+      "ProposedPosition": null,
+      "ProposalResolution": "KEEP",
+      "ProposalShift_u": 0.0,
+      "EvidenceCount": 62,
+      "DemoDiversity": 48,
+      "DemoDiversityPct": 10.8,
+      "PlayerDiversity": 49,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.56,
+      "Confidence": 0.696,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "late(>=35s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 62,
+        "demos": 48,
+        "players": 49,
+        "dwell": 2.56
+      },
+      "Candidates": [
+        {
+          "cluster_id": 25,
+          "medoid": [
+            -2494.8,
+            266.4,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 158,
+            "demos": 91,
+            "players": 102,
+            "dwell": 2.91
+          },
+          "distance_from_current_u": 1395.0,
+          "cluster_confidence": 0.816,
+          "score": 82.63
+        },
+        {
+          "cluster_id": 26,
+          "medoid": [
+            -2353.0,
+            103.2,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 142,
+            "demos": 85,
+            "players": 93,
+            "dwell": 3.75
+          },
+          "distance_from_current_u": 1261.7,
+          "cluster_confidence": 0.844,
+          "score": 78.37
+        },
+        {
+          "cluster_id": 27,
+          "medoid": [
+            -2270.7,
+            378.8,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 134,
+            "demos": 79,
+            "players": 87,
+            "dwell": 2.53
+          },
+          "distance_from_current_u": 1177.9,
+          "cluster_confidence": 0.75,
+          "score": 69.12
+        },
+        {
+          "cluster_id": 32,
+          "medoid": [
+            -1912.8,
+            5.1,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 103,
+            "demos": 64,
+            "players": 67,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 849.0,
+          "cluster_confidence": 0.713,
+          "score": 54.82
+        }
+      ],
+      "SetposCurrent": "setpos -1100.0 250.0 -160.0; setang 0 -45.0 0",
+      "SetposProposed": null
+    },
+    {
+      "SpotId": "ct_retake_b_entry",
+      "Name": "Retake B: Entrada do Site",
+      "CurrentPosition": [
+        -1550.0,
+        350.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteB"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Execute, Retake",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        16
+      ],
+      "CurrentClassification": "INSUFFICIENT_EVIDENCE",
+      "ClassificationReason": "apenas 4 demos com hold compativel em 96u",
+      "ProposedPosition": [
+        -2494.8,
+        266.4,
+        -168.0
+      ],
+      "ProposalResolution": "PROPOSED_NEAREST_CLUSTER_FOR_LOW_EVIDENCE",
+      "ProposalShift_u": 948.5,
+      "EvidenceCount": 158,
+      "DemoDiversity": 91,
+      "DemoDiversityPct": 20.5,
+      "PlayerDiversity": 102,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.91,
+      "Confidence": 0.472,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "late(>=35s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 7,
+        "demos": 4,
+        "players": 4,
+        "dwell": 2.06
+      },
+      "Candidates": [
+        {
+          "cluster_id": 25,
+          "medoid": [
+            -2494.8,
+            266.4,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 158,
+            "demos": 91,
+            "players": 102,
+            "dwell": 2.91
+          },
+          "distance_from_current_u": 948.6,
+          "cluster_confidence": 0.816,
+          "score": 82.63
+        },
+        {
+          "cluster_id": 26,
+          "medoid": [
+            -2353.0,
+            103.2,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 142,
+            "demos": 85,
+            "players": 93,
+            "dwell": 3.75
+          },
+          "distance_from_current_u": 840.2,
+          "cluster_confidence": 0.844,
+          "score": 78.37
+        },
+        {
+          "cluster_id": 27,
+          "medoid": [
+            -2270.7,
+            378.8,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 134,
+            "demos": 79,
+            "players": 87,
+            "dwell": 2.53
+          },
+          "distance_from_current_u": 721.5,
+          "cluster_confidence": 0.75,
+          "score": 69.12
+        },
+        {
+          "cluster_id": 32,
+          "medoid": [
+            -1912.8,
+            5.1,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 103,
+            "demos": 64,
+            "players": 67,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 500.8,
+          "cluster_confidence": 0.713,
+          "score": 54.82
+        }
+      ],
+      "SetposCurrent": "setpos -1550.0 350.0 -160.0; setang 0 -60.0 0",
+      "SetposProposed": "setpos -2494.8 266.4 -168.0; setang 0 -60.0 0"
+    },
+    {
+      "SpotId": "ct_retake_b_defuse_cover",
+      "Name": "Retake B: Cobertura Defuse",
+      "CurrentPosition": [
+        -1750.0,
+        320.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteB"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Execute, Defuse, Retake",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -176,
+        -144,
+        -112,
+        16
+      ],
+      "CurrentClassification": "SMALL_ADJUSTMENT",
+      "ClassificationReason": "pico profissional a 177.1u com 32 demos",
+      "ProposedPosition": [
+        -1927.1,
+        319.3,
+        -160.0
+      ],
+      "ProposalResolution": "RESOLVED_NEAREST_PEAK",
+      "ProposalShift_u": 177.1,
+      "EvidenceCount": 66,
+      "DemoDiversity": 32,
+      "DemoDiversityPct": 7.2,
+      "PlayerDiversity": 34,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 2.62,
+      "Confidence": 0.49,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "late(>=35s)",
+        "awp_only": false
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 25,
+          "medoid": [
+            -2494.8,
+            266.4,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 158,
+            "demos": 91,
+            "players": 102,
+            "dwell": 2.91
+          },
+          "distance_from_current_u": 746.9,
+          "cluster_confidence": 0.816,
+          "score": 82.63
+        },
+        {
+          "cluster_id": 26,
+          "medoid": [
+            -2353.0,
+            103.2,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 142,
+            "demos": 85,
+            "players": 93,
+            "dwell": 3.75
+          },
+          "distance_from_current_u": 641.0,
+          "cluster_confidence": 0.844,
+          "score": 78.37
+        },
+        {
+          "cluster_id": 27,
+          "medoid": [
+            -2270.7,
+            378.8,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 134,
+            "demos": 79,
+            "players": 87,
+            "dwell": 2.53
+          },
+          "distance_from_current_u": 524.3,
+          "cluster_confidence": 0.75,
+          "score": 69.12
+        },
+        {
+          "cluster_id": 32,
+          "medoid": [
+            -1912.8,
+            5.1,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 103,
+            "demos": 64,
+            "players": 67,
+            "dwell": 2.56
+          },
+          "distance_from_current_u": 354.9,
+          "cluster_confidence": 0.713,
+          "score": 54.82
+        }
+      ],
+      "SetposCurrent": "setpos -1750.0 320.0 -160.0; setang 0 -80.0 0",
+      "SetposProposed": "setpos -1927.1 319.3 -160.0; setang 0 -80.0 0"
+    },
+    {
+      "SpotId": "ct_retake_b_awp_cover",
+      "Name": "Retake B: Suporte AWP",
+      "CurrentPosition": [
+        -1950.0,
+        250.0,
+        -160.0
+      ],
+      "ExpectedValvePlace": [
+        "BombsiteB",
+        "Shop"
+      ],
+      "ActualValvePlace": "BombsiteB",
+      "ActualPlacePurity": 1.0,
+      "TeamSide": "CT",
+      "Usage": "Staging, Retake, FlankWatch",
+      "AssociatedBombsite": "B",
+      "NavMeshValid": "UNVERIFIED_RUNTIME",
+      "EmpiricallyWalkable3D": true,
+      "EmpiricallyWalkableXYAnyHeight": true,
+      "ObservedFloorHeightsAtXY": [
+        -144,
+        -112,
+        -80,
+        48
+      ],
+      "CurrentClassification": "INSUFFICIENT_EVIDENCE",
+      "ClassificationReason": "apenas 0 demos com hold compativel em 96u",
+      "ProposedPosition": [
+        -2017.4,
+        -599.8,
+        -168.0
+      ],
+      "ProposalResolution": "PROPOSED_NEAREST_CLUSTER_FOR_LOW_EVIDENCE",
+      "ProposalShift_u": 852.5,
+      "EvidenceCount": 103,
+      "DemoDiversity": 65,
+      "DemoDiversityPct": 14.6,
+      "PlayerDiversity": 67,
+      "PlayerDiversityNote": "instancias (demo,slot); steamid ausente nas npz",
+      "HoldDurationMedian": 3.44,
+      "Confidence": 0.412,
+      "FilterApplied": {
+        "side": "CT",
+        "phase": "late(>=35s)",
+        "awp_only": true
+      },
+      "LocalEvidenceAtCurrent": {
+        "count": 0,
+        "demos": 0,
+        "players": 0,
+        "dwell": null
+      },
+      "Candidates": [
+        {
+          "cluster_id": 30,
+          "medoid": [
+            -2017.4,
+            -599.8,
+            -168.0
+          ],
+          "valve_place": "Shop",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 103,
+            "demos": 65,
+            "players": 67,
+            "dwell": 3.44
+          },
+          "distance_from_current_u": 852.6,
+          "cluster_confidence": 0.831,
+          "score": 59.51
+        },
+        {
+          "cluster_id": 26,
+          "medoid": [
+            -2353.0,
+            103.2,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 100,
+            "demos": 55,
+            "players": 58,
+            "dwell": 4.19
+          },
+          "distance_from_current_u": 429.2,
+          "cluster_confidence": 0.844,
+          "score": 50.71
+        },
+        {
+          "cluster_id": 27,
+          "medoid": [
+            -2270.7,
+            378.8,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 71,
+            "demos": 39,
+            "players": 42,
+            "dwell": 3.31
+          },
+          "distance_from_current_u": 346.0,
+          "cluster_confidence": 0.75,
+          "score": 34.12
+        },
+        {
+          "cluster_id": 28,
+          "medoid": [
+            -2197.5,
+            14.5,
+            -168.0
+          ],
+          "valve_place": "BombsiteB",
+          "in_subregion": false,
+          "filtered_evidence": {
+            "count": 37,
+            "demos": 24,
+            "players": 25,
+            "dwell": 3.62
+          },
+          "distance_from_current_u": 342.0,
+          "cluster_confidence": 0.58,
+          "score": 18.96
+        }
+      ],
+      "SetposCurrent": "setpos -1950.0 250.0 -160.0; setang 0 -30.0 0",
+      "SetposProposed": "setpos -2017.4 -599.8 -168.0; setang 0 -30.0 0"
+    }
+  ]
+}

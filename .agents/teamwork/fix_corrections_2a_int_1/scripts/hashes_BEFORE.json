@@ -1,0 +1,76 @@
+{
+  "label": "BEFORE",
+  "repo_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "entries": [
+    {
+      "path": "training_runs/intermediate_domain_study/source_feasibility_report.md",
+      "exists": true,
+      "bytes": 59871,
+      "sha256": "55f1d9d2cda42297885d2a05471dc651ba63c17e4eabdeecc354d171109f2d4c",
+      "mtime_utc": 1794186321.1670828
+    },
+    {
+      "path": "training_runs/intermediate_domain_study/legal_and_access_constraints.md",
+      "exists": true,
+      "bytes": 6439,
+      "sha256": "989ceb724f918da5d298a08452bc8eda6dbfd1d217c1a2cd7720ab7f7a26555a",
+      "mtime_utc": 1794186103.7565472
+    },
+    {
+      "path": "training_runs/intermediate_domain_study/faceit_access_readiness.json",
+      "exists": true,
+      "bytes": 15880,
+      "sha256": "26739883cec11877c83ecb33bd821fa9fd478fa84847058d65d4f6e384b20712",
+      "mtime_utc": 1794186131.9525325
+    },
+    {
+      "path": "training_runs/intermediate_domain_study/valve_opt_in_feasibility.md",
+      "exists": true,
+      "bytes": 7987,
+      "sha256": "f63ba568aa0fd9de456b7c8fd4ca9fb1b4e1f6e73ae0f91c56a8b60e91f8f61f",
+      "mtime_utc": 1794186148.8197515
+    },
+    {
+      "path": "training_runs/intermediate_domain_study/professional_vs_intermediate.json",
+      "exists": true,
+      "bytes": 68615,
+      "sha256": "a552ea2dc15edc73d4c6e324d9035bf0d79e3a8dc04079a44a14addbb20aad96",
+      "mtime_utc": 1794187056.5166984
+    },
+    {
+      "path": "training_runs/intermediate_domain_study/ct_standardization_analysis.json",
+      "exists": true,
+      "bytes": 55267,
+      "sha256": "ee3a674aef6fb172d7255e4ef56a0b1e1a5a90c50d43cd88766f18bcbf289494",
+      "mtime_utc": 1794186953.4536724
+    },
+    {
+      "path": "training_runs/intermediate_domain_study/tr_standardization_analysis.json",
+      "exists": true,
+      "bytes": 58793,
+      "sha256": "f15d12fa7a1e50e2ee00b9684d8d116f3e1467f8be94b4a3f75dcd37102bcc7f",
+      "mtime_utc": 1794187012.3167856
+    },
+    {
+      "path": "datasets/mirage_domains/intermediate_competitive/acquisition_source_matrix.json",
+      "exists": true,
+      "bytes": 31073,
+      "sha256": "f09ac2a5962bb69fb38361739200b7f656d29e25f0d3c68a2c1b82fde380f3e8",
+      "mtime_utc": 1794186331.889096
+    },
+    {
+      "path": "scratch/2a_intermediate_research_cache/INDEX.md",
+      "exists": true,
+      "bytes": 13646,
+      "sha256": "f18b7a8e2856f2f1daa40924492950013ef5d4c5257fbeef5656e631bd99313a",
+      "mtime_utc": 1794186598.902108
+    },
+    {
+      "path": ".agents/teamwork/researcher_2a_int_1/research_log.md",
+      "exists": true,
+      "bytes": 10966,
+      "sha256": "e6aa0bbee7aa5351d99056ecc90d176c724143d242b1c78d067d017bf3b41cb4",
+      "mtime_utc": 1794185856.3975077
+    }
+  ]
+}

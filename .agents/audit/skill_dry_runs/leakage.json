@@ -1,0 +1,15 @@
+{
+  "script": "check_split_leakage.py",
+  "mode": "DRY_RUN",
+  "data_nature": "SIMULATED",
+  "governance_rules": [
+    "01-evidence-before-claims",
+    "02-no-test-contamination",
+    "03-zero-support-is-na",
+    "04-synthetic-data-labeling"
+  ],
+  "input_artifacts": [],
+  "leakage_detected": false,
+  "verdict": "CONDITIONAL",
+  "note": "Execução em modo --dry-run (SIMULATED). Pela regra 01-evidence-before-claims, nenhum veredito PASS pode ser emitido sem artefato bruto real."
+}

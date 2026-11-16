@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EvidencePacketV1",
+  "description": "Contrato padronizado para injecao cirurgica de evidencias e extratos contextuais em tarefas e subagentes, evitando leituras repetitivas e vazamento de tokens.",
+  "type": "object",
+  "required": [
+    "task_id",
+    "risk_tier",
+    "task_summary",
+    "source_artifacts",
+    "source_hashes",
+    "relevant_extracts",
+    "known_facts",
+    "claims_to_verify",
+    "unresolved_questions",
+    "files_allowed_to_open",
+    "files_forbidden",
+    "max_additional_reads",
+    "created_at_utc",
+    "created_by"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "description": "Identificador unico da tarefa ou marco"
+    },
+    "risk_tier": {
+      "type": "string",
+      "enum": ["Tier 1", "Tier 2", "Tier 3", "Tier 4"]
+    },
+    "task_summary": {
+      "type": "string",
+      "description": "Resumo objetivo e denso da tarefa"
+    },
+    "source_artifacts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 8,
+      "description": "Lista de no maximo 8 caminhos relativos de artefatos de origem"
+    },
+    "source_hashes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      },
+      "description": "Mapa de caminho relativo para hash SHA-256 de 64 caracteres"
+    },
+    "relevant_extracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relative_path", "sha256", "start_line", "end_line", "reason", "content"],
+        "properties": {
+          "relative_path": { "type": "string" },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "start_line": { "type": "integer", "minimum": 1 },
+          "end_line": { "type": "integer", "minimum": 1 },
+          "reason": { "type": "string" },
+          "content": { "type": "string" }
+        }
+      },
+      "description": "Extratos de texto essenciais (total cumulativo recomendado <= 200 linhas)"
+    },
+    "known_facts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Fatos ja verificados e imutaveis para a tarefa"
+    },
+    "claims_to_verify": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Afirmacoes ou gates que exigem checagem"
+    },
+    "unresolved_questions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Perguntas ou pendencias em aberto"
+    },
+    "files_allowed_to_open": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Lista de arquivos com permissao explicita de leitura"
+    },
+    "files_forbidden": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Arquivos estritamente proibidos de abertura (ex: Test set, holdout, segredos)"
+    },
+    "max_additional_reads": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5,
+      "default": 3,
+      "description": "Orcamento maximo de leituras fisicas adicionais permitidas"
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,4 @@
+﻿270c972946e72a1e38eadcc11063095c2bc310228e2383e8107a5f4327aba029  dotnet_test_output.txt  732 bytes
+bcb1aa25d913644258b045f94d2ce45f26d2415bfedccb5675bdb8f5b4d14d45  git_status_before.txt  8084 bytes
+bcb1aa25d913644258b045f94d2ce45f26d2415bfedccb5675bdb8f5b4d14d45  git_status_after.txt  8084 bytes
+79a162a1cba01a9f4e1db5546a0196e58d6d94e8215b3735f09fe11b0852e33e  git_rev_parse_HEAD.txt  45 bytes

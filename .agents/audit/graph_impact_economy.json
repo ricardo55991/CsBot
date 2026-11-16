@@ -1,0 +1,423 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T17:47:21.637784+00:00",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "graph_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+  "graph_exists": true,
+  "dry_run": false,
+  "data_nature": "INFERRED",
+  "workspace_files_nature": "REAL",
+  "verdict": "PASS",
+  "required_attributes": [
+    "entry_points",
+    "writers",
+    "readers",
+    "authoritative_state",
+    "fallbacks",
+    "caches",
+    "side_effects",
+    "telemetry",
+    "tests",
+    "blast_radius"
+  ],
+  "total_flows_analyzed": 1,
+  "flows": {
+    "Economy decision -> buy command -> inventory confirmation": {
+      "flow_name": "Economy decision -> buy command -> inventory confirmation",
+      "data_nature": "INFERRED",
+      "entry_points": [
+        "src/CsBotManager/EconomyManager.cs",
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/Models.cs"
+      ],
+      "entry_points_verified": [
+        {
+          "path": "src/CsBotManager/EconomyManager.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\EconomyManager.cs",
+          "exists": true,
+          "sha256": "032f34410ea4d2f15bef8b40934956805fac378c7326c625421d81c5371cdf5c",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/CsBotManagerPlugin.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+          "exists": true,
+          "sha256": "18a69c9d0127c8acec95f68298038dc0a8f705da030a5d20700fcfe9e3a327fb",
+          "data_nature": "REAL"
+        },
+        {
+          "path": "src/CsBotManager/Models.cs",
+          "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\Models.cs",
+          "exists": true,
+          "sha256": "6e18489868b6706d5b93fbcfcf0adb4a3f005bb322d6931a61a41af56f1c2bc9",
+          "data_nature": "REAL"
+        }
+      ],
+      "writers": [
+        "src/CsBotManager/EconomyManager.cs (decisão de compra por round e emissão de ordens de compra)",
+        "src/CsBotManager/CsBotManagerPlugin.cs (integração com eventos de freeze time e inventário do servidor CS2)"
+      ],
+      "readers": [
+        "src/CsBotManager/CsBotManagerPlugin.cs",
+        "src/CsBotManager/MidRoundAdapter.cs"
+      ],
+      "authoritative_state": [
+        "src/CsBotManager/EconomyManager.cs (plano econômico e confirmação de equipamento adquirido)",
+        "src/CsBotManager/Models.cs"
+      ],
+      "fallbacks": [
+        "src/CsBotManager/EconomyManager.cs (fallback de compra econômica/eco quando saldo é insuficiente)"
+      ],
+      "caches": [
+        "src/CsBotManager/EconomyManager.cs (estado de compra do round atual)"
+      ],
+      "side_effects": [
+        "Execução de comandos de compra e atualização do inventário do bot em src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "telemetry": [
+        "src/CsBotManager/CsBotManagerPlugin.cs (logs de decisão econômica e confirmação de inventário)"
+      ],
+      "tests": [
+        "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+        "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+        "tests/CsBotManager.Tests/OllamaIntegrationDiagnosticTests.cs",
+        "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs",
+        "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs"
+      ],
+      "tests_verified": [],
+      "blast_radius": [
+        "src/CsBotManager/EconomyManager.cs",
+        "src/CsBotManager/CsBotManagerPlugin.cs"
+      ],
+      "workspace_verification": {
+        "data_nature": "REAL",
+        "matched_source_files_count": 24,
+        "matched_source_files": [
+          {
+            "file": "src/CsBotManager/BotLocomotionDriver.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotLocomotionDriver.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/BotSystemConfig.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\BotSystemConfig.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Buy"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CombatAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CombatAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/ContextualSmokeAndAudioBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\ContextualSmokeAndAudioBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CsBotManagerPlugin.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CsBotManagerPlugin.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/CtRetakeAndDefuseBrain.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\CtRetakeAndDefuseBrain.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/EconomyManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\EconomyManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy",
+              "Money",
+              "Inventory",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/LiveRadarTelemetryService.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\LiveRadarTelemetryService.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy",
+              "Money",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MatchTelemetryLogger.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MatchTelemetryLogger.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "Buy",
+              "Money",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MicroMoveEngine.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MicroMoveEngine.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MidRoundAdapter.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MidRoundAdapter.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/MobilityController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\MobilityController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/Models.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\Models.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Buy",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/OllamaIglService.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\OllamaIglService.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "Buy",
+              "Money"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/PresetSpatialValidator.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\PresetSpatialValidator.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Buy"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/RoleManager.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\RoleManager.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/SpotRecordingController.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\SpotRecordingController.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TacticalCalloutSystem.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TacticalCalloutSystem.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TacticalHudRenderer.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TacticalHudRenderer.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Buy"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "src/CsBotManager/TacticalOrderMaterializer.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\src\\CsBotManager\\TacticalOrderMaterializer.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "matched_test_files_count": 9,
+        "matched_test_files": [
+          {
+            "file": "tests/CsBotManager.Tests/EconomyAndIglTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\EconomyAndIglTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy",
+              "Money",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/MovementArbitrationAndStuckTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\MovementArbitrationAndStuckTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/OllamaIntegrationDiagnosticTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\OllamaIntegrationDiagnosticTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "Buy",
+              "Money"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/OrganicRushesAndFakesTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\OrganicRushesAndFakesTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Buy",
+              "Money"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/Phase2ForensicAuditTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\Phase2ForensicAuditTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Inventory"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_4_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_4_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_8_PrecisionTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_8_PrecisionTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy",
+              "Money",
+              "Weapon"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_2_ComprehensiveTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_2_ComprehensiveTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "EconomyManager",
+              "Buy"
+            ],
+            "data_nature": "REAL"
+          },
+          {
+            "file": "tests/CsBotManager.Tests/V4_3_UtilityAiIglTests.cs",
+            "absolute_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\tests\\CsBotManager.Tests\\V4_3_UtilityAiIglTests.cs",
+            "exists": true,
+            "matched_keywords": [
+              "Economy",
+              "Buy"
+            ],
+            "data_nature": "REAL"
+          }
+        ],
+        "graphify": {
+          "graph_json_present": true,
+          "graph_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\graphify-out\\graph.json",
+          "graph_sha256": "7a09693f1f6568803fa7f2ae7a0286cbe38c09f3900d08b96c6538f4eaa264f0",
+          "total_graph_nodes": 2627,
+          "matched_nodes_count": 98,
+          "sample_matched_nodes": [
+            "scripts_archive_botbuy",
+            "scripts_inspect_botbuy",
+            "src_csbotmanager_csbotmanagerplugin_cs_eventweaponfire",
+            "src_csbotmanager_economymanager_cs_random",
+            "src_csbotmanager_economymanager_cs_list",
+            "src_csbotmanager_economymanager_cs_ccsplayercontroller",
+            "src_csbotmanager_economymanager_cs_csteam",
+            "src_csbotmanager_tacticalcalloutsystem_cs_eventweaponfire",
+            "docs_checklist_testes_fase1_c_sistema_de_skins_e_cosméticos_weaponpaints",
+            "docs_plano_implantacao_correcoes_4_1_executar_compras_determinísticas_para_enemybots_e_integrar_ibotcontrollerapi_setbuyplan_c_05a",
+            "docs_plano_implantacao_correcoes_4_3_corrigir_ordem_de_compra_no_full_buy_prioridade_rifle_capacete_i_04d",
+            "docs_plano_implantacao_correcoes_4_4_reforma_completa_de_dropweaponforplayer_e_drop_automático_de_awp_c_05b_i_04a_i_04b_i_04c",
+            "docs_relatorio_auditoria_tecnica_4_fidelidade_do_economymanager_cs_compras_e_drops_reais",
+            "docs_relatorio_auditoria_tecnica_achado_crítico_4b_dropweaponforplayer_desarma_o_bot_doador_ou_joga_fora_a_arma_dele",
+            "docs_relatorio_auditoria_tecnica_achado_importante_4d_compra_cega_no_full_buy_deixa_bots_com_pouco_saldo_sem_rifle"
+          ]
+        }
+      },
+      "all_10_attributes_present": true,
+      "missing_attributes": []
+    }
+  }
+}

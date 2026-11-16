@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-08T22:03:55.201760+00:00",
+  "report_path": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot\\.agents\\teamwork\\implementer_2b3_1\\handoff.md",
+  "report_sha256": "802c91d20cfcbd66625e9d1bed1d68d7a0d214d0ade16a464fb78b0c6a6a8136",
+  "workspace_root": "C:\\Users\\ricar\\OneDrive\\Documentos\\Dev\\CsBot",
+  "dry_run": false,
+  "data_nature": "REAL",
+  "verdict": "FAIL",
+  "total_vectors_checked": 12,
+  "total_violations": 2,
+  "triggered_vectors": [
+    "percentage_100_without_denominator"
+  ],
+  "vectors": {
+    "conflicting_numbers": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "unbacked_metrics": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "zero_support_numeric_metrics": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "incompatible_confusion_matrix": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "divergent_or_truncated_hashes": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "hardcoded_report_claims": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "templated_data_unlabeled": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "missing_declared_files": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "undiscovered_tests": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "test_set_used_in_tuning": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    },
+    "percentage_100_without_denominator": {
+      "status": "FAIL",
+      "violation_count": 2,
+      "findings": [
+        {
+          "line": 83,
+          "content": "6. **Observação 1.4 → Cobertura de Testes e Governança**: A suíte de 22 testes unitários passou integralmente, confirmando o respeito às Regras 01, 02, 03, 04, 06 e 09 do `AGENTS.md`. A suíte C# de 340 testes permaneceu 100% verde.",
+          "detail": "Afirmação de '100%' sem denominador explícito (N/N) na mesma linha."
+        },
+        {
+          "line": 100,
+          "content": "- Os 22 testes unitários obrigatórios passaram com 100% de sucesso.",
+          "detail": "Afirmação de '100%' sem denominador explícito (N/N) na mesma linha."
+        }
+      ]
+    },
+    "unauthorized_human_approval_claim": {
+      "status": "PASS",
+      "violation_count": 0,
+      "findings": []
+    }
+  }
+}

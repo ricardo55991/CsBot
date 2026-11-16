@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-07T19:28:10.759283+00:00",
+  "updated_at_utc": "2026-11-07T21:30:00.000000+00:00",
+  "test_environment": "ISOLATED_TEMP_ENV",
+  "total_false_positives_count": 3,
+  "critical_false_positives_count": 0,
+  "resolved_count": 3,
+  "open_count": 0,
+  "false_positives": [
+    {
+      "fp_id": "FP-01",
+      "component_type": "Hook",
+      "component_name": "validate_generated_report.py",
+      "trigger_event": "PreToolUse",
+      "input_description": "Valid report with full 64-character hex hash preceded by 'SHA-256:'",
+      "erroneous_decision": "deny",
+      "erroneous_reason": "BLOQUEIO [validate-generated-report]: Relatório reprovado pela auditoria cética (1 violação(ões)): [Regra 01 / Hash Truncado] Hash SHA-256 inválido ou truncado detectado: '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde' (exigido 64 hex completos).",
+      "root_cause": "Line 228 regex uses quantifier [0-9a-fA-F]{4,63} which eagerly matches exactly the first 63 hex digits of a 64-char hash; line 233 then evaluates len(candidate) != 64, falsely concluding the hash is truncated.",
+      "severity": "CRITICAL",
+      "suggested_fix": "In validate_generated_report.py line 228, update regex to check word boundaries or inspect full_matches like audit_executive_report.py does: r'(?:sha-?256|previous_sha256|catalog_hash|hash)\\s*[\"\\']?\\s*[:=]\\s*[\"\\']?([0-9a-fA-F]{4,63}(?:\\.\\.\\.)?|[0-9a-fA-F]+\\.\\.\\.)(?!\\w)[\"\\']?'.",
+      "status": "FIXED",
+      "resolved_in": "Patch 1.1",
+      "resolution_timestamp_utc": "2026-11-07T21:30:00Z",
+      "resolution_notes": "Implemented lookahead boundary (?![0-9a-fA-F]) preventing eager truncation match on genuine 64-char hex hashes; added separate ELLIPSIS_HASH_PATTERN for catching truncated hashes with dots; isolated fenced code blocks."
+    },
+    {
+      "fp_id": "FP-02",
+      "component_type": "Hook",
+      "component_name": "post_test_audit.py",
+      "trigger_event": "PostToolUse",
+      "input_description": "Clean test run with 8 passing tests where output is provided under camelCase 'toolResponse'",
+      "erroneous_decision": "observed (corrupted summary)",
+      "erroneous_reason": "canonical_summary recorded as '0/0' instead of '8/8'",
+      "root_cause": "post_test_audit.py line 189 only inspects payload.get('output') or payload.get('result') or snake_case payload.get('tool_response'), failing to unpack camelCase payload.get('toolResponse') from standard Antigravity events.",
+      "severity": "HIGH",
+      "suggested_fix": "Add 'toolResponse' to the checked dictionary keys in lines 150 and 189 of post_test_audit.py.",
+      "status": "FIXED",
+      "resolved_in": "Patch 1.1",
+      "resolution_timestamp_utc": "2026-11-07T21:30:00Z",
+      "resolution_notes": "Unpacked both camelCase toolResponse and snake_case tool_response across payload and tool_input; implemented UNKNOWN summary detection and enforced block_pass_verdict on non-zero exit codes or unparsed test output."
+    },
+    {
+      "fp_id": "FP-03",
+      "component_type": "Hook",
+      "component_name": "validate_generated_report.py",
+      "trigger_event": "PreToolUse",
+      "input_description": "Report containing documentation examples or adversarial test fixtures inside fenced code blocks (```...```)",
+      "erroneous_decision": "deny",
+      "erroneous_reason": "Documentation code blocks containing didactic violation examples falsely triggered blocking skeptic rules.",
+      "root_cause": "Linter treated the document as flat text without segmenting markdown code blocks from live executive claims.",
+      "severity": "HIGH",
+      "suggested_fix": "Implement segment_markdown to isolate fenced code blocks, categorizing them as DOCUMENTATION_EXAMPLE or ADVERSARIAL_FIXTURE and auditing only EXECUTIVE_CLAIM sections.",
+      "status": "FIXED",
+      "resolved_in": "Patch 1.1",
+      "resolution_timestamp_utc": "2026-11-07T21:30:00Z",
+      "resolution_notes": "Implemented segment_markdown in validate_generated_report.py and audit_executive_report.py, isolating fenced code blocks while preserving exact line counts for precise diagnostic reporting."
+    }
+  ]
+}
